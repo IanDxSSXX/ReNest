@@ -1,5 +1,5 @@
-<h1 style="align: center">🪶 ReactUI</h1>
-<p style="align: center">A simple react add-on for you to write React like SwiftUI.</p>
+# 🪶 ReactUI
+A simple react add-on for you to write React like SwiftUI.
 
 ## 📦 Install
 `npm install @iandx/reactui`
