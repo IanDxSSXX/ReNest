@@ -3,7 +3,7 @@ A simple react add-on to write React like SwiftUI.
 
 ## 📦 Install
 `npm install @iandx/reactui`
-## What brings ReactUI?
+## ❓What brings ReactUI?
 React is a great framework, and function hooks make it even more elegant.
 But not HTML or CSS! It's 2022! React uses jsx to replace the ugly HTML and CSS, but......
 What the difference between JSX and HTML! Why can't we code modern? 
@@ -108,7 +108,7 @@ export default ReactUIApp;
   )
   ```
 
-## Advanced
+## 🤖 Advanced
 ### RUITag
 Turn every react component into reactui instance no matter if it's a custom react function or a html tag
 ```typescript
@@ -219,7 +219,7 @@ export default function (title: string) {
   return new Button({title})
 }
 ```
-## Todo
+## ☑️Todo
 - [ ] Build an internal component library with theme and animation.
   - [x] VStack/HStack/ZStack
   - [x] Button
