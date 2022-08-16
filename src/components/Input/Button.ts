@@ -1,12 +1,11 @@
-import {ReactUIElement} from "../../base/ReactUIElement";
+import {ReactUIElement, reactUIProp} from "../../base/ReactUIElement";
 import {Div} from "../../base/HTMLTags";
 import {ReactUIThemeColor} from "../../base/Interfaces";
-import {RUIState, useRUIState} from "../../base/Utils";
+import {useRUIState} from "../../base/Utils";
 
 class Button extends ReactUIElement {
     Body = ({title}: any) => {
         const button = Div(title).registerBy(this)
-
         const mouseState = useRUIState("out")
 
         button
@@ -44,17 +43,9 @@ class Button extends ReactUIElement {
         return button
     }
 
-    color(value: keyof ReactUIThemeColor) {
-        return this.setCustomProp("color", value)
-    }
-
-    colorRevert(value: boolean) {
-        return this.setCustomProp("colorRevert", value)
-    }
-
-    disable(value: boolean=true) {
-        return this.setCustomProp("disable", value)
-    }
+    // ---- this is custom dot function that can be called outside and be used as this.C.xx in Body
+    @reactUIProp
+    disable(value: boolean=true) {return this}
 }
 
 export default function (title: string) {
