@@ -6,6 +6,8 @@
       "dom.iterable",
       "esnext"
     ],
+    // enabling declaration (.d.ts) emit
+    "experimentalDecorators": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
