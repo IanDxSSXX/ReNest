@@ -3,6 +3,59 @@ A simple react add-on to write React like SwiftUI.
 
 ## 📦 Install
 `npm install @iandx/reactui`
+## What brings ReactUI?
+React is a great framework, and function hooks make it even more elegant.
+But not HTML or CSS! It's 2022! React uses jsx to replace the ugly HTML and CSS, but......
+What the difference between JSX and HTML! Why can't we code modern? 
+
+That was what in my mind when I first used SwiftUI back in 2019. Though it was(and still) just a toy 
+and though I've heard its idea was exactly from React, still, it's modern and elegant. 
+So why don't we take a little bit back to React? Here comes ReactUI...
+
+Here is an example to create a list of buttons using jsx and reactui
+* JSX
+  ```typescript jsx
+  const JsxButtons = ({num}:any) => 
+      <div>
+          {num.map((num: number) => 
+              <button 
+                  onClick={()=>{
+                      console.log(`This is button ${num}`)
+                  }}
+                  key={num}>
+                  {num}
+              </button>)}
+      </div>
+  
+  ```
+* ReactUI
+  ```typescript
+  const RUIButtons = RUI(({nums}:any) => 
+      List(nums, (num:number) =>
+          Button(num)
+              .key(num)
+              .onClick(() => {
+                  console.log(`This is button ${num}`)
+              })
+      )
+  )
+  ```
+Except the way ReactUI sets props, everything is the same with React functions.
+
+Basically every prop in React and CSSProperty can be used in ReactUI as 'dot' function, and IDEs will autocomplete for you!
+(if there's some specific properties from third-party components, use `setProp(key, value)`to set additional color)
+```typescript
+const MyText = RUI(() =>
+    Text("test")
+        .fontSize("20px")
+        .fontWeight("bold")
+        .width("30px")
+        .color("red")
+        .className("rui-text")
+        .id("text-12abc")
+        .setProp("other_prop", 123)
+)
+```
 ## ⚡️ Quick Start
 ```typescript
 // ---- src/App.tsx
@@ -16,14 +69,15 @@ export default App;
 
 ```typescript
 // ---- src/ReactUIApp.ts
-import ReactUIApp from 'ReactUIApp';
-import {RUI, Text, Button, useRUIState, VStack} from "@iandx/reactui";
+import ReactUIApp from './ReactUIApp';
+import {RUI, Text, Button, VStack} from "@iandx/reactui";
+import {useState} from "react";
 
 const MyComponent = RUI(({defaultNum}: any) => {
   let [num, setNum] = useState(defaultNum)
   return (
       Button(num)
-        .onChange(()=>{setNum(num+1)})
+        .onClick(()=>{setNum(num+1)})
   )
 })
 
@@ -53,63 +107,7 @@ export default ReactUIApp;
       )     
   )
   ```
-## What brings ReactUI?
-React is a great framework, and function hooks make it even more elegant.
-But not HTML or CSS! It's 2022! React uses jsx to replace the ugly HTML and CSS, but......
-What the difference between JSX and HTML! Why can't we code modern? 
 
-That was what in my mind when I first used SwiftUI back in 2019. Though it was(and still) just a toy 
-and though I've heard its idea was exactly from React, still, it's modern and elegant. 
-So why don't we take a little bit back to React? Here comes ReactUI...
-
-Here is an example to create a list of buttons using jsx and reactui
-* JSX
-  ```typescript jsx
-  const JsxButtons = ({num}:any) => {
-      return (
-          <div>
-              {num.map((num: number) => 
-                  <button 
-                      onClick={()=>{
-                          console.log(`This is button ${num}`)
-                      }}
-                      key={num}>
-                      {num}
-                  </button>)}
-          </div>
-      )
-  }
-  ```
-* ReactUI
-  ```typescript
-  const RUIButtons = RUI(({nums}:any) => {
-      return (
-          List(nums, (num:number) =>
-              Button(num)
-                  .key(num)
-                  .onClick(() => {
-                      console.log(`This is button ${num}`)
-                  })
-          )
-      )
-  })
-  ```
-Except the way ReactUI sets props, everything is the same with React functions.
-
-Basically every prop in React and CSSProperty can be used in ReactUI as 'dot' function, and IDEs will autocomplete for you!
-(if there's some specific properties from third-party components, use `setProp(key, value)`to set additional color)
-```typescript
-const MyText = RUI(() =>
-    Text("test")
-        .fontSize("20px")
-        .fontWeight("bold")
-        .width("30px")
-        .color("red")
-        .className("rui-text")
-        .id("text-12abc")
-        .setProp("other_prop", 123)
-)
-```
 ## Advanced
 ### RUITag
 Turn every react component into reactui instance no matter if it's a custom react function or a html tag
