@@ -1,9 +1,9 @@
-<h1 style="text-align: center">🪶 ReactUI</h1>
-<p style="text-align: center">A simple react add-on for you to write React like SwiftUI.</p>
+<h1 style="align: center">🪶 ReactUI</h1>
+<p style="align: center">A simple react add-on for you to write React like SwiftUI.</p>
 
-# 📦 Install
+## 📦 Install
 `npm install @iandx/reactui`
-# ⚡️ Quick Start
+## ⚡️ Quick Start
 ```typescript
 // ---- src/App.tsx
 import ReactUIApp from 'ReactUIApp';
@@ -53,7 +53,7 @@ export default App;
       )     
   )
   ```
-# What brings ReactUI?
+## What brings ReactUI?
 React is a great framework, and function hooks make it even more elegant.
 But not HTML or CSS! It's 2022! React uses jsx to replace the ugly HTML and CSS, but......
 What the difference between JSX and HTML! Why can't we code modern? 
@@ -110,14 +110,14 @@ const MyText = RUI(() =>
         .setProp("other_prop", 123)
 )
 ```
-# Advanced
-## RUITag
+## Advanced
+### RUITag
 Turn every react component into reactui instance no matter if it's a custom react function or a html tag
 ```typescript
 const RUIDiv = RUITag("div")
 const RUIComponent = RUITag(YourReactFunction)
 ```
-## ConditionView
+### ConditionView
 Use this view to build a dynamic controllable page simple and fast.
 ```typescript
 const MyCondition = RUI(() => {
@@ -138,7 +138,7 @@ const MyCondition = RUI(() => {
     )
 })
 ```
-## Router
+### Router
 Using react-router 6, the NavigationView in ReactUI is pretty easy to use and supports regex path
 (which react-router 6 doesn't support).
 ```typescript
@@ -154,13 +154,13 @@ const MyPage = RUI(() =>
     )
 )
 ```
-## ThemeView
+### ThemeView
 A pretty strong view wrapper to manage all your customized components, 
 the main concepts is: "5 colors are enough for a theme!"
 
 The development and test is already done, but I don't know how to explain 
 it in a straight way, so just leave it here....
-## Custom ReactUI Element
+### Custom ReactUI Element
 This part is to show you an advanced usage of how to define a ReactUI Element 
 apart from the simple `RUI()` and `RUITag()`.
 
@@ -221,7 +221,7 @@ export default function (title: string) {
   return new Button({title})
 }
 ```
-# Todo
+## Todo
 - [ ] Build an internal component library with theme and animation.
   - [x] VStack/HStack/ZStack
   - [x] Button
