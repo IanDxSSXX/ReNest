@@ -1,5 +1,5 @@
 # 🪶 ReactUI
-A simple react add-on for you to write React like SwiftUI.
+A simple react add-on to write React like SwiftUI.
 
 ## 📦 Install
 `npm install @iandx/reactui`
