@@ -1,6 +1,6 @@
 {
   "name": "@iandx/reactui",
-  "version": "0.0.18",
+  "version": "0.1.0",
   "description": "A simple react add-on for you to write React like SwiftUI.",
   "author": "Ian Duan",
   "license": "MIT",
