@@ -62,14 +62,35 @@ That was what in my mind when I first used SwiftUI back in 2019. Though it was(a
 and though I've heard its idea was exactly from React, still, it's modern and elegant. 
 So why don't we take a little bit back to React? Here comes ReactUI...
 
-
-<table border="0">
- <tr>
-    <td><b style="font-size:30px">Title</b></td>
-    <td><b style="font-size:30px">Title 2</b></td>
- </tr>
- <tr>
-    <td>Lorem ipsum ...</td>
-    <td>Lorem ipsum ...</td>
- </tr>
-</table>
+Here is an example to create a list of text using jsx and reactui
+* JSX
+  ```typescript jsx
+  const JsxButtons = ({num}:any) => {
+      return (
+          <div>
+              {num.map((num: number) => 
+                  <button 
+                      onClick={()=>{
+                          console.log(`This is button ${num}`)
+                      }}
+                      key={num}>
+                      num
+                  </button>)}
+          </div>
+      )
+  }
+  ```
+* ReactUI
+  ```typescript jsx
+  const RUIButtons = RUI(({nums}:any) => {
+      return (
+          List(nums, (num) =>
+              Button(num)
+                  .key(num)
+                  .onClick(() => {
+                      console.log(`This is button ${num}`)
+                  })
+          )
+      )
+  })
+  ```
