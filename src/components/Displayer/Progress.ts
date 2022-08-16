@@ -1,15 +1,22 @@
-import {animated} from "@react-spring/web";
-import { Div } from "../../base/HTMLTags";
-import {ReactUIElement} from "../../base/ReactUIElement";
-import ZStack from "../Container/ZStack";
-import {pixelToInt, RUIState} from "../../base/Utils";
+import {animated, useSpring} from "@react-spring/web";
+import {Div} from "../../base/HTMLTags";
+import {RUIState, useRUIState} from "../../base/Utils";
+import {ReactUIElement, ZStack} from "../../base";
+import AnimatedDiv from "../Other/Spring";
+import {ReactUIThemeColorMap} from "../../base/Interfaces";
+import {reactUIProp} from "../../base/ReactUIElement";
 import {useEffect} from "react";
 
 
 class Progress extends ReactUIElement {
-    Body = ({percentage}:any) => {
+    themeColorMap: ReactUIThemeColorMap = {
+        first: "tertiary",
+        second: "foreground",
+    }
+
+    Body = ({value}:any) => {
         const progressBack = Div().ruiClassName("progressBack")
-        const progressFront = Div()
+        const progressFront = AnimatedDiv()
 
         const progress = ZStack(
             progressBack,
@@ -18,43 +25,40 @@ class Progress extends ReactUIElement {
 
         // this.mapViewStyles(progressBack,"height","width")
 
-        const variant = this.C('variant')
+        const variant = this.C.variant
 
         progress
             .alignmentH('leading')
-            .width(progress.S.width??"100px")
+            .width(progress.S.width??"250px")
             .height(progress.S.height??"10px")
 
         progressBack
             .width(progress.S.width)
             .height(progress.S.height)
-            .border("1px solid")
-            .backgroundColor("white")
-
+            .backgroundColor(this.themeColor.second.dark!)
+            .borderRadius("10px")
 
         progressFront
-            .width(`${pixelToInt(progress.S.width)*percentage.value}px`)
             .height(progress.S.height)
-            .border("1px solid")
-            .backgroundColor("gray")
+            .borderRadius("10px")
+            .backgroundColor(this.themeColor.first.standard!)
 
-
-        useEffect(() => {
-            if(percentage.value>1){
-                percentage.value=1
-            } else if (percentage.value<0) {
-                percentage.value=0
-            }
+        const duration = 150
+        const progressFrontStyle = useSpring({
+            width: `calc(${value>1?1:value} * ${progress.S.width})`,
+            config: { duration },
         })
+        progressFront.style(progressFrontStyle)
+
         return progress
     }
-    variant(value: string){
-        return this.setCustomProp("variant",value)
-    }
+
+    @reactUIProp
+    variant(value: string){return this}
 
 }
 
 
-export default function(percentage: RUIState) {
-    return new Progress({percentage})
+export default function(value: number) {
+    return new Progress({value})
 }

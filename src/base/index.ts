@@ -15,7 +15,8 @@ import Toggle from "../components/Input/Toggle"
 import VStack from "../components/Container/VStack"
 import ZStack from "../components/Container/ZStack"
 import Paper from "../components/Displayer/Paper"
+import Progress from "../components/Displayer/Progress";
 
 export {ForEach, If, ConditionView, range, useRUIState, RUI, ReactUIElement, ThemeView, NavigationView, RUITag, uid, objectEquals}
 
-export {Button, HStack, TextField, Spacer, AnimatedDiv, Text, Toggle, VStack, ZStack, Paper}
+export {Button, HStack, TextField, Spacer, AnimatedDiv, Text, Toggle, VStack, ZStack, Paper, Progress}
