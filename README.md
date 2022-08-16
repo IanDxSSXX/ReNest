@@ -35,7 +35,7 @@ const ReactUIApp = RUI(() =>
     .alignment("center")
 )
 
-export default App;
+export default ReactUIApp;
 ```
 * Every ReactUI instance can convert to React element using `.asReactElement()`
 * Every ReactUI instance can take
@@ -62,7 +62,7 @@ That was what in my mind when I first used SwiftUI back in 2019. Though it was(a
 and though I've heard its idea was exactly from React, still, it's modern and elegant. 
 So why don't we take a little bit back to React? Here comes ReactUI...
 
-Here is an example to create a list of text using jsx and reactui
+Here is an example to create a list of buttons using jsx and reactui
 * JSX
   ```typescript jsx
   const JsxButtons = ({num}:any) => {
@@ -74,7 +74,7 @@ Here is an example to create a list of text using jsx and reactui
                           console.log(`This is button ${num}`)
                       }}
                       key={num}>
-                      num
+                      {num}
                   </button>)}
           </div>
       )
@@ -84,7 +84,7 @@ Here is an example to create a list of text using jsx and reactui
   ```typescript
   const RUIButtons = RUI(({nums}:any) => {
       return (
-          List(nums, (num) =>
+          List(nums, (num:number) =>
               Button(num)
                   .key(num)
                   .onClick(() => {
