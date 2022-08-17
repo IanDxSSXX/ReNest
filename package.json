@@ -1,6 +1,6 @@
 {
   "name": "@iandx/reactui",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A simple react add-on for you to write React like SwiftUI.",
   "author": "Ian Duan",
   "license": "MIT",
@@ -26,7 +26,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "rollup": "rollup -c"
+    "rollup": "rollup -c",
+    "publish": "npm publish"
   },
   "eslintConfig": {
     "extends": [

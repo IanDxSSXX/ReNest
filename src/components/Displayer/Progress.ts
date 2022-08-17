@@ -1,11 +1,9 @@
-import {animated, useSpring} from "@react-spring/web";
-import {RUIState, useRUIState} from "base/Utils";
+import {useSpring} from "@react-spring/web";
 import {ReactUIElement} from "base/ReactUIElement";
 import ZStack from "components/Container/ZStack"
 import AnimatedDiv from "components/Other/Spring";
 import {ReactUIThemeColorMap} from "base/Interfaces";
 import {reactUIProp} from "base/ReactUIElement";
-import {useEffect} from "react";
 import {Div} from "base/HTMLTags"
 
 
@@ -15,7 +13,7 @@ class Progress extends ReactUIElement {
         second: "foreground",
     }
 
-    Body = ({value}:any) => {
+    Body = ({value}:any):any => {
         const progressBack = Div().ruiClassName("progressBack")
         const progressFront = AnimatedDiv()
 
