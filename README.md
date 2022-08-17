@@ -71,7 +71,8 @@ export default App;
 ```typescript
 // ---- src/ReactUIApp.ts
 import ReactUIApp from './ReactUIApp';
-import {RUI, Text, Button, VStack} from "@iandx/reactui";
+import {RUI} from "@iandx/reactui";
+import {Text, Button, VStack} from "@iandx/reactui/component";
 import {useState} from "react";
 
 const MyComponent = RUI(({defaultNum}: any) => {
