@@ -2,8 +2,8 @@ import {animated} from "@react-spring/web";
 import {ReactUIElement} from "base/ReactUIElement";
 import {isInstanceOf, Range, uid} from "base/Utils";
 import ReactUIBase from "base/ReactUIBase";
-import VStack from "components/Container/VStack";
-import HStack from "components/Container/HStack";
+import VStack from "component/Container/VStack";
+import HStack from "component/Container/HStack";
 import {ForEach} from "base/ReactUICondition";
 import Text from "./Text"
 import {Div} from "base/HTMLTags";

@@ -1,23 +1,14 @@
 {
   "name": "@iandx/reactui",
-  "version": "0.1.2",
-  "description": "A simple react add-on for you to write React like SwiftUI.",
-  "author": "Ian Duan",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "dependencies": {
     "@react-spring/web": "^9.5.2",
-    "@types/node": "^16.11.47",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.4.0",
-    "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.7.4"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-icons": "4.4.0",
+    "react-router-dom": "6.3.0",
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -26,8 +17,7 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "rollup": "rollup -c",
-    "publish": "npm publish"
+    "rollup": "rollup -c"
   },
   "eslintConfig": {
     "extends": [
@@ -57,9 +47,6 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.4",
@@ -73,6 +60,9 @@
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.10",
     "@storybook/testing-library": "^0.0.13",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
     "babel-plugin-named-exports-order": "^0.0.2",
     "prop-types": "^15.8.1",
     "rollup": "^2.78.0",

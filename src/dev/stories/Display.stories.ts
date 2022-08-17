@@ -1,6 +1,6 @@
-import * as RUI from "../../base";
+import * as RUIComponent from "component";
 import {RUITemplate} from "./RUITemplate";
-import {useRUIState} from "../../base";
+import {useRUIState} from "base";
 
 export default {
     title: 'Display',
@@ -22,5 +22,5 @@ export default {
     }
 }
 
-export const Progress = RUITemplate((args:any)=>RUI.Progress(args.num).setColor(args.color))
+export const Progress = RUITemplate((args:any)=>RUIComponent.Progress(args.num).setColor(args.color))
 

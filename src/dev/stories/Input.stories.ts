@@ -1,4 +1,4 @@
-import * as RUI from "../../base";
+import * as RUIComponent from "component";
 import {RUITemplate} from "./RUITemplate";
 import {useRUIState} from "../../base";
 
@@ -35,12 +35,12 @@ export default {
 
 
 export const Button = RUITemplate((args: any) =>
-    RUI.Button("Button")
+    RUIComponent.Button("Button")
         .setColor(args.first, args.second, args.third, args.forth, args.fifth)
 )
 
 export const Toggle = RUITemplate((args: any) =>
-    RUI.Toggle()
+    RUIComponent.Toggle()
         .setColor(args.first, args.second, args.third, args.forth, args.fifth)
 )
 

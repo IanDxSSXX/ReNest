@@ -1,27 +1,28 @@
 import {useEffect, useRef} from "react";
 import {
-    Button,
-    VStack,
-    TextField,
-    Text,
-    Toggle,
     NavigationView,
     ForEach,
     useRUIState,
     range,
     RUI,
-    HStack, ThemeView
+    ThemeView
 } from "../base";
-import List from "../components/Displayer/List";
-import Paper from "../components/Displayer/Paper"
-import ZStack from "../components/Container/ZStack";
+import {
+    Button,
+    VStack,
+    TextField,
+    Text,
+    Toggle,
+    HStack,
+} from "../component"
+import List from "../component/Displayer/List";
+import Paper from "../component/Displayer/Paper"
+import ZStack from "../component/Container/ZStack";
 import {NavigateTo} from "../base/ReactUINavigation";
-import * as uuid from "uuid";
-import {Div} from "../base/HTMLTags";
 
 
 const ImageDisplay = RUI(() =>
-    VStack()
+    VStack("dfa")
 )
 
 
@@ -96,7 +97,7 @@ const Content = RUI(() => {
             VStack(
                 TopBar().padding("20px").id("6666").themeTag("tag1"),
                 NavigationView({
-                    "": Text("welcom to react UI, click the button above to view components"),
+                    "": Text("welcom to react UI, click the button above to view component"),
                     "textField": TextFieldDisplay(),
                     "list": ListDisplay(),
                     "toggle": ToggleDisplay(),

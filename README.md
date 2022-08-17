@@ -165,7 +165,7 @@ apart from the simple `RUI()` and `RUITag()`.
 
 Here's an example of an internal Button written in ReactUI
 ```typescript
-// ---- src/components/Input/Button.ts
+// ---- src/component/Input/Button.ts
 import {ReactUIElement, reactUIProp} from "../../base/ReactUIElement";
 import {Div} from "../../base/HTMLTags";
 import {ReactUIThemeColor} from "../../base/Interfaces";

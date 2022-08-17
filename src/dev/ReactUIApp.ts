@@ -1,5 +1,5 @@
 import Content from "./Content";
-import {RUI} from "../base/ReactUIElement";
+import {RUI} from "base/ReactUIElement";
 // import Calculator from "../dev/Calculator";
 
 
