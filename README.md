@@ -57,6 +57,7 @@ const MyText = RUI(() =>
 )
 ```
 ## ⚡️ Quick Start
+(try codesandbox here https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
 ```typescript
 // ---- src/App.tsx
 import ReactUIApp from 'ReactUIApp';
