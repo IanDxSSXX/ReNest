@@ -31,7 +31,8 @@ const rollupOutputFunc = (inputPath, outputFile, outputType) => {
 const rollupDefault = [].concat(
     rollupOutputFunc('src/base/index.ts', 'dist/index.js', 'dist/index.d.ts'),
     rollupOutputFunc('src/component/index.ts', 'dist/component/index.js', 'dist/component/index.d.ts'),
-    rollupOutputFunc('src/base/HTMLTags.ts', 'dist/htmlTag/index.js', 'dist/htmlTag/index.d.ts')
+    rollupOutputFunc('src/base/HTMLTags.ts', 'dist/tag/index.js', 'dist/tag/index.d.ts'),
+    rollupOutputFunc('src/base/index.core.ts', 'dist/core/index.js', 'dist/core/index.d.ts')
 )
 
 export default rollupDefault

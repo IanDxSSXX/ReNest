@@ -1,5 +1,4 @@
 
-
 export interface ReactUIThemeColorMap {
     first?: keyof ReactUIThemeColor,
     second?: keyof ReactUIThemeColor,

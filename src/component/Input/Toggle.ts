@@ -1,4 +1,4 @@
-import {ReactUIElement, reactUIProp} from "../../base/ReactUIElement";
+import {ReactUIElement, RUIProp} from "../../base/ReactUIElement";
 import {Div} from "../../base/HTMLTags";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/Spring";
@@ -84,10 +84,10 @@ class Toggle extends ReactUIElement {
         return toggle
     }
 
-    @reactUIProp
+    @RUIProp
     disable(value: boolean=true) {return this}
 
-    @reactUIProp
+    @RUIProp
     onChange(value: any) {return this}
 
 }

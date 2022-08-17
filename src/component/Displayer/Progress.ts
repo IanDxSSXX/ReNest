@@ -3,7 +3,7 @@ import {ReactUIElement} from "base/ReactUIElement";
 import ZStack from "component/Container/ZStack"
 import AnimatedDiv from "component/Other/Spring";
 import {ReactUIThemeColorMap} from "base/Interfaces";
-import {reactUIProp} from "base/ReactUIElement";
+import {RUIProp} from "base/ReactUIElement";
 import {Div} from "base/HTMLTags"
 
 
@@ -52,7 +52,7 @@ class Progress extends ReactUIElement {
         return progress
     }
 
-    @reactUIProp
+    @RUIProp
     variant(value: string){return this}
 
 }

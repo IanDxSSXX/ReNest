@@ -4,7 +4,7 @@ import {ReactUIThemeBase} from "./ReactUITheme";
 import ReactUIBase from "./ReactUIBase";
 
 
-export function reactUIProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+export function RUIProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
         if (args.length === 1) {

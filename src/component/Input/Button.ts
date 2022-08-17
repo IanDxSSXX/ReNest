@@ -1,4 +1,4 @@
-import {ReactUIElement, reactUIProp} from "../../base/ReactUIElement";
+import {ReactUIElement, RUIProp} from "../../base/ReactUIElement";
 import {Div} from "../../base/HTMLTags";
 import {ReactUIThemeColor} from "../../base/Interfaces";
 import {useRUIState} from "../../base/Utils";
@@ -44,7 +44,7 @@ class Button extends ReactUIElement {
     }
 
     // ---- this is custom dot function that can be called outside and be used as this.C.xx in Body
-    @reactUIProp
+    @RUIProp
     disable(value: boolean=true) {return this}
 }
 

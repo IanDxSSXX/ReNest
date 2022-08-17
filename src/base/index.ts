@@ -1,9 +1,9 @@
 import {ForEach, If, ConditionView} from "./ReactUICondition"
-import {range, useRUIState, uid, objectEquals} from "./Utils"
-import {RUI, ReactUIElement} from "./ReactUIElement"
-import ThemeView from "./ReactUITheme"
 import NavigationView from "./ReactUINavigation"
+import {range, useRUIState, uid, useTrigger, useTriggerEvent} from "./Utils"
+import {RUI} from "./ReactUIElement"
+import ThemeView from "./ReactUITheme"
 import {RUITag} from "./HTMLTags";
 
-export {ForEach, If, ConditionView, range, useRUIState, RUI, ReactUIElement, ThemeView, NavigationView, RUITag, uid, objectEquals}
+export {ForEach, If, ConditionView, range, useRUIState, RUI, ThemeView, NavigationView, RUITag, uid, useTrigger, useTriggerEvent}
 

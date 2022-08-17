@@ -1,6 +1,6 @@
 import {useSpring} from "@react-spring/web";
 import {MutableRefObject, useEffect, useRef} from "react";
-import {ReactUIElement, reactUIProp} from "../../base/ReactUIElement";
+import {ReactUIElement, RUIProp} from "../../base/ReactUIElement";
 import {pixelToInt, useRUIState, useTrigger, useTriggerEvent} from "../../base/Utils";
 import ZStack from "../Container/ZStack";
 import {Input} from "../../base/HTMLTags"
@@ -137,19 +137,19 @@ export class TextField extends ReactUIElement {
         return textField
     }
 
-    @reactUIProp
+    @RUIProp
     placeHolder(value: string) { return this }
 
-    @reactUIProp
+    @RUIProp
     variant(value: "outlined" | "underlined") { return this }
 
-    @reactUIProp
+    @RUIProp
     disable(value: boolean=true) { return this }
 
-    @reactUIProp
+    @RUIProp
     autoFocus(value: boolean = true) { return this }
 
-    @reactUIProp
+    @RUIProp
     onChange(value: any) { return this }
 }
 
