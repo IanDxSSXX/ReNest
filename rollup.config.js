@@ -16,7 +16,8 @@ export default [
     plugins: [
       typescript({ tsconfig: "tsconfig.json" })
     ],
-    external: ["react", "react-dom", "uuid", "react-icons", "react-router-dom", "react-spring"]
+    external: ["@react-spring/web", "@types/node", "@types/react", "@types/react-dom", "@types/uuid",
+    "react", "react-dom", "react-icons", "react-router-dom", "typescript"]
   },
   {
       input: 'src/base/index.ts',
