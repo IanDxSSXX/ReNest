@@ -1,6 +1,6 @@
-import {ReactUIElement} from "base/ReactUIElement";
-import {Div} from "base/HTMLTags";
-import {ReactUIThemeColorMap} from "base/Interfaces";
+import {ReactUIElement} from "../../base/ReactUIElement";
+import {Div} from "../../base/HTMLTags";
+import {ReactUIThemeColorMap} from "../../base/Interfaces";
 
 class Paper extends ReactUIElement {
     themeColorMap: ReactUIThemeColorMap = {

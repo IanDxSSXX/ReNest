@@ -55,13 +55,14 @@ export function range(first: number, second?: number) {
 }
 
 // ---* class type
-export function isInstanceOf(obj: any, ...types: any[]) {
-    for (let type of types) {
-        if (Object.getPrototypeOf(obj) instanceof type || obj instanceof type) {
-            return true
-        }
+export function isInstanceOf(obj: any, typeName: string) {
+    const protoTypeNameChain = []
+    let protoType = Object.getPrototypeOf(obj)
+    while (protoType) {
+        protoTypeNameChain.push(protoType.constructor.name)
+        protoType = protoType.__proto__
     }
-    return false
+    return protoTypeNameChain.includes(typeName)
 }
 
 

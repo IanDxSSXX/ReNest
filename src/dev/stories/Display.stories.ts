@@ -1,6 +1,6 @@
-import * as RUIComponent from "component";
+import * as RUIComponent from "../../component";
 import {RUITemplate} from "./RUITemplate";
-import {useRUIState} from "base";
+import {useRUIState} from "../../base";
 
 export default {
     title: 'Display',

@@ -23,10 +23,11 @@ export default class ReactUIBase {
 
     asReactElement(): ReactElement<any> {
         this.beforeAsReactElement()
+
         let children = this.children.map((child) =>
             typeof child === "number" ? `${child}` :
-            isInstanceOf(child, ReactUIBase) ? child.asReactElement() :
-            child instanceof Array ? child.map((c)=>isInstanceOf(c, ReactUIBase) ? c.asReactElement() : c):
+            isInstanceOf(child, "ReactUIBase") ? child.asReactElement() :
+            child instanceof Array ? child.map((c)=>isInstanceOf(c, "ReactUIBase") ? c.asReactElement() : c):
             child)
 
         return(

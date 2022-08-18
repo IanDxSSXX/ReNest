@@ -1,10 +1,10 @@
 import {useSpring} from "@react-spring/web";
-import {ReactUIElement} from "base/ReactUIElement";
-import ZStack from "component/Container/ZStack"
-import AnimatedDiv from "component/Other/Spring";
-import {ReactUIThemeColorMap} from "base/Interfaces";
-import {RUIProp} from "base/ReactUIElement";
-import {Div} from "base/HTMLTags"
+import {ReactUIElement} from "../../base/ReactUIElement";
+import ZStack from "../Container/ZStack"
+import AnimatedDiv from "../Other/Spring";
+import {ReactUIThemeColorMap} from "../../base/Interfaces";
+import {RUIProp} from "../../base/ReactUIElement";
+import {Div} from "../../base/HTMLTags"
 
 
 class Progress extends ReactUIElement {

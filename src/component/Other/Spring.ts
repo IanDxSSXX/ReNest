@@ -4,7 +4,7 @@ import {RUITag} from "../../base/HTMLTags";
 
 
 export class AnimatedDiv extends ReactUIElement {
-    Body = ({children}:any):any => {
+    Body = ({children}:any) => {
         return RUITag(animated.div, ...children)
             .registerBy(this)
             .height(this.S.height ?? "max-content")

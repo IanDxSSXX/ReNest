@@ -6,7 +6,7 @@ import {Div} from "./HTMLTags";
 import {createElement} from "react";
 
 export interface PathRoutes {
-    [key: string]: ReactUIBase | ((value: string) => ReactUIBase)
+    [key: string]: ReactUIBase | ((value: string) => ReactUIBase | any) | any
 }
 
 class NavigationView extends ReactUIThemeBase {
@@ -51,12 +51,12 @@ export class NavigationRoute extends ReactUIBase {
     constructor(element: ReactUIBase | any, path: string, reactUIThemeTag: any, reactUIThemes: any) {
         super(Route)
         function Element() {
-            if (isInstanceOf(element, ReactUIThemeBase)) {
+            if (isInstanceOf(element, "ReactUIThemeBase")) {
                 element.themeTag(reactUIThemeTag)
                 element.themes(reactUIThemes)
             }
 
-            return isInstanceOf(element, ReactUIBase) ? element.asReactElement() : element
+            return isInstanceOf(element, "ReactUIBase") ? element.asReactElement() : element
         }
 
         this.setProps({
@@ -67,7 +67,7 @@ export class NavigationRoute extends ReactUIBase {
 }
 
 export class NavigationRouteMatchable extends ReactUIBase {
-    constructor(regexPathRoutes: {[key: string]: ((value: string) => ReactUIBase)} | any, withSubPath: boolean,
+    constructor(regexPathRoutes: {[key: string]: ((value: string) => ReactUIBase | any)} | any, withSubPath: boolean,
                 reactUIThemeTag: any, reactUIThemes: any) {
         super(Route)
 
@@ -83,12 +83,12 @@ export class NavigationRouteMatchable extends ReactUIBase {
             }
             let element = matchedName === null ? Div() : regexPathRoutes[matchedName](value ?? "")
 
-            if (isInstanceOf(element, ReactUIThemeBase)) {
+            if (isInstanceOf(element, "ReactUIThemeBase")) {
                 (element as ReactUIThemeBase).themeTag(reactUIThemeTag);
                 (element as ReactUIThemeBase).themes(reactUIThemes)
             }
 
-            return isInstanceOf(element, ReactUIBase) ? element.asReactElement() : element
+            return isInstanceOf(element, "ReactUIBase") ? element.asReactElement() : element
         }
 
         this.setProps({
