@@ -17,7 +17,7 @@ export function RUIProp(target: any, propertyKey: string, descriptor: PropertyDe
 
 export class ReactUIElement extends ReactUIThemeBase {
     props: any
-    Body?: (props: any) => ReactUIBase | ReactElement<any> | any
+    Body?: (props: any) => ReactUIBase | ReactElement
     ruiGene: boolean = false
 
     constructor(props?: any, body?: any) {
@@ -32,10 +32,10 @@ export class ReactUIElement extends ReactUIThemeBase {
     static ReactElementWrapper({wrapper, ruiGene}:any) {
         const component = wrapper.Body(wrapper.props)
 
-        if (ruiGene && isInstanceOf(component, "ReactUIBase")) {
+        if (ruiGene && isInstanceOf(component, ReactUIBase)) {
             component.registerBy(wrapper)
         }
-        return component.asReactElement()
+        return isInstanceOf(component, ReactUIBase) ? component.asReactElement() : component
     }
 
     asReactElement(){
@@ -74,14 +74,14 @@ export class ReactUIElement extends ReactUIThemeBase {
         if (!this.ruiGene) {
             // ---- only pass classname and theme color when it's class defined
             view.className(this.P.className, true)
-            if (isInstanceOf(view, "ReactUIThemeBase")) {
+            if (isInstanceOf(view, ReactUIThemeBase)) {
                 (view as ReactUIThemeBase).themeColorMap = this.themeColorMap
             }
         }
         let newView = view as ReactUIThemeBase
 
         // ---- set view theme ** outside can't change inside if not default! **
-        if (isInstanceOf(view, "ReactUIThemeBase")) {
+        if (isInstanceOf(view, ReactUIThemeBase)) {
             let newView = view as ReactUIThemeBase
             newView.themeTag(this.reactUIThemeTag)
             newView.themes(this.reactUIThemes)

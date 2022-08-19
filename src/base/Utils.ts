@@ -55,14 +55,13 @@ export function range(first: number, second?: number) {
 }
 
 // ---* class type
-export function isInstanceOf(obj: any, typeName: string) {
-    const protoTypeNameChain = []
-    let protoType = Object.getPrototypeOf(obj)
-    while (protoType) {
-        protoTypeNameChain.push(protoType.constructor.name)
-        protoType = protoType.__proto__
+export function isInstanceOf(obj: any, ...types: any[]) {
+    for (let type of types) {
+        if (Object.getPrototypeOf(obj) instanceof type || obj instanceof type) {
+            return true
+        }
     }
-    return protoTypeNameChain.includes(typeName)
+    return false
 }
 
 
@@ -156,7 +155,7 @@ export function useTrigger() {
     return new Trigger(triggerValue, setTriggerValue)
 }
 
-export function useTriggerEvent(trigger: Trigger, triggerEvent: (()=>any)) {
+export function useTriggerEffect(trigger: Trigger, triggerEvent: (()=>any)) {
     const isFirstRender = IsFirstRender()
     const triggerValue = (trigger === null || trigger === undefined) ? null : trigger.value
     useEffect(() => {

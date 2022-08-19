@@ -2,37 +2,49 @@ import dts from "rollup-plugin-dts";
 import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-
+import multiInput from 'rollup-plugin-multi-input';
 
 const packageJson = require("./dist/package.json");
 
+const inputPaths = ['src/base/index.ts', 'src/component/index.ts', 'src/base/HTMLTags.ts', 'src/base/index.core.ts']
 
-const rollupOutputFunc = (inputPath, outputFile, outputType) => {
-    return [{
-        input: inputPath,
-        output: {
-          file: outputFile,
-          format: 'umd',
-          name: 'index'
-        },
-        plugins: [
-          typescript({ tsconfig: "tsconfig.json" }),
-          commonjs(),
-          nodeResolve()
-        ],
-        external: Object.keys(packageJson.dependencies)
-      },
-      {
-          input: inputPath,
-          output: [{ file: outputType, format: "es" }],
-          plugins: [dts()],
-    }]
+const outputPathMap = {
+    'src/base/index.ts': 'index.js',
+    'src/component/index.ts': 'component/index.js',
+    'src/base/HTMLTags.ts': 'tag/index.js',
+    'src/base/index.core.ts': 'core/index.js',
 }
-const rollupDefault = [].concat(
-    rollupOutputFunc('src/base/index.ts', 'dist/index.js', 'dist/index.d.ts'),
-    rollupOutputFunc('src/component/index.ts', 'dist/component/index.js', 'dist/component/index.d.ts'),
-    rollupOutputFunc('src/base/HTMLTags.ts', 'dist/tag/index.js', 'dist/tag/index.d.ts'),
-    rollupOutputFunc('src/base/index.core.ts', 'dist/core/index.js', 'dist/core/index.d.ts')
-)
+
+
+const rollupDefault = [{
+      input: inputPaths,
+      output: {
+        dir: './dist',
+        format: 'amd',
+        name: 'index'
+      },
+      plugins: [
+        typescript({ tsconfig: "tsconfig.json" }),
+        commonjs(),
+        nodeResolve(),
+        multiInput({
+            transformOutputPath: (output, input) => outputPathMap[input]
+        })
+      ],
+      external: Object.keys(packageJson.dependencies)
+},
+{
+    input: inputPaths,
+    output: {
+        dir: './dist',
+        format: "es"
+    },
+    plugins: [
+        multiInput({
+            transformOutputPath: (output, input) => outputPathMap[input]
+        }),
+        dts()
+    ]
+}]
 
 export default rollupDefault

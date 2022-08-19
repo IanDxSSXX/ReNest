@@ -20,7 +20,7 @@ class HStack extends ReactUIElement {
         for (let child of flattened(hstack.children)) {
             if (child instanceof Spacer) {
                 child.flexGrow(1)
-            } else if (isInstanceOf(child, "ReactUIWithStyle")) {
+            } else if (isInstanceOf(child, ReactUIWithStyle)) {
                 child.flexShrink(0)
                 if (alignment === "top") {
                     child.marginBottom("auto")
