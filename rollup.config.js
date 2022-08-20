@@ -20,8 +20,7 @@ const rollupDefault = [{
       input: inputPaths,
       output: {
         dir: './dist',
-        format: 'amd',
-        name: 'index'
+        format: 'esm'
       },
       plugins: [
         typescript({ tsconfig: "tsconfig.json" }),
@@ -37,7 +36,7 @@ const rollupDefault = [{
     input: inputPaths,
     output: {
         dir: './dist',
-        format: "es"
+        format: "esm"
     },
     plugins: [
         multiInput({
