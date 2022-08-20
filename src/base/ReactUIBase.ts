@@ -24,10 +24,11 @@ export default class ReactUIBase {
     asReactElement(): ReactElement<any> {
         this.beforeAsReactElement()
 
-        let children = this.children.map((child) =>
+        let children = this.children.filter(child => !isInstanceOf(child, IfClass))
+        children = children.map((child) =>
             typeof child === "number" ? `${child}` :
-            isInstanceOf(child, "ReactUIBase") ? child.asReactElement() :
-            child instanceof Array ? child.map((c)=>isInstanceOf(c, "ReactUIBase") ? c.asReactElement() : c):
+            isInstanceOf(child, ReactUIBase) ? child.asReactElement() :
+            child instanceof Array ? child.map((c)=>isInstanceOf(c, ReactUIBase) ? c.asReactElement() : c):
             child)
 
         return(
@@ -136,4 +137,34 @@ export default class ReactUIBase {
 
 }
 
+
+
+// ---* If
+class IfClass {
+    condition: boolean
+    constructor(condition: boolean) {
+        this.condition = condition
+    }
+
+    Then(element: ReactUIBase | any) {
+        if (this.condition) {
+            return element
+        } else {
+            return this
+        }
+    }
+
+    Else(element: ReactUIBase | any) {
+        return element
+    }
+
+    ElseIf(condition: boolean) {
+        this.condition = condition
+        return this
+    }
+}
+
+export function If(condition: boolean) {
+    return new IfClass(condition)
+}
 

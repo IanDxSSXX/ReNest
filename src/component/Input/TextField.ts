@@ -1,7 +1,7 @@
 import {useSpring} from "@react-spring/web";
 import {MutableRefObject, useEffect, useRef} from "react";
 import {ReactUIElement, RUIProp} from "../../base/ReactUIElement";
-import {pixelToInt, useRUIState, useTrigger, useTriggerEvent} from "../../base/Utils";
+import {pixelToInt, useRUIState, useTrigger, useTriggerEffect} from "../../base/Utils";
 import ZStack from "../Container/ZStack";
 import {Input} from "../../base/HTMLTags"
 import AnimatedDiv from "../Other/Spring";
@@ -42,7 +42,7 @@ export class TextField extends ReactUIElement {
         const fontSize = textField.S.fontSize ?? "15px"
         const variantUnderlined = this.C.variant === "underlined"
 
-        useTriggerEvent(textTrigger, () => {
+        useTriggerEffect(textTrigger, () => {
             !!this.C.onChange && this.C.onChange(textRef.current)
         })
         const styles = useSpring({

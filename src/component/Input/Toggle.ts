@@ -3,7 +3,7 @@ import {Div} from "../../base/HTMLTags";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/Spring";
 import {useSpring} from "@react-spring/web";
-import {RUIState, useRUIState, useTrigger, useTriggerEvent} from "../../base/Utils";
+import {RUIState, useRUIState, useTrigger, useTriggerEffect} from "../../base/Utils";
 import {ReactUIThemeColorMap} from "../../base/Interfaces";
 import {useEffect, useRef} from "react";
 
@@ -20,7 +20,7 @@ class Toggle extends ReactUIElement {
         const toggleRef = useRef(defaultValue)
         const toggleTrigger = useTrigger()
 
-        useTriggerEvent(toggleTrigger, () => {
+        useTriggerEffect(toggleTrigger, () => {
             !!this.C.onChange && this.C.onChange(toggleRef.current)
         })
 

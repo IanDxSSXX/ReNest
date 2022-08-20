@@ -1,11 +1,9 @@
-import {animated} from "@react-spring/web";
 import {ReactUIElement} from "../../base/ReactUIElement";
-import {isInstanceOf, Range, uid} from "../../base/Utils";
+import {Range, uid} from "../../base/Utils";
 import ReactUIBase from "../../base/ReactUIBase";
 import VStack from "../Container/VStack";
 import HStack from "../Container/HStack";
-import {ForEach} from "../../base/ReactUICondition";
-import Text from "./Text"
+import {ForEach} from "../../base";
 import {Div} from "../../base/HTMLTags";
 import {ReactElement} from "react";
 
@@ -49,7 +47,6 @@ class List extends ReactUIElement {
         }
 
 
-
         return listView.alignment(this.C.alignment ?? "center").spacing(this.C.spacing ?? "0px")
 
     }
@@ -66,7 +63,7 @@ class List extends ReactUIElement {
         return this.setCustomProp("alignDirection", "vertical")
     }
 
-    divider(value: "none" | "solid" | ReactUIBase | ReactElement) {
+    divider(value: "none" | "solid" | ReactUIBase | ReactElement | any) {
         return this.setCustomProp("divider", value)
     }
 
