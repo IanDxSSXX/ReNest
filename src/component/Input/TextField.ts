@@ -28,7 +28,7 @@ export class TextField extends ReactUIElement {
 
         // ---- variables
         let colors = {
-            unselected: textField.themeColor.second.light!,
+            unselected: textField.themeColor.third.dark!,
             over: textField.themeColor.second.standard!,
             selected: textField.themeColor.first.standard!,
             foreground: textField.themeColor.third.light!
@@ -47,8 +47,8 @@ export class TextField extends ReactUIElement {
         })
         const styles = useSpring({
             to:{
-                fontSize: isTyping.value ? pixelToInt(fontSize)*7/10 : pixelToInt(fontSize),
-                bottom: isTyping.value  ? "50%" : "0"
+                fontSize: isTyping.value && this.C.placeHolder ? pixelToInt(fontSize)*7/10 : pixelToInt(fontSize),
+                bottom: isTyping.value && this.C.placeHolder ? "50%" : "0"
             },
             config: { duration: 200 },
         });
@@ -74,7 +74,7 @@ export class TextField extends ReactUIElement {
 
         text
             .color(isTyping.value ? colors.selected : colors.unselected)
-            .backgroundColor(colors.foreground)
+            .backgroundColor(this.C.placeHolder ? colors.foreground: '')
             .padding(variantUnderlined ? "0px" : "3px")
             .marginLeft(variantUnderlined ? "0px" : "5px")
             .userSelect("none")
