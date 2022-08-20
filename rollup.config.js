@@ -20,8 +20,7 @@ const rollupDefault = [{
       input: inputPaths,
       output: {
         dir: './dist',
-        format: 'esm',
-        name: 'index'
+        format: 'esm'
       },
       plugins: [
         typescript({ tsconfig: "tsconfig.json" }),
