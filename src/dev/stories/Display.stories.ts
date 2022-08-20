@@ -18,9 +18,14 @@ export default {
             defaultValue: 'tertiary',
             options: ['primary', 'secondary', 'tertiary'],
             control: { type: 'radio' },
+        },
+        variant: {
+            defaultValue: 'circle',
+            options: ['line','circle'],
+            control: {type: 'radio'}
         }
     }
 }
 
-export const Progress = RUITemplate((args:any)=>RUIComponent.Progress(args.num).setColor(args.color))
+export const Progress = RUITemplate((args:any)=>RUIComponent.Progress(args.num).setColor(args.color).variant(args.variant))
 
