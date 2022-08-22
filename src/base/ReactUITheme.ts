@@ -85,7 +85,7 @@ export class ReactUIThemeBase extends ReactUIWithStyle {
         return this
     }
     themeTag(value: string) {
-        if (this.reactUIThemeTag !== globalTag) return
+        if (this.reactUIThemeTag !== globalTag) return this
         this.reactUIThemeTag = value
 
         for (let child of flattened(this.children)) {

@@ -143,7 +143,7 @@ class Progress extends ReactUIElement {
         second: "foreground",
     }
 
-    Body = ({value}:any) => {
+    Body = ({value}:any):any => {
 
 
         const variant = this.C.variant??'line';

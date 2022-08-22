@@ -93,22 +93,31 @@ const Content = RUI(() => {
     return (
         ThemeView(
             ZStack(
-            Paper().width("1000px").height("1000px"),
+            Paper()
+                .width("1000px")
+                .height("1000px"),
             VStack(
-                TopBar().padding("20px").id("6666").themeTag("tag1"),
+                TopBar()
+                    .themeTag("tag1")
+                    .padding("20px"),
                 NavigationView({
                     "": Text("welcom to react UI, click the button above to view component"),
                     "textField": TextFieldDisplay(),
                     "list": ListDisplay(),
                     "toggle": ToggleDisplay(),
                     "image": ImageDisplay(),
-                    ":abc+": (value:any) => HStack("abc   ",value),
-                    ":what[a+]": (value:any) => HStack("no   ",value),
-                    ":": (value:any) => HStack(value),
-                }).themeTag("tag2")
+                    ":abc+": (value:any) => HStack("abc",value), // regExp
+                    ":what[a+]": (value:any) => HStack("no",value), // regExp
+                    ":": (value:any) => HStack(value), // any other route
+                })
+                    .themeTag("tag2")
                 ).padding("20px")
-            ).alignmentH("leading").alignmentV("top").padding("70px")
-        ).themes({"tag1": {colors:{primary:{dark:"#AA9900"}}},
+            )
+                .alignmentH("leading")
+                .alignmentV("top")
+                .padding("70px")
+        ).themes({
+            "tag1": {colors:{primary:{dark:"#AA9900"}}},
             "tag2": {colors:{primary:{dark:"#00AA88"}}}
         })
     )

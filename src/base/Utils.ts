@@ -135,12 +135,14 @@ export function objectEquals(obj1: any, obj2: any) {
 export class Trigger {
     private readonly _value: boolean
     private readonly setProp: any
+    props: any = {}
 
     get value() {
         return this._value
     }
 
-    trigger() {
+    trigger(props?: any) {
+        this.props = props
         this.setProp(!this._value)
     }
 
@@ -155,12 +157,12 @@ export function useTrigger() {
     return new Trigger(triggerValue, setTriggerValue)
 }
 
-export function useTriggerEffect(trigger: Trigger, triggerEvent: (()=>any)) {
+export function useTriggerEffect(trigger: Trigger, triggerEvent: ((props: any)=>any)) {
     const isFirstRender = IsFirstRender()
-    const triggerValue = (trigger === null || trigger === undefined) ? null : trigger.value
+    const triggerValue = !trigger ? null : trigger.value
     useEffect(() => {
         if (triggerValue !== null && !isFirstRender) {
-            triggerEvent()
+            return triggerEvent(trigger.props)
         }
     }, [triggerValue])
 }
