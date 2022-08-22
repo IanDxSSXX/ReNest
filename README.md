@@ -1,5 +1,5 @@
 # 🪶 ReactUI
-A simple react add-on to write React like SwiftUI.
+A simple react add-on to write React just like SwiftUI.
 
 ## 📦 Install
 `npm install @iandx/reactui`
@@ -43,7 +43,7 @@ Here is an example to create a list of buttons using jsx and reactui
 Except the way ReactUI sets props, everything is the same with React functions.
 
 Basically every prop in React and CSSProperty can be used in ReactUI as 'dot' function, and IDEs will autocomplete for you!
-(if there's some specific properties from third-party components, use `setProp(key, value)`to set additional color)
+(if there's some specific properties from third-party components, use `setProp(key, value)`to set additional prop)
 ```typescript
 const MyText = RUI(() =>
     Text("test")
