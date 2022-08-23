@@ -16,7 +16,7 @@ class Select extends ReactUIElement {
     isGroup(arr: Array<any>){
         return arr[0] instanceof Object
     }
-    Body = ({arr, defaultValue}:any)=>{
+    Body = ({arr, defaultValue}:any):any =>{
         const selectedValue = useRUIState(defaultValue)
         const showOptions = useRUIState(false)
         const hoverState = useRUIState(-1)

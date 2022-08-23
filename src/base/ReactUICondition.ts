@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 
 // ---* condition
 export function ConditionView(variable: any, conditionMap: any) {
-    return conditionMap[variable] ?? ""
+    return conditionMap[variable] ?? (conditionMap["[default]"] ?? "")
 }
 
 // ---* for each
