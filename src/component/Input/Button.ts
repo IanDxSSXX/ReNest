@@ -48,6 +48,6 @@ class Button extends ReactUIElement {
     disable(value: boolean=true) {return this}
 }
 
-export default function (title: string) {
+export default function (title: string|number) {
     return new Button({title})
 }

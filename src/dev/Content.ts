@@ -72,21 +72,27 @@ const TextFieldDisplay = RUI(({wrapper}:any) => {
     )
 })
 
-const TopBar = RUI(() => {
-    return (
-        ZStack(
-            Paper().width("600px").height("80px"),
-            HStack(
-                Button("home").onClick(NavigateTo("/")),
-                Button("text field").onClick(NavigateTo("/textField")),
-                Button("list").onClick(NavigateTo("/list")),
-                Button("toggle").onClick(NavigateTo("/toggle")),
-                Button("image").onClick(NavigateTo("/image")),
-                Button("::::").onClick(NavigateTo("/12839")),
-            ).spacing("10px")
-        )
+const TopBar = RUI(() =>
+    ZStack(
+        Paper()
+            .width("600px")
+            .height("80px"),
+        HStack(
+            Button("home")
+                .onClick(NavigateTo("/")),
+            Button("text field")
+                .onClick(NavigateTo("/textField")),
+            Button("list")
+                .onClick(NavigateTo("/list")),
+            Button("toggle")
+                .onClick(NavigateTo("/toggle")),
+            Button("image")
+                .onClick(NavigateTo("/image")),
+            Button("::::")
+                .onClick(NavigateTo("/12839")),
+        ).spacing("10px")
     )
-})
+)
 
 
 const Content = RUI(() => {
@@ -101,7 +107,7 @@ const Content = RUI(() => {
                     .themeTag("tag1")
                     .padding("20px"),
                 NavigationView({
-                    "": Text("welcom to react UI, click the button above to view component"),
+                    "": Text("welcome to react UI, click the button above to view component"),
                     "textField": TextFieldDisplay(),
                     "list": ListDisplay(),
                     "toggle": ToggleDisplay(),
