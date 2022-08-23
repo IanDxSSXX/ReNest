@@ -229,5 +229,5 @@ export default function (title: string) {
   - [x] TextField
   - [x] List
   - [x] pogress
-  - [ ] Select
+  - [x] Select
   - [ ] AutoComplete
