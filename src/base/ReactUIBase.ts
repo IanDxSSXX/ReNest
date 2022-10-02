@@ -6,13 +6,15 @@ import {
     MutableRefObject,
     createElement
 } from "react";
-import {isInstanceOf, uid} from "./Utils";
+import {uid} from "./Utils";
+
 
 export default class ReactUIBase {
     protected elementTag: any = null
     elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
     customProps: any = {}
     children: any[]
+    IAmReactUI = true
     private _element: HTMLElement | undefined | null
 
     constructor(elementTag: any, ...children: any[]) {
@@ -21,23 +23,21 @@ export default class ReactUIBase {
         this.className(`RUI-${this.constructor.name}`)
     }
 
-    asReactElement(): ReactElement<any> {
+    asReactElement(): ReactElement {
         this.beforeAsReactElement()
 
-        let children = this.children.filter(child => !isInstanceOf(child, IfClass))
-        children = children.map((child) =>
-            typeof child === "number" ? `${child}` :
-            isInstanceOf(child, ReactUIBase) ? child.asReactElement() :
-            child instanceof Array ? child.map((c)=>isInstanceOf(c, ReactUIBase) ? c.asReactElement() : c):
+        let children = this.children
+        children = children
+            .map((child) =>
+            child.IAmReactUI??false ? child.asReactElement() :
+            child instanceof Array ? child.map((c)=>c.IAmReactUI??false ? c.asReactElement() : c):
             child)
 
-        return(
-            createElement(
+        return createElement(
                 this.elementTag,
                 this.elementProps,
                 ...children
             )
-        )
     }
 
     // ---* set props
@@ -46,13 +46,13 @@ export default class ReactUIBase {
         return this
     }
 
-    setProp(key: keyof (InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement>) | any, value: any) {
-        this.elementProps[key] = value
+    setProp(key: keyof (InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement>) | any, value: any, willSet=true) {
+        if (willSet) this.elementProps[key] = value
         return this
     }
 
-    setCustomProp(key: string, value: any) {
-        this.customProps[key] = value
+    setCustomProp(key: string, value: any, willSet=true) {
+        if (willSet) this.customProps[key] = value
         return this
     }
 
@@ -133,38 +133,4 @@ export default class ReactUIBase {
 
     // ---- hook
     beforeAsReactElement() {}
-
-
 }
-
-
-
-// ---* If
-class IfClass {
-    condition: boolean
-    constructor(condition: boolean) {
-        this.condition = condition
-    }
-
-    Then(element: ReactUIBase | any) {
-        if (this.condition) {
-            return element
-        } else {
-            return this
-        }
-    }
-
-    Else(element: ReactUIBase | any) {
-        return element
-    }
-
-    ElseIf(condition: boolean) {
-        this.condition = condition
-        return this
-    }
-}
-
-export function If(condition: boolean) {
-    return new IfClass(condition)
-}
-

@@ -1,5 +1,5 @@
 import {CSSProperties} from "react";
-import {flattened, isInstanceOf} from "./Utils";
+import {flattened} from "./Utils";
 import ReactUIBase from "./ReactUIBase";
 import {defaultReactUITheme, defaultReactUIThemeFont, globalTag} from "./Defaults";
 import {
@@ -19,7 +19,7 @@ class ThemeView extends ReactUIBase {
 
     setChildrenTheme() {
         for (let child of this.children) {
-            if (isInstanceOf(child, ReactUIThemeBase)) {
+            if ((child as any).IAmReactUIThemeBase??false) {
                 child.themes(this.reactUIThemes)
             }
         }
@@ -41,6 +41,7 @@ class ThemeView extends ReactUIBase {
 
 
 export class ReactUIThemeBase extends ReactUIWithStyle {
+    IAmReactUIThemeBase = true
     reactUIThemeTag: string = globalTag
     reactUIThemes: ReactUIThemeMap = {}
     themeColorMap: ReactUIThemeColorMap = {}
@@ -78,7 +79,7 @@ export class ReactUIThemeBase extends ReactUIWithStyle {
         }
         this.reactUIThemes = {...this.reactUIThemes, ...reactUIThemes}
         for (let child of flattened(this.children)) {
-            if (isInstanceOf(child, ReactUIThemeBase)) {
+            if ((child as any).IAmReactUIThemeBase??false) {
                 child.themes(this.reactUIThemes)
             }
         }
@@ -89,7 +90,7 @@ export class ReactUIThemeBase extends ReactUIWithStyle {
         this.reactUIThemeTag = value
 
         for (let child of flattened(this.children)) {
-            if (isInstanceOf(child, ReactUIThemeBase)) {
+            if ((child as any).IAmReactUIThemeBase??false) {
                     child.themeTag(value)
             }
         }

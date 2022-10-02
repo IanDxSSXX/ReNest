@@ -1,6 +1,7 @@
 import {ReactUIElement} from "../../base/ReactUIElement";
 import {Div} from "../../base/HTMLTags";
 import {flattened} from "../../base/Utils";
+import ReactUIWithStyle from "../../base/ReactUIWithStyle";
 
 class ZStack extends ReactUIElement {
     Body = ({children}:any) => {
@@ -14,9 +15,11 @@ class ZStack extends ReactUIElement {
             .justifyItems(this.C.alignmentH ?? "center")
 
         for (let child of flattened(zstack.children)) {
-            child
-                .position("relative")
-                .gridArea("1 / 1/ 1 / 1")
+            if (child.IAmReactUIWithStyle??false) {
+                child
+                    .position("relative")
+                    .gridArea("1 / 1/ 1 / 1")
+            }
         }
 
         return zstack

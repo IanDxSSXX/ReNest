@@ -1,12 +1,13 @@
 import ReactUIBase from "./ReactUIBase";
 import {Route, Routes, useNavigate, useParams} from "react-router-dom";
-import {isInstanceOf} from "./Utils";
 import {ReactUIThemeBase} from "./ReactUITheme";
 import {Div} from "./HTMLTags";
 import {createElement, ReactElement} from "react";
+import {RUIFragment} from "./ReactUIWrapper";
+
 
 export interface PathRoutes {
-    [key: string]: ReactUIBase | ((value: string) => ReactUIBase | ReactElement) | ReactElement
+    [key: string]: (value?: string) => (ReactUIBase | ReactElement)
 }
 
 class NavigationView extends ReactUIThemeBase {
@@ -24,7 +25,7 @@ class NavigationView extends ReactUIThemeBase {
             if (path.startsWith(":")) {
                 regexNames.push(path)
             } else {
-                const newRoute = new NavigationRoute(this.pathRoutes[path] as (ReactUIBase | ReactElement),
+                const newRoute = new NavigationRoute(this.pathRoutes[path] as (() => (ReactUIBase | ReactElement)),
                     path, this.reactUIThemeTag, this.reactUIThemes)
                 this.children.push(newRoute)
             }
@@ -49,15 +50,16 @@ class NavigationView extends ReactUIThemeBase {
 }
 
 export class NavigationRoute extends ReactUIBase {
-    constructor(element: ReactUIBase | ReactElement, path: string, reactUIThemeTag: any, reactUIThemes: any) {
+    constructor(elementFunc: () => (ReactUIBase | ReactElement), path: string, reactUIThemeTag: any, reactUIThemes: any) {
         super(Route)
         function Element() {
-            if (isInstanceOf(element, ReactUIThemeBase)) {
+            let element = elementFunc()
+            if ((element as any).IAmReactUIThemeBase??false) {
                 (element as ReactUIThemeBase).themeTag(reactUIThemeTag);
                 (element as ReactUIThemeBase).themes(reactUIThemes)
             }
 
-            return isInstanceOf(element, ReactUIBase) ? (element as ReactUIThemeBase).asReactElement() : element as ReactElement
+            return ((element as any).IAmReactUI??false) ? (element as ReactUIThemeBase).asReactElement() : element as ReactElement
         }
 
         this.setProps({
@@ -68,7 +70,7 @@ export class NavigationRoute extends ReactUIBase {
 }
 
 export class NavigationRouteMatchable extends ReactUIBase {
-    constructor(regexPathRoutes: {[key: string]: ((value: string) => ReactUIBase | ReactElement)}, withSubPath: boolean,
+    constructor(regexPathRoutes: {[key: string]: ((value: string) => (ReactUIBase | ReactElement))}, withSubPath: boolean,
                 reactUIThemeTag: any, reactUIThemes: any) {
         super(Route)
 
@@ -82,14 +84,17 @@ export class NavigationRouteMatchable extends ReactUIBase {
                     break
                 }
             }
-            let element = matchedName === null ? Div() : regexPathRoutes[matchedName](value ?? "")
+            let element: any = matchedName === null ? RUIFragment() : regexPathRoutes[matchedName]
+            if (element instanceof Function) {
+                element = element(value ?? "")
+            }
 
-            if (isInstanceOf(element, ReactUIThemeBase)) {
+            if (element.IAmReactUIThemeBase??false) {
                 (element as ReactUIThemeBase).themeTag(reactUIThemeTag);
                 (element as ReactUIThemeBase).themes(reactUIThemes)
             }
 
-            return isInstanceOf(element, ReactUIBase) ? (element as ReactUIBase).asReactElement() : element as ReactElement
+            return (element.IAmReactUI??false) ? (element as ReactUIBase).asReactElement() : element as ReactElement
         }
 
         this.setProps({

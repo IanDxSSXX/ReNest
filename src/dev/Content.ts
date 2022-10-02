@@ -5,7 +5,7 @@ import {
     useRUIState,
     range,
     RUI,
-    ThemeView
+    ThemeView, ConditionView
 } from "../base";
 import {
     Button,
@@ -96,8 +96,14 @@ const TopBar = RUI(() =>
 
 
 const Content = RUI(() => {
+    let a = false
+    let b = false
     return (
         ThemeView(
+            ConditionView(a,{
+                hh: () => Text("Fsf")
+
+            }).height("50px"),
             ZStack(
             Paper()
                 .width("1000px")
@@ -107,11 +113,11 @@ const Content = RUI(() => {
                     .themeTag("tag1")
                     .padding("20px"),
                 NavigationView({
-                    "": Text("welcome to react UI, click the button above to view component"),
-                    "textField": TextFieldDisplay(),
-                    "list": ListDisplay(),
-                    "toggle": ToggleDisplay(),
-                    "image": ImageDisplay(),
+                    "": () => Text("welcome to react UI, click the button above to view component"),
+                    "textField": () => TextFieldDisplay(),
+                    "list": () => ListDisplay(),
+                    "toggle": () => ToggleDisplay(),
+                    "image": () => ImageDisplay(),
                     ":abc+": (value:any) => HStack("abc",value), // regExp
                     ":what[a+]": (value:any) => HStack("no",value), // regExp
                     ":": (value:any) => HStack(value), // any other route
@@ -130,6 +136,26 @@ const Content = RUI(() => {
 })
 
 
+const HH = RUI(({aa}: { aa:string }) => {
+    return Text(aa)
+})
+
+const saHH = RUI(() => {
+    return Text("sf")
+})
 
 
-export default Content
+const ContentTest = RUI(() => {
+    let a = false
+
+    return VStack(
+        Text("S"),
+        HH({aa: "s"}),
+    )
+})
+
+
+
+// export default Content
+// export default ContentTest
+export default ContentTest

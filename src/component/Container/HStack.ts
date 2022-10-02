@@ -1,7 +1,7 @@
 import {ReactUIElement} from "../../base/ReactUIElement";
 import {Div} from "../../base/HTMLTags";
 import {Spacer} from "../Other/Spacer";
-import {flattened, isInstanceOf} from "../../base/Utils";
+import {flattened} from "../../base/Utils";
 import ReactUIBase from "../../base/ReactUIBase";
 import ReactUIWithStyle from "../../base/ReactUIWithStyle";
 
@@ -20,7 +20,7 @@ class HStack extends ReactUIElement {
         for (let child of flattened(hstack.children)) {
             if (child instanceof Spacer) {
                 child.flexGrow(1)
-            } else if (isInstanceOf(child, ReactUIWithStyle)) {
+            } else if (child.IAMReactUIWithStyle ?? false) {
                 child.flexShrink(0)
                 if (alignment === "top") {
                     child.marginBottom("auto")

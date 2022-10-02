@@ -1,3 +1,4 @@
+import {CSSProperties} from "react";
 
 export interface ReactUIThemeColorMap {
     first?: keyof ReactUIThemeColor,
@@ -32,3 +33,8 @@ export interface ReactUITheme {
 }
 
 export interface ReactUIThemeMap { [key: string]: ReactUITheme }
+
+
+export interface StyleSheet {
+    [key: string]: CSSProperties
+}

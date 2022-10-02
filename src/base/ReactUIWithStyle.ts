@@ -10,6 +10,7 @@ import {Property} from "csstype";
 import ReactUIBase from "./ReactUIBase";
 
 export default class ReactUIWithStyle<TLength = (string & {}) | 0, TTime = string & {}> extends ReactUIBase {
+    IAmReactUIWithStyle = true
     // ---* Events from react/ReactUIHH.d.tx -> DOMAttributes
     // ---- Clipboard Events
     onCopy(value: ClipboardEventHandler) {

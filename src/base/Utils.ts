@@ -9,7 +9,7 @@ export function IsFirstRender() {
 }
 
 // ---* State
-export class RUIState {
+export class RUIState<T> {
     private readonly _value: any
     private readonly setProp: any
     set value(newProp: any) {
@@ -18,9 +18,8 @@ export class RUIState {
     get value() {
         return this._value
     }
-
-    setState(value: any, callback: ()=>any) {
-        this.setProp(value, callback)
+    setValue(func: (pre: T)=>T) {
+        this.setProp(func)
     }
     constructor(prop: any, setProp: any) {
         this.setProp = setProp
@@ -28,9 +27,9 @@ export class RUIState {
     }
 }
 
-export function useRUIState(value: any) {
-    let [prop, setProp] = useState(value)
-    return new RUIState(prop, setProp)
+export function useRUIState<T>(value?: any) {
+    let [prop, setProp] = useState<T>(value)
+    return new RUIState<T>(prop, setProp)
 }
 
 // ---* Range
@@ -52,21 +51,6 @@ export class Range {
 }
 export function range(first: number, second?: number) {
     return new Range(first, second)
-}
-
-// ---* class type
-export function isInstanceOf(obj: any, ...types: any[]) {
-    for (let type of types) {
-        if (Object.getPrototypeOf(obj) instanceof type || obj instanceof type) {
-            return true
-        }
-    }
-    return false
-}
-
-
-export interface StyleSheet {
-    [key: string]: CSSProperties
 }
 
 // ---* color utils

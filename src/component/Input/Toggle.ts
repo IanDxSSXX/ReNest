@@ -6,6 +6,10 @@ import {useSpring} from "@react-spring/web";
 import {RUIState, useRUIState, useTrigger, useTriggerEffect} from "../../base/Utils";
 import {ReactUIThemeColorMap} from "../../base/Interfaces";
 import {useEffect, useRef} from "react";
+import ReactUIBase from "../../base/ReactUIBase";
+import {MdCheck} from "react-icons/md";
+import Paper from "../Displayer/Paper";
+import {RUITag} from "../../base";
 
 
 class Toggle extends ReactUIElement {
@@ -13,7 +17,26 @@ class Toggle extends ReactUIElement {
         first: "secondary",
         second: "foreground"
     }
-    Body = ({defaultValue}: any): any => {
+
+    Check = ({defaultValue}: any): ReactUIBase => {
+        const toggleBack = Paper()
+        const toggleFront = RUITag(MdCheck)()
+        const toggle = ZStack(
+            toggleBack,
+            toggleFront
+        ).registerBy(this)
+
+        toggleBack
+            .width(this.S.width ?? "40px")
+            .height(this.S.height ?? "40px")
+
+        toggleFront
+            .fontSize(this.S.fontWeight ?? "15px")
+
+        return toggle
+    }
+
+    Toggle = ({defaultValue}: any): any => {
         const toggleBack = Div()
         const toggleFront = AnimatedDiv()
         const toggleButton = AnimatedDiv()
@@ -84,11 +107,18 @@ class Toggle extends ReactUIElement {
         return toggle
     }
 
+    Body = ({defaultValue}: any): any => {
+        return (this.C.toggleType ?? "toggle") === "toggle" ? this.Toggle({defaultValue}) : this.Check({defaultValue})
+    }
+
     @RUIProp
     disable(value: boolean=true) {return this}
 
     @RUIProp
     onChange(value: any) {return this}
+
+    @RUIProp
+    toggleType(value: "toggle"|"check") {return this}
 
 }
 
