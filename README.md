@@ -154,7 +154,7 @@ const MyPage = RUI(() =>
     )
 )
 ```
-### ThemeView
+### ThemeProvider
 A pretty strong view wrapper to manage all your customized components, 
 the main concepts is: "5 colors are enough for a theme!"
 
@@ -205,7 +205,7 @@ class Button extends ReactUIElement {
         mouseState.value = "out"
       })
 
-    if (this.C.disable ?? false) {
+    if (this.C.disable) {
       button.pointerEvents("none").opacity("0.5")
     }
 

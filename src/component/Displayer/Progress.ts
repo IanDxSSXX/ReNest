@@ -1,10 +1,9 @@
 import {useSpring} from "@react-spring/web";
-import {ReactUIElement} from "../../base/ReactUIElement";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
 import ZStack from "../Container/ZStack"
 import AnimatedDiv from "../Other/Spring";
-import {ReactUIThemeColorMap} from "../../base/Interfaces";
-import {RUIProp} from "../../base/ReactUIElement";
-import {Div} from "../../base/HTMLTags"
+import {RUIProp} from "../../base/element/ReactUIElement";
+import {Div} from "../../base/utils/HTMLTags"
 import {useEffect, useRef} from "react";
 import {useRUIState} from "../../base";
 import {VStack} from "../index";
@@ -138,10 +137,6 @@ const CircleVariant = (value:number, wrapper:any) => {
     return progress
 }
 class Progress extends ReactUIElement {
-    themeColorMap: ReactUIThemeColorMap = {
-        first: "tertiary",
-        second: "foreground",
-    }
 
     Body = ({value}:any):any => {
 

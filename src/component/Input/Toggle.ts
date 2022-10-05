@@ -1,21 +1,21 @@
-import {ReactUIElement, RUIProp} from "../../base/ReactUIElement";
-import {Div} from "../../base/HTMLTags";
+import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
+import {Div} from "../../base/utils/HTMLTags";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/Spring";
 import {useSpring} from "@react-spring/web";
-import {RUIState, useRUIState, useTrigger, useTriggerEffect} from "../../base/Utils";
-import {ReactUIThemeColorMap} from "../../base/Interfaces";
+import {RUIState, useRUIState, useTrigger, useTriggerEffect} from "../../base/utils/Utils";
 import {useEffect, useRef} from "react";
-import ReactUIBase from "../../base/ReactUIBase";
+import ReactUIBase from "../../base/core/ReactUIBase";
 import {MdCheck} from "react-icons/md";
 import Paper from "../Displayer/Paper";
 import {RUITag} from "../../base";
 
 
 class Toggle extends ReactUIElement {
-    themeColorMap: ReactUIThemeColorMap = {
-        first: "secondary",
-        second: "foreground"
+    defaultTheme = {
+        bg: "#AA00AA",
+        border: "#FFAAFF",
+        fg: "#00AAFF"
     }
 
     Check = ({defaultValue}: any): ReactUIBase => {
@@ -66,21 +66,21 @@ class Toggle extends ReactUIElement {
             .width(toggle.S.width)
             .height(`calc(${toggle.S.height} * 3 / 5)`)
             .borderRadius(`calc(${toggleBack.S.height} / 2)`)
-            .backgroundColor(toggle.themeColor.second.standard!)
+            .backgroundColor(this.theme.bg)
 
         toggleFront
             .width("100%")
             .height(toggleBack.S.height)
             .borderRadius(`calc(${toggleBack.S.height} / 2)`)
-            .backgroundColor(toggle.themeColor.first.light!)
+            .backgroundColor(this.theme.bg)
 
 
         toggleButton
             .width(toggle.S.height)
             .height(toggle.S.height)
             .borderRadius(`calc(${toggle.S.height} / 2)`)
-            .backgroundColor(toggleRef.current ? toggle.themeColor.first!.standard! :
-                toggle.themeColor.second.dark!)
+            .backgroundColor(toggleRef.current ? this.theme.bg :
+                this.theme.bg)
 
         const duration = 150
         const buttonStyles = useSpring({
@@ -100,7 +100,7 @@ class Toggle extends ReactUIElement {
         toggleFront
             .style(frontStyles)
 
-        if (this.C.disable ?? false) {
+        if (this.C.disable) {
             toggle.pointerEvents("none").opacity("0.5")
         }
 

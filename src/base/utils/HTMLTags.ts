@@ -1,4 +1,3 @@
-import {ReactUIThemeBase} from "./ReactUITheme";
 import {RUITag} from "./ReactUIWrapper";
 
 // ----
@@ -6,7 +5,7 @@ export function Div(...children: any[]) {
     return RUITag("div")(...children)
 }
 
-// -----
+// ---- heading
 export function H1(...children: any[]) {
     return RUITag("h1")(...children)
 }
@@ -124,5 +123,3 @@ export function Td(...children: any[]) {
 export function Th(...children: any[]) {
     return RUITag("th")(...children)
 }
-
-

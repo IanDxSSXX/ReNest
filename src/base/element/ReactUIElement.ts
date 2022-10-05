@@ -1,10 +1,10 @@
-import {filteredObject} from "./Utils";
-import {createElement, CSSProperties, DOMAttributes, ReactElement} from "react";
-import {ReactUIThemeBase} from "./ReactUITheme";
-import ReactUIBase from "./ReactUIBase";
-import {isFragment, RUITag} from "./ReactUIWrapper";
+import {filteredObject} from "../utils/Utils";
+import {createElement, ReactElement} from "react";
+import {ReactUITheme} from "../theme/ReactUITheme";
+import ReactUIBase from "../core/ReactUIBase";
+import {RUITag} from "../utils/ReactUIWrapper";
 import {ErrorBoundary} from 'react-error-boundary'
-import {ReactUIHelper} from "./ReactUIHelper";
+import {ReactUIHelper} from "../utils/ReactUIHelper";
 
 
 export function RUIProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -17,9 +17,9 @@ export function RUIProp(target: any, propertyKey: string, descriptor: PropertyDe
     }
 }
 
-export class ReactUIElement extends ReactUIThemeBase {
+export class ReactUIElement extends ReactUITheme {
     props: any
-    Body?: (...props: any[]) => ReactUIBase | ReactElement
+    Body?: (props: any, context: any) => ReactUIBase | ReactElement
     ruiGene: boolean = false
 
     constructor(props?: any) {
@@ -36,13 +36,13 @@ export class ReactUIElement extends ReactUIThemeBase {
         if (!wrapper.Body) {
             ReactUIHelper.error("ReactUIElement must have a Body property, which returns the main")
         }
-        const component = wrapper.Body!(wrapper.props) as any
+        const component = wrapper.Body!(wrapper.props, wrapper.content) as any
 
         if (!component) {
             ReactUIHelper.error("ReactUIElement must have a proper return, current is null")
         }
 
-        if (wrapper.ruiGene && (component.IAmReactUI??false)) {
+        if (component.IAmReactUI) {
             component.registerBy(wrapper)
         }
 
@@ -60,13 +60,12 @@ export class ReactUIElement extends ReactUIThemeBase {
         return  createElement(
             ErrorBoundary,
             {FallbackComponent: ErrorFallBack} as any,
-            (component.IAmReactUI??false) ? component.asReactElement() : component
+            (component.IAmReactUI) ? component.asReactElement() : component
         )
     }
 
-
     asReactElement(){
-        let wrapperProps = {wrapper: this, ruiGene:this.ruiGene}
+        let wrapperProps = {wrapper: this}
         if (this.P.key) {
             wrapperProps = {...wrapperProps, ...{key: this.P.key}}
         }
@@ -76,40 +75,15 @@ export class ReactUIElement extends ReactUIThemeBase {
                 wrapperProps
             )
     }
-
-    // ---- register
-    registerViewStyles(view: ReactUIBase, ...styleNames: (keyof CSSProperties)[]) {
-        for (let styleName of styleNames) {
-            if (this.elementProps.style[styleName]) {
-                view.elementProps.style[styleName] = this.elementProps.style[styleName]
-            }
-        }
-        return this
-    }
-
-    registerViewProps(view: ReactUIBase, ...propNames: (keyof DOMAttributes<any>)[]) {
-        for (let propName of propNames) {
-            if (this.elementProps[propName]) {
-                view.elementProps[propName] = this.elementProps[propName]
-            }
-        }
-        return this
-    }
     
     registerView(view: ReactUIBase) {
-        if(isFragment(view)) return this
         if (!this.ruiGene) {
-            // ---- only pass classname and theme color when it's class defined
+            // ---- only pass classname when it's class defined
             view.className(this.P.className, true)
-            if ((view as any).IAmReactUIThemeBase??false) {
-                (view as ReactUIThemeBase).themeColorMap = this.themeColorMap
-            }
         }
         // ---- set view theme ** outside can't change inside if not default! **
-        if ((view as any).IAmReactUIThemeBase??false) {
-            let newView = view as ReactUIThemeBase
-            newView.themeTag(this.reactUIThemeTag)
-            newView.themes(this.reactUIThemes)
+        if ((view as any).IAmReactUITheme) {
+            this.passDownTheme(view as ReactUITheme)
         }
 
         // ---- react only use key in React.createElement, so no need for pass down

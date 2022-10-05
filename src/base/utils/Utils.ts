@@ -10,7 +10,7 @@ export function IsFirstRender() {
 
 // ---* State
 export class RUIState<T> {
-    private readonly _value: any
+    private readonly _value: T
     private readonly setProp: any
     set value(newProp: any) {
         this.setProp(newProp)
@@ -21,13 +21,13 @@ export class RUIState<T> {
     setValue(func: (pre: T)=>T) {
         this.setProp(func)
     }
-    constructor(prop: any, setProp: any) {
+    constructor(prop: T, setProp: any) {
         this.setProp = setProp
         this._value = prop
     }
 }
 
-export function useRUIState<T>(value?: any) {
+export function useRUIState<T>(value: T) {
     let [prop, setProp] = useState<T>(value)
     return new RUIState<T>(prop, setProp)
 }

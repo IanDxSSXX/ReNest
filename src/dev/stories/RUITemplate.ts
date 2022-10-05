@@ -1,4 +1,4 @@
-import ReactUIBase from "../../base/ReactUIBase";
+import ReactUIBase from "../../base/core/ReactUIBase";
 import {ComponentStory} from "@storybook/react";
 
 

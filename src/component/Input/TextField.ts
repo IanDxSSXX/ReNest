@@ -1,18 +1,18 @@
 import {useSpring} from "@react-spring/web";
 import {MutableRefObject, useEffect, useRef} from "react";
-import {ReactUIElement, RUIProp} from "../../base/ReactUIElement";
-import {pixelToInt, useRUIState, useTrigger, useTriggerEffect} from "../../base/Utils";
+import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
+import {pixelToInt, useRUIState, useTrigger, useTriggerEffect} from "../../base/utils/Utils";
 import ZStack from "../Container/ZStack";
-import {Input} from "../../base/HTMLTags"
+import {Input} from "../../base/utils/HTMLTags"
 import AnimatedDiv from "../Other/Spring";
 import Text from "../Displayer/Text";
-import {ReactUIThemeColorMap} from "../../base/Interfaces";
 
 
 export class TextField extends ReactUIElement {
-    themeColorMap: ReactUIThemeColorMap = {
-        "second": "background",
-        "third": "foreground"
+    defaultTheme = {
+            bg: "#AA00AA",
+            border: "#FFAAFF",
+            fg: "#00AAFF"
     }
 
 
@@ -23,15 +23,15 @@ export class TextField extends ReactUIElement {
         const animatedDiv = AnimatedDiv(text).ruiClassName("AnimatedDiv")
         const textField = ZStack(input, animatedDiv).registerBy(this)
 
-        this.registerViewStyles(input, "height", "width", "font", "fontWeight", "fontSize", "fontFamily")
-        this.registerViewStyles(animatedDiv, "font", "fontWeight", "fontSize", "fontFamily")
+        // this.registerViewStyles(input, "height", "width", "font", "fontWeight", "fontSize", "fontFamily")
+        // this.registerViewStyles(animatedDiv, "font", "fontWeight", "fontSize", "fontFamily")
 
         // ---- variables
         let colors = {
-            unselected: textField.themeColor.third.dark!,
-            over: textField.themeColor.second.standard!,
-            selected: textField.themeColor.first.standard!,
-            foreground: textField.themeColor.third.light!
+            unselected: this.theme.bg,
+            over: this.theme.bg,
+            selected: this.theme.bg,
+            foreground: this.theme.bg
         }
         const inputElement = useRef()
         const textFieldElement = useRef()
@@ -99,7 +99,7 @@ export class TextField extends ReactUIElement {
                 isTyping.value = true
             })
 
-        if (this.C.disable ?? false) {
+        if (this.C.disable) {
             textField.pointerEvents("none").opacity("0.5")
             input.borderColor(colors.over)
             text.color(colors.over)
@@ -107,7 +107,7 @@ export class TextField extends ReactUIElement {
 
         // ---- detect click outside
         useEffect(() => {
-            if (this.C.disable ?? false) {
+            if (this.C.disable) {
                 return
             }
             let clickOutsideHandler = (event: any) => {
@@ -127,10 +127,10 @@ export class TextField extends ReactUIElement {
 
         // ---- render at the first time
         useEffect(() => {
-            if (this.C.autoFocus ?? false) {
+            if (this.C.autoFocus) {
                 (inputElement.current as any).focus()
-                isTyping.value = true
-                input.element.style.borderColor = colors.selected
+                isTyping.value = true;
+                (inputElement.current as any).borderColor = colors.selected
             }
         }, [])
 

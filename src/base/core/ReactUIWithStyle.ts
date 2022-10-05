@@ -1,7 +1,8 @@
 import {
     AnimationEventHandler,
     ClipboardEventHandler,
-    CompositionEventHandler, CSSProperties, DOMAttributes, DragEventHandler,
+    CompositionEventHandler,
+    DragEventHandler,
     FocusEventHandler,
     FormEventHandler, KeyboardEventHandler, MouseEventHandler, PointerEventHandler,
     ReactEventHandler, TouchEventHandler, TransitionEventHandler, UIEventHandler, WheelEventHandler
@@ -11,6 +12,7 @@ import ReactUIBase from "./ReactUIBase";
 
 export default class ReactUIWithStyle<TLength = (string & {}) | 0, TTime = string & {}> extends ReactUIBase {
     IAmReactUIWithStyle = true
+
     // ---* Events from react/ReactUIHH.d.tx -> DOMAttributes
     // ---- Clipboard Events
     onCopy(value: ClipboardEventHandler) {

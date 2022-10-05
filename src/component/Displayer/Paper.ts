@@ -1,21 +1,21 @@
-import {ReactUIElement} from "../../base/ReactUIElement";
-import {Div} from "../../base/HTMLTags";
-import {ReactUIThemeColorMap} from "../../base/Interfaces";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {Div} from "../../base/utils/HTMLTags";
 
 class Paper extends ReactUIElement {
-    themeColorMap: ReactUIThemeColorMap = {
-        "first": "foreground",
+    defaultTheme = {
+            bg: "#AA00AA",
+            border: "#FFAAFF"
     }
 
     Body = () => {
         const paper = Div().registerBy(this)
 
         return paper
-            .backgroundColor(this.themeColor.first!.light!)
+            .backgroundColor(this.theme.bg)
             .width(paper.S.width ?? "200px")
             .height(paper.S.height ?? "280px")
             .borderRadius("7px")
-            .boxShadow(`2px 2px 4px 1px ${this.themeColor.first.dark!}`)
+            .boxShadow(`2px 2px 4px 1px ${this.theme.border}`)
     }
 }
 

@@ -1,9 +1,9 @@
-import {ReactUIElement} from "../../base/ReactUIElement";
-import {Div} from "../../base/HTMLTags";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {Div} from "../../base/utils/HTMLTags";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/Spring";
 import {to, useSpring} from "@react-spring/web";
-import {pixelToInt, RUIState, useRUIState} from "../../base/Utils";
+import {pixelToInt, RUIState, useRUIState} from "../../base/utils/Utils";
 import {MdCheck} from "react-icons/md"
 import {RUITag} from "../../base";
 

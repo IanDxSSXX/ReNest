@@ -6,16 +6,14 @@ import {
     MutableRefObject,
     createElement
 } from "react";
-import {uid} from "./Utils";
 
 
 export default class ReactUIBase {
-    protected elementTag: any = null
+    IAmReactUI = true
+    protected elementTag: any
+    children: any[]
     elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
     customProps: any = {}
-    children: any[]
-    IAmReactUI = true
-    private _element: HTMLElement | undefined | null
 
     constructor(elementTag: any, ...children: any[]) {
         this.elementTag = elementTag
@@ -27,10 +25,9 @@ export default class ReactUIBase {
         this.beforeAsReactElement()
 
         let children = this.children
-        children = children
             .map((child) =>
-            child.IAmReactUI??false ? child.asReactElement() :
-            child instanceof Array ? child.map((c)=>c.IAmReactUI??false ? c.asReactElement() : c):
+            child.IAmReactUI ? child.asReactElement() :
+            child instanceof Array ? child.map((c)=>c.IAmReactUI ? c.asReactElement() : c):
             child)
 
         return createElement(
@@ -61,10 +58,6 @@ export default class ReactUIBase {
         return this
     }
 
-    uid() {
-        return this.setCustomProp("uid", uid())
-    }
-
     id(value: string) {
         this.elementProps.id = value
         return this
@@ -89,8 +82,8 @@ export default class ReactUIBase {
         return this
     }
 
-    style(value: CSSProperties | any) {
-        this.elementProps.style = Object.assign(this.elementProps.style, value)
+    style(value: CSSProperties | any, willSet=true) {
+        if (willSet) this.elementProps.style = Object.assign(this.elementProps.style, value)
         return this
     }
 
@@ -112,23 +105,20 @@ export default class ReactUIBase {
         return this.customProps
     }
 
-    // ---* element related
-    setElementId() {
-        this.elementProps.id = `${this.constructor.name}-${uid()}`
-        return this
-    }
-
-    get element() {
-        if (this._element == null) {
-            this._element = document.getElementById(this.elementProps.id)
-        }
-        return this._element as HTMLElement
-    }
-
     // ---- use for ReactUIElement
     registerBy(element: any) {
         element.registerView(this)
         return this
+    }
+
+    // ---- utils
+    nestedChildren(func: (ruiBase: ReactUIBase)=>void) {
+        for (let child of this.children) {
+            if ((child as any).IAmReactUI) {
+                func(child)
+                child.nestedChildren(func)
+            }
+        }
     }
 
     // ---- hook

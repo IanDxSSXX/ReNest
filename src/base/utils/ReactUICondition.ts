@@ -1,7 +1,7 @@
 import {Range} from "./Utils";
-import ReactUIBase from "./ReactUIBase";
+import ReactUIBase from "../core/ReactUIBase";
 import {ReactElement} from "react";
-import ReactUIWithStyle from "./ReactUIWithStyle";
+import ReactUIWithStyle from "../core/ReactUIWithStyle";
 import {RUIFragment} from "./ReactUIWrapper";
 
 // ---* condition
@@ -17,8 +17,7 @@ export function ConditionView<T=any>(variable: T, conditionMap: any): ReactUIWit
 }
 
 // ---* for each
-export function ForEach<T=any>(arr: T[] | Range, callback: (item: T, idx: number) => ReactUIBase | ReactElement) {
-    let array = arr instanceof Array ? arr: arr.asArray()
-    return array.map((value, index) => callback(value as T, index))
+export function ForEach<T=any>(arr: T[], callback: (item: T, idx: number) => ReactUIBase | ReactElement) {
+    return arr.map((value, index) => callback(value as T, index))
 }
 

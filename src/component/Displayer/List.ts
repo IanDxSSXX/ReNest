@@ -1,18 +1,21 @@
-import {ReactUIElement} from "../../base/ReactUIElement";
-import {Range, uid} from "../../base/Utils";
-import ReactUIBase from "../../base/ReactUIBase";
+import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
+import {Range, uid} from "../../base/utils/Utils";
+import ReactUIBase from "../../base/core/ReactUIBase";
 import VStack from "../Container/VStack";
 import HStack from "../Container/HStack";
 import {ForEach} from "../../base";
-import {Div} from "../../base/HTMLTags";
+import {Div} from "../../base/utils/HTMLTags";
 import {ReactElement} from "react";
 
 class List extends ReactUIElement {
+    defaultTheme = {
+            bg: "#AA00AA"
+    }
+
     Body = ({arrData, arrElem}:any): any => {
         const isHorizontal = (this.C.alignDirection ?? "vertical") === "horizontal"
         const stack = isHorizontal ? HStack : VStack
         let listView
-        this.setColor("foreground")
 
         const divider = this.C.divider ?? "none"
         if (divider === "none") {
@@ -23,7 +26,7 @@ class List extends ReactUIElement {
             if (divider === "solid") {
                 newDivider = () =>
                     Div()
-                        .backgroundColor(this.themeColor.first.dark!)
+                        .backgroundColor(this.theme.bg)
                         .width(isHorizontal ? "1px" : "calc(100% - 10px)")
                         .height(isHorizontal ? "calc(100% - 10px)" : "1px")
                         .margin(isHorizontal ? "5px 0" : "0 5px")
@@ -51,9 +54,8 @@ class List extends ReactUIElement {
 
     }
 
-    alignDirection(value: "horizontal" | "vertical") {
-        return this.setCustomProp("alignDirection", value)
-    }
+    @RUIProp
+    alignDirection(value: "horizontal" | "vertical") { return this }
 
     horizontal() {
         return this.setCustomProp("alignDirection", "horizontal")
@@ -63,19 +65,14 @@ class List extends ReactUIElement {
         return this.setCustomProp("alignDirection", "vertical")
     }
 
-    divider(value: "none" | "solid" | ReactUIBase | ReactElement | any) {
-        return this.setCustomProp("divider", value)
-    }
+    @RUIProp
+    divider(value: "none" | "solid" | ReactUIBase | ReactElement | any) { return this }
 
-    alignment(value: "top" | "bottom" | "leading" | "tailing" | "center") {
-        return this.setCustomProp("alignment", value)
-    }
+    @RUIProp
+    alignment(value: "top" | "bottom" | "leading" | "tailing" | "center") { return this }
 
-    spacing(value: string) {
-        return this.setCustomProp("spacing", value)
-    }
-
-
+    @RUIProp
+    spacing(value: string) { return this }
 }
 
 

@@ -1,16 +1,16 @@
-import ReactUIBase from "./ReactUIBase";
+import ReactUIBase from "../core/ReactUIBase";
 import {Route, Routes, useNavigate, useParams} from "react-router-dom";
-import {ReactUIThemeBase} from "./ReactUITheme";
-import {Div} from "./HTMLTags";
+import {ReactUITheme} from "../theme/ReactUITheme";
 import {createElement, ReactElement} from "react";
-import {RUIFragment} from "./ReactUIWrapper";
+import {RUIFragment} from "../utils/ReactUIWrapper";
 
 
+// ---- encapsulate react-router
 export interface PathRoutes {
     [key: string]: (value?: string) => (ReactUIBase | ReactElement)
 }
 
-class NavigationView extends ReactUIThemeBase {
+class NavigationView extends ReactUITheme {
     pathRoutes: PathRoutes
 
     constructor(pathRoutes: PathRoutes) {
@@ -25,8 +25,9 @@ class NavigationView extends ReactUIThemeBase {
             if (path.startsWith(":")) {
                 regexNames.push(path)
             } else {
-                const newRoute = new NavigationRoute(this.pathRoutes[path] as (() => (ReactUIBase | ReactElement)),
-                    path, this.reactUIThemeTag, this.reactUIThemes)
+                const newRoute = new NavigationRoute(
+                    this.pathRoutes[path] as (() => (ReactUIBase | ReactElement)), path, this
+                )
                 this.children.push(newRoute)
             }
         }
@@ -43,23 +44,22 @@ class NavigationView extends ReactUIThemeBase {
         // ---- if any of the path contains /*, set withSubPath true
         let withSubPath = withSubPathArr.includes(true)
         if (Object.keys(regexPathRoutes).length !== 0) {
-            const newRoute = new NavigationRouteMatchable(regexPathRoutes, withSubPath, this.reactUIThemeTag, this.reactUIThemes)
+            const newRoute = new NavigationRouteMatchable(regexPathRoutes, withSubPath, this)
             this.children.push(newRoute)
         }
     }
 }
 
 export class NavigationRoute extends ReactUIBase {
-    constructor(elementFunc: () => (ReactUIBase | ReactElement), path: string, reactUIThemeTag: any, reactUIThemes: any) {
+    constructor(elementFunc: () => (ReactUIBase | ReactElement), path: string, navigationView: NavigationView) {
         super(Route)
         function Element() {
             let element = elementFunc()
-            if ((element as any).IAmReactUIThemeBase??false) {
-                (element as ReactUIThemeBase).themeTag(reactUIThemeTag);
-                (element as ReactUIThemeBase).themes(reactUIThemes)
+            if ((element as any).IAmReactUITheme) {
+                navigationView.passDownTheme(element as ReactUITheme)
             }
 
-            return ((element as any).IAmReactUI??false) ? (element as ReactUIThemeBase).asReactElement() : element as ReactElement
+            return ((element as any).IAmReactUI) ? (element as ReactUIBase).asReactElement() : element as ReactElement
         }
 
         this.setProps({
@@ -71,7 +71,7 @@ export class NavigationRoute extends ReactUIBase {
 
 export class NavigationRouteMatchable extends ReactUIBase {
     constructor(regexPathRoutes: {[key: string]: ((value: string) => (ReactUIBase | ReactElement))}, withSubPath: boolean,
-                reactUIThemeTag: any, reactUIThemes: any) {
+                navigationView: NavigationView) {
         super(Route)
 
         function Element() {
@@ -89,12 +89,11 @@ export class NavigationRouteMatchable extends ReactUIBase {
                 element = element(value ?? "")
             }
 
-            if (element.IAmReactUIThemeBase??false) {
-                (element as ReactUIThemeBase).themeTag(reactUIThemeTag);
-                (element as ReactUIThemeBase).themes(reactUIThemes)
+            if (element.IAmReactUITheme) {
+                navigationView.passDownTheme(element as ReactUITheme)
             }
 
-            return (element.IAmReactUI??false) ? (element as ReactUIBase).asReactElement() : element as ReactElement
+            return (element.IAmReactUI) ? (element as ReactUIBase).asReactElement() : element as ReactElement
         }
 
         this.setProps({

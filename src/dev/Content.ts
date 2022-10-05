@@ -5,7 +5,7 @@ import {
     useRUIState,
     range,
     RUI,
-    ThemeView, ConditionView
+    ThemeProvider, ConditionView
 } from "../base";
 import {
     Button,
@@ -18,14 +18,13 @@ import {
 import List from "../component/Displayer/List";
 import Paper from "../component/Displayer/Paper"
 import ZStack from "../component/Container/ZStack";
-import {NavigateTo} from "../base/ReactUINavigation";
+import {NavigateTo} from "../base";
+import {useThemes} from "../base/theme/ThemeProvider";
 
 
 const ImageDisplay = RUI(() =>
     VStack("dfa")
 )
-
-
 
 const ToggleDisplay = RUI(() => {
     const toggleState = useRUIState(false)
@@ -35,12 +34,10 @@ const ToggleDisplay = RUI(() => {
     })
 
     return (
-        Toggle(toggleState.value).setColor("tertiary")
+        Toggle(toggleState.value)
             .onChange((v:any)=>{
                 toggleState.value = v
             })
-
-
     )
 })
 
@@ -99,7 +96,7 @@ const Content = RUI(() => {
     let a = false
     let b = false
     return (
-        ThemeView(
+        ThemeProvider(
             ConditionView(a,{
                 hh: () => Text("Fsf")
 
@@ -110,7 +107,7 @@ const Content = RUI(() => {
                 .height("1000px"),
             VStack(
                 TopBar()
-                    .themeTag("tag1")
+                    .themeName("tag1")
                     .padding("20px"),
                 NavigationView({
                     "": () => Text("welcome to react UI, click the button above to view component"),
@@ -122,16 +119,13 @@ const Content = RUI(() => {
                     ":what[a+]": (value:any) => HStack("no",value), // regExp
                     ":": (value:any) => HStack(value), // any other route
                 })
-                    .themeTag("tag2")
+                    .themeName("tag2")
                 ).padding("20px")
             )
                 .alignmentH("leading")
                 .alignmentV("top")
                 .padding("70px")
-        ).themes({
-            "tag1": {colors:{primary:{dark:"#AA9900"}}},
-            "tag2": {colors:{primary:{dark:"#00AA88"}}}
-        })
+        )
     )
 })
 
@@ -154,8 +148,41 @@ const ContentTest = RUI(() => {
     )
 })
 
+const AA = RUI(() => {
+    let themes = useThemes({
+        first: {
+            Button: {
+                bg: "#00AAFF",
+                border: "#00FF00",
+                fg: "#00AAFF"
+            }
+        },
+        second: {
+            Button: {
+                bg: "#AA00AA",
+                border: "#666666",
+                fg: "#AA88AA"
+            }
+        }
+    })
+    return (
+        ThemeProvider(
+            VStack(
+                Button("hhh")
+                    .onClick(() => {
+                        if (themes.themeName === "second") {
+                            themes.to("first")
 
-
+                        }else {
+                            themes.to("second")
+                        }
+                    }),
+                Toggle(true)
+            )
+        )
+            .theme(themes)
+    )
+})
+export default AA
 // export default Content
 // export default ContentTest
-export default ContentTest

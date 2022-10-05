@@ -27,5 +27,5 @@ export default {
     }
 }
 
-export const Progress = RUITemplate((args:any)=>RUIComponent.Progress(args.num).setColor(args.color).variant(args.variant))
+export const Progress = RUITemplate((args:any)=>RUIComponent.Progress(args.num).variant(args.variant))
 

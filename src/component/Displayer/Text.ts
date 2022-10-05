@@ -1,6 +1,6 @@
 import {animated} from "@react-spring/web";
-import { Div } from "../../base/HTMLTags";
-import {ReactUIElement} from "../../base/ReactUIElement";
+import { Div } from "../../base/utils/HTMLTags";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
 
 
 class Text extends ReactUIElement {

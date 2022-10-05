@@ -1,9 +1,9 @@
-import {ReactUIElement} from "../../base/ReactUIElement";
-import {Div} from "../../base/HTMLTags";
+import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
+import {Div} from "../../base/utils/HTMLTags";
 import {Spacer} from "../Other/Spacer";
-import {flattened} from "../../base/Utils";
-import ReactUIBase from "../../base/ReactUIBase";
-import ReactUIWithStyle from "../../base/ReactUIWithStyle";
+import {flattened} from "../../base/utils/Utils";
+import ReactUIBase from "../../base/core/ReactUIBase";
+import ReactUIWithStyle from "../../base/core/ReactUIWithStyle";
 
 class HStack extends ReactUIElement {
     Body = ({children}:any) => {
@@ -18,9 +18,13 @@ class HStack extends ReactUIElement {
 
         let alignment = this.C.alignment
         for (let child of flattened(hstack.children)) {
-            if (child instanceof Spacer) {
+            // ---- pass down theme
+            if (child.IAmReactUITheme) {
+                this.passDownTheme(child)
+            }
+            if (child.constructor.name === "Spacer") {
                 child.flexGrow(1)
-            } else if (child.IAMReactUIWithStyle ?? false) {
+            } else if (child.IAMReactUIWithStyle) {
                 child.flexShrink(0)
                 if (alignment === "top") {
                     child.marginBottom("auto")
@@ -35,13 +39,11 @@ class HStack extends ReactUIElement {
         return hstack
     }
 
-    spacing(value: string) {
-        return this.setCustomProp("spacing", value)
-    }
+    @RUIProp
+    spacing(value: string) { return this }
 
-    alignment(value: "top" | "center" | "bottom") {
-        return this.setCustomProp("alignment", value)
-    }
+    @RUIProp
+    alignment(value: "top" | "center" | "bottom") { return this }
 }
 
 

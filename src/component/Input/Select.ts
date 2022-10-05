@@ -1,7 +1,6 @@
 import {ReactUIElement, RUIProp} from "../../base/index.core";
 import Text from "../Displayer/Text";
 import { AiOutlineDown } from "react-icons/ai";
-import {ReactUIThemeColorMap} from "../../base/Interfaces";
 import List from "../Displayer/List";
 import {HStack, Spacer, VStack, ZStack} from "../../component";
 import {useEffect, useRef} from "react";
@@ -9,9 +8,10 @@ import {useTrigger, useTriggerEffect, range, RUITag, useRUIState} from "../../ba
 import {string} from "prop-types";
 
 class Select extends ReactUIElement {
-    themeColorMap: ReactUIThemeColorMap = {
-        first: 'tertiary',
-        second: 'foreground',
+    defaultTheme = {
+            bg: "#AA00AA",
+            border: "#FFAAFF",
+            fg: "#00AAFF"
     }
     isGroup(arr: Array<any>){
         return arr[0] instanceof Object
@@ -36,7 +36,7 @@ class Select extends ReactUIElement {
         const groupHead = (title:string) => HStack(
             this.C.groupHead?this.C.groupHead(title):
             Text(title)
-                .color(`${select.themeColor.second.dark}`)
+                .color(`${this.theme.bg}`)
                 .fontSize("20px")
                 .userSelect("none")
         )
@@ -60,8 +60,8 @@ class Select extends ReactUIElement {
                         .onMouseOver(() => {hoverState.value = `${i}-${j}`})
                         .backgroundColor(
                             selectedValue.value === item ?
-                                `${select.themeColor.first.light}` : hoverState.value === `${i}-${j}` ? `${select.themeColor.second.dark}` :
-                                    `${select.themeColor.second.light}` )
+                                `${this.theme.fg}` : hoverState.value === `${i}-${j}` ? `${this.theme.bg}` :
+                                    `${this.theme.border}` )
                         .onMouseOut(()=>{hoverState.value = -1})
                 )
             )
@@ -83,8 +83,8 @@ class Select extends ReactUIElement {
                 .onMouseOver(() => {hoverState.value = idx})
                 .backgroundColor(
                     selectedValue.value === item ?
-                        `${select.themeColor.first.light}` : hoverState.value === idx ? `${select.themeColor.second.dark}` :
-                            `${select.themeColor.second.light}` )
+                        `${this.theme.fg}` : hoverState.value === idx ? `${this.theme.bg}` :
+                            `${this.theme.border}` )
                 .onMouseOut(()=>{hoverState.value = -1})
         )
             .vertical()
@@ -103,17 +103,17 @@ class Select extends ReactUIElement {
 
         board
             .zIndex(2)
-            .border(`1px solid ${select.themeColor.second.dark}`)
+            .border(`1px solid ${this.theme.bg}`)
             .width(select.S.width??"100px")
             .height(select.S.height??"20px")
-            .backgroundColor(`${select.themeColor.second.light}`)
+            .backgroundColor(`${this.theme.border}`)
             .padding("4px 10px")
             .alignItems('center')
             .onClick(()=>{showOptions.value=!showOptions.value;})
 
         options
             .top("30px")
-            .boxShadow(`2px 2px 6px ${select.themeColor.second.dark}`)
+            .boxShadow(`2px 2px 6px ${this.theme.bg}`)
 
         groupOptions
             .top("30px")

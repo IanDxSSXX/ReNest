@@ -1,5 +1,5 @@
 import {animated} from "@react-spring/web";
-import {ReactUIElement} from "../../base/ReactUIElement";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
 import {RUITag} from "../../base";
 
 

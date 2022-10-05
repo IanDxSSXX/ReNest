@@ -1,11 +1,7 @@
-import ReactUIBase from "./ReactUIBase";
-import ReactUIWithStyle from "./ReactUIWithStyle"
-import {ReactUIThemeBase} from "./ReactUITheme"
-import {ReactUIElement, RUIProp} from "./ReactUIElement"
-import {ReactUIThemeColorMap, ReactUIThemeColor, ReactUITheme, ReactUIThemeMap, ReactUIThemeColorLevel, ReactUIThemeFont} from "./Interfaces";
-import {defaultReactUITheme, defaultReactUIThemeColor, defaultReactUIThemeFont, noneTag, globalTag} from "./Defaults";
-import {ReactElementWrapper} from "./ReactUIWrapper"
+import ReactUIBase from "./core/ReactUIBase";
+import ReactUIWithStyle from "./core/ReactUIWithStyle"
+import {ReactUITheme} from "./theme/ReactUITheme"
+import {ReactUIElement, RUIProp} from "./element/ReactUIElement"
 
-export {ReactUIBase, ReactUIWithStyle, ReactUIElement, RUIProp, ReactUIThemeBase, defaultReactUITheme, defaultReactUIThemeColor, defaultReactUIThemeFont, noneTag, globalTag}
-export type { ReactUIThemeColorMap, ReactUIThemeColor, ReactUITheme, ReactUIThemeMap, ReactUIThemeColorLevel, ReactUIThemeFont, ReactElementWrapper};
+export {ReactUIBase, ReactUIWithStyle, ReactUIElement, RUIProp, ReactUITheme}
 
