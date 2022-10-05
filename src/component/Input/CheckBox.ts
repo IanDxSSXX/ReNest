@@ -8,7 +8,7 @@ import {MdCheck} from "react-icons/md"
 import {RUITag} from "../../base";
 
 class CheckBox extends ReactUIElement {
-    Body = ({checkBoxState}: any) => {
+    Body = ({}: any) => {
         const check = RUITag(MdCheck)().width("100px").height("100px").zIndex(10)
         const box = Div().width("50px").height("50px").backgroundColor("gray")
 

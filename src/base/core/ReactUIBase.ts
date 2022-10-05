@@ -10,6 +10,10 @@ import {
 
 export default class ReactUIBase {
     IAmReactUI = true
+    IAmReactUITheme = false
+    IAmReactElement = false
+    IAmReactUIWithStyle = false
+
     protected elementTag: any
     children: any[]
     elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
@@ -108,15 +112,18 @@ export default class ReactUIBase {
     // ---- use for ReactUIElement
     registerBy(element: any) {
         element.registerView(this)
+        element.registerAsChild(this)
         return this
     }
 
     // ---- utils
-    nestedChildren(func: (ruiBase: ReactUIBase)=>void) {
+    forEachChild(func: (child: any)=>void, nested=false) {
         for (let child of this.children) {
-            if ((child as any).IAmReactUI) {
+            if (child.IAmReactUI) {
                 func(child)
-                child.nestedChildren(func)
+                if (nested) {
+                    child.forEachChild(func, nested)
+                }
             }
         }
     }

@@ -3,7 +3,6 @@ import {
     NavigationView,
     ForEach,
     useRUIState,
-    range,
     RUI,
     ThemeProvider, ConditionView
 } from "../base";
@@ -15,59 +14,36 @@ import {
     Toggle,
     HStack,
 } from "../component"
-import List from "../component/Displayer/List";
 import Paper from "../component/Displayer/Paper"
 import ZStack from "../component/Container/ZStack";
 import {NavigateTo} from "../base";
 import {useThemes} from "../base/theme/ThemeProvider";
+import {ToggleDisplay} from "./routes/ToggleDisplay";
+import {TextFieldDisplay} from "./routes/TextFieldDisplay";
+import {ListDisplay} from "./routes/ListDisplay";
+import {ImageDisplay} from "./routes/ImageDisplay";
+import {ContextProvider} from "../base/context/ContextProvider";
 
 
-const ImageDisplay = RUI(() =>
-    VStack("dfa")
-)
 
-const ToggleDisplay = RUI(() => {
-    const toggleState = useRUIState(false)
 
-    useEffect(() => {
-        console.log(toggleState.value)
-    })
+let myThemes = {
+    first: {
+        Button: {
+            bg: "#00AAFF",
+            border: "#00FF00",
+            fg: "#00AAFF"
+        }
+    },
+    second: {
+        Button: {
+            bg: "#AA00AA",
+            border: "#666666",
+            fg: "#AA88AA"
+        }
+    }
+}
 
-    return (
-        Toggle(toggleState.value)
-            .onChange((v:any)=>{
-                toggleState.value = v
-            })
-    )
-})
-
-const ListDisplay = RUI(() => {
-    return (
-        VStack(
-            List(range(4), (item,idx) =>
-                Button(`horizontal list ${item}`).key(item)
-            ).horizontal().spacing("10px"),
-            List(range(4), (item,idx) =>
-                Button(`vertical list ${item}`).key(item)
-            ).vertical().spacing("10px"),
-            List(range(4).asArray(), (item,idx) =>
-                Button(`divider list ${item}`).key(item)
-            ).vertical().spacing("10px").divider("solid"),
-        ).spacing("20px").padding("20px")
-    )
-})
-
-const TextFieldDisplay = RUI(({wrapper}:any) => {
-    const textRef = useRef("用ref")
-
-    return (
-        TextField(textRef.current)
-            .placeHolder("哈哈哈")
-            .onChange((newText: any) => {
-                textRef.current = newText
-            })
-    )
-})
 
 const TopBar = RUI(() =>
     ZStack(
@@ -76,6 +52,7 @@ const TopBar = RUI(() =>
             .height("80px"),
         HStack(
             Button("home")
+                .themeName("secondary")
                 .onClick(NavigateTo("/")),
             Button("text field")
                 .onClick(NavigateTo("/textField")),
@@ -91,98 +68,99 @@ const TopBar = RUI(() =>
     )
 )
 
-
 const Content = RUI(() => {
-    let a = false
-    let b = false
+    let theme = useThemes(myThemes, "secondary")
+
     return (
         ThemeProvider(
-            ConditionView(a,{
-                hh: () => Text("Fsf")
-
-            }).height("50px"),
             ZStack(
-            Paper()
-                .width("1000px")
-                .height("1000px"),
-            VStack(
-                TopBar()
-                    .themeName("tag1")
-                    .padding("20px"),
-                NavigationView({
-                    "": () => Text("welcome to react UI, click the button above to view component"),
-                    "textField": () => TextFieldDisplay(),
-                    "list": () => ListDisplay(),
-                    "toggle": () => ToggleDisplay(),
-                    "image": () => ImageDisplay(),
-                    ":abc+": (value:any) => HStack("abc",value), // regExp
-                    ":what[a+]": (value:any) => HStack("no",value), // regExp
-                    ":": (value:any) => HStack(value), // any other route
-                })
-                    .themeName("tag2")
+                Paper()
+                    .width("1000px")
+                    .height("1000px"),
+                VStack(
+                    TopBar()
+                        .padding("20px"),
+                    NavigationView({
+                        "": () => Text("welcome to react UI, click the button above to view component"),
+                        "textField": () => TextFieldDisplay(),
+                        "list": () => ListDisplay(),
+                        "toggle": () => ToggleDisplay(),
+                        "image": () => ImageDisplay(),
+                        ":abc+": (value:any) => HStack("abc",value), // regExp
+                        ":what[a+]": (value:any) => HStack("no",value), // regExp
+                        ":": (value:any) => HStack(value), // any other route
+                    })
                 ).padding("20px")
             )
                 .alignmentH("leading")
                 .alignmentV("top")
                 .padding("70px")
         )
+            .theme(theme)
+
     )
 })
 
 
-const HH = RUI(({aa}: { aa:string }) => {
-    return Text(aa)
-})
-
-const saHH = RUI(() => {
-    return Text("sf")
-})
-
-
-const ContentTest = RUI(() => {
-    let a = false
-
-    return VStack(
-        Text("S"),
-        HH({aa: "s"}),
-    )
-})
-
-const AA = RUI(() => {
-    let themes = useThemes({
-        first: {
-            Button: {
-                bg: "#00AAFF",
-                border: "#00FF00",
-                fg: "#00AAFF"
-            }
-        },
-        second: {
-            Button: {
-                bg: "#AA00AA",
-                border: "#666666",
-                fg: "#AA88AA"
-            }
-        }
-    })
+const TestB = RUI(({}, {theme}) => {
     return (
-        ThemeProvider(
-            VStack(
-                Button("hhh")
-                    .onClick(() => {
-                        if (themes.themeName === "second") {
-                            themes.to("first")
+        Button("里面的")
+            .onClick(() => {
+                if (theme.themeName === "light") {
+                    theme.to("dark")
+                } else {
+                    theme.to("light")
+                }
+            })
+    )
+})
 
-                        }else {
-                            themes.to("second")
+let themehh = {
+    light: {
+        Button: {
+            bg: "#FFAA99",
+            fg: "#AAFF99"
+        },
+    },
+    dark: {
+        Button: {
+            bg: "#666666",
+            fg: "#111188"
+        },
+        Button_hhh: {
+            bg: "#FFAA99",
+            fg: "#111188"
+        }
+    },
+}
+
+const Test = RUI(() => {
+    let theme = useThemes(themehh, "dark")
+    return (
+        ThemeProvider (
+            VStack(
+                Paper()
+                    .width("100px")
+                    .height("100px"),
+                TestB(),
+                Button("click me")
+                    .onClick(() => {
+                        if (theme.themeName === "light") {
+                            theme.to("dark")
+                        } else {
+                            theme.to("light")
                         }
                     }),
-                Toggle(true)
+                Button("click me")
+                    .themeTag("hhh"),
+                Button("click me")
+                    .themeTag("hh")
+                    .themeName("tertiary")
             )
         )
-            .theme(themes)
+            .theme(theme)
     )
 })
-export default AA
-// export default Content
-// export default ContentTest
+
+export default Test
+// export default TopBar

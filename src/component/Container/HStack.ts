@@ -17,11 +17,9 @@ class HStack extends ReactUIElement {
             .columnGap(this.C.spacing)
 
         let alignment = this.C.alignment
-        for (let child of flattened(hstack.children)) {
-            // ---- pass down theme
-            if (child.IAmReactUITheme) {
-                this.passDownTheme(child)
-            }
+        hstack.forEachChild(child => {
+            this.registerAsChild(child)
+
             if (child.constructor.name === "Spacer") {
                 child.flexGrow(1)
             } else if (child.IAMReactUIWithStyle) {
@@ -34,7 +32,7 @@ class HStack extends ReactUIElement {
                     child.marginTop("auto").marginBottom("auto")
                 }
             }
-        }
+        })
 
         return hstack
     }

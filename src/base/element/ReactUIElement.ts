@@ -36,7 +36,7 @@ export class ReactUIElement extends ReactUITheme {
         if (!wrapper.Body) {
             ReactUIHelper.error("ReactUIElement must have a Body property, which returns the main")
         }
-        const component = wrapper.Body!(wrapper.props, wrapper.content) as any
+        const component = wrapper.Body!(wrapper.props, wrapper.customProps.context ?? {}) as any
 
         if (!component) {
             ReactUIHelper.error("ReactUIElement must have a proper return, current is null")
@@ -81,22 +81,25 @@ export class ReactUIElement extends ReactUITheme {
             // ---- only pass classname when it's class defined
             view.className(this.P.className, true)
         }
-        // ---- set view theme ** outside can't change inside if not default! **
-        if ((view as any).IAmReactUITheme) {
-            this.passDownTheme(view as ReactUITheme)
-        }
-
         // ---- react only use key in React.createElement, so no need for pass down
         // ---- and deleting className to avoid some confusion
         // const newElementStyles = filteredObject(this.elementProps.style, [])
         const newElementStyles = this.elementProps.style
-        const newElementProps = filteredObject(this.elementProps, ["key", "className"])
-        view.elementProps.style = {...newElementStyles, ...view.elementProps.style}
-        view.elementProps = {...newElementProps, ...view.elementProps}
+        const newElementProps = filteredObject(this.elementProps, ["key", "className", "style"])
+        view.elementProps.style = {...view.elementProps.style, ...newElementStyles}
+        view.elementProps = {...view.elementProps, ...newElementProps}
+    }
+
+    protected registerAsChild(view: ReactUIBase) {
+        // ---- set view theme ** outside can't change inside if not default! **
+        if ((view as any).IAmReactUITheme) {
+            this.passDownTheme(view as ReactUITheme)
+        }
+        view.customProps.context = this.customProps.context
     }
 }
 
-export function RUI<T extends Object>(body: (props:T) => any) {
+export function RUI<T extends Object>(body: (props:T, context: any) => any) {
     return function(props?: T) {
         let ruiElement = new ReactUIElement(props)
         ruiElement.setBody(body)

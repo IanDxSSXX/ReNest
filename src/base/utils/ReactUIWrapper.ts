@@ -4,7 +4,7 @@ import ReactUIWithStyle from "../core/ReactUIWithStyle";
 
 
 export function RUITag(element: any) {
-    return (...children: any) => new ReactUIWithStyle(element, ...children).deleteProp("className")
+    return (...children: any) => new ReactUITheme(element, ...children).deleteProp("className")
 }
 
 
@@ -17,7 +17,7 @@ export function RUIElement(reactElement: ReactElement) {
 
 // ----
 export namespace C {
-    export class RUIFragment extends ReactUIWithStyle {
+    export class RUIFragment extends ReactUITheme {
         constructor(...children: any[]) {
             super(Fragment, ...children);
         }

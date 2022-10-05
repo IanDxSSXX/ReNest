@@ -49,6 +49,8 @@ class List extends ReactUIElement {
             ).registerBy(this)
         }
 
+        this.registerAsChild(listView)
+
 
         return listView.alignment(this.C.alignment ?? "center").spacing(this.C.spacing ?? "0px")
 

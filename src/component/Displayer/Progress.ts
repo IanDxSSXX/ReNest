@@ -15,16 +15,16 @@ const LineVariant = (value:number, wrapper: any) => {
     const progress = ZStack(
         progressBack,
         progressFront
-    ).registerBy(wrapper)
+    )
     progress
         .alignmentH('leading')
-        .width(progress.S.width ?? "250px")
-        .height(progress.S.height ?? "10px")
+        .width("250px")
+        .height("10px")
 
     progressBack
         .width(progress.S.width)
         .height(progress.S.height)
-        .backgroundColor(wrapper.themeColor.second.dark!)
+        .backgroundColor(wrapper.theme.second.dark!)
         .borderRadius("10px")
 
     progressFront

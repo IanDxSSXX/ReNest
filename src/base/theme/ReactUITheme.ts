@@ -23,6 +23,7 @@ export class ReactUITheme extends ReactUIWithStyle {
 
     themeTag(value: string) {
         this._themeTag = "_"+value
+        return this
     }
 
     get theme() {
@@ -33,12 +34,20 @@ export class ReactUITheme extends ReactUIWithStyle {
         return {...this.defaultTheme, ...this.ruiThemes[this.ruiThemeName]}
     }
 
-    private setThemes(value: {[key: string]: any}) {
+    themes(value: {[key: string]: any}) {
         this.ruiThemes = {...this.ruiThemes, ...value}
         return this
     }
 
-    private setPassDownThemes(value: {[key: string]: {[key: string]: any}}) {
+    themeName(value: string) {
+        if (Object.keys(this.ruiThemes).includes(value)) {
+            this.ruiThemeName = value
+        }
+        return this
+    }
+
+    // ---- pass down
+    setPassDownThemes(value: {[key: string]: {[key: string]: any}}) {
         this.passDownThemes = value
         // ---- current Element's themes
         let currElementThemes: { [key: string]: any } = {}
@@ -53,36 +62,29 @@ export class ReactUITheme extends ReactUIWithStyle {
 
         this.ruiThemes = {...this.ruiThemes, ...currElementThemes}
 
-        for (let child of flattened(this.children)) {
+        this.forEachChild(child => {
             if (child.IAmReactUITheme) {
-                child.themes(value, true)
+                (child as ReactUITheme).setPassDownThemes(value)
             }
-        }
+        }, true)
+
         return this
     }
 
-    themes(value: {[key: string]: {[key: string]: any}} | {[key: string]: any}, passDown=false) {
-        if (passDown) return this.setPassDownThemes(value)
-        return this.setThemes(value)
-    }
-
-    themeName(value: string, passDown=true) {
+    setPassDownThemeName(value: string) {
         if (Object.keys(this.ruiThemes).includes(value)) {
             this.ruiThemeName = value
         }
         this.passDownThemeName = value
-        if (passDown) {
-            for (let child of flattened(this.children)) {
-                if (child.IAmReactUITheme) {
-                    child.themeName(value)
-                }
+        this.forEachChild(child => {
+            if (child.IAmReactUITheme) {
+                (child as ReactUITheme).setPassDownThemeName(value)
             }
-        }
-        return this
+        }, true)
     }
 
     passDownTheme(view: ReactUITheme) {
-        view.themes(this.passDownThemes, true)
-        view.themeName(this.passDownThemeName)
+        view.setPassDownThemes(this.passDownThemes)
+        view.setPassDownThemeName(this.passDownThemeName)
     }
 }

@@ -14,17 +14,15 @@ class ZStack extends ReactUIElement {
             .alignItems(this.C.alignmentV ?? "center")
             .justifyItems(this.C.alignmentH ?? "center")
 
-        for (let child of flattened(zstack.children)) {
-            // ---- pass down theme
-            if (child.IAmReactUITheme) {
-                this.passDownTheme(child)
-            }
+        zstack.forEachChild(child => {
+            this.registerAsChild(child)
+
             if (child.IAmReactUIWithStyle) {
                 child
                     .position("relative")
                     .gridArea("1 / 1/ 1 / 1")
             }
-        }
+        })
 
         return zstack
     }

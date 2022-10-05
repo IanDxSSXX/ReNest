@@ -6,15 +6,27 @@ import ZStack from "../Container/ZStack";
 import {Input} from "../../base/utils/HTMLTags"
 import AnimatedDiv from "../Other/Spring";
 import Text from "../Displayer/Text";
+import {RUIColor} from "../../base/theme/Colors";
 
+const themes = {
+    primary: {
+        unselected: RUIColor.white.dark,
+        over: RUIColor.red.light,
+        selected: RUIColor.red.standard,
+        foreground: RUIColor.white.light,
+    },
+    secondary: {
+        bg: RUIColor.green.light,
+        fg: RUIColor.green.dark,
+    },
+    tertiary: {
+        bg: RUIColor.blue.light,
+        fg: RUIColor.blue.dark,
+    },
+}
 
 export class TextField extends ReactUIElement {
-    defaultTheme = {
-            bg: "#AA00AA",
-            border: "#FFAAFF",
-            fg: "#00AAFF"
-    }
-
+    defaultTheme = themes.primary
 
     Body =  ({defaultText}: any): any => {
         // ---- init
@@ -23,23 +35,14 @@ export class TextField extends ReactUIElement {
         const animatedDiv = AnimatedDiv(text).ruiClassName("AnimatedDiv")
         const textField = ZStack(input, animatedDiv).registerBy(this)
 
-        // this.registerViewStyles(input, "height", "width", "font", "fontWeight", "fontSize", "fontFamily")
-        // this.registerViewStyles(animatedDiv, "font", "fontWeight", "fontSize", "fontFamily")
-
         // ---- variables
-        let colors = {
-            unselected: this.theme.bg,
-            over: this.theme.bg,
-            selected: this.theme.bg,
-            foreground: this.theme.bg
-        }
         const inputElement = useRef()
         const textFieldElement = useRef()
         const textRef = useRef(defaultText)
         const textTrigger = useTrigger()
         const isTyping = useRUIState(textRef.current !== "")
         const isMouseOver = useRUIState(false)
-        const fontSize = textField.S.fontSize ?? "15px"
+        const fontSize = "15px"
         const variantUnderlined = this.C.variant === "underlined"
 
         useTriggerEffect(textTrigger, () => {
@@ -56,25 +59,25 @@ export class TextField extends ReactUIElement {
         // ---- style
         input
             .ref(inputElement)
-            .width(input.S.width ?? "200px")
+            .width("200px")
             .outline("none")
             .border("solid")
             .fontSize(fontSize)
             .borderWidth(variantUnderlined ? "0px 0px 1px 0px" : "1px")
             .borderRadius(variantUnderlined ? "0px" : "5px")
             .padding(variantUnderlined ? "7px 0px" : "7px")
-            .borderColor(isTyping.value ? colors.selected :
-                isMouseOver.value ? colors.over : colors.unselected)
+            .borderColor(isTyping.value ? this.theme.selected :
+                isMouseOver.value ? this.theme.over : this.theme.unselected)
             .setProp("defaultValue", textRef.current)
             .onChange(() => {
                 textRef.current = (inputElement as any).current.value
                 textTrigger.trigger()
             })
-            .backgroundColor(colors.foreground)
+            .backgroundColor(this.theme.foreground)
 
         text
-            .color(isTyping.value ? colors.selected : colors.unselected)
-            .backgroundColor(this.C.placeHolder ? colors.foreground: '')
+            .color(isTyping.value ? this.theme.selected : this.theme.unselected)
+            .backgroundColor(this.C.placeHolder ? this.theme.foreground: '')
             .padding(variantUnderlined ? "0px" : "3px")
             .marginLeft(variantUnderlined ? "0px" : "5px")
             .userSelect("none")
@@ -87,8 +90,8 @@ export class TextField extends ReactUIElement {
         textField
             .ref(textFieldElement)
             .alignmentH("leading")
-            .height(textField.S.height ?? "max-content")
-            .width(textField.S.width ?? "max-content")
+            .height("max-content")
+            .width("max-content")
             .onMouseOver(() => {
                 isMouseOver.value = true
             })
@@ -101,8 +104,8 @@ export class TextField extends ReactUIElement {
 
         if (this.C.disable) {
             textField.pointerEvents("none").opacity("0.5")
-            input.borderColor(colors.over)
-            text.color(colors.over)
+            input.borderColor(this.theme.over)
+            text.color(this.theme.over)
         }
 
         // ---- detect click outside
@@ -130,7 +133,7 @@ export class TextField extends ReactUIElement {
             if (this.C.autoFocus) {
                 (inputElement.current as any).focus()
                 isTyping.value = true;
-                (inputElement.current as any).borderColor = colors.selected
+                (inputElement.current as any).borderColor = this.theme.selected
             }
         }, [])
 
@@ -154,5 +157,5 @@ export class TextField extends ReactUIElement {
 }
 
 export default function(defaultText: string) {
-    return new TextField({defaultText})
+    return new TextField({defaultText}).themes(themes).themeName("primary")
 }

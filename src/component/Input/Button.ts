@@ -1,35 +1,46 @@
 import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import {useRUIState} from "../../base";
+import {RUIColor} from "../../base/theme/Colors";
+import {Button as TButton} from "../../base/utils/HTMLTags";
+
+const themes = {
+    primary: {
+        bg: RUIColor.red.light,
+        fg: RUIColor.red.dark,
+    },
+    secondary: {
+        bg: RUIColor.green.light,
+        fg: RUIColor.green.dark,
+    },
+    tertiary: {
+        bg: RUIColor.blue.light,
+        fg: RUIColor.blue.dark,
+    },
+}
 
 class Button extends ReactUIElement {
-    defaultTheme = {
-        bg: "#AA00AA",
-        border: "#FFAAFF",
-        fg: "#00AAFF"
-    }
+    defaultTheme = themes.primary
 
     Body = ({title}: any) => {
-        const button = Div(title)
+        const button = TButton(title)
         const mouseState = useRUIState("out")
 
         button
             .boxSizing("border-box")
             .border("solid")
-            .borderRadius(button.S.borderRadius ?? "5px")
-            .borderWidth(button.S.borderWidth ?? "1px")
-            .height(button.S.height ?? "max-content")
-            .width(button.S.width ?? "max-content")
+            .borderRadius("5px")
+            .borderWidth("1px")
+            .height("max-content")
+            .width("max-content")
             .padding("5px 10px")
             .textAlign("center")
             .verticalAlign("middle")
-            .lineHeight(button.S.height === "max-content" ? "" :
-                        `calc(${button.S.height} - 2 * ${button.S.borderWidth} - 10px`)
             .userSelect("none")
             .cursor("pointer")
-            .backgroundColor(this.theme.border)
-            .color(this.theme.fg!)
-            .borderColor(this.theme.border)
+            .backgroundColor(this.theme.bg)
+            .color(this.theme.fg)
+            .borderColor(this.theme.fg)
             .opacity(mouseState.value === "out" ? "1" : "0.5")
             .onMouseDown(() => {
                 mouseState.value = "down"
@@ -53,12 +64,7 @@ class Button extends ReactUIElement {
     disable(value: boolean=true) {return this}
 }
 
+
 export default function (title: string|number) {
-    return new Button({title})
-        .themes({"primary": {
-                bg: "#00AAAA",
-                border: "#00FFFF",
-                fg: "#00AAFF"
-        }})
-        .themeName("primary")
+    return new Button({title}).themes(themes).themeName("secondary")
 }

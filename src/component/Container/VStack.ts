@@ -19,11 +19,9 @@ class VStack extends ReactUIElement {
 
         let alignment = this.C.alignment
 
-        for (let child of flattened(vstack.children)) {
-            // ---- pass down theme
-            if (child.IAmReactUITheme) {
-                this.passDownTheme(child)
-            }
+        vstack.forEachChild(child => {
+            this.registerAsChild(child)
+
             if (child.constructor.name === "Spacer") {
                 child.flexGrow(1)
             } else if (child.IAmReactUIWithStyle) {
@@ -36,7 +34,7 @@ class VStack extends ReactUIElement {
                     child.marginLeft("auto").marginRight("auto")
                 }
             }
-        }
+        })
 
         return vstack
     }
