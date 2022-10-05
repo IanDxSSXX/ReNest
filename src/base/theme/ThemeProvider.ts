@@ -1,31 +1,32 @@
-import {C as RUIWrapperC} from "../utils/ReactUIWrapper";
-import {flattened} from "../utils/Utils";
-import {useState} from "react";
+import {Fragment, useState} from "react";
 import {ReactUIHelper} from "../utils/ReactUIHelper";
+import {ReactUITheme} from "./ReactUITheme";
+import {ReactUIBase} from "../index.core";
 
 namespace C {
-    export class ThemeProvider extends RUIWrapperC.RUIFragment {
-        private themes(value: { [key: string]: { [key: string]: any }}) {
-            for (let child of this.children) {
-                if ((child as any).IAmReactUITheme) {
-                    child.themes(value, true)
-                }
-            }
-            return this
+    export class ThemeProvider extends ReactUIBase {
+        // ---- same as RUIFragment
+        constructor(...children: any[]) {
+            super(Fragment, ...children);
         }
-
-        private themeName(value: string) {
-            for (let child of flattened(this.children)) {
-                if (child.IAmReactUITheme) {
-                    child.themeName(value)
-                }
+        beforeAsReactElement() {
+            if (!!this.elementProps && !!this.elementProps.key) {
+                this.elementProps = {key: this.elementProps.key}
+            } else {
+                this.elementProps = undefined
             }
-            return this
         }
 
         theme(themeState: ThemesState) {
-            this.themes(themeState.themes)
-            this.themeName(themeState.themeName)
+            this.forEachChild(child => {
+                // ---- themes
+                if (child.IAmReactUITheme) {
+                    (child as ReactUITheme).setPassDownThemes(themeState.themes);
+                    (child as ReactUITheme).setPassDownThemeName(themeState.themeName);
+                }
+                // ---- set context
+                child.customProps.context = {...child.customProps.context, ...{theme: themeState}}
+            }, true)
             return this
         }
     }
@@ -53,11 +54,11 @@ export class ThemesState {
     }
 }
 
-export function useThemes(themes: { [key: string]: { [key: string]: any }}) {
+export function useThemes(themes: { [key: string]: { [key: string]: any }}, defaultThemeName?: string) {
     if (typeof themes !== "object" || Object.keys(themes).length === 0) {
         ReactUIHelper.error(`must provide a solid object to useThemes.`)
     }
-    let defaultThemeName = Object.keys(themes)[0]
+    defaultThemeName = !!defaultThemeName ? defaultThemeName : Object.keys(themes)[0]
     let [themeName, setThemeName] = useState(defaultThemeName)
     return new ThemesState(themes, themeName, setThemeName)
 }
