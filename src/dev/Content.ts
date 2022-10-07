@@ -101,64 +101,53 @@ const Content = RUI(() => {
     )
 })
 
-
-const TestB = RUI(({}, {theme}) => {
+const ChangeA = RUI(({}, {a}) => {
     return (
-        Button("里面的")
-            .onClick(() => {
-                if (theme.themeName === "light") {
-                    theme.to("dark")
-                } else {
-                    theme.to("light")
-                }
-            })
+        VStack(
+            `${a.value}`,
+        )
+    )
+})
+const Change = RUI(({}, {a}) => {
+    return (
+        VStack(
+            ChangeA(),
+            Button("click me")
+                .onClick(() => {a.value = !a.value}),
+        )
     )
 })
 
-let themehh = {
-    light: {
-        Button: {
-            bg: "#FFAA99",
-            fg: "#AAFF99"
-        },
-    },
-    dark: {
-        Button: {
-            bg: "#666666",
-            fg: "#111188"
-        },
-        Button_hhh: {
-            bg: "#FFAA99",
-            fg: "#111188"
-        }
-    },
-}
+const NoChange = RUI(({}, {a}) => {
+    return (
+        VStack(
+            "hh",
+        )
+    )
+})
+
+
+
 
 const Test = RUI(() => {
-    let theme = useThemes(themehh, "dark")
+    let a = useRUIState(false)
+    let b = useRUIState(false)
     return (
-        ThemeProvider (
+        ContextProvider (
             VStack(
-                Paper()
-                    .width("100px")
-                    .height("100px"),
-                TestB(),
+                Change(),
+                NoChange()
+                    .contextTag("hhh"),
                 Button("click me")
-                    .onClick(() => {
-                        if (theme.themeName === "light") {
-                            theme.to("dark")
-                        } else {
-                            theme.to("light")
-                        }
-                    }),
-                Button("click me")
-                    .themeTag("hhh"),
-                Button("click me")
-                    .themeTag("hh")
-                    .themeName("tertiary")
+                    .onClick(() => {a.value = !a.value}),
+                // Button("click me")
+                //     .themeTag("hhh"),
+                // Button("click me")
+                //     .themeTag("hh")
+                //     .themeName("tertiary")
             )
         )
-            .theme(theme)
+            .context({a}, "hhh")
     )
 })
 

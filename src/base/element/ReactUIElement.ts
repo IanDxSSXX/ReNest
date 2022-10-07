@@ -21,6 +21,8 @@ export class ReactUIElement extends ReactUITheme {
     props: any
     Body?: (props: any, context: any) => ReactUIBase | ReactElement
     ruiGene: boolean = false
+    contexts: {[key:string]:{[key:string]: any}} = {}
+    IAmReactElement = true
 
     constructor(props?: any) {
         super("")
@@ -36,7 +38,13 @@ export class ReactUIElement extends ReactUITheme {
         if (!wrapper.Body) {
             ReactUIHelper.error("ReactUIElement must have a Body property, which returns the main")
         }
-        const component = wrapper.Body!(wrapper.props, wrapper.customProps.context ?? {}) as any
+
+        let context = {}
+        for (let tag of [...new Set(wrapper.ruiContextTag)]) {
+            context = {...context, ...wrapper.ruiContext[tag]??{}}
+        }
+
+        const component = wrapper.Body!(wrapper.props, context) as any
 
         if (!component) {
             ReactUIHelper.error("ReactUIElement must have a proper return, current is null")
@@ -92,10 +100,8 @@ export class ReactUIElement extends ReactUITheme {
 
     protected registerAsChild(view: ReactUIBase) {
         // ---- set view theme ** outside can't change inside if not default! **
-        if ((view as any).IAmReactUITheme) {
-            this.passDownTheme(view as ReactUITheme)
-        }
-        view.customProps.context = this.customProps.context
+        this.passDownTheme(view)
+        this.passDownContext(view)
     }
 }
 

@@ -1,8 +1,8 @@
-import {flattened} from "../utils/Utils";
-import ReactUIWithStyle from "../core/ReactUIWithStyle";
 import {ReactUIHelper} from "../utils/ReactUIHelper";
+import {ReactUIContext} from "../context/ReactUIContext";
+import ReactUIBase from "../core/ReactUIBase";
 
-export class ReactUITheme extends ReactUIWithStyle {
+export class ReactUITheme extends ReactUIContext {
     IAmReactUITheme = true
 
     // ---- current element themes
@@ -83,8 +83,10 @@ export class ReactUITheme extends ReactUIWithStyle {
         }, true)
     }
 
-    passDownTheme(view: ReactUITheme) {
-        view.setPassDownThemes(this.passDownThemes)
-        view.setPassDownThemeName(this.passDownThemeName)
+    passDownTheme(view: ReactUIBase) {
+        if (view.IAmReactUITheme) {
+            (view as ReactUITheme).setPassDownThemes(this.passDownThemes);
+            (view as ReactUITheme).setPassDownThemeName(this.passDownThemeName)
+        }
     }
 }

@@ -13,6 +13,9 @@ export default class ReactUIBase {
     IAmReactUITheme = false
     IAmReactElement = false
     IAmReactUIWithStyle = false
+    IAmReactUIContext = false
+    IAMContextProvider = false
+
 
     protected elementTag: any
     children: any[]
@@ -30,9 +33,9 @@ export default class ReactUIBase {
 
         let children = this.children
             .map((child) =>
-            child.IAmReactUI ? child.asReactElement() :
-            child instanceof Array ? child.map((c)=>c.IAmReactUI ? c.asReactElement() : c):
-            child)
+                child.IAmReactUI ? child.asReactElement() :
+                child instanceof Array ? child.map((c)=>c.IAmReactUI ? c.asReactElement() : c):
+                child)
 
         return createElement(
                 this.elementTag,
