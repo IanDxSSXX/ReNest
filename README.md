@@ -15,9 +15,9 @@ So why don't we take a little bit back to React? Here comes ReactUI...
 Here is an example to create a list of buttons using jsx and reactui
 * JSX
   ```typescript jsx
-  const JsxButtons = ({num}:any) => 
+  const JsxButtons = ({nums}:any) => 
       <div>
-          {num.map((num: number) => 
+          {nums.map((num: number) => 
               <button 
                   onClick={()=>{
                       console.log(`This is button ${num}`)
@@ -57,7 +57,7 @@ const MyText = RUI(() =>
 )
 ```
 ## ⚡️ Quick Start
-(try codesandbox here https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
+* try ReactUI in [!codesandbox](https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
 ```typescript
 // ---- src/App.tsx
 import ReactUIApp from 'ReactUIApp';
@@ -114,8 +114,14 @@ export default ReactUIApp;
 ### RUITag
 Turn every react component into reactui instance no matter if it's a custom react function or a html tag
 ```typescript
-const RUIDiv = RUITag("div")
-const RUIComponent = RUITag(YourReactFunction)
+const RUIDiv = RUITag("div")()
+const RUIComponent = RUITag(YourReactFunction)()
+```
+### RUIElement
+Turn a react component instance to reactUI instance
+```tsx
+const myJSX = <div>hello</div>
+const RUIInstance = RUIElement(myJSX)()
 ```
 ### ConditionView
 Use this view to build a dynamic controllable page simple and fast.
@@ -130,9 +136,9 @@ const MyCondition = RUI(() => {
                     displayIdx.value = displayIdx.value == 2 ? 0 : displayIdx.value+1
                 }),
             ConditionView(displayIdx.value, {
-                0: Text("This is the default view"),
-                1: Text("This is view 1"),
-                2: Text("This is the second view")
+                0: () => Text("This is the default view"),
+                1: () => Text("This is view 1"),
+                2: () => Text("This is the second view")
             })
         )
     )
@@ -146,20 +152,75 @@ const MyPage = RUI(() =>
     VStack(
         Text("this will show whatever the route is"),
         NavigationView({
-          "": Text("this is home"),
-          "what": Text("this is what"),
+          "": () => Text("this is home"),
+          "what": () =>  Text("this is what"),
           ":abc+": (path: string) => Text(`this matches abcccccc: ${path}`),
           ":": (path: string) => Text(`this matches everything else: ${path}`)
         })
     )
 )
 ```
-### ThemeProvider
-A pretty strong view wrapper to manage all your customized components, 
-the main concepts is: "5 colors are enough for a theme!"
+### ContextProvider
+Using ContextProvider in SwiftUI to manage global states simple and powerful.
 
-The development and test is already done, but I don't know how to explain 
-it in a straight way, so just leave it here....
+```typescript
+import {ContextProvider} from "@iandx/reactui";
+const ComponentA = RUI((props, contexts) =>
+  VStack(
+    P(`Current first state value is ${contexts.myFirstState.value}`),
+    Button("add").onClick(() => {
+      contexts.myFirstState.value += 1
+    })
+  )
+)
+const MyComponentWithContext = RUI(() => {
+  const myFirstState = useRUIState(0)
+
+  return (
+    ContextProvider(
+      VStack(
+        ComponentA()
+      )
+   ).context({myFirstState})
+  )
+})
+````
+
+context with tag:
+```typescript
+import {ContextProvider} from "@iandx/reactui";
+const ComponentA = RUI((props, {myFirstState}) => // no mySecondState in contexts here
+  VStack(
+    P(`Current first state value is ${myFirstState.value}`),
+    Button("add").onClick(() => {
+      myFirstState.value += 1
+    })
+  )
+)
+const ComponentB = RUI((props, {myFirstState, mySecondState}) =>
+  VStack(
+    P(`Current first state value is ${mySecondState.value}`),
+    Button("add").onClick(() => {
+      mySecondState.value += 1
+    })
+  )
+)
+const MyComponentWithContext = RUI(() => {
+  const myFirstState = useRUIState(0)
+  const mySecondState = useRUIState("")
+
+  return (
+    ContextProvider(
+      VStack(
+        ComponentA(),
+        ComponentB()
+          .contextTag("tag2")
+      )
+   ).context({myFirstState})
+    .context({mySecondState}, "tag2")
+  )
+})
+````
 ### Custom ReactUI Element
 This part is to show you an advanced usage of how to define a ReactUI Element 
 apart from the simple `RUI()` and `RUITag()`.
@@ -167,33 +228,26 @@ apart from the simple `RUI()` and `RUITag()`.
 Here's an example of an internal Button written in ReactUI
 ```typescript
 // ---- src/component/Input/Button.ts
-import {ReactUIElement, RUIProp} from "../../base/ReactUIElement";
-import {Div} from "../../base/HTMLTags";
-import {ReactUIThemeColor} from "../../base/Interfaces";
-import {useRUIState} from "../../base/Utils";
-
 class Button extends ReactUIElement {
   Body = ({title}: any) => {
-    const button = Div(title).registerBy(this)
+    const button = TButton(title)
     const mouseState = useRUIState("out")
 
     button
       .boxSizing("border-box")
       .border("solid")
-      .borderRadius(button.S.borderRadius ?? "5px")
-      .borderWidth(button.S.borderWidth ?? "1px")
-      .height(button.S.height ?? "max-content")
-      .width(button.S.width ?? "max-content")
+      .borderRadius("5px")
+      .borderWidth("1px")
+      .height("max-content")
+      .width("max-content")
       .padding("5px 10px")
       .textAlign("center")
       .verticalAlign("middle")
-      .lineHeight(button.S.height === "max-content" ? "" :
-              `calc(${button.S.height} - 2 * ${button.S.borderWidth} - 10px`)
       .userSelect("none")
       .cursor("pointer")
-      .backgroundColor(this.themeColor.first.dark!)
-      .color(this.themeColor.first.light!)
-      .borderColor(this.themeColor.first.light!)
+      .backgroundColor(this.theme.bg)
+      .color(this.theme.fg)
+      .borderColor(this.theme.fg)
       .opacity(mouseState.value === "out" ? "1" : "0.5")
       .onMouseDown(() => {
         mouseState.value = "down"
@@ -212,22 +266,103 @@ class Button extends ReactUIElement {
     return button
   }
 
-  // ---- these are custom dot function that can be called outside and be used as this.C.xx in Body
+  // ---- this is custom dot function that can be called outside and be used as this.C.xx in Body
   @RUIProp
   disable(value: boolean=true) {return this}
 }
-
 export default function (title: string) {
   return new Button({title})
 }
 ```
-## ☑️Todo
-- [ ] Build an internal component library with theme and animation.
-  - [x] VStack/HStack/ZStack
-  - [x] Button
-  - [x] Toggle
-  - [x] TextField
-  - [x] List
-  - [x] pogress
-  - [x] Select
-  - [ ] AutoComplete
+### Theme
+Use theme in ReactUIElement
+```typescript
+let themes = {
+  primary: {
+      bg: "#11AA11",
+      shadow: "#AAFF00"
+  },
+  secondary: {
+      bg: "#00AAAA",
+      shadow: "#FF66FF"
+  }
+}
+
+class Paper extends ReactUIElement {
+  defaultTheme = themes.primary
+
+  Body = () => {
+    const paper = Div()
+
+    return paper
+      .backgroundColor(this.theme.bg)
+      .width("200px")
+      .height("280px")
+      .borderRadius("7px")
+      .boxShadow(`2px 2px 4px 1px ${this.theme.shadow}`)
+  }
+}
+
+export default function() {
+    return new Paper().themes(themes).themeName("primary")
+}
+
+```
+`ThemeProvider`
+```typescript
+import {ThemeProvider} from "@iandx/reactui"
+const ComponentWithTheme = RUI(() =>
+  ThemeProvider(
+    VStack(
+      Paper()
+        .themeName("primary"),
+      Paper()
+        .themeName("secondary")
+    )
+  )
+)
+```
+`useTheme`, use this hook to save theme in contexts and change theme across any component
+
+```typescript
+import {ThemeProvider, useTheme} from "@iandx/reactui"
+
+const ComponentA = RUI(({}, {theme}) =>
+  Button("click me to change theme")
+    .onClick(() => {
+      if (!theme.is("myTheme")) {
+        theme.to("myTheme")
+      } else {
+        theme.to("primary")
+      }
+    })
+)
+const ComponentWithTheme = RUI(() => {
+  let theme = useTheme({
+    myTheme: {
+      bg: "#22AA11",
+      shadow: "#55FF00"
+    },
+  })
+  
+  return (
+    ThemeProvider(
+      VStack(
+        Paper()
+      )
+    ).theme(theme)
+  )
+})
+```
+> Tips: Everything that starts with RUI is a **function** and ReactUI a **class**
+## Components Todo List
+- [x] VStack/HStack/ZStack
+- [x] Button
+- [x] Toggle
+- [x] TextField
+- [x] List
+- [x] pogress
+- [x] Select
+- [ ] AutoComplete
+
+

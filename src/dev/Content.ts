@@ -1,4 +1,3 @@
-import {useEffect, useRef} from "react";
 import {
     NavigationView,
     ForEach,
@@ -17,13 +16,11 @@ import {
 import Paper from "../component/Displayer/Paper"
 import ZStack from "../component/Container/ZStack";
 import {NavigateTo} from "../base";
-import {useThemes} from "../base/theme/ThemeProvider";
+import {useTheme} from "../base/theme/ThemeProvider";
 import {ToggleDisplay} from "./routes/ToggleDisplay";
 import {TextFieldDisplay} from "./routes/TextFieldDisplay";
 import {ListDisplay} from "./routes/ListDisplay";
 import {ImageDisplay} from "./routes/ImageDisplay";
-import {ContextProvider} from "../base/context/ContextProvider";
-
 
 
 
@@ -69,7 +66,7 @@ const TopBar = RUI(() =>
 )
 
 const Content = RUI(() => {
-    let theme = useThemes(myThemes, "secondary")
+    let theme = useTheme(myThemes, "secondary")
 
     return (
         ThemeProvider(
@@ -101,55 +98,4 @@ const Content = RUI(() => {
     )
 })
 
-const ChangeA = RUI(({}, {a}) => {
-    return (
-        VStack(
-            `${a.value}`,
-        )
-    )
-})
-const Change = RUI(({}, {a}) => {
-    return (
-        VStack(
-            ChangeA(),
-            Button("click me")
-                .onClick(() => {a.value = !a.value}),
-        )
-    )
-})
-
-const NoChange = RUI(({}, {a}) => {
-    return (
-        VStack(
-            "hh",
-        )
-    )
-})
-
-
-
-
-const Test = RUI(() => {
-    let a = useRUIState(false)
-    let b = useRUIState(false)
-    return (
-        ContextProvider (
-            VStack(
-                Change(),
-                NoChange()
-                    .contextTag("hhh"),
-                Button("click me")
-                    .onClick(() => {a.value = !a.value}),
-                // Button("click me")
-                //     .themeTag("hhh"),
-                // Button("click me")
-                //     .themeTag("hh")
-                //     .themeName("tertiary")
-            )
-        )
-            .context({a}, "hhh")
-    )
-})
-
-export default Test
-// export default TopBar
+export default Content

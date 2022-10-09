@@ -29,12 +29,6 @@ class Paper extends ReactUIElement {
     }
 }
 
-// default
-// themes: {
-//    default: themes.primary,
-//    primary: ...
-//    secondary : ....
-//
 export default function() {
     return new Paper().themes(themes).themeName("primary")
 }

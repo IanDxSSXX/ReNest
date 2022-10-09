@@ -46,6 +46,10 @@ export class ThemesState {
     to(themeName: string) {
         this.setThemeName(themeName)
     }
+    
+    is(themeName: string) {
+        return this.themeName === themeName
+    }
 
     constructor(themes: { [key: string]: { [key: string]: any }}, themeName: string, setThemeName: any) {
         this.themes = themes
@@ -54,9 +58,9 @@ export class ThemesState {
     }
 }
 
-export function useThemes(themes: { [key: string]: { [key: string]: any }}, defaultThemeName?: string) {
+export function useTheme(themes: { [key: string]: { [key: string]: any }}, defaultThemeName?: string) {
     if (typeof themes !== "object" || Object.keys(themes).length === 0) {
-        ReactUIHelper.error(`must provide a solid object to useThemes.`)
+        ReactUIHelper.error(`must provide a solid object to useTheme.`)
     }
     defaultThemeName = !!defaultThemeName ? defaultThemeName : Object.keys(themes)[0]
     let [themeName, setThemeName] = useState(defaultThemeName)
