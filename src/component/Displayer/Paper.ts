@@ -3,19 +3,12 @@ import {Div} from "../../base/utils/HTMLTags";
 import {RUIColor} from "../../base/theme/Colors";
 
 
-let themes = {
-    primary: {
-        bg: RUIColor.white.light,
-        shadow: RUIColor.white.dark
-    },
-    secondary: {
-        bg: RUIColor.red.light,
-        shadow: RUIColor.red.dark
-    }
-}
 
 class Paper extends ReactUIElement {
-    defaultTheme = themes.primary
+    defaultTheme =  {
+        bg: RUIColor.white.light,
+        shadow: RUIColor.white.dark
+    }
 
     Body = () => {
         const paper = Div()
@@ -30,5 +23,5 @@ class Paper extends ReactUIElement {
 }
 
 export default function() {
-    return new Paper().themes(themes).themeName("primary")
+    return new Paper()
 }

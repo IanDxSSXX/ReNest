@@ -2,7 +2,7 @@ import {C as RUIWrapperC} from "../utils/ReactUIWrapper";
 import {flattened} from "../utils/Utils";
 import {useState} from "react";
 import {ReactUIHelper} from "../utils/ReactUIHelper";
-import ReactUIBase from "../core/ReactUIBase";
+import ReactUIBase from "../base/ReactUIBase";
 import {ReactUIElement} from "../element/ReactUIElement";
 import {ReactUIContext} from "./ReactUIContext";
 

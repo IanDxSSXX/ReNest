@@ -1,11 +1,12 @@
-import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/Spring";
 import {useSpring} from "@react-spring/web";
 import {RUIState, useRUIState, useTrigger, useTriggerEffect} from "../../base/utils/Utils";
 import {useEffect, useRef} from "react";
-import ReactUIBase from "../../base/core/ReactUIBase";
+import ReactUIBase from "../../base/base/ReactUIBase";
 import {MdCheck} from "react-icons/md";
 import Paper from "../Displayer/Paper";
 import {RUITag} from "../../base";
@@ -24,7 +25,7 @@ class Toggle extends ReactUIElement {
         const toggle = ZStack(
             toggleBack,
             toggleFront
-        ).registerBy(this)
+        )
 
         toggleBack
             .width(this.S.width ?? "40px")
@@ -50,7 +51,7 @@ class Toggle extends ReactUIElement {
         const toggle = ZStack(
             ZStack(toggleBack, toggleFront).alignmentH("leading"),
             toggleButton
-        ).registerBy(this)
+        )
 
 
         toggle

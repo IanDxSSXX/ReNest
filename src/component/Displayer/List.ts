@@ -1,15 +1,17 @@
-import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
-import {Range, uid} from "../../base/utils/Utils";
-import ReactUIBase from "../../base/core/ReactUIBase";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {RUIProp} from "../../base/element/Helpers";
+import {uid} from "../../base";
+import ReactUIBase from "../../base/base/ReactUIBase";
 import VStack from "../Container/VStack";
 import HStack from "../Container/HStack";
 import {ForEach} from "../../base";
 import {Div} from "../../base/utils/HTMLTags";
 import {ReactElement} from "react";
+import {RUIColor} from "../../base/theme/Colors";
 
 class List extends ReactUIElement {
     defaultTheme = {
-            bg: "#AA00AA"
+        bg: RUIColor.black.standard
     }
 
     Body = ({arrData, arrElem}:any): any => {
@@ -19,7 +21,7 @@ class List extends ReactUIElement {
 
         const divider = this.C.divider ?? "none"
         if (divider === "none") {
-            listView = stack(ForEach(arrData, arrElem)).registerBy(this)
+            listView = stack(ForEach(arrData, arrElem))
         } else {
             const newArrData: any[] = []
             let newDivider: () => any
@@ -31,29 +33,22 @@ class List extends ReactUIElement {
                         .height(isHorizontal ? "calc(100% - 10px)" : "1px")
                         .margin(isHorizontal ? "5px 0" : "0 5px")
                         .key(uid())
-
             } else {
                 newDivider = () => divider()
             }
             arrData.forEach((value:any, index:number) => {
-                if (index !== 0) {
-                    newArrData.push(newDivider)
-                }
+                if (index !== 0) newArrData.push(newDivider)
                 newArrData.push(value)
             })
 
             listView = stack(
                 ForEach(newArrData, (item, idx) =>
-                    idx % 2 === 0 ? arrElem(item, idx % 2) : item()
+                    idx % 2 === 0 ? arrElem(item, idx / 2) : item()
                 )
-            ).registerBy(this)
+            )
         }
 
-        this.registerAsChild(listView)
-
-
-        return listView.alignment(this.C.alignment ?? "center").spacing(this.C.spacing ?? "0px")
-
+        return listView.alignment("center").spacing(this.C.spacing ?? "0px")
     }
 
     @RUIProp
@@ -78,6 +73,6 @@ class List extends ReactUIElement {
 }
 
 
-export default function(arrData: any[] | Range, arrElem: (item: any, idx: number) => ReactUIBase | ReactElement) {
+export default function<T=any>(arrData: T[] | Range, arrElem: (item: T, idx: number) => ReactUIBase | ReactElement) {
     return new List({arrData, arrElem})
 }

@@ -1,9 +1,10 @@
-import ReactUIBase from "../core/ReactUIBase";
+import ReactUIBase from "../base/ReactUIBase";
 import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 import {ReactUITheme} from "../theme/ReactUITheme";
 import {createElement, ReactElement} from "react";
-import {RUIFragment} from "../utils/ReactUIWrapper";
+import {RUIFragment, RUITag} from "../utils/ReactUIWrapper";
 import {NavigationRoute, NavigationRouteMatchable} from "./NavigationRoute";
+import {BrowserRouter as RRDBrowserRouter} from "react-router-dom";
 
 
 export namespace C {
@@ -55,6 +56,10 @@ export namespace C {
 }
 export function NavigationView(pathRoutes: C.PathRoutes) {
     return new C.NavigationView(pathRoutes)
+}
+
+export function BrowserRouter(...children: any[]) {
+    return RUITag(RRDBrowserRouter)(...children)
 }
 
 export function NavigateBack() {

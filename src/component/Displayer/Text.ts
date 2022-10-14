@@ -5,7 +5,7 @@ import {ReactUIElement} from "../../base/element/ReactUIElement";
 
 class Text extends ReactUIElement {
     Body = ({content}:any):any => {
-        return Div(content).registerBy(this)
+        return Div(content)
             .height(this.S.height ?? "max-content")
             .width(this.S.width ?? "max-content")
             .textAlign("center").verticalAlign("middle")

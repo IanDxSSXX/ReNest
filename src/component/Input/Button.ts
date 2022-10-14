@@ -1,4 +1,5 @@
-import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
 import {useRUIState} from "../../base";
 import {RUIColor} from "../../base/theme/Colors";

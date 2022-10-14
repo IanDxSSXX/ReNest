@@ -6,7 +6,6 @@ import {RUITag} from "../../base";
 export class AnimatedDiv extends ReactUIElement {
     Body = ({children}:any) => {
         return RUITag(animated.div)(...children)
-            .registerBy(this)
             .height(this.S.height ?? "max-content")
             .width(this.S.width ?? "max-content")
     }

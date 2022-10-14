@@ -1,7 +1,7 @@
 import {Range} from "./Utils";
-import ReactUIBase from "../core/ReactUIBase";
+import ReactUIBase from "../base/ReactUIBase";
 import {ReactElement} from "react";
-import ReactUIWithStyle from "../core/ReactUIWithStyle";
+import ReactUIWithStyle from "../base/ReactUIWithStyle";
 import {RUIFragment} from "./ReactUIWrapper";
 
 // ---* condition

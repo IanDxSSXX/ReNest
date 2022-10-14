@@ -1,7 +1,7 @@
 import {flattened} from "../utils/Utils";
-import ReactUIWithStyle from "../core/ReactUIWithStyle";
+import ReactUIWithStyle from "../base/ReactUIWithStyle";
 import {ReactUIHelper} from "../utils/ReactUIHelper";
-import ReactUIBase from "../core/ReactUIBase";
+import ReactUIBase from "../base/ReactUIBase";
 
 export class ReactUIContext extends ReactUIWithStyle {
     IAmReactUIContext = true

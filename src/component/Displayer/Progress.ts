@@ -2,7 +2,7 @@ import {useSpring} from "@react-spring/web";
 import {ReactUIElement} from "../../base/element/ReactUIElement";
 import ZStack from "../Container/ZStack"
 import AnimatedDiv from "../Other/Spring";
-import {RUIProp} from "../../base/element/ReactUIElement";
+import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags"
 import {useEffect, useRef} from "react";
 import {useRUIState} from "../../base";
@@ -64,7 +64,7 @@ const CircleVariant = (value:number, wrapper:any) => {
         progressBackLeft,
         progressBackRight,
         progressFront
-    ).registerBy(wrapper)
+    )
 
     // this.mapViewStyles(progressBack,"height","width")
     progress

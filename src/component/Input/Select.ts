@@ -99,7 +99,7 @@ class Select extends ReactUIElement {
         const select = ZStack(
             board,
             this.isGroup(arr)? groupOptions: options
-        ).registerBy(this)
+        )
 
         board
             .zIndex(2)

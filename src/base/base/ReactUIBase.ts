@@ -6,16 +6,19 @@ import {
     MutableRefObject,
     createElement
 } from "react";
+import {flattened, uid} from "../utils/Utils";
 
 
 export default class ReactUIBase {
     IAmReactUI = true
     IAmReactUITheme = false
-    IAmReactElement = false
+    IAmReactUIElement = false
     IAmReactUIWithStyle = false
     IAmReactUIContext = false
     IAMContextProvider = false
 
+    currJson: string = ""
+    preJson: string = ""
 
     protected elementTag: any
     children: any[]
@@ -112,16 +115,9 @@ export default class ReactUIBase {
         return this.customProps
     }
 
-    // ---- use for ReactUIElement
-    registerBy(element: any) {
-        element.registerView(this)
-        element.registerAsChild(this)
-        return this
-    }
-
     // ---- utils
     forEachChild(func: (child: any)=>void, nested=false) {
-        for (let child of this.children) {
+        for (let child of flattened(this.children)) {
             if (child.IAmReactUI) {
                 func(child)
                 if (nested) {

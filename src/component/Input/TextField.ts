@@ -1,6 +1,7 @@
 import {useSpring} from "@react-spring/web";
 import {MutableRefObject, useEffect, useRef} from "react";
-import {ReactUIElement, RUIProp} from "../../base/element/ReactUIElement";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {RUIProp} from "../../base/element/Helpers";
 import {pixelToInt, useRUIState, useTrigger, useTriggerEffect} from "../../base/utils/Utils";
 import ZStack from "../Container/ZStack";
 import {Input} from "../../base/utils/HTMLTags"
@@ -16,12 +17,16 @@ const themes = {
         foreground: RUIColor.white.light,
     },
     secondary: {
-        bg: RUIColor.green.light,
-        fg: RUIColor.green.dark,
+        unselected: RUIColor.white.dark,
+        over: RUIColor.green.light,
+        selected: RUIColor.green.standard,
+        foreground: RUIColor.white.light,
     },
     tertiary: {
-        bg: RUIColor.blue.light,
-        fg: RUIColor.blue.dark,
+        unselected: RUIColor.white.dark,
+        over: RUIColor.blue.light,
+        selected: RUIColor.blue.standard,
+        foreground: RUIColor.white.light,
     },
 }
 
@@ -33,7 +38,7 @@ export class TextField extends ReactUIElement {
         const input = Input().ruiClassName("Input")
         const text = Text(this.C.placeHolder ?? "").ruiClassName("PlacerHolder")
         const animatedDiv = AnimatedDiv(text).ruiClassName("AnimatedDiv")
-        const textField = ZStack(input, animatedDiv).registerBy(this)
+        const textField = ZStack(input, animatedDiv)
 
         // ---- variables
         const inputElement = useRef()

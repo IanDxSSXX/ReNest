@@ -1,6 +1,6 @@
 import {ReactUIHelper} from "../utils/ReactUIHelper";
 import {ReactUIContext} from "../context/ReactUIContext";
-import ReactUIBase from "../core/ReactUIBase";
+import ReactUIBase from "../base/ReactUIBase";
 
 export class ReactUITheme extends ReactUIContext {
     IAmReactUITheme = true

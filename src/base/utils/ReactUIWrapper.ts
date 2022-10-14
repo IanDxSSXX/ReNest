@@ -1,6 +1,5 @@
 import {Fragment, ReactElement} from "react";
 import {ReactUITheme} from "../theme/ReactUITheme";
-import ReactUIWithStyle from "../core/ReactUIWithStyle";
 
 
 export function RUITag(element: any) {

@@ -1,11 +1,11 @@
 import {ReactUIElement} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import {flattened} from "../../base/utils/Utils";
-import ReactUIWithStyle from "../../base/core/ReactUIWithStyle";
+import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
 
 class ZStack extends ReactUIElement {
     Body = ({children}:any) => {
-        const zstack = Div(...children).registerBy(this)
+        const zstack = Div(...children)
 
         zstack
             .height(zstack.S.height ?? "max-content")
@@ -15,7 +15,7 @@ class ZStack extends ReactUIElement {
             .justifyItems(this.C.alignmentH ?? "center")
 
         zstack.forEachChild(child => {
-            this.registerAsChild(child)
+            // this.registerAsChild(child)
 
             if (child.IAmReactUIWithStyle) {
                 child
