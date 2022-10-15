@@ -5,25 +5,30 @@ import Text from "../../component/Displayer/Text";
 
 export default {
     title: 'Input',
+    argTypes: {
+        themeName:{
+            defaultValue:'primary',
+            options: ['primary','secondary','tertiary'],
+            control: {type: 'radio'},
+        }
+    }
 };
 
 
 export const Button = RUITemplate((args: any) =>
-    RUIComponent.Button("Button")
-        // .setColor(args.first, args.second, args.third, args.forth, args.fifth)
+    RUIComponent.Button("Button").themeName(args.themeName)
 )
 
 export const Toggle = RUITemplate((args: any) =>
-    RUIComponent.Toggle()
+    RUIComponent.Toggle().themeName(args.themeName)
 )
-
 
 export const Select = RUITemplate((args: any) =>
     RUIComponent.Select([{title:"orange",data:[1,3,4]},{title:"banana",data:[10,30,40]}],'1')
 )
 
 export const TextField = RUITemplate((args: any) =>
-    RUIComponent.TextField('').placeHolder(args.placeHolder)
+    RUIComponent.TextField("").placeHolder(args.placeHolder).themeName(args.themeName)
 )
 TextField.argTypes = {
     placeHolder:{

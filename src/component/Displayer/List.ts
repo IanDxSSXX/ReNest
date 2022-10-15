@@ -11,24 +11,24 @@ import {RUIColor} from "../../base/theme/Colors";
 
 class List extends ReactUIElement {
     defaultTheme = {
-        bg: RUIColor.black.standard
+        divider: RUIColor.black.standard
     }
 
     Body = ({arrData, arrElem}:any): any => {
         const isHorizontal = (this.C.alignDirection ?? "vertical") === "horizontal"
-        const stack = isHorizontal ? HStack : VStack
+        const Stack = isHorizontal ? HStack : VStack
         let listView
 
         const divider = this.C.divider ?? "none"
         if (divider === "none") {
-            listView = stack(ForEach(arrData, arrElem))
+            listView = Stack(ForEach(arrData, arrElem))
         } else {
             const newArrData: any[] = []
             let newDivider: () => any
             if (divider === "solid") {
                 newDivider = () =>
                     Div()
-                        .backgroundColor(this.theme.bg)
+                        .backgroundColor(this.theme.divider)
                         .width(isHorizontal ? "1px" : "calc(100% - 10px)")
                         .height(isHorizontal ? "calc(100% - 10px)" : "1px")
                         .margin(isHorizontal ? "5px 0" : "0 5px")
@@ -41,7 +41,7 @@ class List extends ReactUIElement {
                 newArrData.push(value)
             })
 
-            listView = stack(
+            listView = Stack(
                 ForEach(newArrData, (item, idx) =>
                     idx % 2 === 0 ? arrElem(item, idx / 2) : item()
                 )

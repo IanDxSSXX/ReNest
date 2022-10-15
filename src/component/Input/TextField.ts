@@ -31,6 +31,8 @@ const themes = {
 }
 
 class TextField extends ReactUIElement {
+    defaultTheme = themes.primary
+
     Body = ({defaultText}: any): any => {
         const inputElement = useRef()
         const textFieldElement = useRef()

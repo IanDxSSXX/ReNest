@@ -3,7 +3,7 @@ import {RUITag} from "../utils/ReactUIWrapper";
 import {createElement, memo, useEffect} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import {ReactUIElement} from "./ReactUIElement";
-
+import lodash from "lodash"
 
 // ---- react treat useXXX as a hook and Xxxx as a component,
 //      can't use hook in a callback, so make react view it as a component
@@ -63,31 +63,30 @@ export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (pre, curr
     let useMemo = currWrapper.C.useMemo??true
     if (!useMemo) return false
 
-    let preProps = preWrapper.props, currProps = currWrapper.props
-
     // ---- styles and custom props
-    // ---1 styles, update on change by default
-    for (let key of Object.keys(preWrapper.elementProps.style)) {
-        if (preWrapper.elementProps.style??{}[key] !== currWrapper.customProps.style??{}[key]) return false
-    }
-    // ---2 element props, , update on change by default
-    for (let key of Object.keys(preWrapper.customProps)) {
-        if (key !== "style" && preWrapper.elementProps[key] !== currWrapper.customProps[key]) return false
-    }
+    // ---1 element props, update on change by default using deep equal
+    if (!lodash.isEqual(preWrapper.elementProps, currWrapper.elementProps)) return false
 
-    // -3/4 custom and input props with shouldUpdate hook
+    // ---2 themes, update on change by default using deep equal
+    if (preWrapper.ruiThemeName !== currWrapper.ruiThemeName) return false
+    if (!lodash.isEqual(preWrapper.ruiThemes, currWrapper.ruiThemes)) return false
+
+    // ---3 contexts
+    if (!lodash.isEqual(preWrapper.contexts, currWrapper.contexts)) return false
+
+    // -4.5 custom and input props with shouldUpdate hook
     if (!!currWrapper.C.shouldUpdate) {
-        return currWrapper.C.shouldUpdate({...preProps, ...preWrapper.customProps}, {...currProps, ...currWrapper.customProps})
+        return currWrapper.C.shouldUpdate(
+            {...preWrapper.props, ...preWrapper.customProps}, {...currWrapper.props, ...currWrapper.customProps})
     }
 
-    // ---3 custom props
-    for (let key of Object.keys(preWrapper.customProps)) {
-        if (preWrapper.customProps[key] !== currWrapper.customProps[key]) return false
-    }
-    // ---4 input props
-    for (let key of Object.keys(preProps)) {
-        if (preProps[key] !== currProps[key]) return false
-    }
+    // ---4 custom props, update on change by default using deep equal
+    //      no function hooks
+    let filterKeyFunc = (_: any, key: string) => !["didMount", "didUpdate", "shouldUpdate", "willUnmount"].includes(key)
+    if (!lodash.isEqual(lodash.pickBy(preWrapper.customProps, filterKeyFunc), lodash.pickBy(currWrapper.customProps, filterKeyFunc))) return false
+
+    // ---5 input props
+    if (!lodash.isEqual(preWrapper.props, currWrapper.props)) return false
 
     return true
 }) as any
