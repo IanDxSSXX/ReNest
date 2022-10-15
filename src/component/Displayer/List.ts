@@ -48,7 +48,9 @@ class List extends ReactUIElement {
             )
         }
 
-        return listView.alignment("center").spacing(this.C.spacing ?? "0px")
+        return listView
+            .alignment("center")
+            .spacing(this.C.spacing ?? "0px")
     }
 
     @RUIProp

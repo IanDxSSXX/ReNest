@@ -63,6 +63,11 @@ export default class ReactUIBase {
         return this
     }
 
+    setStyle(key: string, value: any, willSet=true) {
+        if (willSet) this.elementProps.style[key] = value
+        return this
+    }
+
     deleteProp(key: any) {
         delete this.elementProps[key]
         return this
@@ -125,6 +130,7 @@ export default class ReactUIBase {
                 }
             }
         }
+        return this
     }
 
     // ---- hook

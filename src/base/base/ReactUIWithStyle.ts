@@ -10,2841 +10,1732 @@ import {
 import {Property} from "csstype";
 import ReactUIBase from "./ReactUIBase";
 
+
+function RUIStyleProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalValue = descriptor.value;
+    descriptor.value = function(...args: any[]) {
+        (this as ReactUIWithStyle).setStyle(propertyKey, args[0], args[1])
+        return originalValue.apply(this, args);
+    }
+}
+
+function RUIElementProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalValue = descriptor.value;
+    descriptor.value = function(...args: any[]) {
+        (this as ReactUIWithStyle).setProp(propertyKey, args[0], args[1])
+        return originalValue.apply(this, args);
+    }
+}
+
 export default class ReactUIWithStyle<TLength = (string & {}) | 0, TTime = string & {}> extends ReactUIBase {
     IAmReactUIWithStyle = true
 
     // ---* Events from react/ReactUIHH.d.tx -> DOMAttributes
     // ---- Clipboard Events
-    onCopy(value: ClipboardEventHandler) {
-        this.elementProps.onCopy = value
-        return this
-    }
+    @RUIElementProp
+    onCopy(value: ClipboardEventHandler, willSet=true) { return this }
 
-    onCopyCapture(value: ClipboardEventHandler) {
-        this.elementProps.onCopyCapture = value
-        return this
-    }
+    @RUIElementProp
+    onCopyCapture(value: ClipboardEventHandler, willSet=true) { return this }
 
-    onCut(value: ClipboardEventHandler) {
-        this.elementProps.onCut = value
-        return this
-    }
+    @RUIElementProp
+    onCut(value: ClipboardEventHandler, willSet=true) { return this }
 
-    onCutCapture(value: ClipboardEventHandler) {
-        this.elementProps.onCutCapture = value
-        return this
-    }
+    @RUIElementProp
+    onCutCapture(value: ClipboardEventHandler, willSet=true) { return this }
 
-    onPaste(value: ClipboardEventHandler) {
-        this.elementProps.onPaste = value
-        return this
-    }
+    @RUIElementProp
+    onPaste(value: ClipboardEventHandler, willSet=true) { return this }
 
-    onPasteCapture(value: ClipboardEventHandler) {
-        this.elementProps.onPasteCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPasteCapture(value: ClipboardEventHandler, willSet=true) { return this }
 
     // ---- Composition Events
-    onCompositionEnd(value: CompositionEventHandler) {
-        this.elementProps.onCompositionEnd = value
-        return this
-    }
+    @RUIElementProp
+    onCompositionEnd(value: CompositionEventHandler, willSet=true) { return this }
 
-    onCompositionEndCapture(value: CompositionEventHandler) {
-        this.elementProps.onCompositionEndCapture = value
-        return this
-    }
+    @RUIElementProp
+    onCompositionEndCapture(value: CompositionEventHandler, willSet=true) { return this }
 
-    onCompositionStart(value: CompositionEventHandler) {
-        this.elementProps.onCompositionStart = value
-        return this
-    }
+    @RUIElementProp
+    onCompositionStart(value: CompositionEventHandler, willSet=true) { return this }
 
-    onCompositionStartCapture(value: CompositionEventHandler) {
-        this.elementProps.onCompositionStartCapture = value
-        return this
-    }
+    @RUIElementProp
+    onCompositionStartCapture(value: CompositionEventHandler, willSet=true) { return this }
 
-    onCompositionUpdate(value: CompositionEventHandler) {
-        this.elementProps.onCompositionUpdate = value
-        return this
-    }
+    @RUIElementProp
+    onCompositionUpdate(value: CompositionEventHandler, willSet=true) { return this }
 
-    onCompositionUpdateCapture(value: CompositionEventHandler) {
-        this.elementProps.onCompositionUpdateCapture = value
-        return this
-    }
+    @RUIElementProp
+    onCompositionUpdateCapture(value: CompositionEventHandler, willSet=true) { return this }
 
     // ---- Focus Events
-    onFocus(value: FocusEventHandler) {
-        this.elementProps.onFocus = value
-        return this
-    }
+    @RUIElementProp
+    onFocus(value: FocusEventHandler, willSet=true) { return this }
 
-    onFocusCapture(value: FocusEventHandler) {
-        this.elementProps.onFocusCapture = value
-        return this
-    }
+    @RUIElementProp
+    onFocusCapture(value: FocusEventHandler, willSet=true) { return this }
 
-    onBlur(value: FocusEventHandler) {
-        this.elementProps.onBlur = value
-        return this
-    }
+    @RUIElementProp
+    onBlur(value: FocusEventHandler, willSet=true) { return this }
 
-    onBlurCapture(value: FocusEventHandler) {
-        this.elementProps.onBlurCapture = value
-        return this
-    }
+    @RUIElementProp
+    onBlurCapture(value: FocusEventHandler, willSet=true) { return this }
 
     // ---- Form Events
-    onChange(value: FormEventHandler) {
-        this.elementProps.onChange = value
-        return this
-    }
+    @RUIElementProp
+    onChange(value: FormEventHandler, willSet=true) { return this }
 
-    onChangeCapture(value: FormEventHandler) {
-        this.elementProps.onChangeCapture = value
-        return this
-    }
+    @RUIElementProp
+    onChangeCapture(value: FormEventHandler, willSet=true) { return this }
 
-    onBeforeInput(value: FormEventHandler) {
-        this.elementProps.onBeforeInput = value
-        return this
-    }
+    @RUIElementProp
+    onBeforeInput(value: FormEventHandler, willSet=true) { return this }
 
-    onBeforeInputCapture(value: FormEventHandler) {
-        this.elementProps.onBeforeInputCapture = value
-        return this
-    }
+    @RUIElementProp
+    onBeforeInputCapture(value: FormEventHandler, willSet=true) { return this }
 
-    onInput(value: FormEventHandler) {
-        this.elementProps.onInput = value
-        return this
-    }
+    @RUIElementProp
+    onInput(value: FormEventHandler, willSet=true) { return this }
 
-    onInputCapture(value: FormEventHandler) {
-        this.elementProps.onInputCapture = value
-        return this
-    }
+    @RUIElementProp
+    onInputCapture(value: FormEventHandler, willSet=true) { return this }
 
-    onReset(value: FormEventHandler) {
-        this.elementProps.onReset = value
-        return this
-    }
+    @RUIElementProp
+    onReset(value: FormEventHandler, willSet=true) { return this }
 
-    onResetCapture(value: FormEventHandler) {
-        this.elementProps.onResetCapture = value
-        return this
-    }
+    @RUIElementProp
+    onResetCapture(value: FormEventHandler, willSet=true) { return this }
 
-    onSubmit(value: FormEventHandler) {
-        this.elementProps.onSubmit = value
-        return this
-    }
+    @RUIElementProp
+    onSubmit(value: FormEventHandler, willSet=true) { return this }
 
-    onSubmitCapture(value: FormEventHandler) {
-        this.elementProps.onSubmitCapture = value
-        return this
-    }
+    @RUIElementProp
+    onSubmitCapture(value: FormEventHandler, willSet=true) { return this }
 
-    onInvalid(value: FormEventHandler) {
-        this.elementProps.onInvalid = value
-        return this
-    }
+    @RUIElementProp
+    onInvalid(value: FormEventHandler, willSet=true) { return this }
 
-    onInvalidCapture(value: FormEventHandler) {
-        this.elementProps.onInvalidCapture = value
-        return this
-    }
+    @RUIElementProp
+    onInvalidCapture(value: FormEventHandler, willSet=true) { return this }
 
     // ---- Image Events
-    onLoad(value: ReactEventHandler) {
-        this.elementProps.onLoad = value
-        return this
-    }
+    @RUIElementProp
+    onLoad(value: ReactEventHandler, willSet=true) { return this }
 
-    onLoadCapture(value: ReactEventHandler) {
-        this.elementProps.onLoadCapture = value
-        return this
-    }
+    @RUIElementProp
+    onLoadCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onError(value: ReactEventHandler) {
-        this.elementProps.onError = value
-        return this
-    }
+    @RUIElementProp
+    onError(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- also a Media Event
-    onErrorCapture(value: ReactEventHandler) {
-        this.elementProps.onErrorCapture = value
-        return this
-    }
+    @RUIElementProp
+    onErrorCapture(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- also a Media Event
     // ---- Keyboard Events
-    onKeyDown(value: KeyboardEventHandler) {
-        this.elementProps.onKeyDown = value
-        return this
-    }
+    @RUIElementProp
+    onKeyDown(value: KeyboardEventHandler, willSet=true) { return this }
 
-    onKeyDownCapture(value: KeyboardEventHandler) {
-        this.elementProps.onKeyDownCapture = value
-        return this
-    }
+    @RUIElementProp
+    onKeyDownCapture(value: KeyboardEventHandler, willSet=true) { return this }
 
-    onKeyPress(value: KeyboardEventHandler) {
-        this.elementProps.onKeyPress = value
-        return this
-    }
+    @RUIElementProp
+    onKeyPress(value: KeyboardEventHandler, willSet=true) { return this }
 
-    onKeyPressCapture(value: KeyboardEventHandler) {
-        this.elementProps.onKeyPressCapture = value
-        return this
-    }
+    @RUIElementProp
+    onKeyPressCapture(value: KeyboardEventHandler, willSet=true) { return this }
 
-    onKeyUp(value: KeyboardEventHandler) {
-        this.elementProps.onKeyUp = value
-        return this
-    }
+    @RUIElementProp
+    onKeyUp(value: KeyboardEventHandler, willSet=true) { return this }
 
-    onKeyUpCapture(value: KeyboardEventHandler) {
-        this.elementProps.onKeyUpCapture = value
-        return this
-    }
+    @RUIElementProp
+    onKeyUpCapture(value: KeyboardEventHandler, willSet=true) { return this }
 
     // ---- Media Events
-    onAbort(value: ReactEventHandler) {
-        this.elementProps.onAbort = value
-        return this
-    }
+    @RUIElementProp
+    onAbort(value: ReactEventHandler, willSet=true) { return this }
 
-    onAbortCapture(value: ReactEventHandler) {
-        this.elementProps.onAbortCapture = value
-        return this
-    }
+    @RUIElementProp
+    onAbortCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onCanPlay(value: ReactEventHandler) {
-        this.elementProps.onCanPlay = value
-        return this
-    }
+    @RUIElementProp
+    onCanPlay(value: ReactEventHandler, willSet=true) { return this }
 
-    onCanPlayCapture(value: ReactEventHandler) {
-        this.elementProps.onCanPlayCapture = value
-        return this
-    }
+    @RUIElementProp
+    onCanPlayCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onCanPlayThrough(value: ReactEventHandler) {
-        this.elementProps.onCanPlayThrough = value
-        return this
-    }
+    @RUIElementProp
+    onCanPlayThrough(value: ReactEventHandler, willSet=true) { return this }
 
-    onCanPlayThroughCapture(value: ReactEventHandler) {
-        this.elementProps.onCanPlayThroughCapture = value
-        return this
-    }
+    @RUIElementProp
+    onCanPlayThroughCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onDurationChange(value: ReactEventHandler) {
-        this.elementProps.onDurationChange = value
-        return this
-    }
+    @RUIElementProp
+    onDurationChange(value: ReactEventHandler, willSet=true) { return this }
 
-    onDurationChangeCapture(value: ReactEventHandler) {
-        this.elementProps.onDurationChangeCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDurationChangeCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onEmptied(value: ReactEventHandler) {
-        this.elementProps.onEmptied = value
-        return this
-    }
+    @RUIElementProp
+    onEmptied(value: ReactEventHandler, willSet=true) { return this }
 
-    onEmptiedCapture(value: ReactEventHandler) {
-        this.elementProps.onEmptiedCapture = value
-        return this
-    }
+    @RUIElementProp
+    onEmptiedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onEncrypted(value: ReactEventHandler) {
-        this.elementProps.onEncrypted = value
-        return this
-    }
+    @RUIElementProp
+    onEncrypted(value: ReactEventHandler, willSet=true) { return this }
 
-    onEncryptedCapture(value: ReactEventHandler) {
-        this.elementProps.onEncryptedCapture = value
-        return this
-    }
+    @RUIElementProp
+    onEncryptedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onEnded(value: ReactEventHandler) {
-        this.elementProps.onEnded = value
-        return this
-    }
+    @RUIElementProp
+    onEnded(value: ReactEventHandler, willSet=true) { return this }
 
-    onEndedCapture(value: ReactEventHandler) {
-        this.elementProps.onEndedCapture = value
-        return this
-    }
+    @RUIElementProp
+    onEndedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onLoadedData(value: ReactEventHandler) {
-        this.elementProps.onLoadedData = value
-        return this
-    }
+    @RUIElementProp
+    onLoadedData(value: ReactEventHandler, willSet=true) { return this }
 
-    onLoadedDataCapture(value: ReactEventHandler) {
-        this.elementProps.onLoadedDataCapture = value
-        return this
-    }
+    @RUIElementProp
+    onLoadedDataCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onLoadedMetadata(value: ReactEventHandler) {
-        this.elementProps.onLoadedMetadata = value
-        return this
-    }
+    @RUIElementProp
+    onLoadedMetadata(value: ReactEventHandler, willSet=true) { return this }
 
-    onLoadedMetadataCapture(value: ReactEventHandler) {
-        this.elementProps.onLoadedMetadataCapture = value
-        return this
-    }
+    @RUIElementProp
+    onLoadedMetadataCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onLoadStart(value: ReactEventHandler) {
-        this.elementProps.onLoadStart = value
-        return this
-    }
+    @RUIElementProp
+    onLoadStart(value: ReactEventHandler, willSet=true) { return this }
 
-    onLoadStartCapture(value: ReactEventHandler) {
-        this.elementProps.onLoadStartCapture = value
-        return this
-    }
+    @RUIElementProp
+    onLoadStartCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onPause(value: ReactEventHandler) {
-        this.elementProps.onPause = value
-        return this
-    }
+    @RUIElementProp
+    onPause(value: ReactEventHandler, willSet=true) { return this }
 
-    onPauseCapture(value: ReactEventHandler) {
-        this.elementProps.onPauseCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPauseCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onPlay(value: ReactEventHandler) {
-        this.elementProps.onPlay = value
-        return this
-    }
+    @RUIElementProp
+    onPlay(value: ReactEventHandler, willSet=true) { return this }
 
-    onPlayCapture(value: ReactEventHandler) {
-        this.elementProps.onPlayCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPlayCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onPlaying(value: ReactEventHandler) {
-        this.elementProps.onPlaying = value
-        return this
-    }
+    @RUIElementProp
+    onPlaying(value: ReactEventHandler, willSet=true) { return this }
 
-    onPlayingCapture(value: ReactEventHandler) {
-        this.elementProps.onPlayingCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPlayingCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onProgress(value: ReactEventHandler) {
-        this.elementProps.onProgress = value
-        return this
-    }
+    @RUIElementProp
+    onProgress(value: ReactEventHandler, willSet=true) { return this }
 
-    onProgressCapture(value: ReactEventHandler) {
-        this.elementProps.onProgressCapture = value
-        return this
-    }
+    @RUIElementProp
+    onProgressCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onRateChange(value: ReactEventHandler) {
-        this.elementProps.onRateChange = value
-        return this
-    }
+    @RUIElementProp
+    onRateChange(value: ReactEventHandler, willSet=true) { return this }
 
-    onRateChangeCapture(value: ReactEventHandler) {
-        this.elementProps.onRateChangeCapture = value
-        return this
-    }
+    @RUIElementProp
+    onRateChangeCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onSeeked(value: ReactEventHandler) {
-        this.elementProps.onSeeked = value
-        return this
-    }
+    @RUIElementProp
+    onSeeked(value: ReactEventHandler, willSet=true) { return this }
 
-    onSeekedCapture(value: ReactEventHandler) {
-        this.elementProps.onSeekedCapture = value
-        return this
-    }
+    @RUIElementProp
+    onSeekedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onSeeking(value: ReactEventHandler) {
-        this.elementProps.onSeeking = value
-        return this
-    }
+    @RUIElementProp
+    onSeeking(value: ReactEventHandler, willSet=true) { return this }
 
-    onSeekingCapture(value: ReactEventHandler) {
-        this.elementProps.onSeekingCapture = value
-        return this
-    }
+    @RUIElementProp
+    onSeekingCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onStalled(value: ReactEventHandler) {
-        this.elementProps.onStalled = value
-        return this
-    }
+    @RUIElementProp
+    onStalled(value: ReactEventHandler, willSet=true) { return this }
 
-    onStalledCapture(value: ReactEventHandler) {
-        this.elementProps.onStalledCapture = value
-        return this
-    }
+    @RUIElementProp
+    onStalledCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onSuspend(value: ReactEventHandler) {
-        this.elementProps.onSuspend = value
-        return this
-    }
+    @RUIElementProp
+    onSuspend(value: ReactEventHandler, willSet=true) { return this }
 
-    onSuspendCapture(value: ReactEventHandler) {
-        this.elementProps.onSuspendCapture = value
-        return this
-    }
+    @RUIElementProp
+    onSuspendCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onTimeUpdate(value: ReactEventHandler) {
-        this.elementProps.onTimeUpdate = value
-        return this
-    }
+    @RUIElementProp
+    onTimeUpdate(value: ReactEventHandler, willSet=true) { return this }
 
-    onTimeUpdateCapture(value: ReactEventHandler) {
-        this.elementProps.onTimeUpdateCapture = value
-        return this
-    }
+    @RUIElementProp
+    onTimeUpdateCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onVolumeChange(value: ReactEventHandler) {
-        this.elementProps.onVolumeChange = value
-        return this
-    }
+    @RUIElementProp
+    onVolumeChange(value: ReactEventHandler, willSet=true) { return this }
 
-    onVolumeChangeCapture(value: ReactEventHandler) {
-        this.elementProps.onVolumeChangeCapture = value
-        return this
-    }
+    @RUIElementProp
+    onVolumeChangeCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    onWaiting(value: ReactEventHandler) {
-        this.elementProps.onWaiting = value
-        return this
-    }
+    @RUIElementProp
+    onWaiting(value: ReactEventHandler, willSet=true) { return this }
 
-    onWaitingCapture(value: ReactEventHandler) {
-        this.elementProps.onWaitingCapture = value
-        return this
-    }
+    @RUIElementProp
+    onWaitingCapture(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- MouseEvents
-    onAuxClick(value: MouseEventHandler) {
-        this.elementProps.onAuxClick = value
-        return this
-    }
+    @RUIElementProp
+    onAuxClick(value: MouseEventHandler, willSet=true) { return this }
 
-    onAuxClickCapture(value: MouseEventHandler) {
-        this.elementProps.onAuxClickCapture = value
-        return this
-    }
+    @RUIElementProp
+    onAuxClickCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onClick(value: MouseEventHandler) {
-        this.elementProps.onClick = value
-        return this
-    }
+    @RUIElementProp
+    onClick(value: MouseEventHandler, willSet=true) { return this }
 
-    onClickCapture(value: MouseEventHandler) {
-        this.elementProps.onClickCapture = value
-        return this
-    }
+    @RUIElementProp
+    onClickCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onContextMenu(value: MouseEventHandler) {
-        this.elementProps.onContextMenu = value
-        return this
-    }
+    @RUIElementProp
+    onContextMenu(value: MouseEventHandler, willSet=true) { return this }
 
-    onContextMenuCapture(value: MouseEventHandler) {
-        this.elementProps.onContextMenuCapture = value
-        return this
-    }
+    @RUIElementProp
+    onContextMenuCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onDoubleClick(value: MouseEventHandler) {
-        this.elementProps.onDoubleClick = value
-        return this
-    }
+    @RUIElementProp
+    onDoubleClick(value: MouseEventHandler, willSet=true) { return this }
 
-    onDoubleClickCapture(value: MouseEventHandler) {
-        this.elementProps.onDoubleClickCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDoubleClickCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onDrag(value: DragEventHandler) {
-        this.elementProps.onDrag = value
-        return this
-    }
+    @RUIElementProp
+    onDrag(value: DragEventHandler, willSet=true) { return this }
 
-    onDragCapture(value: DragEventHandler) {
-        this.elementProps.onDragCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDragCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onDragEnd(value: DragEventHandler) {
-        this.elementProps.onDragEnd = value
-        return this
-    }
+    @RUIElementProp
+    onDragEnd(value: DragEventHandler, willSet=true) { return this }
 
-    onDragEndCapture(value: DragEventHandler) {
-        this.elementProps.onDragEndCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDragEndCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onDragEnter(value: DragEventHandler) {
-        this.elementProps.onDragEnter = value
-        return this
-    }
+    @RUIElementProp
+    onDragEnter(value: DragEventHandler, willSet=true) { return this }
 
-    onDragEnterCapture(value: DragEventHandler) {
-        this.elementProps.onDragEnterCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDragEnterCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onDragExit(value: DragEventHandler) {
-        this.elementProps.onDragExit = value
-        return this
-    }
+    @RUIElementProp
+    onDragExit(value: DragEventHandler, willSet=true) { return this }
 
-    onDragExitCapture(value: DragEventHandler) {
-        this.elementProps.onDragExitCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDragExitCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onDragLeave(value: DragEventHandler) {
-        this.elementProps.onDragLeave = value
-        return this
-    }
+    @RUIElementProp
+    onDragLeave(value: DragEventHandler, willSet=true) { return this }
 
-    onDragLeaveCapture(value: DragEventHandler) {
-        this.elementProps.onDragLeaveCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDragLeaveCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onDragOver(value: DragEventHandler) {
-        this.elementProps.onDragOver = value
-        return this
-    }
+    @RUIElementProp
+    onDragOver(value: DragEventHandler, willSet=true) { return this }
 
-    onDragOverCapture(value: DragEventHandler) {
-        this.elementProps.onDragOverCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDragOverCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onDragStart(value: DragEventHandler) {
-        this.elementProps.onDragStart = value
-        return this
-    }
+    @RUIElementProp
+    onDragStart(value: DragEventHandler, willSet=true) { return this }
 
-    onDragStartCapture(value: DragEventHandler) {
-        this.elementProps.onDragStartCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDragStartCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onDrop(value: DragEventHandler) {
-        this.elementProps.onDrop = value
-        return this
-    }
+    @RUIElementProp
+    onDrop(value: DragEventHandler, willSet=true) { return this }
 
-    onDropCapture(value: DragEventHandler) {
-        this.elementProps.onDropCapture = value
-        return this
-    }
+    @RUIElementProp
+    onDropCapture(value: DragEventHandler, willSet=true) { return this }
 
-    onMouseDown(value: MouseEventHandler) {
-        this.elementProps.onMouseDown = value
-        return this
-    }
+    @RUIElementProp
+    onMouseDown(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseDownCapture(value: MouseEventHandler) {
-        this.elementProps.onMouseDownCapture = value
-        return this
-    }
+    @RUIElementProp
+    onMouseDownCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseEnter(value: MouseEventHandler) {
-        this.elementProps.onMouseEnter = value
-        return this
-    }
+    @RUIElementProp
+    onMouseEnter(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseLeave(value: MouseEventHandler) {
-        this.elementProps.onMouseLeave = value
-        return this
-    }
+    @RUIElementProp
+    onMouseLeave(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseMove(value: MouseEventHandler) {
-        this.elementProps.onMouseMove = value
-        return this
-    }
+    @RUIElementProp
+    onMouseMove(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseMoveCapture(value: MouseEventHandler) {
-        this.elementProps.onMouseMoveCapture = value
-        return this
-    }
+    @RUIElementProp
+    onMouseMoveCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseOut(value: MouseEventHandler) {
-        this.elementProps.onMouseOut = value
-        return this
-    }
+    @RUIElementProp
+    onMouseOut(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseOutCapture(value: MouseEventHandler) {
-        this.elementProps.onMouseOutCapture = value
-        return this
-    }
+    @RUIElementProp
+    onMouseOutCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseOver(value: MouseEventHandler) {
-        this.elementProps.onMouseOver = value
-        return this
-    }
+    @RUIElementProp
+    onMouseOver(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseOverCapture(value: MouseEventHandler) {
-        this.elementProps.onMouseOverCapture = value
-        return this
-    }
+    @RUIElementProp
+    onMouseOverCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseUp(value: MouseEventHandler) {
-        this.elementProps.onMouseUp = value
-        return this
-    }
+    @RUIElementProp
+    onMouseUp(value: MouseEventHandler, willSet=true) { return this }
 
-    onMouseUpCapture(value: MouseEventHandler) {
-        this.elementProps.onMouseUpCapture = value
-        return this
-    }
+    @RUIElementProp
+    onMouseUpCapture(value: MouseEventHandler, willSet=true) { return this }
 
     // ---- Selection Events
-    onSelect(value: ReactEventHandler) {
-        this.elementProps.onSelect = value
-        return this
-    }
+    @RUIElementProp
+    onSelect(value: ReactEventHandler, willSet=true) { return this }
 
-    onSelectCapture(value: ReactEventHandler) {
-        this.elementProps.onSelectCapture = value
-        return this
-    }
+    @RUIElementProp
+    onSelectCapture(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- Touch Events
-    onTouchCancel(value: TouchEventHandler) {
-        this.elementProps.onTouchCancel = value
-        return this
-    }
+    @RUIElementProp
+    onTouchCancel(value: TouchEventHandler, willSet=true) { return this }
 
-    onTouchCancelCapture(value: TouchEventHandler) {
-        this.elementProps.onTouchCancelCapture = value
-        return this
-    }
+    @RUIElementProp
+    onTouchCancelCapture(value: TouchEventHandler, willSet=true) { return this }
 
-    onTouchEnd(value: TouchEventHandler) {
-        this.elementProps.onTouchEnd = value
-        return this
-    }
+    @RUIElementProp
+    onTouchEnd(value: TouchEventHandler, willSet=true) { return this }
 
-    onTouchEndCapture(value: TouchEventHandler) {
-        this.elementProps.onTouchEndCapture = value
-        return this
-    }
+    @RUIElementProp
+    onTouchEndCapture(value: TouchEventHandler, willSet=true) { return this }
 
-    onTouchMove(value: TouchEventHandler) {
-        this.elementProps.onTouchMove = value
-        return this
-    }
+    @RUIElementProp
+    onTouchMove(value: TouchEventHandler, willSet=true) { return this }
 
-    onTouchMoveCapture(value: TouchEventHandler) {
-        this.elementProps.onTouchMoveCapture = value
-        return this
-    }
+    @RUIElementProp
+    onTouchMoveCapture(value: TouchEventHandler, willSet=true) { return this }
 
-    onTouchStart(value: TouchEventHandler) {
-        this.elementProps.onTouchStart = value
-        return this
-    }
+    @RUIElementProp
+    onTouchStart(value: TouchEventHandler, willSet=true) { return this }
 
-    onTouchStartCapture(value: TouchEventHandler) {
-        this.elementProps.onTouchStartCapture = value
-        return this
-    }
+    @RUIElementProp
+    onTouchStartCapture(value: TouchEventHandler, willSet=true) { return this }
 
     // ---- Pointer Events
-    onPointerDown(value: PointerEventHandler) {
-        this.elementProps.onPointerDown = value
-        return this
-    }
+    @RUIElementProp
+    onPointerDown(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerDownCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerDownCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerDownCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerMove(value: PointerEventHandler) {
-        this.elementProps.onPointerMove = value
-        return this
-    }
+    @RUIElementProp
+    onPointerMove(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerMoveCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerMoveCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerMoveCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerUp(value: PointerEventHandler) {
-        this.elementProps.onPointerUp = value
-        return this
-    }
+    @RUIElementProp
+    onPointerUp(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerUpCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerUpCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerUpCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerCancel(value: PointerEventHandler) {
-        this.elementProps.onPointerCancel = value
-        return this
-    }
+    @RUIElementProp
+    onPointerCancel(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerCancelCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerCancelCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerCancelCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerEnter(value: PointerEventHandler) {
-        this.elementProps.onPointerEnter = value
-        return this
-    }
+    @RUIElementProp
+    onPointerEnter(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerEnterCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerEnterCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerEnterCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerLeave(value: PointerEventHandler) {
-        this.elementProps.onPointerLeave = value
-        return this
-    }
+    @RUIElementProp
+    onPointerLeave(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerLeaveCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerLeaveCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerLeaveCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerOver(value: PointerEventHandler) {
-        this.elementProps.onPointerOver = value
-        return this
-    }
+    @RUIElementProp
+    onPointerOver(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerOverCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerOverCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerOverCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerOut(value: PointerEventHandler) {
-        this.elementProps.onPointerOut = value
-        return this
-    }
+    @RUIElementProp
+    onPointerOut(value: PointerEventHandler, willSet=true) { return this }
 
-    onPointerOutCapture(value: PointerEventHandler) {
-        this.elementProps.onPointerOutCapture = value
-        return this
-    }
+    @RUIElementProp
+    onPointerOutCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onGotPointerCapture(value: PointerEventHandler) {
-        this.elementProps.onGotPointerCapture = value
-        return this
-    }
+    @RUIElementProp
+    onGotPointerCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onGotPointerCaptureCapture(value: PointerEventHandler) {
-        this.elementProps.onGotPointerCaptureCapture = value
-        return this
-    }
+    @RUIElementProp
+    onGotPointerCaptureCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onLostPointerCapture(value: PointerEventHandler) {
-        this.elementProps.onLostPointerCapture = value
-        return this
-    }
+    @RUIElementProp
+    onLostPointerCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    onLostPointerCaptureCapture(value: PointerEventHandler) {
-        this.elementProps.onLostPointerCaptureCapture = value
-        return this
-    }
+    @RUIElementProp
+    onLostPointerCaptureCapture(value: PointerEventHandler, willSet=true) { return this }
 
     // ---- UI Events
-    onScroll(value: UIEventHandler) {
-        this.elementProps.onScroll = value
-        return this
-    }
+    @RUIElementProp
+    onScroll(value: UIEventHandler, willSet=true) { return this }
 
-    onScrollCapture(value: UIEventHandler) {
-        this.elementProps.onScrollCapture = value
-        return this
-    }
+    @RUIElementProp
+    onScrollCapture(value: UIEventHandler, willSet=true) { return this }
 
     // ---- Wheel Events
-    onWheel(value: WheelEventHandler) {
-        this.elementProps.onWheel = value
-        return this
-    }
+    @RUIElementProp
+    onWheel(value: WheelEventHandler, willSet=true) { return this }
 
-    onWheelCapture(value: WheelEventHandler) {
-        this.elementProps.onWheelCapture = value
-        return this
-    }
+    @RUIElementProp
+    onWheelCapture(value: WheelEventHandler, willSet=true) { return this }
 
     // ---- Animation Events
-    onAnimationStart(value: AnimationEventHandler) {
-        this.elementProps.onAnimationStart = value
-        return this
-    }
+    @RUIElementProp
+    onAnimationStart(value: AnimationEventHandler, willSet=true) { return this }
 
-    onAnimationStartCapture(value: AnimationEventHandler) {
-        this.elementProps.onAnimationStartCapture = value
-        return this
-    }
+    @RUIElementProp
+    onAnimationStartCapture(value: AnimationEventHandler, willSet=true) { return this }
 
-    onAnimationEnd(value: AnimationEventHandler) {
-        this.elementProps.onAnimationEnd = value
-        return this
-    }
+    @RUIElementProp
+    onAnimationEnd(value: AnimationEventHandler, willSet=true) { return this }
 
-    onAnimationEndCapture(value: AnimationEventHandler) {
-        this.elementProps.onAnimationEndCapture = value
-        return this
-    }
+    @RUIElementProp
+    onAnimationEndCapture(value: AnimationEventHandler, willSet=true) { return this }
 
-    onAnimationIteration(value: AnimationEventHandler) {
-        this.elementProps.onAnimationIteration = value
-        return this
-    }
+    @RUIElementProp
+    onAnimationIteration(value: AnimationEventHandler, willSet=true) { return this }
 
-    onAnimationIterationCapture(value: AnimationEventHandler) {
-        this.elementProps.onAnimationIterationCapture = value
-        return this
-    }
+    @RUIElementProp
+    onAnimationIterationCapture(value: AnimationEventHandler, willSet=true) { return this }
 
     // ---- Transition Events
-    onTransitionEnd(value: TransitionEventHandler) {
-        this.elementProps.onTransitionEnd = value
-        return this
-    }
+    @RUIElementProp
+    onTransitionEnd(value: TransitionEventHandler, willSet=true) { return this }
 
-    onTransitionEndCapture(value: TransitionEventHandler) {
-        this.elementProps.onTransitionEndCapture = value
-        return this
-    }
+    @RUIElementProp
+    onTransitionEndCapture(value: TransitionEventHandler, willSet=true) { return this }
 
     // ---* All styles from csstype/ReactUIHH.d.ts
-    accentColor(value: Property.AccentColor) {
-        this.elementProps.style.accentColor = value
-        return this
-    }
-
-    alignContent(value: Property.AlignContent) {
-        this.elementProps.style.alignContent = value
-        return this
-    }
-
-    alignItems(value: Property.AlignItems) {
-        this.elementProps.style.alignItems = value
-        return this
-    }
-
-    alignSelf(value: Property.AlignSelf) {
-        this.elementProps.style.alignSelf = value
-        return this
-    }
-
-    alignTracks(value: Property.AlignTracks) {
-        this.elementProps.style.alignTracks = value
-        return this
-    }
-
-    animationDelay(value: Property.AnimationDelay<TTime>) {
-        this.elementProps.style.animationDelay = value
-        return this
-    }
-
-    animationDirection(value: Property.AnimationDirection) {
-        this.elementProps.style.animationDirection = value
-        return this
-    }
-
-    animationDuration(value: Property.AnimationDuration<TTime>) {
-        this.elementProps.style.animationDuration = value
-        return this
-    }
-
-    animationFillMode(value: Property.AnimationFillMode) {
-        this.elementProps.style.animationFillMode = value
-        return this
-    }
-
-    animationIterationCount(value: Property.AnimationIterationCount) {
-        this.elementProps.style.animationIterationCount = value
-        return this
-    }
-
-    animationName(value: Property.AnimationName) {
-        this.elementProps.style.animationName = value
-        return this
-    }
-
-    animationPlayState(value: Property.AnimationPlayState) {
-        this.elementProps.style.animationPlayState = value
-        return this
-    }
-
-    animationTimeline(value: Property.AnimationTimeline) {
-        this.elementProps.style.animationTimeline = value
-        return this
-    }
-
-    animationTimingFunction(value: Property.AnimationTimingFunction) {
-        this.elementProps.style.animationTimingFunction = value
-        return this
-    }
-
-    appearance(value: Property.Appearance) {
-        this.elementProps.style.appearance = value
-        return this
-    }
-
-    aspectRatio(value: Property.AspectRatio) {
-        this.elementProps.style.aspectRatio = value
-        return this
-    }
-
-    backdropFilter(value: Property.BackdropFilter) {
-        this.elementProps.style.backdropFilter = value
-        return this
-    }
-
-    backfaceVisibility(value: Property.BackfaceVisibility) {
-        this.elementProps.style.backfaceVisibility = value
-        return this
-    }
-
-    backgroundAttachment(value: Property.BackgroundAttachment) {
-        this.elementProps.style.backgroundAttachment = value
-        return this
-    }
-
-    backgroundBlendMode(value: Property.BackgroundBlendMode) {
-        this.elementProps.style.backgroundBlendMode = value
-        return this
-    }
-
-    backgroundClip(value: Property.BackgroundClip) {
-        this.elementProps.style.backgroundClip = value
-        return this
-    }
-
-    backgroundColor(value: Property.BackgroundColor) {
-        this.elementProps.style.backgroundColor = value
-        return this
-    }
-
-    backgroundImage(value: Property.BackgroundImage) {
-        this.elementProps.style.backgroundImage = value
-        return this
-    }
-
-    backgroundOrigin(value: Property.BackgroundOrigin) {
-        this.elementProps.style.backgroundOrigin = value
-        return this
-    }
-
-    backgroundPositionX(value: Property.BackgroundPositionX<TLength>) {
-        this.elementProps.style.backgroundPositionX = value
-        return this
-    }
-
-    backgroundPositionY(value: Property.BackgroundPositionY<TLength>) {
-        this.elementProps.style.backgroundPositionY = value
-        return this
-    }
-
-    backgroundRepeat(value: Property.BackgroundRepeat) {
-        this.elementProps.style.backgroundRepeat = value
-        return this
-    }
-
-    backgroundSize(value: Property.BackgroundSize<TLength>) {
-        this.elementProps.style.backgroundSize = value
-        return this
-    }
-
-    blockOverflow(value: Property.BlockOverflow) {
-        this.elementProps.style.blockOverflow = value
-        return this
-    }
-
-    blockSize(value: Property.BlockSize<TLength>) {
-        this.elementProps.style.blockSize = value
-        return this
-    }
-
-    borderBlockColor(value: Property.BorderBlockColor) {
-        this.elementProps.style.borderBlockColor = value
-        return this
-    }
-
-    borderBlockEndColor(value: Property.BorderBlockEndColor) {
-        this.elementProps.style.borderBlockEndColor = value
-        return this
-    }
-
-    borderBlockEndStyle(value: Property.BorderBlockEndStyle) {
-        this.elementProps.style.borderBlockEndStyle = value
-        return this
-    }
-
-    borderBlockEndWidth(value: Property.BorderBlockEndWidth<TLength>) {
-        this.elementProps.style.borderBlockEndWidth = value
-        return this
-    }
-
-    borderBlockStartColor(value: Property.BorderBlockStartColor) {
-        this.elementProps.style.borderBlockStartColor = value
-        return this
-    }
-
-    borderBlockStartStyle(value: Property.BorderBlockStartStyle) {
-        this.elementProps.style.borderBlockStartStyle = value
-        return this
-    }
-
-    borderBlockStartWidth(value: Property.BorderBlockStartWidth<TLength>) {
-        this.elementProps.style.borderBlockStartWidth = value
-        return this
-    }
-
-    borderBlockStyle(value: Property.BorderBlockStyle) {
-        this.elementProps.style.borderBlockStyle = value
-        return this
-    }
-
-    borderBlockWidth(value: Property.BorderBlockWidth<TLength>) {
-        this.elementProps.style.borderBlockWidth = value
-        return this
-    }
-
-    borderBottomColor(value: Property.BorderBottomColor) {
-        this.elementProps.style.borderBottomColor = value
-        return this
-    }
-
-    borderBottomLeftRadius(value: Property.BorderBottomLeftRadius<TLength>) {
-        this.elementProps.style.borderBottomLeftRadius = value
-        return this
-    }
-
-    borderBottomRightRadius(value: Property.BorderBottomRightRadius<TLength>) {
-        this.elementProps.style.borderBottomRightRadius = value
-        return this
-    }
-
-    borderBottomStyle(value: Property.BorderBottomStyle) {
-        this.elementProps.style.borderBottomStyle = value
-        return this
-    }
-
-    borderBottomWidth(value: Property.BorderBottomWidth<TLength>) {
-        this.elementProps.style.borderBottomWidth = value
-        return this
-    }
-
-    borderCollapse(value: Property.BorderCollapse) {
-        this.elementProps.style.borderCollapse = value
-        return this
-    }
-
-    borderEndEndRadius(value: Property.BorderEndEndRadius<TLength>) {
-        this.elementProps.style.borderEndEndRadius = value
-        return this
-    }
-
-    borderEndStartRadius(value: Property.BorderEndStartRadius<TLength>) {
-        this.elementProps.style.borderEndStartRadius = value
-        return this
-    }
-
-    borderImageOutset(value: Property.BorderImageOutset<TLength>) {
-        this.elementProps.style.borderImageOutset = value
-        return this
-    }
-
-    borderImageRepeat(value: Property.BorderImageRepeat) {
-        this.elementProps.style.borderImageRepeat = value
-        return this
-    }
-
-    borderImageSlice(value: Property.BorderImageSlice) {
-        this.elementProps.style.borderImageSlice = value
-        return this
-    }
-
-    borderImageSource(value: Property.BorderImageSource) {
-        this.elementProps.style.borderImageSource = value
-        return this
-    }
-
-    borderImageWidth(value: Property.BorderImageWidth<TLength>) {
-        this.elementProps.style.borderImageWidth = value
-        return this
-    }
-
-    borderInlineColor(value: Property.BorderInlineColor) {
-        this.elementProps.style.borderInlineColor = value
-        return this
-    }
-
-    borderInlineEndColor(value: Property.BorderInlineEndColor) {
-        this.elementProps.style.borderInlineEndColor = value
-        return this
-    }
-
-    borderInlineEndStyle(value: Property.BorderInlineEndStyle) {
-        this.elementProps.style.borderInlineEndStyle = value
-        return this
-    }
-
-    borderInlineEndWidth(value: Property.BorderInlineEndWidth<TLength>) {
-        this.elementProps.style.borderInlineEndWidth = value
-        return this
-    }
-
-    borderInlineStartColor(value: Property.BorderInlineStartColor) {
-        this.elementProps.style.borderInlineStartColor = value
-        return this
-    }
-
-    borderInlineStartStyle(value: Property.BorderInlineStartStyle) {
-        this.elementProps.style.borderInlineStartStyle = value
-        return this
-    }
-
-    borderInlineStartWidth(value: Property.BorderInlineStartWidth<TLength>) {
-        this.elementProps.style.borderInlineStartWidth = value
-        return this
-    }
-
-    borderInlineStyle(value: Property.BorderInlineStyle) {
-        this.elementProps.style.borderInlineStyle = value
-        return this
-    }
-
-    borderInlineWidth(value: Property.BorderInlineWidth<TLength>) {
-        this.elementProps.style.borderInlineWidth = value
-        return this
-    }
-
-    borderLeftColor(value: Property.BorderLeftColor) {
-        this.elementProps.style.borderLeftColor = value
-        return this
-    }
-
-    borderLeftStyle(value: Property.BorderLeftStyle) {
-        this.elementProps.style.borderLeftStyle = value
-        return this
-    }
-
-    borderLeftWidth(value: Property.BorderLeftWidth<TLength>) {
-        this.elementProps.style.borderLeftWidth = value
-        return this
-    }
-
-    borderRightColor(value: Property.BorderRightColor) {
-        this.elementProps.style.borderRightColor = value
-        return this
-    }
-
-    borderRightStyle(value: Property.BorderRightStyle) {
-        this.elementProps.style.borderRightStyle = value
-        return this
-    }
-
-    borderRightWidth(value: Property.BorderRightWidth<TLength>) {
-        this.elementProps.style.borderRightWidth = value
-        return this
-    }
-
-    borderSpacing(value: Property.BorderSpacing<TLength>) {
-        this.elementProps.style.borderSpacing = value
-        return this
-    }
-
-    borderStartEndRadius(value: Property.BorderStartEndRadius<TLength>) {
-        this.elementProps.style.borderStartEndRadius = value
-        return this
-    }
-
-    borderStartStartRadius(value: Property.BorderStartStartRadius<TLength>) {
-        this.elementProps.style.borderStartStartRadius = value
-        return this
-    }
-
-    borderTopColor(value: Property.BorderTopColor) {
-        this.elementProps.style.borderTopColor = value
-        return this
-    }
-
-    borderTopLeftRadius(value: Property.BorderTopLeftRadius<TLength>) {
-        this.elementProps.style.borderTopLeftRadius = value
-        return this
-    }
-
-    borderTopRightRadius(value: Property.BorderTopRightRadius<TLength>) {
-        this.elementProps.style.borderTopRightRadius = value
-        return this
-    }
-
-    borderTopStyle(value: Property.BorderTopStyle) {
-        this.elementProps.style.borderTopStyle = value
-        return this
-    }
-
-    borderTopWidth(value: Property.BorderTopWidth<TLength>) {
-        this.elementProps.style.borderTopWidth = value
-        return this
-    }
-
-    bottom(value: Property.Bottom<TLength>) {
-        this.elementProps.style.bottom = value
-        return this
-    }
-
-    boxDecorationBreak(value: Property.BoxDecorationBreak) {
-        this.elementProps.style.boxDecorationBreak = value
-        return this
-    }
-
-    boxShadow(value: Property.BoxShadow) {
-        this.elementProps.style.boxShadow = value
-        return this
-    }
-
-    boxSizing(value: Property.BoxSizing) {
-        this.elementProps.style.boxSizing = value
-        return this
-    }
-
-    breakAfter(value: Property.BreakAfter) {
-        this.elementProps.style.breakAfter = value
-        return this
-    }
-
-    breakBefore(value: Property.BreakBefore) {
-        this.elementProps.style.breakBefore = value
-        return this
-    }
-
-    breakInside(value: Property.BreakInside) {
-        this.elementProps.style.breakInside = value
-        return this
-    }
-
-    captionSide(value: Property.CaptionSide) {
-        this.elementProps.style.captionSide = value
-        return this
-    }
-
-    caretColor(value: Property.CaretColor) {
-        this.elementProps.style.caretColor = value
-        return this
-    }
-
-    clear(value: Property.Clear) {
-        this.elementProps.style.clear = value
-        return this
-    }
-
-    clipPath(value: Property.ClipPath) {
-        this.elementProps.style.clipPath = value
-        return this
-    }
-
-    color(value: Property.Color) {
-        this.elementProps.style.color = value
-        return this
-    }
-
-    colorAdjust(value: Property.PrintColorAdjust) {
-        this.elementProps.style.colorAdjust = value
-        return this
-    }
-
-    colorScheme(value: Property.ColorScheme) {
-        this.elementProps.style.colorScheme = value
-        return this
-    }
-
-    columnCount(value: Property.ColumnCount) {
-        this.elementProps.style.columnCount = value
-        return this
-    }
-
-    columnFill(value: Property.ColumnFill) {
-        this.elementProps.style.columnFill = value
-        return this
-    }
-
-    columnGap(value: Property.ColumnGap<TLength>) {
-        this.elementProps.style.columnGap = value
-        return this
-    }
-
-    columnRuleColor(value: Property.ColumnRuleColor) {
-        this.elementProps.style.columnRuleColor = value
-        return this
-    }
-
-    columnRuleStyle(value: Property.ColumnRuleStyle) {
-        this.elementProps.style.columnRuleStyle = value
-        return this
-    }
-
-    columnRuleWidth(value: Property.ColumnRuleWidth<TLength>) {
-        this.elementProps.style.columnRuleWidth = value
-        return this
-    }
-
-    columnSpan(value: Property.ColumnSpan) {
-        this.elementProps.style.columnSpan = value
-        return this
-    }
-
-    columnWidth(value: Property.ColumnWidth<TLength>) {
-        this.elementProps.style.columnWidth = value
-        return this
-    }
-
-    contain(value: Property.Contain) {
-        this.elementProps.style.contain = value
-        return this
-    }
-
-    content(value: Property.Content) {
-        this.elementProps.style.content = value
-        return this
-    }
-
-    contentVisibility(value: Property.ContentVisibility) {
-        this.elementProps.style.contentVisibility = value
-        return this
-    }
-
-    counterIncrement(value: Property.CounterIncrement) {
-        this.elementProps.style.counterIncrement = value
-        return this
-    }
-
-    counterReset(value: Property.CounterReset) {
-        this.elementProps.style.counterReset = value
-        return this
-    }
-
-    counterSet(value: Property.CounterSet) {
-        this.elementProps.style.counterSet = value
-        return this
-    }
-
-    cursor(value: Property.Cursor) {
-        this.elementProps.style.cursor = value
-        return this
-    }
-
-    direction(value: Property.Direction) {
-        this.elementProps.style.direction = value
-        return this
-    }
-
-    display(value: Property.Display) {
-        this.elementProps.style.display = value
-        return this
-    }
-
-    emptyCells(value: Property.EmptyCells) {
-        this.elementProps.style.emptyCells = value
-        return this
-    }
-
-    filter(value: Property.Filter) {
-        this.elementProps.style.filter = value
-        return this
-    }
-
-    flexBasis(value: Property.FlexBasis<TLength>) {
-        this.elementProps.style.flexBasis = value
-        return this
-    }
-
-    flexDirection(value: Property.FlexDirection) {
-        this.elementProps.style.flexDirection = value
-        return this
-    }
-
-    flexGrow(value: Property.FlexGrow) {
-        this.elementProps.style.flexGrow = value
-        return this
-    }
-
-    flexShrink(value: Property.FlexShrink) {
-        this.elementProps.style.flexShrink = value
-        return this
-    }
-
-    flexWrap(value: Property.FlexWrap) {
-        this.elementProps.style.flexWrap = value
-        return this
-    }
-
-    float(value: Property.Float) {
-        this.elementProps.style.float = value
-        return this
-    }
-
-    fontFamily(value: Property.FontFamily) {
-        this.elementProps.style.fontFamily = value
-        return this
-    }
-
-    fontFeatureSettings(value: Property.FontFeatureSettings) {
-        this.elementProps.style.fontFeatureSettings = value
-        return this
-    }
-
-    fontKerning(value: Property.FontKerning) {
-        this.elementProps.style.fontKerning = value
-        return this
-    }
-
-    fontLanguageOverride(value: Property.FontLanguageOverride) {
-        this.elementProps.style.fontLanguageOverride = value
-        return this
-    }
-
-    fontOpticalSizing(value: Property.FontOpticalSizing) {
-        this.elementProps.style.fontOpticalSizing = value
-        return this
-    }
-
-    fontSize(value: Property.FontSize<TLength>) {
-        this.elementProps.style.fontSize = value
-        return this
-    }
-
-    fontSizeAdjust(value: Property.FontSizeAdjust) {
-        this.elementProps.style.fontSizeAdjust = value
-        return this
-    }
-
-    fontSmooth(value: Property.FontSmooth<TLength>) {
-        this.elementProps.style.fontSmooth = value
-        return this
-    }
-
-    fontStretch(value: Property.FontStretch) {
-        this.elementProps.style.fontStretch = value
-        return this
-    }
-
-    fontStyle(value: Property.FontStyle) {
-        this.elementProps.style.fontStyle = value
-        return this
-    }
-
-    fontSynthesis(value: Property.FontSynthesis) {
-        this.elementProps.style.fontSynthesis = value
-        return this
-    }
-
-    fontVariant(value: Property.FontVariant) {
-        this.elementProps.style.fontVariant = value
-        return this
-    }
-
-    fontVariantAlternates(value: Property.FontVariantAlternates) {
-        this.elementProps.style.fontVariantAlternates = value
-        return this
-    }
-
-    fontVariantCaps(value: Property.FontVariantCaps) {
-        this.elementProps.style.fontVariantCaps = value
-        return this
-    }
-
-    fontVariantEastAsian(value: Property.FontVariantEastAsian) {
-        this.elementProps.style.fontVariantEastAsian = value
-        return this
-    }
-
-    fontVariantLigatures(value: Property.FontVariantLigatures) {
-        this.elementProps.style.fontVariantLigatures = value
-        return this
-    }
-
-    fontVariantNumeric(value: Property.FontVariantNumeric) {
-        this.elementProps.style.fontVariantNumeric = value
-        return this
-    }
-
-    fontVariantPosition(value: Property.FontVariantPosition) {
-        this.elementProps.style.fontVariantPosition = value
-        return this
-    }
-
-    fontVariationSettings(value: Property.FontVariationSettings) {
-        this.elementProps.style.fontVariationSettings = value
-        return this
-    }
-
-    fontWeight(value: Property.FontWeight) {
-        this.elementProps.style.fontWeight = value
-        return this
-    }
-
-    forcedColorAdjust(value: Property.ForcedColorAdjust) {
-        this.elementProps.style.forcedColorAdjust = value
-        return this
-    }
-
-    gridAutoColumns(value: Property.GridAutoColumns<TLength>) {
-        this.elementProps.style.gridAutoColumns = value
-        return this
-    }
-
-    gridAutoFlow(value: Property.GridAutoFlow) {
-        this.elementProps.style.gridAutoFlow = value
-        return this
-    }
-
-    gridAutoRows(value: Property.GridAutoRows<TLength>) {
-        this.elementProps.style.gridAutoRows = value
-        return this
-    }
-
-    gridColumnEnd(value: Property.GridColumnEnd) {
-        this.elementProps.style.gridColumnEnd = value
-        return this
-    }
-
-    gridColumnStart(value: Property.GridColumnStart) {
-        this.elementProps.style.gridColumnStart = value
-        return this
-    }
-
-    gridRowEnd(value: Property.GridRowEnd) {
-        this.elementProps.style.gridRowEnd = value
-        return this
-    }
-
-    gridRowStart(value: Property.GridRowStart) {
-        this.elementProps.style.gridRowStart = value
-        return this
-    }
-
-    gridTemplateAreas(value: Property.GridTemplateAreas) {
-        this.elementProps.style.gridTemplateAreas = value
-        return this
-    }
-
-    gridTemplateColumns(value: Property.GridTemplateColumns<TLength>) {
-        this.elementProps.style.gridTemplateColumns = value
-        return this
-    }
-
-    gridTemplateRows(value: Property.GridTemplateRows<TLength>) {
-        this.elementProps.style.gridTemplateRows = value
-        return this
-    }
-
-    hangingPunctuation(value: Property.HangingPunctuation) {
-        this.elementProps.style.hangingPunctuation = value
-        return this
-    }
-
-    height(value: Property.Height<TLength>) {
-        this.elementProps.style.height = value
-        return this
-    }
-
-    hyphenateCharacter(value: Property.HyphenateCharacter) {
-        this.elementProps.style.hyphenateCharacter = value
-        return this
-    }
-
-    hyphens(value: Property.Hyphens) {
-        this.elementProps.style.hyphens = value
-        return this
-    }
-
-    imageOrientation(value: Property.ImageOrientation) {
-        this.elementProps.style.imageOrientation = value
-        return this
-    }
-
-    imageRendering(value: Property.ImageRendering) {
-        this.elementProps.style.imageRendering = value
-        return this
-    }
-
-    imageResolution(value: Property.ImageResolution) {
-        this.elementProps.style.imageResolution = value
-        return this
-    }
-
-    initialLetter(value: Property.InitialLetter) {
-        this.elementProps.style.initialLetter = value
-        return this
-    }
-
-    inlineSize(value: Property.InlineSize<TLength>) {
-        this.elementProps.style.inlineSize = value
-        return this
-    }
-
-    inputSecurity(value: Property.InputSecurity) {
-        this.elementProps.style.inputSecurity = value
-        return this
-    }
-
-    inset(value: Property.Inset<TLength>) {
-        this.elementProps.style.inset = value
-        return this
-    }
-
-    insetBlock(value: Property.InsetBlock<TLength>) {
-        this.elementProps.style.insetBlock = value
-        return this
-    }
-
-    insetBlockEnd(value: Property.InsetBlockEnd<TLength>) {
-        this.elementProps.style.insetBlockEnd = value
-        return this
-    }
-
-    insetBlockStart(value: Property.InsetBlockStart<TLength>) {
-        this.elementProps.style.insetBlockStart = value
-        return this
-    }
-
-    insetInline(value: Property.InsetInline<TLength>) {
-        this.elementProps.style.insetInline = value
-        return this
-    }
-
-    insetInlineEnd(value: Property.InsetInlineEnd<TLength>) {
-        this.elementProps.style.insetInlineEnd = value
-        return this
-    }
-
-    insetInlineStart(value: Property.InsetInlineStart<TLength>) {
-        this.elementProps.style.insetInlineStart = value
-        return this
-    }
-
-    isolation(value: Property.Isolation) {
-        this.elementProps.style.isolation = value
-        return this
-    }
-
-    justifyContent(value: Property.JustifyContent) {
-        this.elementProps.style.justifyContent = value
-        return this
-    }
-
-    justifyItems(value: Property.JustifyItems) {
-        this.elementProps.style.justifyItems = value
-        return this
-    }
-
-    justifySelf(value: Property.JustifySelf) {
-        this.elementProps.style.justifySelf = value
-        return this
-    }
-
-    justifyTracks(value: Property.JustifyTracks) {
-        this.elementProps.style.justifyTracks = value
-        return this
-    }
-
-    left(value: Property.Left<TLength>) {
-        this.elementProps.style.left = value
-        return this
-    }
-
-    letterSpacing(value: Property.LetterSpacing<TLength>) {
-        this.elementProps.style.letterSpacing = value
-        return this
-    }
-
-    lineBreak(value: Property.LineBreak) {
-        this.elementProps.style.lineBreak = value
-        return this
-    }
-
-    lineHeight(value: Property.LineHeight<TLength>) {
-        this.elementProps.style.lineHeight = value
-        return this
-    }
-
-    lineHeightStep(value: Property.LineHeightStep<TLength>) {
-        this.elementProps.style.lineHeightStep = value
-        return this
-    }
-
-    listStyleImage(value: Property.ListStyleImage) {
-        this.elementProps.style.listStyleImage = value
-        return this
-    }
-
-    listStylePosition(value: Property.ListStylePosition) {
-        this.elementProps.style.listStylePosition = value
-        return this
-    }
-
-    listStyleType(value: Property.ListStyleType) {
-        this.elementProps.style.listStyleType = value
-        return this
-    }
-
-    marginBlock(value: Property.MarginBlock<TLength>) {
-        this.elementProps.style.marginBlock = value
-        return this
-    }
-
-    marginBlockEnd(value: Property.MarginBlockEnd<TLength>) {
-        this.elementProps.style.marginBlockEnd = value
-        return this
-    }
-
-    marginBlockStart(value: Property.MarginBlockStart<TLength>) {
-        this.elementProps.style.marginBlockStart = value
-        return this
-    }
-
-    marginBottom(value: Property.MarginBottom<TLength>) {
-        this.elementProps.style.marginBottom = value
-        return this
-    }
-
-    marginInline(value: Property.MarginInline<TLength>) {
-        this.elementProps.style.marginInline = value
-        return this
-    }
-
-    marginInlineEnd(value: Property.MarginInlineEnd<TLength>) {
-        this.elementProps.style.marginInlineEnd = value
-        return this
-    }
-
-    marginInlineStart(value: Property.MarginInlineStart<TLength>) {
-        this.elementProps.style.marginInlineStart = value
-        return this
-    }
-
-    marginLeft(value: Property.MarginLeft<TLength>) {
-        this.elementProps.style.marginLeft = value
-        return this
-    }
-
-    marginRight(value: Property.MarginRight<TLength>) {
-        this.elementProps.style.marginRight = value
-        return this
-    }
-
-    marginTop(value: Property.MarginTop<TLength>) {
-        this.elementProps.style.marginTop = value
-        return this
-    }
-
-    maskBorderMode(value: Property.MaskBorderMode) {
-        this.elementProps.style.maskBorderMode = value
-        return this
-    }
-
-    maskBorderOutset(value: Property.MaskBorderOutset<TLength>) {
-        this.elementProps.style.maskBorderOutset = value
-        return this
-    }
-
-    maskBorderRepeat(value: Property.MaskBorderRepeat) {
-        this.elementProps.style.maskBorderRepeat = value
-        return this
-    }
-
-    maskBorderSlice(value: Property.MaskBorderSlice) {
-        this.elementProps.style.maskBorderSlice = value
-        return this
-    }
-
-    maskBorderSource(value: Property.MaskBorderSource) {
-        this.elementProps.style.maskBorderSource = value
-        return this
-    }
-
-    maskBorderWidth(value: Property.MaskBorderWidth<TLength>) {
-        this.elementProps.style.maskBorderWidth = value
-        return this
-    }
-
-    maskClip(value: Property.MaskClip) {
-        this.elementProps.style.maskClip = value
-        return this
-    }
-
-    maskComposite(value: Property.MaskComposite) {
-        this.elementProps.style.maskComposite = value
-        return this
-    }
-
-    maskImage(value: Property.MaskImage) {
-        this.elementProps.style.maskImage = value
-        return this
-    }
-
-    maskMode(value: Property.MaskMode) {
-        this.elementProps.style.maskMode = value
-        return this
-    }
-
-    maskOrigin(value: Property.MaskOrigin) {
-        this.elementProps.style.maskOrigin = value
-        return this
-    }
-
-    maskPosition(value: Property.MaskPosition<TLength>) {
-        this.elementProps.style.maskPosition = value
-        return this
-    }
-
-    maskRepeat(value: Property.MaskRepeat) {
-        this.elementProps.style.maskRepeat = value
-        return this
-    }
-
-    maskSize(value: Property.MaskSize<TLength>) {
-        this.elementProps.style.maskSize = value
-        return this
-    }
-
-    maskType(value: Property.MaskType) {
-        this.elementProps.style.maskType = value
-        return this
-    }
-
-    mathStyle(value: Property.MathStyle) {
-        this.elementProps.style.mathStyle = value
-        return this
-    }
-
-    maxBlockSize(value: Property.MaxBlockSize<TLength>) {
-        this.elementProps.style.maxBlockSize = value
-        return this
-    }
-
-    maxHeight(value: Property.MaxHeight<TLength>) {
-        this.elementProps.style.maxHeight = value
-        return this
-    }
-
-    maxInlineSize(value: Property.MaxInlineSize<TLength>) {
-        this.elementProps.style.maxInlineSize = value
-        return this
-    }
-
-    maxLines(value: Property.MaxLines) {
-        this.elementProps.style.maxLines = value
-        return this
-    }
-
-    maxWidth(value: Property.MaxWidth<TLength>) {
-        this.elementProps.style.maxWidth = value
-        return this
-    }
-
-    minBlockSize(value: Property.MinBlockSize<TLength>) {
-        this.elementProps.style.minBlockSize = value
-        return this
-    }
-
-    minHeight(value: Property.MinHeight<TLength>) {
-        this.elementProps.style.minHeight = value
-        return this
-    }
-
-    minInlineSize(value: Property.MinInlineSize<TLength>) {
-        this.elementProps.style.minInlineSize = value
-        return this
-    }
-
-    minWidth(value: Property.MinWidth<TLength>) {
-        this.elementProps.style.minWidth = value
-        return this
-    }
-
-    mixBlendMode(value: Property.MixBlendMode) {
-        this.elementProps.style.mixBlendMode = value
-        return this
-    }
-
-    motionDistance(value: Property.OffsetDistance<TLength>) {
-        this.elementProps.style.motionDistance = value
-        return this
-    }
-
-    motionPath(value: Property.OffsetPath) {
-        this.elementProps.style.motionPath = value
-        return this
-    }
-
-    motionRotation(value: Property.OffsetRotate) {
-        this.elementProps.style.motionRotation = value
-        return this
-    }
-
-    objectFit(value: Property.ObjectFit) {
-        this.elementProps.style.objectFit = value
-        return this
-    }
-
-    objectPosition(value: Property.ObjectPosition<TLength>) {
-        this.elementProps.style.objectPosition = value
-        return this
-    }
-
-    offsetAnchor(value: Property.OffsetAnchor<TLength>) {
-        this.elementProps.style.offsetAnchor = value
-        return this
-    }
-
-    offsetDistance(value: Property.OffsetDistance<TLength>) {
-        this.elementProps.style.offsetDistance = value
-        return this
-    }
-
-    offsetPath(value: Property.OffsetPath) {
-        this.elementProps.style.offsetPath = value
-        return this
-    }
-
-    offsetRotate(value: Property.OffsetRotate) {
-        this.elementProps.style.offsetRotate = value
-        return this
-    }
-
-    offsetRotation(value: Property.OffsetRotate) {
-        this.elementProps.style.offsetRotation = value
-        return this
-    }
-
-    opacity(value: Property.Opacity) {
-        this.elementProps.style.opacity = value
-        return this
-    }
-
-    order(value: Property.Order) {
-        this.elementProps.style.order = value
-        return this
-    }
-
-    orphans(value: Property.Orphans) {
-        this.elementProps.style.orphans = value
-        return this
-    }
-
-    outlineColor(value: Property.OutlineColor) {
-        this.elementProps.style.outlineColor = value
-        return this
-    }
-
-    outlineOffset(value: Property.OutlineOffset<TLength>) {
-        this.elementProps.style.outlineOffset = value
-        return this
-    }
-
-    outlineStyle(value: Property.OutlineStyle) {
-        this.elementProps.style.outlineStyle = value
-        return this
-    }
-
-    outlineWidth(value: Property.OutlineWidth<TLength>) {
-        this.elementProps.style.outlineWidth = value
-        return this
-    }
-
-    overflowAnchor(value: Property.OverflowAnchor) {
-        this.elementProps.style.overflowAnchor = value
-        return this
-    }
-
-    overflowBlock(value: Property.OverflowBlock) {
-        this.elementProps.style.overflowBlock = value
-        return this
-    }
-
-    overflowClipBox(value: Property.OverflowClipBox) {
-        this.elementProps.style.overflowClipBox = value
-        return this
-    }
-
-    overflowClipMargin(value: Property.OverflowClipMargin<TLength>) {
-        this.elementProps.style.overflowClipMargin = value
-        return this
-    }
-
-    overflowInline(value: Property.OverflowInline) {
-        this.elementProps.style.overflowInline = value
-        return this
-    }
-
-    overflowWrap(value: Property.OverflowWrap) {
-        this.elementProps.style.overflowWrap = value
-        return this
-    }
-
-    overflowX(value: Property.OverflowX) {
-        this.elementProps.style.overflowX = value
-        return this
-    }
-
-    overflowY(value: Property.OverflowY) {
-        this.elementProps.style.overflowY = value
-        return this
-    }
-
-    overscrollBehaviorBlock(value: Property.OverscrollBehaviorBlock) {
-        this.elementProps.style.overscrollBehaviorBlock = value
-        return this
-    }
-
-    overscrollBehaviorInline(value: Property.OverscrollBehaviorInline) {
-        this.elementProps.style.overscrollBehaviorInline = value
-        return this
-    }
-
-    overscrollBehaviorX(value: Property.OverscrollBehaviorX) {
-        this.elementProps.style.overscrollBehaviorX = value
-        return this
-    }
-
-    overscrollBehaviorY(value: Property.OverscrollBehaviorY) {
-        this.elementProps.style.overscrollBehaviorY = value
-        return this
-    }
-
-    paddingBlock(value: Property.PaddingBlock<TLength>) {
-        this.elementProps.style.paddingBlock = value
-        return this
-    }
-
-    paddingBlockEnd(value: Property.PaddingBlockEnd<TLength>) {
-        this.elementProps.style.paddingBlockEnd = value
-        return this
-    }
-
-    paddingBlockStart(value: Property.PaddingBlockStart<TLength>) {
-        this.elementProps.style.paddingBlockStart = value
-        return this
-    }
-
-    paddingBottom(value: Property.PaddingBottom<TLength>) {
-        this.elementProps.style.paddingBottom = value
-        return this
-    }
-
-    paddingInline(value: Property.PaddingInline<TLength>) {
-        this.elementProps.style.paddingInline = value
-        return this
-    }
-
-    paddingInlineEnd(value: Property.PaddingInlineEnd<TLength>) {
-        this.elementProps.style.paddingInlineEnd = value
-        return this
-    }
-
-    paddingInlineStart(value: Property.PaddingInlineStart<TLength>) {
-        this.elementProps.style.paddingInlineStart = value
-        return this
-    }
-
-    paddingLeft(value: Property.PaddingLeft<TLength>) {
-        this.elementProps.style.paddingLeft = value
-        return this
-    }
-
-    paddingRight(value: Property.PaddingRight<TLength>) {
-        this.elementProps.style.paddingRight = value
-        return this
-    }
-
-    paddingTop(value: Property.PaddingTop<TLength>) {
-        this.elementProps.style.paddingTop = value
-        return this
-    }
-
-    pageBreakAfter(value: Property.PageBreakAfter) {
-        this.elementProps.style.pageBreakAfter = value
-        return this
-    }
-
-    pageBreakBefore(value: Property.PageBreakBefore) {
-        this.elementProps.style.pageBreakBefore = value
-        return this
-    }
-
-    pageBreakInside(value: Property.PageBreakInside) {
-        this.elementProps.style.pageBreakInside = value
-        return this
-    }
-
-    paintOrder(value: Property.PaintOrder) {
-        this.elementProps.style.paintOrder = value
-        return this
-    }
-
-    perspective(value: Property.Perspective<TLength>) {
-        this.elementProps.style.perspective = value
-        return this
-    }
-
-    perspectiveOrigin(value: Property.PerspectiveOrigin<TLength>) {
-        this.elementProps.style.perspectiveOrigin = value
-        return this
-    }
-
-    placeContent(value: Property.PlaceContent) {
-        this.elementProps.style.placeContent = value
-        return this
-    }
-
-    pointerEvents(value: Property.PointerEvents) {
-        this.elementProps.style.pointerEvents = value
-        return this
-    }
-
-    position(value: Property.Position) {
-        this.elementProps.style.position = value
-        return this
-    }
-
-    printColorAdjust(value: Property.PrintColorAdjust) {
-        this.elementProps.style.printColorAdjust = value
-        return this
-    }
-
-    quotes(value: Property.Quotes) {
-        this.elementProps.style.quotes = value
-        return this
-    }
-
-    resize(value: Property.Resize) {
-        this.elementProps.style.resize = value
-        return this
-    }
-
-    right(value: Property.Right<TLength>) {
-        this.elementProps.style.right = value
-        return this
-    }
-
-    rotate(value: Property.Rotate) {
-        this.elementProps.style.rotate = value
-        return this
-    }
-
-    rowGap(value: Property.RowGap<TLength>) {
-        this.elementProps.style.rowGap = value
-        return this
-    }
-
-    rubyAlign(value: Property.RubyAlign) {
-        this.elementProps.style.rubyAlign = value
-        return this
-    }
-
-    rubyMerge(value: Property.RubyMerge) {
-        this.elementProps.style.rubyMerge = value
-        return this
-    }
-
-    rubyPosition(value: Property.RubyPosition) {
-        this.elementProps.style.rubyPosition = value
-        return this
-    }
-
-    scale(value: Property.Scale) {
-        this.elementProps.style.scale = value
-        return this
-    }
-
-    scrollBehavior(value: Property.ScrollBehavior) {
-        this.elementProps.style.scrollBehavior = value
-        return this
-    }
-
-    scrollMargin(value: Property.ScrollMargin<TLength>) {
-        this.elementProps.style.scrollMargin = value
-        return this
-    }
-
-    scrollMarginBlock(value: Property.ScrollMarginBlock<TLength>) {
-        this.elementProps.style.scrollMarginBlock = value
-        return this
-    }
-
-    scrollMarginBlockEnd(value: Property.ScrollMarginBlockEnd<TLength>) {
-        this.elementProps.style.scrollMarginBlockEnd = value
-        return this
-    }
-
-    scrollMarginBlockStart(value: Property.ScrollMarginBlockStart<TLength>) {
-        this.elementProps.style.scrollMarginBlockStart = value
-        return this
-    }
-
-    scrollMarginBottom(value: Property.ScrollMarginBottom<TLength>) {
-        this.elementProps.style.scrollMarginBottom = value
-        return this
-    }
-
-    scrollMarginInline(value: Property.ScrollMarginInline<TLength>) {
-        this.elementProps.style.scrollMarginInline = value
-        return this
-    }
-
-    scrollMarginInlineEnd(value: Property.ScrollMarginInlineEnd<TLength>) {
-        this.elementProps.style.scrollMarginInlineEnd = value
-        return this
-    }
-
-    scrollMarginInlineStart(value: Property.ScrollMarginInlineStart<TLength>) {
-        this.elementProps.style.scrollMarginInlineStart = value
-        return this
-    }
-
-    scrollMarginLeft(value: Property.ScrollMarginLeft<TLength>) {
-        this.elementProps.style.scrollMarginLeft = value
-        return this
-    }
-
-    scrollMarginRight(value: Property.ScrollMarginRight<TLength>) {
-        this.elementProps.style.scrollMarginRight = value
-        return this
-    }
-
-    scrollMarginTop(value: Property.ScrollMarginTop<TLength>) {
-        this.elementProps.style.scrollMarginTop = value
-        return this
-    }
-
-    scrollPadding(value: Property.ScrollPadding<TLength>) {
-        this.elementProps.style.scrollPadding = value
-        return this
-    }
-
-    scrollPaddingBlock(value: Property.ScrollPaddingBlock<TLength>) {
-        this.elementProps.style.scrollPaddingBlock = value
-        return this
-    }
-
-    scrollPaddingBlockEnd(value: Property.ScrollPaddingBlockEnd<TLength>) {
-        this.elementProps.style.scrollPaddingBlockEnd = value
-        return this
-    }
-
-    scrollPaddingBlockStart(value: Property.ScrollPaddingBlockStart<TLength>) {
-        this.elementProps.style.scrollPaddingBlockStart = value
-        return this
-    }
-
-    scrollPaddingBottom(value: Property.ScrollPaddingBottom<TLength>) {
-        this.elementProps.style.scrollPaddingBottom = value
-        return this
-    }
-
-    scrollPaddingInline(value: Property.ScrollPaddingInline<TLength>) {
-        this.elementProps.style.scrollPaddingInline = value
-        return this
-    }
-
-    scrollPaddingInlineEnd(value: Property.ScrollPaddingInlineEnd<TLength>) {
-        this.elementProps.style.scrollPaddingInlineEnd = value
-        return this
-    }
-
-    scrollPaddingInlineStart(value: Property.ScrollPaddingInlineStart<TLength>) {
-        this.elementProps.style.scrollPaddingInlineStart = value
-        return this
-    }
-
-    scrollPaddingLeft(value: Property.ScrollPaddingLeft<TLength>) {
-        this.elementProps.style.scrollPaddingLeft = value
-        return this
-    }
-
-    scrollPaddingRight(value: Property.ScrollPaddingRight<TLength>) {
-        this.elementProps.style.scrollPaddingRight = value
-        return this
-    }
-
-    scrollPaddingTop(value: Property.ScrollPaddingTop<TLength>) {
-        this.elementProps.style.scrollPaddingTop = value
-        return this
-    }
-
-    scrollSnapAlign(value: Property.ScrollSnapAlign) {
-        this.elementProps.style.scrollSnapAlign = value
-        return this
-    }
-
-    scrollSnapMargin(value: Property.ScrollMargin<TLength>) {
-        this.elementProps.style.scrollSnapMargin = value
-        return this
-    }
-
-    scrollSnapMarginBottom(value: Property.ScrollMarginBottom<TLength>) {
-        this.elementProps.style.scrollSnapMarginBottom = value
-        return this
-    }
-
-    scrollSnapMarginLeft(value: Property.ScrollMarginLeft<TLength>) {
-        this.elementProps.style.scrollSnapMarginLeft = value
-        return this
-    }
-
-    scrollSnapMarginRight(value: Property.ScrollMarginRight<TLength>) {
-        this.elementProps.style.scrollSnapMarginRight = value
-        return this
-    }
-
-    scrollSnapMarginTop(value: Property.ScrollMarginTop<TLength>) {
-        this.elementProps.style.scrollSnapMarginTop = value
-        return this
-    }
-
-    scrollSnapStop(value: Property.ScrollSnapStop) {
-        this.elementProps.style.scrollSnapStop = value
-        return this
-    }
-
-    scrollSnapType(value: Property.ScrollSnapType) {
-        this.elementProps.style.scrollSnapType = value
-        return this
-    }
-
-    scrollbarColor(value: Property.ScrollbarColor) {
-        this.elementProps.style.scrollbarColor = value
-        return this
-    }
-
-    scrollbarGutter(value: Property.ScrollbarGutter) {
-        this.elementProps.style.scrollbarGutter = value
-        return this
-    }
-
-    scrollbarWidth(value: Property.ScrollbarWidth) {
-        this.elementProps.style.scrollbarWidth = value
-        return this
-    }
-
-    shapeImageThreshold(value: Property.ShapeImageThreshold) {
-        this.elementProps.style.shapeImageThreshold = value
-        return this
-    }
-
-    shapeMargin(value: Property.ShapeMargin<TLength>) {
-        this.elementProps.style.shapeMargin = value
-        return this
-    }
-
-    shapeOutside(value: Property.ShapeOutside) {
-        this.elementProps.style.shapeOutside = value
-        return this
-    }
-
-    tabSize(value: Property.TabSize<TLength>) {
-        this.elementProps.style.tabSize = value
-        return this
-    }
-
-    tableLayout(value: Property.TableLayout) {
-        this.elementProps.style.tableLayout = value
-        return this
-    }
-
-    textAlign(value: Property.TextAlign) {
-        this.elementProps.style.textAlign = value
-        return this
-    }
-
-    textAlignLast(value: Property.TextAlignLast) {
-        this.elementProps.style.textAlignLast = value
-        return this
-    }
-
-    textCombineUpright(value: Property.TextCombineUpright) {
-        this.elementProps.style.textCombineUpright = value
-        return this
-    }
-
-    textDecorationColor(value: Property.TextDecorationColor) {
-        this.elementProps.style.textDecorationColor = value
-        return this
-    }
-
-    textDecorationLine(value: Property.TextDecorationLine) {
-        this.elementProps.style.textDecorationLine = value
-        return this
-    }
-
-    textDecorationSkip(value: Property.TextDecorationSkip) {
-        this.elementProps.style.textDecorationSkip = value
-        return this
-    }
-
-    textDecorationSkipInk(value: Property.TextDecorationSkipInk) {
-        this.elementProps.style.textDecorationSkipInk = value
-        return this
-    }
-
-    textDecorationStyle(value: Property.TextDecorationStyle) {
-        this.elementProps.style.textDecorationStyle = value
-        return this
-    }
-
-    textDecorationThickness(value: Property.TextDecorationThickness<TLength>) {
-        this.elementProps.style.textDecorationThickness = value
-        return this
-    }
-
-    textDecorationWidth(value: Property.TextDecorationThickness<TLength>) {
-        this.elementProps.style.textDecorationWidth = value
-        return this
-    }
-
-    textEmphasisColor(value: Property.TextEmphasisColor) {
-        this.elementProps.style.textEmphasisColor = value
-        return this
-    }
-
-    textEmphasisPosition(value: Property.TextEmphasisPosition) {
-        this.elementProps.style.textEmphasisPosition = value
-        return this
-    }
-
-    textEmphasisStyle(value: Property.TextEmphasisStyle) {
-        this.elementProps.style.textEmphasisStyle = value
-        return this
-    }
-
-    textIndent(value: Property.TextIndent<TLength>) {
-        this.elementProps.style.textIndent = value
-        return this
-    }
-
-    textJustify(value: Property.TextJustify) {
-        this.elementProps.style.textJustify = value
-        return this
-    }
-
-    textOrientation(value: Property.TextOrientation) {
-        this.elementProps.style.textOrientation = value
-        return this
-    }
-
-    textOverflow(value: Property.TextOverflow) {
-        this.elementProps.style.textOverflow = value
-        return this
-    }
-
-    textRendering(value: Property.TextRendering) {
-        this.elementProps.style.textRendering = value
-        return this
-    }
-
-    textShadow(value: Property.TextShadow) {
-        this.elementProps.style.textShadow = value
-        return this
-    }
-
-    textSizeAdjust(value: Property.TextSizeAdjust) {
-        this.elementProps.style.textSizeAdjust = value
-        return this
-    }
-
-    textTransform(value: Property.TextTransform) {
-        this.elementProps.style.textTransform = value
-        return this
-    }
-
-    textUnderlineOffset(value: Property.TextUnderlineOffset<TLength>) {
-        this.elementProps.style.textUnderlineOffset = value
-        return this
-    }
-
-    textUnderlinePosition(value: Property.TextUnderlinePosition) {
-        this.elementProps.style.textUnderlinePosition = value
-        return this
-    }
-
-    top(value: Property.Top<TLength>) {
-        this.elementProps.style.top = value
-        return this
-    }
-
-    touchAction(value: Property.TouchAction) {
-        this.elementProps.style.touchAction = value
-        return this
-    }
-
-    transform(value: Property.Transform) {
-        this.elementProps.style.transform = value
-        return this
-    }
-
-    transformBox(value: Property.TransformBox) {
-        this.elementProps.style.transformBox = value
-        return this
-    }
-
-    transformOrigin(value: Property.TransformOrigin<TLength>) {
-        this.elementProps.style.transformOrigin = value
-        return this
-    }
-
-    transformStyle(value: Property.TransformStyle) {
-        this.elementProps.style.transformStyle = value
-        return this
-    }
-
-    transitionDelay(value: Property.TransitionDelay<TTime>) {
-        this.elementProps.style.transitionDelay = value
-        return this
-    }
-
-    transitionDuration(value: Property.TransitionDuration<TTime>) {
-        this.elementProps.style.transitionDuration = value
-        return this
-    }
-
-    transitionProperty(value: Property.TransitionProperty) {
-        this.elementProps.style.transitionProperty = value
-        return this
-    }
-
-    transitionTimingFunction(value: Property.TransitionTimingFunction) {
-        this.elementProps.style.transitionTimingFunction = value
-        return this
-    }
-
-    translate(value: Property.Translate<TLength>) {
-        this.elementProps.style.translate = value
-        return this
-    }
-
-    unicodeBidi(value: Property.UnicodeBidi) {
-        this.elementProps.style.unicodeBidi = value
-        return this
-    }
-
-    userSelect(value: Property.UserSelect) {
-        this.elementProps.style.userSelect = value
-        return this
-    }
-
-    verticalAlign(value: Property.VerticalAlign<TLength>) {
-        this.elementProps.style.verticalAlign = value
-        return this
-    }
-
-    visibility(value: Property.Visibility) {
-        this.elementProps.style.visibility = value
-        return this
-    }
-
-    whiteSpace(value: Property.WhiteSpace) {
-        this.elementProps.style.whiteSpace = value
-        return this
-    }
-
-    widows(value: Property.Widows) {
-        this.elementProps.style.widows = value
-        return this
-    }
-
-    width(value: Property.Width<TLength>) {
-        this.elementProps.style.width = value
-        return this
-    }
-
-    willChange(value: Property.WillChange) {
-        this.elementProps.style.willChange = value
-        return this
-    }
-
-    wordBreak(value: Property.WordBreak) {
-        this.elementProps.style.wordBreak = value
-        return this
-    }
-
-    wordSpacing(value: Property.WordSpacing<TLength>) {
-        this.elementProps.style.wordSpacing = value
-        return this
-    }
-
-    wordWrap(value: Property.WordWrap) {
-        this.elementProps.style.wordWrap = value
-        return this
-    }
-
-    writingMode(value: Property.WritingMode) {
-        this.elementProps.style.writingMode = value
-        return this
-    }
-
-    zIndex(value: Property.ZIndex) {
-        this.elementProps.style.zIndex = value
-        return this
-    }
-
-    zoom(value: Property.Zoom) {
-        this.elementProps.style.zoom = value
-        return this
-    }
-
-    all(value: Property.All) {
-        this.elementProps.style.all = value
-        return this
-    }
-
-    animation(value: Property.Animation<TTime>) {
-        this.elementProps.style.animation = value
-        return this
-    }
-
-    background(value: Property.Background<TLength>) {
-        this.elementProps.style.background = value
-        return this
-    }
-
-    backgroundPosition(value: Property.BackgroundPosition<TLength>) {
-        this.elementProps.style.backgroundPosition = value
-        return this
-    }
-
-    border(value: Property.Border<TLength>) {
-        this.elementProps.style.border = value
-        return this
-    }
-
-    borderBlock(value: Property.BorderBlock<TLength>) {
-        this.elementProps.style.borderBlock = value
-        return this
-    }
-
-    borderBlockEnd(value: Property.BorderBlockEnd<TLength>) {
-        this.elementProps.style.borderBlockEnd = value
-        return this
-    }
-
-    borderBlockStart(value: Property.BorderBlockStart<TLength>) {
-        this.elementProps.style.borderBlockStart = value
-        return this
-    }
-
-    borderBottom(value: Property.BorderBottom<TLength>) {
-        this.elementProps.style.borderBottom = value
-        return this
-    }
-
-    borderColor(value: Property.BorderColor) {
-        this.elementProps.style.borderColor = value
-        return this
-    }
-
-    borderImage(value: Property.BorderImage) {
-        this.elementProps.style.borderImage = value
-        return this
-    }
-
-    borderInline(value: Property.BorderInline<TLength>) {
-        this.elementProps.style.borderInline = value
-        return this
-    }
-
-    borderInlineEnd(value: Property.BorderInlineEnd<TLength>) {
-        this.elementProps.style.borderInlineEnd = value
-        return this
-    }
-
-    borderInlineStart(value: Property.BorderInlineStart<TLength>) {
-        this.elementProps.style.borderInlineStart = value
-        return this
-    }
-
-    borderLeft(value: Property.BorderLeft<TLength>) {
-        this.elementProps.style.borderLeft = value
-        return this
-    }
-
-    borderRadius(value: Property.BorderRadius<TLength>) {
-        this.elementProps.style.borderRadius = value
-        return this
-    }
-
-    borderRight(value: Property.BorderRight<TLength>) {
-        this.elementProps.style.borderRight = value
-        return this
-    }
-
-    borderStyle(value: Property.BorderStyle) {
-        this.elementProps.style.borderStyle = value
-        return this
-    }
-
-    borderTop(value: Property.BorderTop<TLength>) {
-        this.elementProps.style.borderTop = value
-        return this
-    }
-
-    borderWidth(value: Property.BorderWidth<TLength>) {
-        this.elementProps.style.borderWidth = value
-        return this
-    }
-
-    columnRule(value: Property.ColumnRule<TLength>) {
-        this.elementProps.style.columnRule = value
-        return this
-    }
-
-    columns(value: Property.Columns<TLength>) {
-        this.elementProps.style.columns = value
-        return this
-    }
-
-    flex(value: Property.Flex<TLength>) {
-        this.elementProps.style.flex = value
-        return this
-    }
-
-    flexFlow(value: Property.FlexFlow) {
-        this.elementProps.style.flexFlow = value
-        return this
-    }
-
-    font(value: Property.Font) {
-        this.elementProps.style.font = value
-        return this
-    }
-
-    gap(value: Property.Gap<TLength>) {
-        this.elementProps.style.gap = value
-        return this
-    }
-
-    grid(value: Property.Grid) {
-        this.elementProps.style.grid = value
-        return this
-    }
-
-    gridArea(value: Property.GridArea) {
-        this.elementProps.style.gridArea = value
-        return this
-    }
-
-    gridColumn(value: Property.GridColumn) {
-        this.elementProps.style.gridColumn = value
-        return this
-    }
-
-    gridRow(value: Property.GridRow) {
-        this.elementProps.style.gridRow = value
-        return this
-    }
-
-    gridTemplate(value: Property.GridTemplate) {
-        this.elementProps.style.gridTemplate = value
-        return this
-    }
-
-    lineClamp(value: Property.LineClamp) {
-        this.elementProps.style.lineClamp = value
-        return this
-    }
-
-    listStyle(value: Property.ListStyle) {
-        this.elementProps.style.listStyle = value
-        return this
-    }
-
-    margin(value: Property.Margin<TLength>) {
-        this.elementProps.style.margin = value
-        return this
-    }
-
-    mask(value: Property.Mask<TLength>) {
-        this.elementProps.style.mask = value
-        return this
-    }
-
-    maskBorder(value: Property.MaskBorder) {
-        this.elementProps.style.maskBorder = value
-        return this
-    }
-
-    motion(value: Property.Offset<TLength>) {
-        this.elementProps.style.motion = value
-        return this
-    }
-
-    offset(value: Property.Offset<TLength>) {
-        this.elementProps.style.offset = value
-        return this
-    }
-
-    outline(value: Property.Outline<TLength>) {
-        this.elementProps.style.outline = value
-        return this
-    }
-
-    overflow(value: Property.Overflow) {
-        this.elementProps.style.overflow = value
-        return this
-    }
-
-    overscrollBehavior(value: Property.OverscrollBehavior) {
-        this.elementProps.style.overscrollBehavior = value
-        return this
-    }
-
-    padding(value: Property.Padding<TLength>) {
-        this.elementProps.style.padding = value
-        return this
-    }
-
-    placeItems(value: Property.PlaceItems) {
-        this.elementProps.style.placeItems = value
-        return this
-    }
-
-    placeSelf(value: Property.PlaceSelf) {
-        this.elementProps.style.placeSelf = value
-        return this
-    }
-
-    textDecoration(value: Property.TextDecoration<TLength>) {
-        this.elementProps.style.textDecoration = value
-        return this
-    }
-
-    textEmphasis(value: Property.TextEmphasis) {
-        this.elementProps.style.textEmphasis = value
-        return this
-    }
-
-    transition(value: Property.Transition<TTime>) {
-        this.elementProps.style.transition = value
-        return this
-    }
+    @RUIStyleProp
+    accentColor(value: Property.AccentColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    alignContent(value: Property.AlignContent, willSet=true) { return this }
+
+    @RUIStyleProp
+    alignItems(value: Property.AlignItems, willSet=true) { return this }
+
+    @RUIStyleProp
+    alignSelf(value: Property.AlignSelf, willSet=true) { return this }
+
+    @RUIStyleProp
+    alignTracks(value: Property.AlignTracks, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationDelay(value: Property.AnimationDelay<TTime>, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationDirection(value: Property.AnimationDirection, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationDuration(value: Property.AnimationDuration<TTime>, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationFillMode(value: Property.AnimationFillMode, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationIterationCount(value: Property.AnimationIterationCount, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationName(value: Property.AnimationName, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationPlayState(value: Property.AnimationPlayState, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationTimeline(value: Property.AnimationTimeline, willSet=true) { return this }
+
+    @RUIStyleProp
+    animationTimingFunction(value: Property.AnimationTimingFunction, willSet=true) { return this }
+
+    @RUIStyleProp
+    appearance(value: Property.Appearance, willSet=true) { return this }
+
+    @RUIStyleProp
+    aspectRatio(value: Property.AspectRatio, willSet=true) { return this }
+
+    @RUIStyleProp
+    backdropFilter(value: Property.BackdropFilter, willSet=true) { return this }
+
+    @RUIStyleProp
+    backfaceVisibility(value: Property.BackfaceVisibility, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundAttachment(value: Property.BackgroundAttachment, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundBlendMode(value: Property.BackgroundBlendMode, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundClip(value: Property.BackgroundClip, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundColor(value: Property.BackgroundColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundImage(value: Property.BackgroundImage, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundOrigin(value: Property.BackgroundOrigin, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundPositionX(value: Property.BackgroundPositionX<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundPositionY(value: Property.BackgroundPositionY<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundRepeat(value: Property.BackgroundRepeat, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundSize(value: Property.BackgroundSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    blockOverflow(value: Property.BlockOverflow, willSet=true) { return this }
+
+    @RUIStyleProp
+    blockSize(value: Property.BlockSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockColor(value: Property.BorderBlockColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockEndColor(value: Property.BorderBlockEndColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockEndStyle(value: Property.BorderBlockEndStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockEndWidth(value: Property.BorderBlockEndWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockStartColor(value: Property.BorderBlockStartColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockStartStyle(value: Property.BorderBlockStartStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockStartWidth(value: Property.BorderBlockStartWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockStyle(value: Property.BorderBlockStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockWidth(value: Property.BorderBlockWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBottomColor(value: Property.BorderBottomColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBottomLeftRadius(value: Property.BorderBottomLeftRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBottomRightRadius(value: Property.BorderBottomRightRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBottomStyle(value: Property.BorderBottomStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBottomWidth(value: Property.BorderBottomWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderCollapse(value: Property.BorderCollapse, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderEndEndRadius(value: Property.BorderEndEndRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderEndStartRadius(value: Property.BorderEndStartRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderImageOutset(value: Property.BorderImageOutset<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderImageRepeat(value: Property.BorderImageRepeat, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderImageSlice(value: Property.BorderImageSlice, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderImageSource(value: Property.BorderImageSource, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderImageWidth(value: Property.BorderImageWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineColor(value: Property.BorderInlineColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineEndColor(value: Property.BorderInlineEndColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineEndStyle(value: Property.BorderInlineEndStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineEndWidth(value: Property.BorderInlineEndWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineStartColor(value: Property.BorderInlineStartColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineStartStyle(value: Property.BorderInlineStartStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineStartWidth(value: Property.BorderInlineStartWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineStyle(value: Property.BorderInlineStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineWidth(value: Property.BorderInlineWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderLeftColor(value: Property.BorderLeftColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderLeftStyle(value: Property.BorderLeftStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderLeftWidth(value: Property.BorderLeftWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderRightColor(value: Property.BorderRightColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderRightStyle(value: Property.BorderRightStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderRightWidth(value: Property.BorderRightWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderSpacing(value: Property.BorderSpacing<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderStartEndRadius(value: Property.BorderStartEndRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderStartStartRadius(value: Property.BorderStartStartRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderTopColor(value: Property.BorderTopColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderTopLeftRadius(value: Property.BorderTopLeftRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderTopRightRadius(value: Property.BorderTopRightRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderTopStyle(value: Property.BorderTopStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderTopWidth(value: Property.BorderTopWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    bottom(value: Property.Bottom<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    boxDecorationBreak(value: Property.BoxDecorationBreak, willSet=true) { return this }
+
+    @RUIStyleProp
+    boxShadow(value: Property.BoxShadow, willSet=true) { return this }
+
+    @RUIStyleProp
+    boxSizing(value: Property.BoxSizing, willSet=true) { return this }
+
+    @RUIStyleProp
+    breakAfter(value: Property.BreakAfter, willSet=true) { return this }
+
+    @RUIStyleProp
+    breakBefore(value: Property.BreakBefore, willSet=true) { return this }
+
+    @RUIStyleProp
+    breakInside(value: Property.BreakInside, willSet=true) { return this }
+
+    @RUIStyleProp
+    captionSide(value: Property.CaptionSide, willSet=true) { return this }
+
+    @RUIStyleProp
+    caretColor(value: Property.CaretColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    clear(value: Property.Clear, willSet=true) { return this }
+
+    @RUIStyleProp
+    clipPath(value: Property.ClipPath, willSet=true) { return this }
+
+    @RUIStyleProp
+    color(value: Property.Color, willSet=true) { return this }
+
+    @RUIStyleProp
+    colorAdjust(value: Property.PrintColorAdjust, willSet=true) { return this }
+
+    @RUIStyleProp
+    colorScheme(value: Property.ColorScheme, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnCount(value: Property.ColumnCount, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnFill(value: Property.ColumnFill, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnGap(value: Property.ColumnGap<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnRuleColor(value: Property.ColumnRuleColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnRuleStyle(value: Property.ColumnRuleStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnRuleWidth(value: Property.ColumnRuleWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnSpan(value: Property.ColumnSpan, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnWidth(value: Property.ColumnWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    contain(value: Property.Contain, willSet=true) { return this }
+
+    @RUIStyleProp
+    content(value: Property.Content, willSet=true) { return this }
+
+    @RUIStyleProp
+    contentVisibility(value: Property.ContentVisibility, willSet=true) { return this }
+
+    @RUIStyleProp
+    counterIncrement(value: Property.CounterIncrement, willSet=true) { return this }
+
+    @RUIStyleProp
+    counterReset(value: Property.CounterReset, willSet=true) { return this }
+
+    @RUIStyleProp
+    counterSet(value: Property.CounterSet, willSet=true) { return this }
+
+    @RUIStyleProp
+    cursor(value: Property.Cursor, willSet=true) { return this }
+
+    @RUIStyleProp
+    direction(value: Property.Direction, willSet=true) { return this }
+
+    @RUIStyleProp
+    display(value: Property.Display, willSet=true) { return this }
+
+    @RUIStyleProp
+    emptyCells(value: Property.EmptyCells, willSet=true) { return this }
+
+    @RUIStyleProp
+    filter(value: Property.Filter, willSet=true) { return this }
+
+    @RUIStyleProp
+    flexBasis(value: Property.FlexBasis<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    flexDirection(value: Property.FlexDirection, willSet=true) { return this }
+
+    @RUIStyleProp
+    flexGrow(value: Property.FlexGrow, willSet=true) { return this }
+
+    @RUIStyleProp
+    flexShrink(value: Property.FlexShrink, willSet=true) { return this }
+
+    @RUIStyleProp
+    flexWrap(value: Property.FlexWrap, willSet=true) { return this }
+
+    @RUIStyleProp
+    float(value: Property.Float, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontFamily(value: Property.FontFamily, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontFeatureSettings(value: Property.FontFeatureSettings, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontKerning(value: Property.FontKerning, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontLanguageOverride(value: Property.FontLanguageOverride, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontOpticalSizing(value: Property.FontOpticalSizing, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontSize(value: Property.FontSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontSizeAdjust(value: Property.FontSizeAdjust, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontSmooth(value: Property.FontSmooth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontStretch(value: Property.FontStretch, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontStyle(value: Property.FontStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontSynthesis(value: Property.FontSynthesis, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariant(value: Property.FontVariant, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariantAlternates(value: Property.FontVariantAlternates, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariantCaps(value: Property.FontVariantCaps, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariantEastAsian(value: Property.FontVariantEastAsian, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariantLigatures(value: Property.FontVariantLigatures, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariantNumeric(value: Property.FontVariantNumeric, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariantPosition(value: Property.FontVariantPosition, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontVariationSettings(value: Property.FontVariationSettings, willSet=true) { return this }
+
+    @RUIStyleProp
+    fontWeight(value: Property.FontWeight, willSet=true) { return this }
+
+    @RUIStyleProp
+    forcedColorAdjust(value: Property.ForcedColorAdjust, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridAutoColumns(value: Property.GridAutoColumns<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridAutoFlow(value: Property.GridAutoFlow, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridAutoRows(value: Property.GridAutoRows<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridColumnEnd(value: Property.GridColumnEnd, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridColumnStart(value: Property.GridColumnStart, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridRowEnd(value: Property.GridRowEnd, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridRowStart(value: Property.GridRowStart, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridTemplateAreas(value: Property.GridTemplateAreas, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridTemplateColumns(value: Property.GridTemplateColumns<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridTemplateRows(value: Property.GridTemplateRows<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    hangingPunctuation(value: Property.HangingPunctuation, willSet=true) { return this }
+
+        @RUIStyleProp
+    height(value: Property.Height<TLength>) { return this }
+
+    @RUIStyleProp
+    hyphenateCharacter(value: Property.HyphenateCharacter, willSet=true) { return this }
+
+    @RUIStyleProp
+    hyphens(value: Property.Hyphens, willSet=true) { return this }
+
+    @RUIStyleProp
+    imageOrientation(value: Property.ImageOrientation, willSet=true) { return this }
+
+    @RUIStyleProp
+    imageRendering(value: Property.ImageRendering, willSet=true) { return this }
+
+    @RUIStyleProp
+    imageResolution(value: Property.ImageResolution, willSet=true) { return this }
+
+    @RUIStyleProp
+    initialLetter(value: Property.InitialLetter, willSet=true) { return this }
+
+    @RUIStyleProp
+    inlineSize(value: Property.InlineSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    inputSecurity(value: Property.InputSecurity, willSet=true) { return this }
+
+    @RUIStyleProp
+    inset(value: Property.Inset<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    insetBlock(value: Property.InsetBlock<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    insetBlockEnd(value: Property.InsetBlockEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    insetBlockStart(value: Property.InsetBlockStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    insetInline(value: Property.InsetInline<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    insetInlineEnd(value: Property.InsetInlineEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    insetInlineStart(value: Property.InsetInlineStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    isolation(value: Property.Isolation, willSet=true) { return this }
+
+    @RUIStyleProp
+    justifyContent(value: Property.JustifyContent, willSet=true) { return this }
+
+    @RUIStyleProp
+    justifyItems(value: Property.JustifyItems, willSet=true) { return this }
+
+    @RUIStyleProp
+    justifySelf(value: Property.JustifySelf, willSet=true) { return this }
+
+    @RUIStyleProp
+    justifyTracks(value: Property.JustifyTracks, willSet=true) { return this }
+
+    @RUIStyleProp
+    left(value: Property.Left<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    letterSpacing(value: Property.LetterSpacing<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    lineBreak(value: Property.LineBreak, willSet=true) { return this }
+
+    @RUIStyleProp
+    lineHeight(value: Property.LineHeight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    lineHeightStep(value: Property.LineHeightStep<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    listStyleImage(value: Property.ListStyleImage, willSet=true) { return this }
+
+    @RUIStyleProp
+    listStylePosition(value: Property.ListStylePosition, willSet=true) { return this }
+
+    @RUIStyleProp
+    listStyleType(value: Property.ListStyleType, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginBlock(value: Property.MarginBlock<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginBlockEnd(value: Property.MarginBlockEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginBlockStart(value: Property.MarginBlockStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginBottom(value: Property.MarginBottom<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginInline(value: Property.MarginInline<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginInlineEnd(value: Property.MarginInlineEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginInlineStart(value: Property.MarginInlineStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginLeft(value: Property.MarginLeft<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginRight(value: Property.MarginRight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    marginTop(value: Property.MarginTop<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskBorderMode(value: Property.MaskBorderMode, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskBorderOutset(value: Property.MaskBorderOutset<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskBorderRepeat(value: Property.MaskBorderRepeat, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskBorderSlice(value: Property.MaskBorderSlice, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskBorderSource(value: Property.MaskBorderSource, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskBorderWidth(value: Property.MaskBorderWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskClip(value: Property.MaskClip, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskComposite(value: Property.MaskComposite, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskImage(value: Property.MaskImage, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskMode(value: Property.MaskMode, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskOrigin(value: Property.MaskOrigin, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskPosition(value: Property.MaskPosition<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskRepeat(value: Property.MaskRepeat, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskSize(value: Property.MaskSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskType(value: Property.MaskType, willSet=true) { return this }
+
+    @RUIStyleProp
+    mathStyle(value: Property.MathStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    maxBlockSize(value: Property.MaxBlockSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maxHeight(value: Property.MaxHeight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maxInlineSize(value: Property.MaxInlineSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maxLines(value: Property.MaxLines, willSet=true) { return this }
+
+    @RUIStyleProp
+    maxWidth(value: Property.MaxWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    minBlockSize(value: Property.MinBlockSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    minHeight(value: Property.MinHeight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    minInlineSize(value: Property.MinInlineSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    minWidth(value: Property.MinWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    mixBlendMode(value: Property.MixBlendMode, willSet=true) { return this }
+
+    @RUIStyleProp
+    motionDistance(value: Property.OffsetDistance<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    motionPath(value: Property.OffsetPath, willSet=true) { return this }
+
+    @RUIStyleProp
+    motionRotation(value: Property.OffsetRotate, willSet=true) { return this }
+
+    @RUIStyleProp
+    objectFit(value: Property.ObjectFit, willSet=true) { return this }
+
+    @RUIStyleProp
+    objectPosition(value: Property.ObjectPosition<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    offsetAnchor(value: Property.OffsetAnchor<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    offsetDistance(value: Property.OffsetDistance<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    offsetPath(value: Property.OffsetPath, willSet=true) { return this }
+
+    @RUIStyleProp
+    offsetRotate(value: Property.OffsetRotate, willSet=true) { return this }
+
+    @RUIStyleProp
+    offsetRotation(value: Property.OffsetRotate, willSet=true) { return this }
+
+    @RUIStyleProp
+    opacity(value: Property.Opacity, willSet=true) { return this }
+
+    @RUIStyleProp
+    order(value: Property.Order, willSet=true) { return this }
+
+    @RUIStyleProp
+    orphans(value: Property.Orphans, willSet=true) { return this }
+
+    @RUIStyleProp
+    outlineColor(value: Property.OutlineColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    outlineOffset(value: Property.OutlineOffset<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    outlineStyle(value: Property.OutlineStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    outlineWidth(value: Property.OutlineWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowAnchor(value: Property.OverflowAnchor, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowBlock(value: Property.OverflowBlock, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowClipBox(value: Property.OverflowClipBox, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowClipMargin(value: Property.OverflowClipMargin<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowInline(value: Property.OverflowInline, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowWrap(value: Property.OverflowWrap, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowX(value: Property.OverflowX, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflowY(value: Property.OverflowY, willSet=true) { return this }
+
+    @RUIStyleProp
+    overscrollBehaviorBlock(value: Property.OverscrollBehaviorBlock, willSet=true) { return this }
+
+    @RUIStyleProp
+    overscrollBehaviorInline(value: Property.OverscrollBehaviorInline, willSet=true) { return this }
+
+    @RUIStyleProp
+    overscrollBehaviorX(value: Property.OverscrollBehaviorX, willSet=true) { return this }
+
+    @RUIStyleProp
+    overscrollBehaviorY(value: Property.OverscrollBehaviorY, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingBlock(value: Property.PaddingBlock<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingBlockEnd(value: Property.PaddingBlockEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingBlockStart(value: Property.PaddingBlockStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingBottom(value: Property.PaddingBottom<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingInline(value: Property.PaddingInline<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingInlineEnd(value: Property.PaddingInlineEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingInlineStart(value: Property.PaddingInlineStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingLeft(value: Property.PaddingLeft<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingRight(value: Property.PaddingRight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    paddingTop(value: Property.PaddingTop<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    pageBreakAfter(value: Property.PageBreakAfter, willSet=true) { return this }
+
+    @RUIStyleProp
+    pageBreakBefore(value: Property.PageBreakBefore, willSet=true) { return this }
+
+    @RUIStyleProp
+    pageBreakInside(value: Property.PageBreakInside, willSet=true) { return this }
+
+    @RUIStyleProp
+    paintOrder(value: Property.PaintOrder, willSet=true) { return this }
+
+    @RUIStyleProp
+    perspective(value: Property.Perspective<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    perspectiveOrigin(value: Property.PerspectiveOrigin<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    placeContent(value: Property.PlaceContent, willSet=true) { return this }
+
+    @RUIStyleProp
+    pointerEvents(value: Property.PointerEvents, willSet=true) { return this }
+
+    @RUIStyleProp
+    position(value: Property.Position, willSet=true) { return this }
+
+    @RUIStyleProp
+    printColorAdjust(value: Property.PrintColorAdjust, willSet=true) { return this }
+
+    @RUIStyleProp
+    quotes(value: Property.Quotes, willSet=true) { return this }
+
+    @RUIStyleProp
+    resize(value: Property.Resize, willSet=true) { return this }
+
+    @RUIStyleProp
+    right(value: Property.Right<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    rotate(value: Property.Rotate, willSet=true) { return this }
+
+    @RUIStyleProp
+    rowGap(value: Property.RowGap<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    rubyAlign(value: Property.RubyAlign, willSet=true) { return this }
+
+    @RUIStyleProp
+    rubyMerge(value: Property.RubyMerge, willSet=true) { return this }
+
+    @RUIStyleProp
+    rubyPosition(value: Property.RubyPosition, willSet=true) { return this }
+
+    @RUIStyleProp
+    scale(value: Property.Scale, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollBehavior(value: Property.ScrollBehavior, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMargin(value: Property.ScrollMargin<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginBlock(value: Property.ScrollMarginBlock<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginBlockEnd(value: Property.ScrollMarginBlockEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginBlockStart(value: Property.ScrollMarginBlockStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginBottom(value: Property.ScrollMarginBottom<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginInline(value: Property.ScrollMarginInline<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginInlineEnd(value: Property.ScrollMarginInlineEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginInlineStart(value: Property.ScrollMarginInlineStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginLeft(value: Property.ScrollMarginLeft<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginRight(value: Property.ScrollMarginRight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollMarginTop(value: Property.ScrollMarginTop<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPadding(value: Property.ScrollPadding<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingBlock(value: Property.ScrollPaddingBlock<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingBlockEnd(value: Property.ScrollPaddingBlockEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingBlockStart(value: Property.ScrollPaddingBlockStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingBottom(value: Property.ScrollPaddingBottom<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingInline(value: Property.ScrollPaddingInline<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingInlineEnd(value: Property.ScrollPaddingInlineEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingInlineStart(value: Property.ScrollPaddingInlineStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingLeft(value: Property.ScrollPaddingLeft<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingRight(value: Property.ScrollPaddingRight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollPaddingTop(value: Property.ScrollPaddingTop<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapAlign(value: Property.ScrollSnapAlign, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapMargin(value: Property.ScrollMargin<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapMarginBottom(value: Property.ScrollMarginBottom<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapMarginLeft(value: Property.ScrollMarginLeft<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapMarginRight(value: Property.ScrollMarginRight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapMarginTop(value: Property.ScrollMarginTop<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapStop(value: Property.ScrollSnapStop, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollSnapType(value: Property.ScrollSnapType, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollbarColor(value: Property.ScrollbarColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollbarGutter(value: Property.ScrollbarGutter, willSet=true) { return this }
+
+    @RUIStyleProp
+    scrollbarWidth(value: Property.ScrollbarWidth, willSet=true) { return this }
+
+    @RUIStyleProp
+    shapeImageThreshold(value: Property.ShapeImageThreshold, willSet=true) { return this }
+
+    @RUIStyleProp
+    shapeMargin(value: Property.ShapeMargin<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    shapeOutside(value: Property.ShapeOutside, willSet=true) { return this }
+
+    @RUIStyleProp
+    tabSize(value: Property.TabSize<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    tableLayout(value: Property.TableLayout, willSet=true) { return this }
+
+    @RUIStyleProp
+    textAlign(value: Property.TextAlign, willSet=true) { return this }
+
+    @RUIStyleProp
+    textAlignLast(value: Property.TextAlignLast, willSet=true) { return this }
+
+    @RUIStyleProp
+    textCombineUpright(value: Property.TextCombineUpright, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecorationColor(value: Property.TextDecorationColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecorationLine(value: Property.TextDecorationLine, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecorationSkip(value: Property.TextDecorationSkip, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecorationSkipInk(value: Property.TextDecorationSkipInk, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecorationStyle(value: Property.TextDecorationStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecorationThickness(value: Property.TextDecorationThickness<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecorationWidth(value: Property.TextDecorationThickness<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    textEmphasisColor(value: Property.TextEmphasisColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    textEmphasisPosition(value: Property.TextEmphasisPosition, willSet=true) { return this }
+
+    @RUIStyleProp
+    textEmphasisStyle(value: Property.TextEmphasisStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    textIndent(value: Property.TextIndent<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    textJustify(value: Property.TextJustify, willSet=true) { return this }
+
+    @RUIStyleProp
+    textOrientation(value: Property.TextOrientation, willSet=true) { return this }
+
+    @RUIStyleProp
+    textOverflow(value: Property.TextOverflow, willSet=true) { return this }
+
+    @RUIStyleProp
+    textRendering(value: Property.TextRendering, willSet=true) { return this }
+
+    @RUIStyleProp
+    textShadow(value: Property.TextShadow, willSet=true) { return this }
+
+    @RUIStyleProp
+    textSizeAdjust(value: Property.TextSizeAdjust, willSet=true) { return this }
+
+    @RUIStyleProp
+    textTransform(value: Property.TextTransform, willSet=true) { return this }
+
+    @RUIStyleProp
+    textUnderlineOffset(value: Property.TextUnderlineOffset<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    textUnderlinePosition(value: Property.TextUnderlinePosition, willSet=true) { return this }
+
+    @RUIStyleProp
+    top(value: Property.Top<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    touchAction(value: Property.TouchAction, willSet=true) { return this }
+
+    @RUIStyleProp
+    transform(value: Property.Transform, willSet=true) { return this }
+
+    @RUIStyleProp
+    transformBox(value: Property.TransformBox, willSet=true) { return this }
+
+    @RUIStyleProp
+    transformOrigin(value: Property.TransformOrigin<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    transformStyle(value: Property.TransformStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    transitionDelay(value: Property.TransitionDelay<TTime>, willSet=true) { return this }
+
+    @RUIStyleProp
+    transitionDuration(value: Property.TransitionDuration<TTime>, willSet=true) { return this }
+
+    @RUIStyleProp
+    transitionProperty(value: Property.TransitionProperty, willSet=true) { return this }
+
+    @RUIStyleProp
+    transitionTimingFunction(value: Property.TransitionTimingFunction, willSet=true) { return this }
+
+    @RUIStyleProp
+    translate(value: Property.Translate<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    unicodeBidi(value: Property.UnicodeBidi, willSet=true) { return this }
+
+    @RUIStyleProp
+    userSelect(value: Property.UserSelect, willSet=true) { return this }
+
+    @RUIStyleProp
+    verticalAlign(value: Property.VerticalAlign<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    visibility(value: Property.Visibility, willSet=true) { return this }
+
+    @RUIStyleProp
+    whiteSpace(value: Property.WhiteSpace, willSet=true) { return this }
+
+    @RUIStyleProp
+    widows(value: Property.Widows, willSet=true) { return this }
+
+    @RUIStyleProp
+    width(value: Property.Width<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    willChange(value: Property.WillChange, willSet=true) { return this }
+
+    @RUIStyleProp
+    wordBreak(value: Property.WordBreak, willSet=true) { return this }
+
+    @RUIStyleProp
+    wordSpacing(value: Property.WordSpacing<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    wordWrap(value: Property.WordWrap, willSet=true) { return this }
+
+    @RUIStyleProp
+    writingMode(value: Property.WritingMode, willSet=true) { return this }
+
+    @RUIStyleProp
+    zIndex(value: Property.ZIndex, willSet=true) { return this }
+
+    @RUIStyleProp
+    zoom(value: Property.Zoom, willSet=true) { return this }
+
+    @RUIStyleProp
+    all(value: Property.All, willSet=true) { return this }
+
+    @RUIStyleProp
+    animation(value: Property.Animation<TTime>, willSet=true) { return this }
+
+    @RUIStyleProp
+    background(value: Property.Background<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    backgroundPosition(value: Property.BackgroundPosition<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    border(value: Property.Border<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlock(value: Property.BorderBlock<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockEnd(value: Property.BorderBlockEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBlockStart(value: Property.BorderBlockStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderBottom(value: Property.BorderBottom<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderColor(value: Property.BorderColor, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderImage(value: Property.BorderImage, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInline(value: Property.BorderInline<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineEnd(value: Property.BorderInlineEnd<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderInlineStart(value: Property.BorderInlineStart<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderLeft(value: Property.BorderLeft<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderRadius(value: Property.BorderRadius<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderRight(value: Property.BorderRight<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderStyle(value: Property.BorderStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderTop(value: Property.BorderTop<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    borderWidth(value: Property.BorderWidth<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    columnRule(value: Property.ColumnRule<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    columns(value: Property.Columns<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    flex(value: Property.Flex<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    flexFlow(value: Property.FlexFlow, willSet=true) { return this }
+
+    @RUIStyleProp
+    font(value: Property.Font, willSet=true) { return this }
+
+    @RUIStyleProp
+    gap(value: Property.Gap<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    grid(value: Property.Grid, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridArea(value: Property.GridArea, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridColumn(value: Property.GridColumn, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridRow(value: Property.GridRow, willSet=true) { return this }
+
+    @RUIStyleProp
+    gridTemplate(value: Property.GridTemplate, willSet=true) { return this }
+
+    @RUIStyleProp
+    lineClamp(value: Property.LineClamp, willSet=true) { return this }
+
+    @RUIStyleProp
+    listStyle(value: Property.ListStyle, willSet=true) { return this }
+
+    @RUIStyleProp
+    margin(value: Property.Margin<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    mask(value: Property.Mask<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    maskBorder(value: Property.MaskBorder, willSet=true) { return this }
+
+    @RUIStyleProp
+    motion(value: Property.Offset<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    offset(value: Property.Offset<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    outline(value: Property.Outline<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    overflow(value: Property.Overflow, willSet=true) { return this }
+
+    @RUIStyleProp
+    overscrollBehavior(value: Property.OverscrollBehavior, willSet=true) { return this }
+
+    @RUIStyleProp
+    padding(value: Property.Padding<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    placeItems(value: Property.PlaceItems, willSet=true) { return this }
+
+    @RUIStyleProp
+    placeSelf(value: Property.PlaceSelf, willSet=true) { return this }
+
+    @RUIStyleProp
+    textDecoration(value: Property.TextDecoration<TLength>, willSet=true) { return this }
+
+    @RUIStyleProp
+    textEmphasis(value: Property.TextEmphasis, willSet=true) { return this }
+
+    @RUIStyleProp
+    transition(value: Property.Transition<TTime>, willSet=true) { return this }
 
 }

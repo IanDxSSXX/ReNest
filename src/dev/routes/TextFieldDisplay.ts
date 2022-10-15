@@ -10,6 +10,9 @@ export const TextFieldDisplay = RUI(() => {
             .placeHolder("哈哈哈")
             .onChange((newText: any) => {
                 textRef.current = newText
+                console.log(textRef.current)
             })
+            .variant("underlined")
+            .autoFocus()
     )
 })

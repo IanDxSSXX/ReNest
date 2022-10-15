@@ -65,9 +65,26 @@ export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (pre, curr
 
     let preProps = preWrapper.props, currProps = currWrapper.props
 
-    if (!!currWrapper.C.shouldUpdate) return currWrapper.C.shouldUpdate(preProps, currProps)
+    // ---- styles and custom props
+    // ---1 styles, update on change by default
+    for (let key of Object.keys(preWrapper.elementProps.style)) {
+        if (preWrapper.elementProps.style??{}[key] !== currWrapper.customProps.style??{}[key]) return false
+    }
+    // ---2 element props, , update on change by default
+    for (let key of Object.keys(preWrapper.customProps)) {
+        if (key !== "style" && preWrapper.elementProps[key] !== currWrapper.customProps[key]) return false
+    }
 
-    // ---- shallow equal
+    // -3/4 custom and input props with shouldUpdate hook
+    if (!!currWrapper.C.shouldUpdate) {
+        return currWrapper.C.shouldUpdate({...preProps, ...preWrapper.customProps}, {...currProps, ...currWrapper.customProps})
+    }
+
+    // ---3 custom props
+    for (let key of Object.keys(preWrapper.customProps)) {
+        if (preWrapper.customProps[key] !== currWrapper.customProps[key]) return false
+    }
+    // ---4 input props
     for (let key of Object.keys(preProps)) {
         if (preProps[key] !== currProps[key]) return false
     }
@@ -79,8 +96,17 @@ export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (pre, curr
 export function RUIProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
-        if (args.length === 1) {
-            (this as ReactUIElement).setCustomProp(propertyKey, args[0], args[1]??true)
+        if (args.length === 0) {
+            // ---- check if there's default value, use toString and regex to match the first default value
+            let functionString = originalValue.toString()
+            let regex = /arguments.length > 0 && arguments\[0] !== undefined \? arguments\[0] : ([\s\S]*?);/g
+            let match = functionString.match(regex)
+            if (match?.length === 1) {
+                let defaultValue = match[0].replace(regex, "$1");
+                (this as ReactUIElement).setCustomProp(propertyKey, eval("("+defaultValue+")"))
+            }
+        } else if(args.length === 1) {
+            (this as ReactUIElement).setCustomProp(propertyKey, args[0])
         }
         return originalValue.apply(this, args);
     }

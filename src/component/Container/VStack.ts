@@ -8,35 +8,27 @@ import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
 import {ReactUITheme} from "../../base/theme/ReactUITheme";
 
 class VStack extends ReactUIElement {
-    Body = ({children}:any) => {
-        const vstack = Div(...children)
-
-        vstack
-            .height(vstack.S.height ?? "max-content")
-            .width(vstack.S.width ?? "max-content")
+    Body = ({children}:any) =>
+        Div(...children)
+            .height("max-content")
+            .width("max-content")
             .display("flex")
             .flexDirection("column")
             .rowGap(this.C.spacing)
-
-        let alignment = this.C.alignment
-
-        vstack.forEachChild(child => {
-            if (child.constructor.name === "Spacer") {
-                child.flexGrow(1)
-            } else if (child.IAmReactUIWithStyle) {
-                child.flexShrink(0)
-                if (alignment === "leading") {
-                    child.marginRight("auto")
-                } else if (alignment === "tailing") {
-                    child.marginLeft("auto")
-                } else if (alignment === "center") {
-                    child.marginLeft("auto").marginRight("auto")
+            .forEachChild(child => {
+                if (child.constructor.name === "Spacer") {
+                    child.flexGrow(1)
+                } else if (child.IAmReactUIWithStyle) {
+                    child.flexShrink(0)
+                    if (this.C.alignment === "leading") {
+                        child.marginRight("auto")
+                    } else if (this.C.alignment === "tailing") {
+                        child.marginLeft("auto")
+                    } else if (this.C.alignment === "center") {
+                        child.marginLeft("auto").marginRight("auto")
+                    }
                 }
-            }
         })
-
-        return vstack
-    }
 
     @RUIProp
     spacing(value: string) { return this }

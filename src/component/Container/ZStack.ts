@@ -2,48 +2,37 @@ import {ReactUIElement} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import {flattened} from "../../base/utils/Utils";
 import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
+import {RUIProp} from "../../base/element/Helpers";
 
 class ZStack extends ReactUIElement {
-    Body = ({children}:any) => {
-        const zstack = Div(...children)
-
-        zstack
-            .height(zstack.S.height ?? "max-content")
-            .width(zstack.S.width ?? "max-content")
+    Body = ({children}:any) =>
+        Div(...children)
+            .height("max-content")
+            .width("max-content")
             .display("grid")
-            .alignItems(this.C.alignmentV ?? "center")
-            .justifyItems(this.C.alignmentH ?? "center")
+            .alignItems(({
+                "top": "flex-start",
+                "center": "center",
+                "bottom": "flex-end"
+            } as any)[this.C.alignmentV ?? "center"])
+            .justifyItems(({
+                "leading": "left",
+                "center": "center",
+                "tailing": "right"
+            } as any)[this.C.alignmentH ?? "center"])
+            .forEachChild(child => {
+                if (child.IAmReactUIWithStyle) {
+                    child
+                        .position("relative")
+                        .gridArea("1 / 1/ 1 / 1")
+                }
+            })
 
-        zstack.forEachChild(child => {
-            // this.registerAsChild(child)
+    @RUIProp
+    alignmentH(value: "leading" | "center" | "tailing") { return this }
 
-            if (child.IAmReactUIWithStyle) {
-                child
-                    .position("relative")
-                    .gridArea("1 / 1/ 1 / 1")
-            }
-        })
-
-        return zstack
-    }
-
-    alignmentH(value: "leading" | "center" | "tailing") {
-        let map = {
-            "leading": "left",
-            "center": "center",
-            "tailing": "right"
-        }
-        return this.setCustomProp("alignmentH", map[value])
-    }
-
-    alignmentV(value: "top" | "center" | "bottom") {
-        let map = {
-            "top": "flex-start",
-            "center": "center",
-            "bottom": "flex-end"
-        }
-        return this.setCustomProp("alignmentV", map[value])
-    }
+    @RUIProp
+    alignmentV(value: "top" | "center" | "bottom") { return this }
 }
 
 

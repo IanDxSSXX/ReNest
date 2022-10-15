@@ -14,15 +14,9 @@ export const Button = RUITemplate((args: any) =>
 )
 
 export const Toggle = RUITemplate((args: any) =>
-    RUIComponent.Toggle().toggleType(args.toggleType)
+    RUIComponent.Toggle()
 )
-Toggle.argTypes = {
-    toggleType:{
-        defaultValue: 'toggle',
-        options: ['toggle', 'check'],
-        control: { type: 'radio' },
-    }
-}
+
 
 export const Select = RUITemplate((args: any) =>
     RUIComponent.Select([{title:"orange",data:[1,3,4]},{title:"banana",data:[10,30,40]}],'1')

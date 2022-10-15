@@ -3,9 +3,8 @@ import {Div} from "../../base/utils/HTMLTags";
 
 
 export class Spacer extends ReactUIElement {
-    Body = ():any => {
-        return Div()
-    }
+    Body = () =>
+        Div()
 }
 
 

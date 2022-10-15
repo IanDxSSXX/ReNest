@@ -57,7 +57,6 @@ export class ReactUIElement<T=any> extends ReactUITheme {
     @RUIProp
     willUnmount(value: ()=>any) { return this }
 
-
     // ---- memo
     @RUIProp
     useMemo(value: boolean=true) { return this }

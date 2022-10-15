@@ -10,16 +10,14 @@ class Paper extends ReactUIElement {
         shadow: RUIColor.white.dark
     }
 
-    Body = () => {
-        const paper = Div()
-
-        return paper
+    Body = () =>
+        Div()
             .backgroundColor(this.theme.bg)
             .width("200px")
             .height("280px")
             .borderRadius("7px")
             .boxShadow(`2px 2px 4px 1px ${this.theme.shadow}`)
-    }
+
 }
 
 export default function() {
