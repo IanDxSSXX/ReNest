@@ -8,6 +8,7 @@ import {Input} from "../../base/utils/HTMLTags"
 import AnimatedDiv from "../Other/Spring";
 import Text from "../Displayer/Text";
 import {RUIColor} from "../../base/theme/Colors";
+import {ConditionView} from "../../base";
 
 const themes = {
     primary: {
@@ -69,18 +70,21 @@ class TextField extends ReactUIElement {
                         !!this.C.onChange && this.C.onChange(textRef.current)
                     })
                     .backgroundColor(this.theme.foreground),
-                AnimatedDiv(
-                    Text(this.C.placeHolder ?? "")
-                        .color(this.C.disable ? this.theme.over :
-                            isTyping.value ? this.theme.selected : this.theme.unselected)
-                        .backgroundColor(this.theme.foreground)
-                        .padding(variantUnderlined ? "0px" : "3px")
-                        .marginLeft(variantUnderlined ? "0px" : "5px")
-                        .userSelect("none")
-                        .pointerEvents("none")
-                )
-                    .fontSize(fontSize)
-                    .style(styles)
+                ConditionView((this.C.placeHolder ?? "") === "", {
+                    false: () =>
+                        AnimatedDiv(
+                            Text(this.C.placeHolder)
+                                .color(this.C.disable ? this.theme.over :
+                                    isTyping.value ? this.theme.selected : this.theme.unselected)
+                                .background(`linear-gradient(to top , ${this.theme.foreground} 0%, ${this.theme.foreground}  50%, transparent 50%, transparent 100%)`)
+                                .padding(variantUnderlined ? "0px" : "3px")
+                                .marginLeft(variantUnderlined ? "0px" : "5px")
+                                .userSelect("none")
+                                .pointerEvents("none")
+                        )
+                            .fontSize(fontSize)
+                            .style(styles)
+                })
             )
                 .ref(textFieldElement)
                 .alignmentH("leading")

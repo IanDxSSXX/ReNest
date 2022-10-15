@@ -10,7 +10,7 @@ export function ConditionView<T=any>(variable: T, conditionMap: any): ReactUIWit
     if (!newViewFunc) {
         newViewFunc = conditionMap[":"]
         if (!newViewFunc) {
-            newViewFunc = RUIFragment
+            return RUIFragment()
         }
     }
     return newViewFunc(variable)

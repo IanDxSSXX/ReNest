@@ -11,15 +11,18 @@ import {RUIColor} from "../../base/theme/Colors";
 const themes = {
     primary: {
         bg: RUIColor.white.dark,
-        fg: RUIColor.red.standard,
+        toggle: RUIColor.red.standard,
+        fg: RUIColor.red.light,
     },
     secondary: {
         bg: RUIColor.white.dark,
-        fg: RUIColor.green.standard,
+        toggle: RUIColor.green.standard,
+        fg: RUIColor.green.light,
     },
     tertiary: {
         bg: RUIColor.white.dark,
-        fg: RUIColor.blue.standard,
+        toggle: RUIColor.blue.standard,
+        fg: RUIColor.blue.light,
     },
 }
 
@@ -66,7 +69,7 @@ class Toggle extends ReactUIElement {
                     .width(toggleHeight)
                     .height(toggleHeight)
                     .borderRadius(`calc(${toggleHeight} / 2)`)
-                    .backgroundColor(valueState.value ? this.theme.fg : this.theme.bg)
+                    .backgroundColor(valueState.value ? this.theme.toggle : this.theme.bg)
                     .style(buttonStyles)
             )
                 .width(toggleWidth)
