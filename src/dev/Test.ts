@@ -23,21 +23,13 @@ let myThemes = {
     }
 }
 class CSub1 extends View {
-    @State A: any = 1
-    @Context mm: any
-    @Prop JJ: any = "test"
-    @DotProp fuck: any = 1
+    @Prop toggle: any
+    @DotProp text: any
 
-    Body = () => {
-        console.log("jjkk", this.fuck)
-
-        return VStack(
-            Button("hh")
-                .onClick(() => {
-                    console.log(this.fuck)
-                    this.A.setValue((pre: any) => pre + 1)
-                }).id(uid()),
-            Text(`${this.JJ}`)
+    Body = () =>
+        VStack(
+            Text(`${this.toggle}`),
+            Text(this.text)
         )
             .didMount(() => {
                 // console.log(this.mm.value)
@@ -46,32 +38,28 @@ class CSub1 extends View {
             .didUpdate(() => {
                 console.log("rerender")
             })
-
-    }
 }
 let Sub1 = FuncView(CSub1)
 
 
 class CMain extends View {
-    @State b: any = false
-    @Ref c: any = 1
-    @State text: any = "fs"
+    @State count: any = 1
+    @State toggle: any = false
+    @State text: any = "defaultValue"
 
     Body = () =>
-        ContextProvider(
-                VStack(
-                    TextField(this.text.value)
-                        .onChange((newT:string) => {this.text.value = newT}),
-                    Button("1")
-                        .onClick(() => {
-                            this.b.setValue((pre: any) => !pre)
-                        })
-                        .disable(),
-                    Sub1({b: this.b.value})
-                        // .thisIsDot("123456"),
-                )
+        VStack(
+            TextField(this.text.value)
+                .onChange((newT:string) => {this.text.value = newT}),
+            Button("click me")
+                .onClick(() => {
+                    this.count.setValue((pre: number) => pre + 1)
+                    this.toggle.setValue((pre: boolean) => !pre)
+                }),
+            Text(`count: ${this.count.value}`),
+            Sub1({toggle: this.toggle.value})
+                .text(this.text.value)
         )
-            .context({mm: this.b})
 }
 
 

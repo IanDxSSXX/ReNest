@@ -39,12 +39,10 @@ class TextField extends View {
     myFontSize = "15px"
     variantUnderlined = this.C.variant === "underlined"
 
-    @Prop defaultText = ""
-
+    @Prop defaultText = "11"
     @Ref inputElement: any
     @Ref textFieldElement: any
-    @Ref textRef: any = this.defaultText
-
+    @Callback(Ref) textRef: any = () => this.defaultText
     @Callback(State) isTyping: any = () => this.textRef.current !== ""
     @State isMouseOver: any = false
     @Callback(Hook(useSpring)) styles = () => ({
