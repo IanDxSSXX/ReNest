@@ -1,28 +1,45 @@
-import {flattened} from "../utils/Utils";
+import {flattened, uid} from "../utils/Utils";
 import ReactUIWithStyle from "../base/ReactUIWithStyle";
-import {ReactUIHelper} from "../utils/ReactUIHelper";
-import ReactUIBase from "../base/ReactUIBase";
+import {ContextStore} from "./Store";
+// import {C} from "./ContextProvider";
 
 export class ReactUIContext extends ReactUIWithStyle {
     IAmReactUIContext = true
-    ruiContext: {[key: string]: {[key: string]: any}} = {}
     ruiContextTag: string[] = ["default"]
+    contextId: string = uid()
+    willUseContext = false
 
+    get contexts() {
+        if (!this.willUseContext) return {}
+        let context = {}
+        for (let tag of [...new Set(this.ruiContextTag)]) {
+            context = {...context, ...(ContextStore[this.contextId][tag] ?? {})}
+        }
+
+        return context
+    }
+
+    // ---- add tag
     addContextTag(newTag: string) {
         this.ruiContextTag = [newTag, ...this.ruiContextTag]
         return this
     }
 
-    // ---- add tag
     contextTag(value: string) {
         this.addContextTag(value)
         return this
     }
 
-    passDownContext(view: ReactUIBase) {
-        if (view.IAmReactUIContext && !view.IAMContextProvider) {
-            (view as ReactUIContext).ruiContext = this.ruiContext
-        }
+    passDownContext() {
+        if (!this.willUseContext) return
+        this.forEachChild(child => {
+            // ---- if encounter ContextProvider, stop nesting, which means only use inner ContextProvider's contexts
+            if (child.IAMContextProvider) return false
+            if (child.IAmReactUIContext) {
+                child.contextId = this.contextId
+                child.willUseContext = true
+            }
+        }, true)
     }
 
 }

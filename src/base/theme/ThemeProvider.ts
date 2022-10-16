@@ -2,31 +2,20 @@ import {Fragment, useState} from "react";
 import {ReactUIHelper} from "../utils/ReactUIHelper";
 import {ReactUITheme} from "./ReactUITheme";
 import {ReactUIBase} from "../index.core";
+import {C as RUIWrapperC} from "../utils/ReactUIWrapper";
+import {ThemeStore} from "./Store";
 
 namespace C {
-    export class ThemeProvider extends ReactUIBase {
-        // ---- same as RUIFragment
-        constructor(...children: any[]) {
-            super(Fragment, ...children);
-        }
-        beforeAsReactElement() {
-            if (!!this.elementProps && !!this.elementProps.key) {
-                this.elementProps = {key: this.elementProps.key}
-            } else {
-                this.elementProps = undefined
+    export class ThemeProvider extends RUIWrapperC.RUIFragment {
+        IAMThemeProvider = true
+        useTheme(themeState: ThemesState) {
+            ThemeStore[this.themeId] = {
+                themes: themeState.themes,
+                themeName: themeState.themeName
             }
-        }
+            this.willUseTheme = true
+            this.passDownTheme()
 
-        theme(themeState: ThemesState) {
-            this.forEachChild(child => {
-                // ---- themes
-                if (child.IAmReactUITheme) {
-                    (child as ReactUITheme).setPassDownThemes(themeState.themes);
-                    (child as ReactUITheme).setPassDownThemeName(themeState.themeName);
-                }
-                // ---- set context
-                child.customProps.context = {...child.customProps.context, ...{theme: themeState}}
-            }, true)
             return this
         }
     }

@@ -98,5 +98,5 @@ class Toggle extends ReactUIElement {
 }
 
 export default function(defaultValue=false) {
-    return new Toggle({defaultValue}).themes(themes)
+    return new Toggle({defaultValue})
 }

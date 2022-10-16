@@ -9,12 +9,20 @@ export class NavigationRoute extends ReactUIBase {
     constructor(elementFunc: () => (ReactUIBase | ReactElement), path: string, navigationView: C.NavigationView) {
         super(Route)
         function Element() {
-            let element = elementFunc()
-            if ((element as any).IAmReactUITheme) {
-                navigationView.passDownTheme(element as ReactUITheme)
+            let element = elementFunc() as any
+            if (element.IAmReactUITheme) {
+                navigationView.children = [element]
+                navigationView.passDownTheme()
+                navigationView.children = []
             }
 
-            return ((element as any).IAmReactUI) ? (element as ReactUIBase).asReactElement() : element as ReactElement
+            if (element.IAmReactUIContext) {
+                navigationView.children = [element]
+                navigationView.passDownContext()
+                navigationView.children = []
+            }
+
+            return (element.IAmReactUI) ? (element as ReactUIBase).asReactElement() : element as ReactElement
         }
 
         this.setProps({
@@ -45,7 +53,15 @@ export class NavigationRouteMatchable extends ReactUIBase {
             }
 
             if (element.IAmReactUITheme) {
-                navigationView.passDownTheme(element as ReactUITheme)
+                navigationView.children = [element]
+                navigationView.passDownTheme()
+                navigationView.children = []
+            }
+
+            if (element.IAmReactUIContext) {
+                navigationView.children = [element]
+                navigationView.passDownContext()
+                navigationView.children = []
             }
 
             return (element.IAmReactUI) ? (element as ReactUIBase).asReactElement() : element as ReactElement

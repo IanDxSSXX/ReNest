@@ -6,10 +6,10 @@ import {ReactElementWrapperMemorized, RUIProp} from "./Helpers";
 
 export class ReactUIElement<T=any> extends ReactUITheme {
     props: T
-    Body?: (props: T, context: any) => ReactUIBase | ReactElement
+    Init: (props: T) => any = () => {}
+    Body?: (props: T) => ReactUIBase | ReactElement
     ruiGene: boolean = false
-    contexts: {[key:string]:{[key:string]: any}} = {}
-    IAmReactUIElement = true
+    readonly IAmReactUIElement = true
 
     constructor(props?: any) {
         super("")
@@ -40,8 +40,9 @@ export class ReactUIElement<T=any> extends ReactUITheme {
         view.elementProps.style = {...view.elementProps.style, ...newElementStyles}
         view.elementProps = {...view.elementProps, ...newElementProps}
 
-        this.passDownTheme(view)
-        this.passDownContext(view)
+        this.children = [view]
+        this.passDownTheme()
+        this.passDownContext()
 
         return view
     }
@@ -65,7 +66,7 @@ export class ReactUIElement<T=any> extends ReactUITheme {
     shouldUpdate(value: (preProps: T, currProps: T) => boolean) { return this }
 }
 
-export function RUI<T extends Object>(body: (props:T, context: any) => any) {
+export function RUI<T extends Object>(body: (props:T) => any) {
     return function(props?: T) {
         let ruiElement = new ReactUIElement<T>(props)
         ruiElement.setBody(body)

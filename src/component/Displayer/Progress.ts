@@ -7,40 +7,10 @@ import {Div} from "../../base/utils/HTMLTags"
 import {useEffect, useRef} from "react";
 import {useRUIState} from "../../base";
 import {VStack} from "../index";
+import {RUIColor} from "../../base/theme/Colors";
 
 
-const LineVariant = (value:number, wrapper: any) => {
-    const progressBack = Div()
-    const progressFront = AnimatedDiv()
-    const progress = ZStack(
-        progressBack,
-        progressFront
-    )
-    progress
-        .alignmentH('leading')
-        .width("250px")
-        .height("10px")
 
-    progressBack
-        .width(progress.S.width)
-        .height(progress.S.height)
-        .backgroundColor(wrapper.theme.second.dark!)
-        .borderRadius("10px")
-
-    progressFront
-        .height(progress.S.height)
-        .borderRadius("10px")
-        .backgroundColor(wrapper.themeColor.first.standard!)
-
-    const duration = 150
-    const progressFrontStyle = useSpring({
-        width: `calc(${value > 1 ? 1 : value} * ${progress.S.width})`,
-        config: {duration},
-    });
-    progressFront.style(progressFrontStyle)
-
-    return progress
-}
 
 const CircleVariant = (value:number, wrapper:any) => {
     const circleLeft = AnimatedDiv()
@@ -136,7 +106,39 @@ const CircleVariant = (value:number, wrapper:any) => {
 
     return progress
 }
+
+
 class Progress extends ReactUIElement {
+    defaultTheme = {
+        fg: RUIColor.green.standard,
+        bg: RUIColor.white.dark
+    }
+    LineVariant = (value:number) => {
+        const duration = 150
+        const progressFrontStyle = useSpring({
+            width: `calc(${value > 1 ? 1 : value} * 100%)`,
+            config: {duration},
+        });
+
+        return (
+            ZStack(
+                Div()
+                    .backgroundColor(this.theme.fg)
+                    .borderRadius("10px"),
+                AnimatedDiv()
+                    .borderRadius("10px")
+                    .backgroundColor(this.theme.bg)
+                    .style(progressFrontStyle)
+            )
+                .alignmentH('leading')
+                .width("250px")
+                .height("10px")
+        )
+
+
+
+
+    }
 
     Body = ({value}:any):any => {
 
@@ -145,7 +147,7 @@ class Progress extends ReactUIElement {
 
         let progress
         if(variant==='line'){
-            progress = LineVariant(value, this)
+            progress = this.LineVariant(value)
         } else {
             progress = CircleVariant(value, this)
         }
