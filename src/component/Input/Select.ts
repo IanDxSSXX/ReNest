@@ -1,4 +1,4 @@
-import {ReactUIElement, RUIProp} from "../../base/index.core";
+import {ReactUIElement} from "../../base/element/ReactUIElement";
 import Text from "../Displayer/Text";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import List from "../Displayer/List";
@@ -7,6 +7,7 @@ import {useEffect, useRef} from "react";
 import {useTrigger, useTriggerEffect, range, RUITag, useRUIState, RUI} from "../../base";
 import {string} from "prop-types";
 import {RUIColor} from "../../base/theme/Colors";
+import {RUIProp} from "../../base/element/Helpers";
 
 class Select extends ReactUIElement {
     defaultTheme = {

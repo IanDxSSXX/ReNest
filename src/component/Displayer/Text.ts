@@ -1,5 +1,5 @@
 import {Div} from "../../base/utils/HTMLTags";
-import {View} from "../../base/element/ReactUIElement";
+import {FuncView, View} from "../../base/element/ReactUIElement";
 
 
 class Text extends View {
@@ -13,5 +13,5 @@ class Text extends View {
 
 
 export default function(content: string | number) {
-    return new Text({content})
+    return FuncView (Text)({content})
 }

@@ -1,40 +1,36 @@
-import {View} from "../../base/element/ReactUIElement";
+import {FuncView, View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
 import {Spacer} from "../Other/Spacer";
+import {DotProp} from "../../base/element/Decorator";
 
 class HStack extends View {
+    @DotProp spacing: any = "0px"
+    @DotProp alignment: "top" | "center" | "bottom" = "top"
     Body = ({children}:any) =>
         Div(...children)
             .height("max-content")
             .width("max-content")
             .display("flex")
             .flexDirection("row")
-            .columnGap(this.C.spacing)
+            .columnGap(this.spacing)
             .forEachChild((child: any) => {
                 if (child.constructor.name === "Spacer") {
                     child.flexGrow(1)
                 } else if (child.IAMReactUIWithStyle) {
                     child.flexShrink(0)
-                    if (this.C.alignment === "top") {
+                    if (this.alignment === "top") {
                         child.marginBottom("auto")
-                    } else if (this.C.alignment === "bottom") {
+                    } else if (this.alignment === "bottom") {
                         child.marginTop("auto")
-                    } else if (this.C.alignment === "center") {
+                    } else if (this.alignment === "center") {
                         child.marginTop("auto").marginBottom("auto")
                     }
                 }
             })
-
-
-    @RUIProp
-    spacing(value: string) { return this }
-
-    @RUIProp
-    alignment(value: "top" | "center" | "bottom") { return this }
 }
 
 
 export default function(...children: any[]) {
-    return new HStack({children})
+    return FuncView(HStack)({children})
 }
