@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom/client";
 import ReactUIApp from "./dev/ReactUIApp";
-import {BrowserRouter} from "./base/navigation/ReactUINavigation";
-import {Div} from "./base/utils/HTMLTags";
-import {ContextProvider, ForEach, FuncView} from "./base";
+import {BrowserRouter} from "./core/navigation/ReactUINavigation";
+import {Div} from "./core/utils/HTMLTags";
+import {ContextProvider, ForEach, FuncView} from "./core";
 import {Button} from "./component";
 
 const root = ReactDOM.createRoot(

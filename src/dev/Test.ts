@@ -1,8 +1,8 @@
-import {ReactUIElement, ViewWrapper, View} from "../base/element/ReactUIElement";
+import {ReactUIElement, ViewWrapper, View} from "../core/element/ReactUIElement";
 import {Button, VStack, Text, TextField} from "../component";
-import {Context, DotProp, Prop} from "../base/element/Decorator";
-import {Ref, State} from "../base/element/HookDecorator";
-import {Div} from "../base/utils/HTMLTags";
+import {Context, DotProp, Prop} from "../core/element/Decorator";
+import {Ref, State} from "../core/element/HookDecorator";
+import {Div} from "../core/utils/HTMLTags";
 
 let myThemes = {
     first: {

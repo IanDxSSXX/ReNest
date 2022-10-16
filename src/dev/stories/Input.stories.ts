@@ -1,6 +1,6 @@
 import * as RUIComponent from "../../component";
 import {RUITemplate} from "./RUITemplate";
-import {TagView, useRUIState} from "../../base";
+import {TagView, useRUIState} from "../../core";
 import Text from "../../component/Displayer/Text";
 
 export default {

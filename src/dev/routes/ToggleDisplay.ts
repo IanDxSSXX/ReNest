@@ -1,4 +1,4 @@
-import {FuncView, useRUIState} from "../../base";
+import {FuncView, useRUIState} from "../../core";
 import {useEffect} from "react";
 import {Toggle} from "../../component";
 

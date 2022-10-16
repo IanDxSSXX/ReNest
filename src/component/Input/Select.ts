@@ -1,6 +1,6 @@
-import {FuncView, TagView, useRUIState, useTrigger, useTriggerEffect, View} from "../../base";
+import {FuncView, TagView, useRUIState, useTrigger, useTriggerEffect, View} from "../../core";
 import {useEffect, useRef} from "react";
-import {RUIColor} from "../../base/theme/Colors";
+import {RUIColor} from "../../core/theme/Colors";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import Spacer from "../Other/Spacer";
 import HStack from "../Container/HStack";

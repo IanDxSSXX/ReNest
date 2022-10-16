@@ -1,6 +1,6 @@
-import {Div} from "../../base/utils/HTMLTags";
-import {Callback, DotProp, Ref, Spring, State, View, ViewWrapper} from "../../base";
-import {RUIColor} from "../../base/theme/Colors";
+import {Div} from "../../core/utils/HTMLTags";
+import {Callback, DotProp, Ref, Spring, State, View, ViewWrapper} from "../../core";
+import {RUIColor} from "../../core/theme/Colors";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/AnimatedDiv";
 

@@ -1,4 +1,4 @@
-import {ForEach, FuncView} from "../../base";
+import {ForEach, FuncView} from "../../core";
 import {Button, VStack} from "../../component";
 import List from "../../component/Displayer/List";
 

@@ -1,7 +1,7 @@
-import {Div} from "../../base/utils/HTMLTags";
+import {Div} from "../../core/utils/HTMLTags";
 import AnimatedDiv from "../Other/AnimatedDiv";
-import {RUIColor} from "../../base/theme/Colors";
-import {Callback, DotProp, Prop, Spring, State, View, ViewWrapper} from "../../base";
+import {RUIColor} from "../../core/theme/Colors";
+import {Callback, DotProp, Prop, Spring, State, View, ViewWrapper} from "../../core";
 import ZStack from "../Container/ZStack";
 
 const themes = {

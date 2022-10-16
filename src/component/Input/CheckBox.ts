@@ -1,8 +1,8 @@
-import {View} from "../../base";
-import {Div} from "../../base/utils/HTMLTags";
+import {View} from "../../core";
+import {Div} from "../../core/utils/HTMLTags";
 import ZStack from "../Container/ZStack";
 import {MdCheck} from "react-icons/md"
-import {TagView} from "../../base";
+import {TagView} from "../../core";
 
 class CheckBox extends View {
     Body = ({}: any) => {

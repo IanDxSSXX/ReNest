@@ -1,4 +1,4 @@
-import {FuncView} from "../../base";
+import {FuncView} from "../../core";
 import {useRef} from "react";
 import {TextField} from "../../component";
 

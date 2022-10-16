@@ -1,5 +1,5 @@
 import Content from "./Content";
-import {FuncView} from "../base";
+import {FuncView} from "../core";
 // import Calculator from "../dev/Calculator";
 
 

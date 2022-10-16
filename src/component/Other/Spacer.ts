@@ -1,5 +1,5 @@
-import {View, ViewWrapper} from "../../base";
-import {Div} from "../../base/utils/HTMLTags";
+import {View, ViewWrapper} from "../../core";
+import {Div} from "../../core/utils/HTMLTags";
 
 class Spacer extends View {
     Body = () =>

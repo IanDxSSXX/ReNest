@@ -1,7 +1,7 @@
-import {Callback, ConditionView, DotProp, Prop, Ref, Spring, State, View, ViewWrapper} from "../../base";
-import {Input} from "../../base/utils/HTMLTags";
-import {RUIColor} from "../../base/theme/Colors";
-import {pixelToInt} from "../../base/utils/Utils";
+import {Callback, ConditionView, DotProp, Prop, Ref, Spring, State, View, ViewWrapper} from "../../core";
+import {Input} from "../../core/utils/HTMLTags";
+import {RUIColor} from "../../core/theme/Colors";
+import {pixelToInt} from "../../core/utils/Utils";
 import ZStack from "../Container/ZStack";
 import {AnimatedDiv} from "../index";
 import Text from "../Displayer/Text";

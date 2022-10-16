@@ -1,5 +1,5 @@
-import {Div} from "../../base/utils/HTMLTags";
-import {View, ViewWrapper} from "../../base/element/ReactUIElement";
+import {Div} from "../../core/utils/HTMLTags";
+import {View, ViewWrapper} from "../../core/element/ReactUIElement";
 
 
 class Text extends View {

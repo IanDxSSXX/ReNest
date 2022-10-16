@@ -1,5 +1,5 @@
-import {Div} from "../../base/utils/HTMLTags";
-import {DotProp, View, ViewWrapper} from "../../base";
+import {Div} from "../../core/utils/HTMLTags";
+import {DotProp, View, ViewWrapper} from "../../core";
 
 class ZStack extends View {
     @DotProp alignmentH:  "leading" | "center" | "tailing" = "center"

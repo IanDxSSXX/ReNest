@@ -1,9 +1,9 @@
-import {useTheme} from "../base/theme/ThemeProvider";
+import {useTheme} from "../core/theme/ThemeProvider";
 import {ToggleDisplay} from "./routes/ToggleDisplay";
 import {ListDisplay} from "./routes/ListDisplay";
-import {FuncView, NavigationView, ThemeProvider} from "../base";
+import {FuncView, NavigationView, ThemeProvider} from "../core";
 import {TextFieldDisplay} from "./routes/TextFieldDisplay";
-import {NavigateTo} from "../base/navigation/ReactUINavigation";
+import {NavigateTo} from "../core/navigation/ReactUINavigation";
 import {ImageDisplay} from "./routes/ImageDisplay";
 import {Button, HStack, Paper, VStack, ZStack, Text} from "../component";
 import Test from "./Test"
