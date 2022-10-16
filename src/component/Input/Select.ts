@@ -21,7 +21,7 @@ class Select extends ReactUIElement {
         return arr[0] instanceof Object
     }
 
-    Board = RUI(({selectedValue, showOptions}:any)=>{
+    Board = (selectedValue:string, showOptions:any)=>{
         return HStack(
             Text(selectedValue),
             Spacer(),
@@ -38,7 +38,7 @@ class Select extends ReactUIElement {
             .alignItems('center')
             .onClick(()=>{showOptions.setValue((pre:any)=>!pre);})
             .borderRadius("2px")
-    })
+    }
 
     OptionItem = RUI((item:string)=>{
         return HStack(
@@ -69,7 +69,7 @@ class Select extends ReactUIElement {
                     .width("100px")
                     .height("20px"),
                 List(group.data,(item,j)=>
-                    this.optionItem(item)
+                    this.OptionItem(item)
                         .padding("4px 10px 4px 20px")
                         .key(`${i}-${j}`)
                         .width("100px")
@@ -92,7 +92,7 @@ class Select extends ReactUIElement {
             .visibility(showOptions.value?'visible':'hidden')
 
         const options:any = List(arr,(item, idx)=>
-                this.optionItem(item)
+                this.OptionItem(item)
                 .key(idx)
                 .width("100px")
                 .height("20px")
@@ -142,7 +142,7 @@ class Select extends ReactUIElement {
             };
         })
         return ZStack(
-            this.board(selectedValue.value,showOptions),
+            this.Board(selectedValue.value, showOptions),
             this.isGroup(arr)? groupOptions: options
         )
             .alignmentV('top')

@@ -8,6 +8,7 @@ import {useEffect, useRef} from "react";
 import {useRUIState} from "../../base";
 import {VStack} from "../index";
 import {RUIColor} from "../../base/theme/Colors";
+import {Callback, DotProp, Hook, Ref, State} from "../../base/element/HookDecorator";
 
 
 let themes = {
@@ -24,130 +25,128 @@ let themes = {
         bg: RUIColor.white.dark
     }
 }
-class Progress extends ReactUIElement {
-    defaultTheme = {
-        fg: RUIColor.blue.standard,
-        bg: RUIColor.white.dark
+
+
+class LineProgress extends ReactUIElement {
+    defaultThemes = themes
+    defaultThemeName = "primary"
+    duration = 150
+    @Hook(useSpring) progressFrontStyle = {
+        width: `calc(${this.props.value > 1 ? 1 : this.props.value} * 100%)`,
+        config: {duration: this.duration},
     }
 
-    LineVariant = (value:number) => {
-        const duration = 150
-        const progressFrontStyle = useSpring({
-            width: `calc(${value > 1 ? 1 : value} * 100%)`,
-            config: {duration},
-        });
-
-        return (
-            ZStack(
-                Div()
-                    .width("100%")
-                    .height("100%")
-                    .backgroundColor(this.theme.bg)
-                    .borderRadius("10px"),
-                AnimatedDiv()
-                    .height("100%")
-                    .borderRadius("10px")
-                    .backgroundColor(this.theme.fg)
-                    .style(progressFrontStyle)
-            )
-                .alignmentH('leading')
-                .width("250px")
-                .height("10px")
+    Body = () =>
+        ZStack(
+            Div()
+                .width("100%")
+                .height("100%")
+                .backgroundColor(this.theme.bg)
+                .borderRadius("10px"),
+            AnimatedDiv()
+                .height("100%")
+                .borderRadius("10px")
+                .backgroundColor(this.theme.fg)
+                .style(this.progressFrontStyle)
         )
-    }
+            .alignmentH('leading')
+            .width("250px")
+            .height("10px")
+}
 
-    CircleVariant = (value:number) => {
-        const valueState = useRUIState(value)
-        const preValueRef = useRef(value)
 
-        let delay = useRUIState("none")
-        const duration = 5000
+class CircleProgress extends ReactUIElement {
+    defaultThemes = themes
+    defaultThemeName = "primary"
 
-        const circleLeftStyle = useSpring({
-            transform: `rotate(${valueState.value>0.5?valueState.value*360-180:0}deg)`,
-            delay: delay.value  == "left" ? duration*(0.5-preValueRef.current) : 0,
-            config: {
-                duration: duration * (delay.value === "left" ?
-                    valueState.value - 0.5 : (delay.value === "right" ?
-                        preValueRef.current - 0.5:
-                        Math.abs(preValueRef.current - valueState.value)))
-            },
-        });
-        const circleRightStyle = useSpring({
-            transform: `rotate(${valueState.value<0.5?valueState.value*360:180}deg)`,
-            delay: delay.value == "right" ? duration*(preValueRef.current-0.5) : 0,
-            config: {
-                duration: duration * (delay.value === "right" ?
-                    0.5 - valueState.value : (delay.value === "left" ?
-                        0.5 - preValueRef.current :
-                        Math.abs(valueState.value - preValueRef.current)))
-            },
-        });
+    duration = 5000
+    @State delay: any = "none"
+    @State valueState = this.props.value
+    @Ref preValueRef = this.props.value
+    @Callback @Hook(useSpring) circleLeftStyle = () => ({
+        transform: `rotate(${this.valueState.value>0.5?this.valueState.value*360-180:0}deg)`,
+        delay: this.delay.value  == "left" ? this.duration*(0.5-this.preValueRef.current) : 0,
+        config: {
+            duration: this.duration * (this.delay.value === "left" ?
+                this.valueState.value - 0.5 : (this.delay.value === "right" ?
+                    this.preValueRef.current - 0.5:
+                    Math.abs(this.preValueRef.current - this.valueState.value)))
+        },
+    })
 
-        return (
-            ZStack(
-                Div(
-                    AnimatedDiv()
-                        .width('150px')
-                        .height('150px')
-                        .borderRadius('50%')
-                        .backgroundColor(this.theme.bg)
-                        .clipPath('inset(0px 0px 0px 75px)')
-                        .style(circleRightStyle)
-                ).clipPath('inset(0px 0px 0px 75px)')
-                    .width('150px')
-                    .height('150px'),
-                Div(
-                    AnimatedDiv()
-                        .width('150px')
-                        .height('150px')
-                        .borderRadius('50%')
-                        .backgroundColor(this.theme.bg)
-                        .clipPath('inset(0px 75px 0px 0px)')
-                        .style(circleLeftStyle)
-                ).clipPath('inset(0px 75px 0px 0px)')
-                    .width('150px')
-                    .height('150px'),
+    @Callback @Hook(useSpring) circleRightStyle = () => ({
+        transform: `rotate(${this.valueState.value<0.5?this.valueState.value*360:180}deg)`,
+        delay: this.delay.value == "right" ? this.duration*(this.preValueRef.current-0.5) : 0,
+        config: {
+            duration: this.duration * (this.delay.value === "right" ?
+                0.5 - this.valueState.value : (this.delay.value === "left" ?
+                    0.5 - this.preValueRef.current :
+                    Math.abs(this.valueState.value - this.preValueRef.current)))
+        },
+    })
+
+
+    Body = (value:number) =>
+        ZStack(
+            Div(
                 AnimatedDiv()
-                    .width('130px')
-                    .height('130px')
+                    .width('150px')
+                    .height('150px')
                     .borderRadius('50%')
                     .backgroundColor(this.theme.bg)
-            )
+                    .clipPath('inset(0px 0px 0px 75px)')
+                    .style(this.circleRightStyle)
+            ).clipPath('inset(0px 0px 0px 75px)')
                 .width('150px')
-                .height('150px')
+                .height('150px'),
+            Div(
+                AnimatedDiv()
+                    .width('150px')
+                    .height('150px')
+                    .borderRadius('50%')
+                    .backgroundColor(this.theme.bg)
+                    .clipPath('inset(0px 75px 0px 0px)')
+                    .style(this.circleLeftStyle)
+            ).clipPath('inset(0px 75px 0px 0px)')
+                .width('150px')
+                .height('150px'),
+            AnimatedDiv()
+                .width('130px')
+                .height('130px')
                 .borderRadius('50%')
-                .backgroundColor(this.theme.fg)
-                .didUpdate(() => {
-                    if (valueState.value > 0.5 && value < 0.5) {
-                        delay.value = "right"
-                    } else if (valueState.value < 0.5 && value > 0.5) {
-                        delay.value = "left"
-                    } else {
-                        delay.value = "none"
-                    }
-                    preValueRef.current = valueState.value
-                    valueState.value = value
-                }, [value])
+                .backgroundColor(this.theme.bg)
         )
-    }
+            .width('150px')
+            .height('150px')
+            .borderRadius('50%')
+            .backgroundColor(this.theme.fg)
+            .didUpdate(() => {
+                if (this.valueState.value > 0.5 && value < 0.5) {
+                    this.delay.value = "right"
+                } else if (this.valueState.value < 0.5 && value > 0.5) {
+                    this.delay.value = "left"
+                } else {
+                    this.delay.value = "none"
+                }
+                this.preValueRef.current = this.valueState.value
+                this.valueState.value = value
+            }, [value])
+}
 
+class Progress extends ReactUIElement {
+    @DotProp variant() {}
 
     Body = ({value}:any):any => {
-        const variant = this.C.variant??'line';
-
         let progress
-        if(variant==='line'){
-            progress = this.LineVariant(value)
+        if(this.variant as any ==='line'){
+            progress = new LineProgress({value})
         } else {
-            progress = this.CircleVariant(value)
+            progress = new CircleProgress({value})
         }
 
         return progress
     }
 
-    @RUIProp
-    variant(value: string){return this}
     // 'line' 'circle'
 
     @RUIProp
@@ -157,5 +156,5 @@ class Progress extends ReactUIElement {
 
 
 export default function(value: number) {
-    return new Progress({value}).themes(themes)
+    return new Progress({value})
 }
