@@ -1,8 +1,8 @@
 import {Div} from "../../base/utils/HTMLTags";
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 
 
-class Text extends ReactUIElement {
+class Text extends View {
     Body = ({content}:any):any =>
         Div(content)
             .height("max-content")

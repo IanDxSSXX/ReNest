@@ -1,7 +1,6 @@
 import {flattened, uid} from "../utils/Utils";
 import ReactUIWithStyle from "../base/ReactUIWithStyle";
 import {ContextStore} from "./Store";
-// import {C} from "./ContextProvider";
 
 export class ReactUIContext extends ReactUIWithStyle {
     IAmReactUIContext = true

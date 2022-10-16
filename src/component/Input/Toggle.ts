@@ -1,4 +1,4 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
 import ZStack from "../Container/ZStack";
@@ -6,6 +6,7 @@ import AnimatedDiv from "../Other/Spring";
 import {useSpring} from "@react-spring/web";
 import {useRUIState} from "../../base";
 import {RUIColor} from "../../base/theme/Colors";
+import {DotProp} from "../../base/element/Decorator";
 
 
 const themes = {
@@ -26,7 +27,7 @@ const themes = {
     },
 }
 
-class Toggle extends ReactUIElement {
+class Toggle extends View {
     defaultTheme = themes.secondary
 
     Body = ({defaultValue}: any): any => {
@@ -84,8 +85,7 @@ class Toggle extends ReactUIElement {
         )
     }
 
-    @RUIProp
-    height(value: string) {return this}
+    @DotProp height: any
 
     @RUIProp
     width(value: string) {return this}

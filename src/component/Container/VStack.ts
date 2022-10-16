@@ -1,4 +1,4 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
 import {Spacer} from "../Other/Spacer";
@@ -7,7 +7,7 @@ import ReactUIBase from "../../base/base/ReactUIBase";
 import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
 import {ReactUITheme} from "../../base/theme/ReactUITheme";
 
-class VStack extends ReactUIElement {
+class VStack extends View {
     Body = ({children}:any) =>
         Div(...children)
             .height("max-content")
@@ -15,7 +15,7 @@ class VStack extends ReactUIElement {
             .display("flex")
             .flexDirection("column")
             .rowGap(this.C.spacing)
-            .forEachChild(child => {
+            .forEachChild((child: any) => {
                 if (child.constructor.name === "Spacer") {
                     child.flexGrow(1)
                 } else if (child.IAmReactUIWithStyle) {

@@ -5,7 +5,7 @@ import {ForEach, RUI, uid, useRUIState} from "./base";
 // import {Button, Paper, Text, VStack, ZStack} from "./component";
 import {createElement, memo, useEffect, useMemo, useRef, useState} from "react"
 import {ReactUIHelper} from "./base/utils/ReactUIHelper";
-import {ReactUIElement} from "./base/element/ReactUIElement";
+import {View} from "./base/element/ReactUIElement";
 import {Div, Button} from "./base/utils/HTMLTags";
 import {ContextProvider} from "./base/context/ContextProvider";
 

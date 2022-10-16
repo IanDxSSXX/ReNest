@@ -228,7 +228,7 @@ apart from the simple `RUI()` and `RUITag()`.
 Here's an example of an internal Button written in ReactUI
 ```typescript
 // ---- src/component/Input/Button.ts
-class Button extends ReactUIElement {
+class Button extends View {
   Body = ({title}: any) => {
     const button = TButton(title)
     const mouseState = useRUIState("out")
@@ -288,7 +288,7 @@ let themes = {
   }
 }
 
-class Paper extends ReactUIElement {
+class Paper extends View {
   defaultTheme = themes.primary
 
   Body = () => {
