@@ -50,7 +50,7 @@ class TextField extends ReactUIElement {
             },
             config: { duration: 200 },
         });
-        
+
         return (
             ZStack(
                 Input()
