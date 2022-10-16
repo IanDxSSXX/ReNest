@@ -1,5 +1,5 @@
 import {useSpring} from "@react-spring/web";
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import ZStack from "../Container/ZStack"
 import AnimatedDiv from "../Other/Spring";
 import {RUIProp} from "../../base/element/Helpers";
@@ -108,7 +108,7 @@ const CircleVariant = (value:number, wrapper:any) => {
 }
 
 
-class Progress extends ReactUIElement {
+class Progress extends View {
     defaultTheme = {
         fg: RUIColor.green.standard,
         bg: RUIColor.white.dark

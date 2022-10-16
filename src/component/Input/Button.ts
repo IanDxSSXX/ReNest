@@ -1,9 +1,10 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {ReactUIElement, FuncView, View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
 import {useRUIState} from "../../base";
 import {RUIColor} from "../../base/theme/Colors";
 import {Button as HTMLButton} from "../../base/utils/HTMLTags";
 import {State} from "../../base/element/HookDecorator";
+import {DotProp, Prop} from "../../base/element/Decorator";
 
 const themes = {
     primary: {
@@ -20,13 +21,15 @@ const themes = {
     },
 }
 
-class Button extends ReactUIElement {
-    @State mouseState: any = "out"
+class Button extends View {
     defaultThemes = themes
     defaultThemeName = "primary"
+    @State mouseState: any = "out"
+    @DotProp disable = false
+    @Prop title = ""
 
-    Body = ({title}: any) =>
-        HTMLButton(title)
+    Body = () =>
+        HTMLButton(this.title)
             .boxSizing("border-box")
             .border("solid")
             .borderRadius("5px")
@@ -51,15 +54,11 @@ class Button extends ReactUIElement {
             .onMouseOut(() => {
                 this.mouseState.value = "out"
             })
-            .pointerEvents("none", this.C.disable??false)
-            .opacity("0.5", this.C.disable??false)
-
-
-
-    @RUIProp
-    disable(value: boolean=true) {return this}
+            .pointerEvents("none", this.disable)
+            .opacity("0.5", this.disable)
 }
 
-export default function (title: string|number) {
-    return new Button({title})
+export default function (title: string) {
+    return FuncView<{title: string}>(Button)({title})
 }
+

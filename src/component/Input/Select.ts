@@ -1,4 +1,4 @@
-import {ReactUIElement, RUIProp} from "../../base/index.core";
+import {RUIProp} from "../../base/element/Helpers";
 import Text from "../Displayer/Text";
 import { AiOutlineDown } from "react-icons/ai";
 import List from "../Displayer/List";
@@ -6,8 +6,9 @@ import {HStack, Spacer, VStack, ZStack} from "../../component";
 import {useEffect, useRef} from "react";
 import {useTrigger, useTriggerEffect, range, RUITag, useRUIState} from "../../base";
 import {string} from "prop-types";
+import {View} from "../../base/element/ReactUIElement";
 
-class Select extends ReactUIElement {
+class Select extends View {
     defaultTheme = {
             bg: "#AA00AA",
             border: "#FFAAFF",
@@ -52,7 +53,7 @@ class Select extends ReactUIElement {
                         .key(`${i}-${j}`)
                         .width(select.S.width??"100px")
                         .height(select.S.height??"20px")
-                        .onClick(e=>{
+                        .onClick((e: any)=>{
                             selectedValue.value = arr[i].data[j];
                             showOptions.value = !showOptions.value;
                             onChangeTrigger.trigger()
@@ -75,7 +76,7 @@ class Select extends ReactUIElement {
                 .width(select.S.width??"100px")
                 .height(select.S.height??"20px")
                 .padding("4px 10px")
-                .onClick(e=>{
+                .onClick((e: any)=>{
                     selectedValue.value = arr[idx];
                     showOptions.value = !showOptions.value;
                     onChangeTrigger.trigger()

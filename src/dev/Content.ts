@@ -21,7 +21,7 @@ import {ListDisplay} from "./routes/ListDisplay";
 import {ImageDisplay} from "./routes/ImageDisplay";
 import lodash from "lodash"
 import {useCallback, useEffect, useRef} from "react";
-import {ReactUIElement} from "../base/element/ReactUIElement";
+import {View} from "../base/element/ReactUIElement";
 import Test from "./Test"
 
 

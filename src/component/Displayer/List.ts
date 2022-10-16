@@ -1,4 +1,4 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
 import {uid} from "../../base";
 import ReactUIBase from "../../base/base/ReactUIBase";
@@ -9,7 +9,7 @@ import {Div} from "../../base/utils/HTMLTags";
 import {ReactElement} from "react";
 import {RUIColor} from "../../base/theme/Colors";
 
-class List extends ReactUIElement {
+class List extends View {
     defaultTheme = {
         divider: RUIColor.black.standard
     }

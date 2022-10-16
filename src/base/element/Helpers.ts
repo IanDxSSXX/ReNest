@@ -5,11 +5,10 @@ import {ErrorBoundary} from "react-error-boundary";
 import {ReactUIElement} from "./ReactUIElement";
 import lodash from "lodash"
 import {useRUIState} from "../utils/Utils";
-import {HookWrapper, ResoleContext, ResoleDotProp, ResoleHook} from "./HookDecorator";
+import {HookWrapper, ResolveContext, ResolveDotProp, ResolveHook, ResolveProp} from "./Decorator";
 
 
-
-const ReactElementWrapper = ({wrapper}:{wrapper:ReactUIElement}) => {
+const ReactElementWrapper = ({wrapper}:any) => {
     // ---- error boundary
     const ErrorFallBack = ({error}: { error: Error }) => {
         let message
@@ -25,17 +24,18 @@ const ReactElementWrapper = ({wrapper}:{wrapper:ReactUIElement}) => {
     // ---e
     if (!wrapper.Body) ReactUIHelper.error("ReactUIElement must have a Body property, which returns the main")
 
-    console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(wrapper)))
-
     // ---- decorators **so tricky**
+    // console.log((wrapper as any).fuck, "tt", wrapper)
     for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(wrapper))) {
-        ResoleHook(wrapper, key, "HOOK")               // ---n any hook with single prop: @Hook(useRef)
-        ResoleHook(wrapper, key, "SHOOK", true)        // ---n any hook with multiple props: @Hook(useTheme)
-        ResoleContext(wrapper, key)
-        ResoleDotProp(wrapper, key)
+        ResolveHook(wrapper, key, "HOOK", false, ()=>    // ---n any hook with single prop: @Hook(useRef)
+        ResolveHook(wrapper, key, "SHOOK", true, ()=>     // ---n any hook with multiple props: @Hook(useTheme)
+        ResolveContext(wrapper, key, ()=>
+        ResolveProp(wrapper, key, () =>
+        ResolveDotProp(wrapper, key)
+        ))))
     }
 
-        // ---- lifecycle
+    // ---- lifecycle
     // ---1 didMount and willUnmount
     useEffect(() => {
         !!wrapper.C.didMount && wrapper.C.didMount()
@@ -49,7 +49,6 @@ const ReactElementWrapper = ({wrapper}:{wrapper:ReactUIElement}) => {
 
 
     // ---- call Body
-    wrapper.Init!(wrapper.props)
     const component = wrapper.Body!(wrapper.props) as any
     // ---e
     if (!component) ReactUIHelper.error("ReactUIElement must have a proper return, current is null")
@@ -77,16 +76,13 @@ export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (pre, curr
     // ---2 themes, update on change by default using deep equal
     if (!lodash.isEqual(preWrapper.theme, currWrapper.theme)) return false
 
-    // ---3 contexts
-    if (!lodash.isEqual(preWrapper.C.contexts, currWrapper.C.contexts)) return false
-
     // -4.5 custom and input props with shouldUpdate hook
     if (!!currWrapper.C.shouldUpdate) {
         return currWrapper.C.shouldUpdate(
             {...preWrapper.props, ...preWrapper.customProps}, {...currWrapper.props, ...currWrapper.customProps})
     }
 
-    // ---4 custom props, update on change by default using deep equal
+    // ---4 custom props, update on change by default using deep equal, contains dot prop and context
     //      no function hooks
     let filterKeyFunc = (_: any, key: string) => !["didMount", "didUpdate", "shouldUpdate", "willUnmount"].includes(key)
     if (!lodash.isEqual(lodash.pickBy(preWrapper.customProps, filterKeyFunc), lodash.pickBy(currWrapper.customProps, filterKeyFunc))) return false

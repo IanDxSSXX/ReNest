@@ -1,9 +1,9 @@
 import {animated} from "@react-spring/web";
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {RUITag} from "../../base";
 
 
-export class AnimatedDiv extends ReactUIElement {
+export class AnimatedDiv extends View {
     Body = ({children}: any) =>
         RUITag(animated.div)(...children)
             .height("max-content")

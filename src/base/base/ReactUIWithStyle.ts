@@ -10,7 +10,6 @@ import {
 import {Property} from "csstype";
 import ReactUIBase from "./ReactUIBase";
 
-
 function RUIStyleProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
@@ -967,8 +966,8 @@ export default class ReactUIWithStyle<TLength = (string & {}) | 0, TTime = strin
     @RUIStyleProp
     hangingPunctuation(value: Property.HangingPunctuation, willSet=true) { return this }
 
-        @RUIStyleProp
-    height(value: Property.Height<TLength>) { return this }
+    @RUIStyleProp
+    height(value: Property.Width<TLength>, willSet=true) { return this }
 
     @RUIStyleProp
     hyphenateCharacter(value: Property.HyphenateCharacter, willSet=true) { return this }

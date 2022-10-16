@@ -1,11 +1,11 @@
 import {RUI, ThemeProvider, uid, useRUIState} from "../base";
-import {ReactUIElement} from "../base/element/ReactUIElement";
-import {Button, VStack, Text} from "../component";
+import {ReactUIElement, FuncView, View} from "../base/element/ReactUIElement";
+import {Button, VStack, Text, TextField} from "../component";
 import {ContextProvider} from "../base/context/ContextProvider";
 import {useTheme} from "../base/theme/ThemeProvider";
-import {Context, DotProp, Ref, SHook, State, Theme} from "../base/element/HookDecorator";
+import {Context, DotProp, Prop} from "../base/element/Decorator";
+import {Ref, State} from "../base/element/HookDecorator";
 
-let C2F = (A: any) => (p?: any) => new A(p)
 let myThemes = {
     first: {
         Button: {
@@ -22,79 +22,59 @@ let myThemes = {
         }
     }
 }
-class CSub1 extends ReactUIElement {
+class CSub1 extends View {
     @State A: any = 1
     @Context mm: any
+    @Prop JJ: any = "test"
+    @DotProp fuck: any = 1
 
+    Body = () => {
+        console.log("jjkk", this.fuck)
 
-    Body = ({b}:any) =>
-        VStack(
+        return VStack(
             Button("hh")
                 .onClick(() => {
-                    this.A.setValue((pre: any)=>pre+1)
+                    console.log(this.fuck)
+                    this.A.setValue((pre: any) => pre + 1)
                 }).id(uid()),
-            Text(this.A.value),
-            Text(`${this.mm.value}`),
-            Text(`${b}`)
+            Text(`${this.JJ}`)
         )
             .didMount(() => {
-                console.log(this.mm.value)
+                // console.log(this.mm.value)
                 // console.log(c)
             })
             .didUpdate(() => {
                 console.log("rerender")
             })
-}
-let Sub1 = C2F(CSub1)
-class CSub2 extends ReactUIElement {
-    @DotProp whatIsYou() {return this}
 
-    Body = ({b}:any) =>
-        VStack(
-            Text("fuck"),
-            Text(this.whatIsYou as any)
-        )
-            .didUpdate(() => {
-                console.log("rerender2")
-            })
+    }
 }
-let Sub2 = C2F(CSub2)
+let Sub1 = FuncView(CSub1)
 
-class CMain extends ReactUIElement {
+
+class CMain extends View {
     @State b: any = false
-    @State a: any = false
     @Ref c: any = 1
-    @Theme myTheme: any = [myThemes, "first"]
-
+    @State text: any = "fs"
 
     Body = () =>
-        // VStack(
-        ThemeProvider(
-            ContextProvider(
-                // ContextProvider(
-                    VStack(
-                        Button("click me")
-                            .onClick(() => {
-                                this.b.setValue((pre: any) => !pre)
-                                this.myTheme.to("second")
-                                // this.a.setValue(pre=>!pre)
-                            }),
-                        Text(`${this.b.value}`),
-                        Sub1({b: false}),
-                        Sub2()
-                            .whatIsYou("ceshi")
-                    )
-                // )
-                //     .context({look: true})
-
-            )
-                .context({mm: this.b})
+        ContextProvider(
+                VStack(
+                    TextField(this.text.value)
+                        .onChange((newT:string) => {this.text.value = newT}),
+                    Button("1")
+                        .onClick(() => {
+                            this.b.setValue((pre: any) => !pre)
+                        })
+                        .disable(),
+                    Sub1({b: this.b.value})
+                        // .thisIsDot("123456"),
+                )
         )
-            .useTheme(this.myTheme)
-    // )
+            .context({mm: this.b})
 }
 
 
-const Main = C2F(CMain)
+const Main = FuncView(CMain)
 
 export default Main

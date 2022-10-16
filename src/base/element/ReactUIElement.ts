@@ -3,17 +3,23 @@ import {createElement, ReactElement} from "react";
 import {ReactUITheme} from "../theme/ReactUITheme";
 import ReactUIBase from "../base/ReactUIBase";
 import {ReactElementWrapperMemorized, RUIProp} from "./Helpers";
+import {ResolveDotPropWrapper} from "./Decorator";
 
 export class ReactUIElement<T=any> extends ReactUITheme {
     props: T
-    Init: (props: T) => any = () => {}
     Body?: (props: T) => ReactUIBase | ReactElement
     ruiGene: boolean = false
-    readonly IAmReactUIElement = true
+    fuck:any
 
     constructor(props?: any) {
         super("")
         this.props = props ?? {}
+    }
+    init() {
+        for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
+            ResolveDotPropWrapper(this, key)
+        }
+        return this
     }
 
     setBody(body: any) {
@@ -73,3 +79,10 @@ export function RUI<T extends Object>(body: (props:T) => any) {
         return ruiElement
     }
 }
+
+export const View = ReactUIElement
+
+export function FuncView<T extends Object>(RUIClass: any) {
+    return (props?: T) => new RUIClass(props).init()
+}
+

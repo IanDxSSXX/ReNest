@@ -1,6 +1,6 @@
 import {useSpring} from "@react-spring/web";
 import {useRef} from "react";
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
 import {pixelToInt, useRUIState} from "../../base/utils/Utils";
 import ZStack from "../Container/ZStack";
@@ -9,7 +9,8 @@ import AnimatedDiv from "../Other/Spring";
 import Text from "../Displayer/Text";
 import {RUIColor} from "../../base/theme/Colors";
 import {ConditionView} from "../../base";
-import {Callback, Hook, Ref, State} from "../../base/element/HookDecorator";
+import {Callback, Hook, Prop} from "../../base/element/Decorator";
+import {Ref, State} from "../../base/element/HookDecorator";
 
 const themes = {
     primary: {
@@ -32,17 +33,21 @@ const themes = {
     },
 }
 
-class TextField extends ReactUIElement {
+class TextField extends View {
     defaultThemes = themes
     defaultThemeName = "primary"
     myFontSize = "15px"
     variantUnderlined = this.C.variant === "underlined"
+
+    @Prop defaultText = ""
+
     @Ref inputElement: any
     @Ref textFieldElement: any
-    @Ref textRef: any = this.props.defaultText
-    @Callback @State isTyping: any = () => this.textRef.current !== ""
+    @Ref textRef: any = this.defaultText
+
+    @Callback(State) isTyping: any = () => this.textRef.current !== ""
     @State isMouseOver: any = false
-    @Callback @Hook(useSpring) styles = () => ({
+    @Callback(Hook(useSpring)) styles = () => ({
         to:{
             fontSize: this.isTyping.value ? pixelToInt(this.myFontSize)*7/10 : pixelToInt(this.myFontSize),
             bottom: this.isTyping.value ? "50%" : "0"

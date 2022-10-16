@@ -1,8 +1,8 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 
 
-export class Spacer extends ReactUIElement {
+export class Spacer extends View {
     Body = () =>
         Div()
 }

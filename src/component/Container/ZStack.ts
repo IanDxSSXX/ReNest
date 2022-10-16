@@ -1,10 +1,10 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import {flattened} from "../../base/utils/Utils";
 import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
 import {RUIProp} from "../../base/element/Helpers";
 
-class ZStack extends ReactUIElement {
+class ZStack extends View {
     Body = ({children}:any) =>
         Div(...children)
             .height("max-content")
@@ -20,7 +20,7 @@ class ZStack extends ReactUIElement {
                 "center": "center",
                 "tailing": "right"
             } as any)[this.C.alignmentH ?? "center"])
-            .forEachChild(child => {
+            .forEachChild((child: any) => {
                 if (child.IAmReactUIWithStyle) {
                     child
                         .position("relative")

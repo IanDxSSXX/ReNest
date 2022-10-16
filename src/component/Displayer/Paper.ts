@@ -1,10 +1,10 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import {RUIColor} from "../../base/theme/Colors";
 
 
 
-class Paper extends ReactUIElement {
+class Paper extends View {
     defaultTheme =  {
         bg: RUIColor.white.light,
         shadow: RUIColor.white.dark

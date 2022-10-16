@@ -1,7 +1,5 @@
 import {Fragment, useState} from "react";
 import {ReactUIHelper} from "../utils/ReactUIHelper";
-import {ReactUITheme} from "./ReactUITheme";
-import {ReactUIBase} from "../index.core";
 import {C as RUIWrapperC} from "../utils/ReactUIWrapper";
 import {ThemeStore} from "./Store";
 

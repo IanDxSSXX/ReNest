@@ -1,4 +1,4 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
+import {View} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/Spring";
@@ -7,7 +7,7 @@ import {pixelToInt, RUIState, useRUIState} from "../../base/utils/Utils";
 import {MdCheck} from "react-icons/md"
 import {RUITag} from "../../base";
 
-class CheckBox extends ReactUIElement {
+class CheckBox extends View {
     Body = ({}: any) => {
         const check = RUITag(MdCheck)().width("100px").height("100px").zIndex(10)
         const box = Div().width("50px").height("50px").backgroundColor("gray")
