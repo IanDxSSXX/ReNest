@@ -1,10 +1,13 @@
-import {View} from "../../base/element/ReactUIElement";
+import {FuncView, View} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import {flattened} from "../../base/utils/Utils";
 import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
 import {RUIProp} from "../../base/element/Helpers";
+import {DotProp} from "../../base/element/Decorator";
 
 class ZStack extends View {
+    @DotProp alignmentH:  "leading" | "center" | "tailing" = "leading"
+    @DotProp alignmentV:  "top" | "center" | "bottom"  = "top"
     Body = ({children}:any) =>
         Div(...children)
             .height("max-content")
@@ -27,15 +30,9 @@ class ZStack extends View {
                         .gridArea("1 / 1/ 1 / 1")
                 }
             })
-
-    @RUIProp
-    alignmentH(value: "leading" | "center" | "tailing") { return this }
-
-    @RUIProp
-    alignmentV(value: "top" | "center" | "bottom") { return this }
 }
 
 
 export default function(...children: any[]) {
-    return new ZStack({children})
+    return FuncView(ZStack)({children})
 }

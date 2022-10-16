@@ -1,4 +1,4 @@
-import {View} from "../../base/element/ReactUIElement";
+import {FuncView, View} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
 import {RUIColor} from "../../base/theme/Colors";
 
@@ -20,6 +20,4 @@ class Paper extends View {
 
 }
 
-export default function() {
-    return new Paper()
-}
+export default  FuncView(Paper)
