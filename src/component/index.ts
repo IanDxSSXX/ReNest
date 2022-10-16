@@ -3,7 +3,7 @@ import Select from "./Input/Select";
 import HStack from "./Container/HStack"
 import TextField from "./Input/TextField"
 import Spacer from "./Other/Spacer"
-import AnimatedDiv from "./Other/Spring"
+import AnimatedDiv from "./Other/AnimatedDiv"
 import Text from "./Displayer/Text"
 import Toggle from "./Input/Toggle"
 import VStack from "./Container/VStack"

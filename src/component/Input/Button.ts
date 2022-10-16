@@ -1,10 +1,7 @@
-import {ReactUIElement, ViewWrapper, View} from "../../base/element/ReactUIElement";
-import {RUIProp} from "../../base/element/Helpers";
-import {useRUIState} from "../../base";
 import {RUIColor} from "../../base/theme/Colors";
-import {Button as HTMLButton} from "../../base/utils/HTMLTags";
-import {State} from "../../base/element/HookDecorator";
-import {DotProp, Prop} from "../../base/element/Decorator";
+import {DotProp, Prop, State, View, ViewWrapper} from "../../base";
+import {Button as HTMLButton} from "../../base/utils/HTMLTags"
+
 
 const themes = {
     primary: {
@@ -58,7 +55,5 @@ class Button extends View {
             .opacity("0.5", this.disable)
 }
 
-export default function (title: string) {
-    return ViewWrapper<{title: string}>(Button)({title})
-}
+export default (title: string) => ViewWrapper<{title: string}>(Button)({title})
 

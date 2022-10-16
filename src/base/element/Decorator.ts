@@ -1,6 +1,3 @@
-import {useRUIState} from "../utils/Utils";
-import {useRef} from "react";
-
 function StatusKey(name: string, key: string) {
     return "_STATUS_" + name + "_" + key
 }
@@ -29,10 +26,10 @@ export function ResolveHook(wrapper: any, statusKey: string, hookName: string, s
     // ---> key        <-- useHook(_HN_STORE_)
     if (!isStatusKey(statusKey, hookName)) return callback()
     let key = getKeyFromStatus(statusKey, hookName)
-    let hook = wrapper["_"+hookName+"_FUNC_"+key]
+    let hook = wrapper[StoreKey(`_${hookName}_FUNC_`, key)]
     if (!hook) return
     let storeKey = StoreKey(hookName, key)
-    let isFunc = "_ISCALLBACK_"+key
+    let isFunc = StatusKey("CALLBACK", key)
     if (wrapper[storeKey] === true) {
         wrapper[storeKey] = wrapper[key]
         let props = wrapper[key]
@@ -101,7 +98,7 @@ function createHookDecorator(target: any, propertyKey: string, hookName: string,
         value: true,
         writable: true
     })
-    Object.defineProperty(target, "_"+hookName+"_FUNC_" + propertyKey, {
+    Object.defineProperty(target, StoreKey(`_${hookName}_FUNC_`, propertyKey), {
         value: hookFunc
     })
 }
@@ -113,38 +110,38 @@ function createHookDecorator(target: any, propertyKey: string, hookName: string,
 export function Callback(decorator: Function) {
     return function(target: any, propertyKey: string) {
         decorator(target, propertyKey)
-        Object.defineProperty(target, "_ISCALLBACK_"+propertyKey, {
+        Object.defineProperty(target, StatusKey("CALLBACK", propertyKey), {
             value: true,
         })
     }
 }
 
-export function Hook(hook: Function) {
+export const Hook = (hook: Function) => {
     return function(target: any, propertyKey: string) {
         createHookDecorator(target, propertyKey, "HOOK", hook)
     }
 }
 
-export function SHook(hook: Function) {
+export const SHook = (hook: Function) => {
     return function(target: any, propertyKey: string) {
         createHookDecorator(target, propertyKey, "SHOOK", hook)
     }
 }
 
 
-export function Context(target: any, propertyKey: string) {
+export const Context = (target: any, propertyKey: string) => {
     Object.defineProperty(target, StatusKey("CONTEXT", propertyKey), {
         value: true,
     })
 }
 
-export function Prop(target: any, propertyKey: string) {
+export const Prop = (target: any, propertyKey: string) => {
     Object.defineProperty(target, StatusKey("PROP", propertyKey), {
         value: true,
     })
 }
 
-export function DotProp(target: any, propertyKey: string) {
+export const DotProp = (target: any, propertyKey: string) => {
     Object.defineProperty(target, StatusKey("DOTPROP", propertyKey), {
         value: true,
         writable: true

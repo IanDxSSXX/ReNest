@@ -1,7 +1,6 @@
 import ReactUIBase from "../base/ReactUIBase";
 import {createElement, ReactElement} from "react";
 import {Route, useParams} from "react-router-dom";
-import {ReactUITheme} from "../theme/ReactUITheme";
 import {FragmentView} from "../utils/ReactUIWrapper";
 import {C} from "./ReactUINavigation";
 

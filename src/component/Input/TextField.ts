@@ -1,14 +1,10 @@
-import {useSpring} from "@react-spring/web";
-import {FuncView, View} from "../../base/element/ReactUIElement";
+import {Callback, ConditionView, DotProp, Prop, Ref, Spring, State, View, ViewWrapper} from "../../base";
+import {Input} from "../../base/utils/HTMLTags";
+import {RUIColor} from "../../base/theme/Colors";
 import {pixelToInt} from "../../base/utils/Utils";
 import ZStack from "../Container/ZStack";
-import {Input} from "../../base/utils/HTMLTags"
-import AnimatedDiv from "../Other/Spring";
+import {AnimatedDiv} from "../index";
 import Text from "../Displayer/Text";
-import {RUIColor} from "../../base/theme/Colors";
-import {ConditionView} from "../../base";
-import {Callback, DotProp, Hook, Prop} from "../../base/element/Decorator";
-import {Ref, State} from "../../base/element/HookDecorator";
 
 const themes = {
     primary: {
@@ -49,7 +45,7 @@ class TextField extends View {
     @Callback(Ref) textRef: any = () => this.defaultText
     @Callback(State) isTyping: any = () => this.textRef.current !== ""
     @State isMouseOver: any = false
-    @Callback(Hook(useSpring)) styles = () => ({
+    @Callback(Spring) styles = () => ({
         to:{
             fontSize: this.isTyping.value ? pixelToInt(this.myFontSize)*7/10 : pixelToInt(this.myFontSize),
             bottom: this.isTyping.value ? "50%" : "0"
@@ -80,7 +76,7 @@ class TextField extends View {
             ConditionView((this.placeHolder ?? "") === "", {
                 false: () =>
                     AnimatedDiv(
-                        Text(this.placeHolder!)
+                        Text(this.placeHolder)
                             .color((this.disable ?? true) ? this.theme.over :
                                 this.isTyping.value ? this.theme.selected : this.theme.unselected)
                             .background(`linear-gradient(to top , ${this.theme.foreground} 0%, ${this.theme.foreground}  50.5%, transparent 50.5%, transparent 100%)`)
@@ -95,8 +91,6 @@ class TextField extends View {
         )
             .ref(this.textFieldElement)
             .alignmentH("leading")
-            .height("max-content")
-            .width("max-content")
             .pointerEvents("none", this.disable)
             .opacity("0.5", this.disable)
             .onMouseOver(() => {
@@ -131,6 +125,5 @@ class TextField extends View {
 }
 
 
-export default function(defaultText: string) {
-    return FuncView(TextField)({defaultText})
-}
+export default (defaultText: string) => ViewWrapper(TextField)({defaultText})
+

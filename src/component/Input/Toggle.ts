@@ -1,13 +1,8 @@
-import {View} from "../../base/element/ReactUIElement";
-import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
-import ZStack from "../Container/ZStack";
-import AnimatedDiv from "../Other/Spring";
-import {useSpring} from "@react-spring/web";
-import {useRUIState} from "../../base";
+import AnimatedDiv from "../Other/AnimatedDiv";
 import {RUIColor} from "../../base/theme/Colors";
-import {DotProp} from "../../base/element/Decorator";
-
+import {Callback, DotProp, Prop, Spring, State, View, ViewWrapper} from "../../base";
+import ZStack from "../Container/ZStack";
 
 const themes = {
     primary: {
@@ -28,75 +23,64 @@ const themes = {
 }
 
 class Toggle extends View {
-    defaultTheme = themes.secondary
+    defaultThemes = themes
+    defaultThemeName = "secondary"
 
-    Body = ({defaultValue}: any): any => {
-        const valueState = useRUIState(defaultValue)
+    @Prop defaultValue: boolean = false
+    @Callback(State) valueState: any = () => this.defaultValue
+    @DotProp width: any
+    @DotProp height: any
+    toggleWidth = () => this.width ?? "40px"
+    toggleHeight = () => this.height ?? "24px"
+    toggleBackWidth = () => this.toggleWidth()
+    toggleBackHeight = () => `calc(${this.toggleHeight()} * 3 / 5)`
+    duration = 150
+    @Callback(Spring) buttonStyles = () => ({
+        translateX: this.valueState.value ?
+            `calc((${this.toggleWidth()} - ${this.toggleHeight()}) / 2)` :
+            `calc((${this.toggleHeight()} - ${this.toggleWidth()}) / 2)`,
+        config: { duration: this.duration },
+    })
+    @Callback(Spring) frontStyles = () => ({
+        width: this.valueState.value ? this.toggleWidth() : this.toggleHeight(),
+        config: { duration: this.duration },
+    })
+    @DotProp disable = false
+    @DotProp onChange: any = () => null
 
-        const toggleWidth = this.C.width ?? "40px"
-        const toggleHeight = this.C.height ?? "24px"
-        const toggleBackWidth = toggleWidth
-        const toggleBackHeight = `calc(${toggleHeight} * 3 / 5)`
-        
-        const duration = 150
-        const buttonStyles = useSpring({
-            translateX: valueState.value ?
-                `calc((${toggleWidth} - ${toggleHeight}) / 2)` :
-                `calc((${toggleHeight} - ${toggleWidth}) / 2)`,
-            config: { duration },
-        })
-        const frontStyles = useSpring({
-            width: valueState.value ? toggleWidth : toggleHeight,
-            config: { duration },
-        })
-
-        return (
+    Body = (): any =>
             ZStack(
                 ZStack(
                     Div()
-                        .width(toggleBackWidth)
-                        .height(toggleBackHeight)
-                        .borderRadius(`calc(${toggleBackHeight} / 2)`)
+                        .width(this.toggleBackWidth())
+                        .height(this.toggleBackHeight())
+                        .borderRadius(`calc(${this.toggleBackHeight()} / 2)`)
                         .backgroundColor(this.theme.bg),
                     AnimatedDiv()
                         .width("100%")
-                        .height(toggleBackHeight)
-                        .borderRadius(`calc(${toggleBackHeight} / 2)`)
-                        .backgroundColor(valueState.value ? this.theme.fg : this.theme.bg)
-                        .style(frontStyles)
+                        .height(this.toggleBackHeight())
+                        .borderRadius(`calc(${this.toggleBackHeight()} / 2)`)
+                        .backgroundColor(this.valueState.value ? this.theme.fg : this.theme.bg)
+                        .style(this.frontStyles)
                 )
                     .alignmentH("leading"),
                 AnimatedDiv()
-                    .width(toggleHeight)
-                    .height(toggleHeight)
-                    .borderRadius(`calc(${toggleHeight} / 2)`)
-                    .backgroundColor(valueState.value ? this.theme.toggle : this.theme.bg)
-                    .style(buttonStyles)
+                    .width(this.toggleHeight())
+                    .height(this.toggleHeight())
+                    .borderRadius(`calc(${this.toggleHeight()} / 2)`)
+                    .backgroundColor(this.valueState.value ? this.theme.toggle : this.theme.bg)
+                    .style(this.buttonStyles)
             )
-                .width(toggleWidth)
-                .height(toggleHeight)
+                .width(this.toggleWidth())
+                .height(this.toggleHeight())
                 .cursor("pointer")
                 .onClick(() => {
-                    !!this.C.onChange && this.C.onChange(!valueState.value)
-                    valueState.setValue(pre => !pre)
+                    this.onChange(!this.valueState.value)
+                    this.valueState.setValue((pre: boolean) => !pre)
                 })
-                .pointerEvents("none", this.C.disable ?? false)
-                .opacity("0.5", this.C.disable ?? false)
-        )
-    }
+                .pointerEvents("none", this.disable)
+                .opacity("0.5", this.disable)
 
-    @DotProp height: any
-
-    @RUIProp
-    width(value: string) {return this}
-
-    @RUIProp
-    disable(value: boolean=true) {return this}
-
-    @RUIProp
-    onChange(value: any) {return this}
 }
 
-export default function(defaultValue=false) {
-    return new Toggle({defaultValue})
-}
+export default (defaultValue=false) => ViewWrapper(Toggle)({defaultValue})

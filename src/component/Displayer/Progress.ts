@@ -1,10 +1,8 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
-import ZStack from "../Container/ZStack"
-import AnimatedDiv from "../Other/Spring";
-import {Div} from "../../base/utils/HTMLTags"
+import {Div} from "../../base/utils/HTMLTags";
+import {Callback, DotProp, Ref, Spring, State, View, ViewWrapper} from "../../base";
 import {RUIColor} from "../../base/theme/Colors";
-import {Callback, DotProp, Ref, Spring, State} from "../../base/index.core";
-
+import ZStack from "../Container/ZStack";
+import AnimatedDiv from "../Other/AnimatedDiv";
 
 let themes = {
     primary: {
@@ -22,7 +20,7 @@ let themes = {
 }
 
 
-class LineProgress extends ReactUIElement {
+class LineProgress extends View {
     defaultThemes = themes
     defaultThemeName = "primary"
     duration = 150
@@ -50,7 +48,7 @@ class LineProgress extends ReactUIElement {
 }
 
 
-class CircleProgress extends ReactUIElement {
+class CircleProgress extends View {
     defaultThemes = themes
     defaultThemeName = "primary"
 
@@ -128,7 +126,7 @@ class CircleProgress extends ReactUIElement {
             }, [value])
 }
 
-class Progress extends ReactUIElement {
+class Progress extends View {
     @DotProp variant: string = 'line'
     @DotProp showNum: boolean = false
 
@@ -147,5 +145,5 @@ class Progress extends ReactUIElement {
 
 
 export default function(value: number) {
-    return new Progress({value})
+    return ViewWrapper(Progress)({value})
 }

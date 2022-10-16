@@ -1,15 +1,15 @@
-import {ReactUIElement} from "../../base/element/ReactUIElement";
-import Text from "../Displayer/Text";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import List from "../Displayer/List";
-import {HStack, Spacer, VStack, ZStack} from "../../component";
+import {FuncView, TagView, useRUIState, useTrigger, useTriggerEffect, View} from "../../base";
 import {useEffect, useRef} from "react";
-import {useTrigger, useTriggerEffect, range, RUITag, useRUIState, RUI} from "../../base";
-import {string} from "prop-types";
 import {RUIColor} from "../../base/theme/Colors";
-import {RUIProp} from "../../base/element/Helpers";
+import {MdKeyboardArrowDown} from "react-icons/md";
+import Spacer from "../Other/Spacer";
+import HStack from "../Container/HStack";
+import Text from "../Displayer/Text";
+import ZStack from "../Container/ZStack";
+import List from "../Displayer/List";
+import VStack from "../Container/VStack";
 
-class Select extends ReactUIElement {
+class Select extends View {
     defaultTheme = {
             bg: RUIColor.white.light,
             border: RUIColor.white.dark,
@@ -26,7 +26,7 @@ class Select extends ReactUIElement {
         return HStack(
             Text(selectedValue),
             Spacer(),
-            RUITag(MdKeyboardArrowDown)()
+            TagView(MdKeyboardArrowDown)()
         )
             .zIndex(2)
             .border(`1px solid ${this.theme.border}`)
@@ -41,9 +41,9 @@ class Select extends ReactUIElement {
             .borderRadius("2px")
     }
 
-    OptionItem = RUI((item:string)=>{
+    OptionItem = FuncView((item:string)=>{
         return HStack(
-            this.C.option?this.C.option(item):
+            this.customProps.option?this.customProps.option(item):
                 Text(item)
                     .userSelect("none")
         )
@@ -57,7 +57,7 @@ class Select extends ReactUIElement {
         const groupOptionsValue = [{title:"orange",data:[1,3,4]}]
 
         const groupHead = (title:string) => HStack(
-            this.C.groupHead?this.C.groupHead(title):
+            this.customProps.groupHead?this.customProps.groupHead(title):
             Text(title)
                 .color(`${this.theme.bg}`)
                 .fontSize("20px")
@@ -116,7 +116,7 @@ class Select extends ReactUIElement {
 
         const onChangeTrigger = useTrigger()
 
-        useTriggerEffect(onChangeTrigger, () => !!this.C.onChange && this.C.onChange(selectedValue.value))
+        useTriggerEffect(onChangeTrigger, () => !!this.customProps.onChange && this.customProps.onChange(selectedValue.value))
 
 
         options
@@ -150,12 +150,12 @@ class Select extends ReactUIElement {
             .ref(selectElement)
     }
 
-    @RUIProp
-    onChange(value: any) { return this }
-    @RUIProp
-    option(value: Function) {return this}
-    @RUIProp
-    groupHead(value: Function) {return this}
+    // @RUIProp
+    // onChange(value: any) { return this }
+    // @RUIProp
+    // option(value: Function) {return this}
+    // @RUIProp
+    // groupHead(value: Function) {return this}
 }
 
 export default function (arr:any,defaultValue:any) {

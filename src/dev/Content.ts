@@ -1,29 +1,12 @@
-import {
-    NavigationView,
-    useRUIState,
-    FuncView,
-    ThemeProvider,
-    uid
-} from "../base";
-import {
-    Button,
-    VStack,
-    Text,
-    HStack,
-} from "../component"
-import Paper from "../component/Displayer/Paper"
-import ZStack from "../component/Container/ZStack";
-import {NavigateTo} from "../base";
 import {useTheme} from "../base/theme/ThemeProvider";
 import {ToggleDisplay} from "./routes/ToggleDisplay";
-import {TextFieldDisplay} from "./routes/TextFieldDisplay";
 import {ListDisplay} from "./routes/ListDisplay";
+import {FuncView, NavigationView, ThemeProvider} from "../base";
+import {TextFieldDisplay} from "./routes/TextFieldDisplay";
+import {NavigateTo} from "../base/navigation/ReactUINavigation";
 import {ImageDisplay} from "./routes/ImageDisplay";
-import lodash from "lodash"
-import {useCallback, useEffect, useRef} from "react";
-import {View} from "../base/element/ReactUIElement";
+import {Button, HStack, Paper, VStack, ZStack, Text} from "../component";
 import Test from "./Test"
-
 
 let myThemes = {
     first: {
@@ -100,5 +83,5 @@ const Content = FuncView(() => {
 })
 
 
-export default Content
-// export default Test
+// export default Content
+export default Test

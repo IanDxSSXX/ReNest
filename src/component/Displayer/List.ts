@@ -1,14 +1,9 @@
-import {ViewWrapper, View} from "../../base/element/ReactUIElement";
-import {RUIProp} from "../../base/element/Helpers";
-import {ConditionView, uid} from "../../base";
-import ReactUIBase from "../../base/base/ReactUIBase";
-import VStack from "../Container/VStack";
-import HStack from "../Container/HStack";
-import {ForEach} from "../../base";
+import {ConditionView, DotProp, ForEach, Prop, View, ViewWrapper} from "../../base";
 import {Div} from "../../base/utils/HTMLTags";
-import {ReactElement} from "react";
 import {RUIColor} from "../../base/theme/Colors";
-import {DotProp, Prop} from "../../base/element/Decorator";
+import HStack from "../Container/HStack";
+import VStack from "../Container/VStack";
+
 
 class List extends View {
     defaultTheme = {
@@ -19,7 +14,7 @@ class List extends View {
     @Prop arrElem: any
     @DotProp horizontal = false
     @DotProp vertical = false
-    @DotProp divider: "none" | "solid" | ReactUIBase | ReactElement | any = "none"
+    @DotProp divider: "none" | "solid" | any = "none"
     @DotProp spacing: string = "0px"
     @DotProp alignment: "top" | "bottom" | "leading" | "tailing" | "center" = "center"
 
@@ -46,7 +41,7 @@ class List extends View {
                                             .height(this.isHorizontal() ? "calc(100% - 10px)" : "1px")
                                             .margin(this.isHorizontal() ? "5px 0" : "0 5px"),
                                     ":": this.divider
-                                }).key(uid())
+                                }).key(this.arrData.length+(idx-1)/2)
                         })
                     )
                 )
@@ -56,6 +51,6 @@ class List extends View {
 }
 
 
-export default function<T=any>(arrData: T[] | Range, arrElem: (item: T, idx: number) => ReactUIBase | ReactElement) {
+export default function<T=any>(arrData: T[] | Range, arrElem: (item: T, idx: number) => any) {
     return ViewWrapper(List)({arrData, arrElem})
 }

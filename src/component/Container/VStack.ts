@@ -1,12 +1,5 @@
-import {FuncView, View} from "../../base/element/ReactUIElement";
-import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
-import {Spacer} from "../Other/Spacer";
-import {flattened} from "../../base/utils/Utils";
-import ReactUIBase from "../../base/base/ReactUIBase";
-import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
-import {ReactUITheme} from "../../base/theme/ReactUITheme";
-import {DotProp} from "../../base/element/Decorator";
+import {DotProp, ViewWrapper, View} from "../../base";
 
 class VStack extends View {
     @DotProp spacing: any = "0px"
@@ -35,7 +28,6 @@ class VStack extends View {
 }
 
 
+export default (...children: any[]) => ViewWrapper(VStack)({children})
 
-export default function(...children: any[]) {
-    return FuncView(VStack)({children})
-}
+

@@ -1,13 +1,10 @@
-import {FuncView, View} from "../../base/element/ReactUIElement";
 import {Div} from "../../base/utils/HTMLTags";
-import {flattened} from "../../base/utils/Utils";
-import ReactUIWithStyle from "../../base/base/ReactUIWithStyle";
-import {RUIProp} from "../../base/element/Helpers";
-import {DotProp} from "../../base/element/Decorator";
+import {DotProp, View, ViewWrapper} from "../../base";
 
 class ZStack extends View {
-    @DotProp alignmentH:  "leading" | "center" | "tailing" = "leading"
-    @DotProp alignmentV:  "top" | "center" | "bottom"  = "top"
+    @DotProp alignmentH:  "leading" | "center" | "tailing" = "center"
+    @DotProp alignmentV:  "top" | "center" | "bottom"  = "center"
+
     Body = ({children}:any) =>
         Div(...children)
             .height("max-content")
@@ -17,12 +14,12 @@ class ZStack extends View {
                 "top": "flex-start",
                 "center": "center",
                 "bottom": "flex-end"
-            } as any)[this.C.alignmentV ?? "center"])
+            } as any)[this.alignmentV])
             .justifyItems(({
                 "leading": "left",
                 "center": "center",
                 "tailing": "right"
-            } as any)[this.C.alignmentH ?? "center"])
+            } as any)[this.alignmentH])
             .forEachChild((child: any) => {
                 if (child.IAmReactUIWithStyle) {
                     child
@@ -33,6 +30,5 @@ class ZStack extends View {
 }
 
 
-export default function(...children: any[]) {
-    return FuncView(ZStack)({children})
-}
+export default (...children: any[]) => ViewWrapper(ZStack)({children})
+

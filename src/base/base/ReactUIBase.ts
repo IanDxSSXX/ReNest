@@ -10,12 +10,6 @@ import {flattened, uid} from "../utils/Utils";
 
 export default class ReactUIBase {
     IAmReactUI = true
-    // IAmReactUITheme = false
-    // IAmReactUIElement = false
-    // IAmReactUIWithStyle = false
-    // IAmReactUIContext = false
-    // IAMContextProvider = false
-    // IAMThemeProvider = false
 
     protected elementTag: any
     children: any[]
@@ -113,9 +107,6 @@ export default class ReactUIBase {
         return this.elementProps.style
     }
 
-    get C() {
-        return this.customProps
-    }
 
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {

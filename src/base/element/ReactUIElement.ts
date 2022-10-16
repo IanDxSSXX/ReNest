@@ -2,19 +2,19 @@ import {filteredObject} from "../utils/Utils";
 import {createElement, ReactElement} from "react";
 import {ReactUITheme} from "../theme/ReactUITheme";
 import ReactUIBase from "../base/ReactUIBase";
-import {ReactElementWrapperMemorized, RUIProp} from "./Helpers";
-import {ResolveDotPropWrapper} from "./Decorator";
+import {ReactElementWrapperMemorized} from "./ReactUIHOC";
+import {ResolveContext, ResolveDotProp, ResolveDotPropWrapper, ResolveProp} from "./Decorator";
 
-export class ReactUIElement<T=any> extends ReactUITheme {
+export abstract class ReactUIElementAbstract<T=any> extends ReactUITheme {
     props: T
-    Body?: (props: T) => ReactUIBase | ReactElement
+    abstract Body: (props: T) => ReactUIBase | ReactElement
     ruiGene: boolean = false
-    fuck:any
 
-    constructor(props?: any) {
+    constructor(props: any={}) {
         super("")
-        this.props = props ?? {}
+        this.props = props
     }
+
     init() {
         for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
             ResolveDotPropWrapper(this, key)
@@ -28,6 +28,13 @@ export class ReactUIElement<T=any> extends ReactUITheme {
     }
 
     asReactElement() {
+        for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
+            ResolveContext(this, key, () =>
+            ResolveProp(this, key, () =>
+            ResolveDotProp(this, key)
+            ))
+        }
+
         return createElement(
             ReactElementWrapperMemorized,
             {wrapper: this, ...!!this.P.key ? {key: this.P.key} : {} }
@@ -53,35 +60,54 @@ export class ReactUIElement<T=any> extends ReactUITheme {
         return view
     }
 
-    // lifecycle
-    @RUIProp
-    didMount(value: ()=>any) { return this }
+    // ---- lifecycle
+    lifecycle: {
+        didMount?: ()=>any,
+        didUpdate: {func:()=>any, states?: any[]}[],
+        willUnmount?: ()=>any,
+        shouldUpdate?: (preProps: T, currProps: T) => boolean
+    } = {didUpdate: []}
+
+    didMount(value: ()=>any) {
+        this.lifecycle.didMount = value
+        return this
+    }
 
     didUpdate(value: ()=>any, states?: any[]) {
-        return this.setCustomProp("didUpdate", [...this.C.didUpdate??[], {func: value, states: states}])
+        this.lifecycle.didUpdate = [...this.lifecycle.didUpdate, {func: value, states}]
+        return this
     }
 
-    @RUIProp
-    willUnmount(value: ()=>any) { return this }
+    willUnmount(value: ()=>any) {
+        this.lifecycle.willUnmount = value
+        return this
+    }
 
     // ---- memo
-    @RUIProp
-    useMemo(value: boolean=true) { return this }
+    useMemo(value: boolean=true) {
+        return this.setCustomProp("useMemo", value)
+    }
 
-    @RUIProp
-    shouldUpdate(value: (preProps: T, currProps: T) => boolean) { return this }
-}
-
-export function FuncView<T extends Object>(body: (props:T) => any) {
-    return function(props?: T) {
-        let ruiElement = new ReactUIElement<T>(props)
-        ruiElement.setBody(body)
-        return ruiElement
+    shouldUpdate(value: (preProps: T, currProps: T) => boolean) {
+        this.lifecycle.shouldUpdate = value
+        return this
     }
 }
 
-export const View = ReactUIElement
+// ---- FuncView to write like react function
+export class ReactUIElement<T> extends ReactUIElementAbstract {
+    Body
+    constructor(body: (props: T) => any, props?: T) {
+        super(props);
+        this.Body = body
+    }
+}
+export function FuncView<T extends Object>(body: (props:T) => any) {
+    return (props?: T) => new ReactUIElement<T>(body, props)
+}
 
+// ---- View to write like swiftUI
+export const View = ReactUIElementAbstract
 export function ViewWrapper<T extends Object>(RUIClass: any) {
     return (props?: T) => new RUIClass(props).init()
 }

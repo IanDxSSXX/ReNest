@@ -2,6 +2,7 @@ import {ReactUIElement, ViewWrapper, View} from "../base/element/ReactUIElement"
 import {Button, VStack, Text, TextField} from "../component";
 import {Context, DotProp, Prop} from "../base/element/Decorator";
 import {Ref, State} from "../base/element/HookDecorator";
+import {Div} from "../base/utils/HTMLTags";
 
 let myThemes = {
     first: {
@@ -29,8 +30,7 @@ class CSub1 extends View {
             Text(this.text)
         )
             .didMount(() => {
-                // console.log(this.mm.value)
-                // console.log(c)
+                console.log("hh1")
             })
             .didUpdate(() => {
                 console.log("rerender")
@@ -45,7 +45,7 @@ class CMain extends View {
     @State text: any = "defaultValue"
 
     Body = () =>
-        VStack(
+        Div(
             TextField(this.text.value)
                 .onChange((newT:string) => {this.text.value = newT}),
             Button("click me")
@@ -54,9 +54,14 @@ class CMain extends View {
                     this.toggle.setValue((pre: boolean) => !pre)
                 }),
             Text(`count: ${this.count.value}`),
-            Sub1({toggle: this.toggle.value})
+            Sub1({toggle: false})
                 .text(this.text.value)
+                // .text("11")
+                // .didMount(() => {
+                //     console.log("hh2")
+                // })
         )
+
 }
 
 

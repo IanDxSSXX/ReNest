@@ -1,9 +1,9 @@
 import {animated} from "@react-spring/web";
-import {View} from "../../base/element/ReactUIElement";
+import {View, ViewWrapper} from "../../base";
 import {TagView} from "../../base";
 
 
-export class AnimatedDiv extends View {
+class AnimatedDiv extends View {
     Body = ({children}: any) =>
         TagView(animated.div)(...children)
             .height("max-content")
@@ -11,6 +11,4 @@ export class AnimatedDiv extends View {
 
 }
 
-export default function(...children: any[]) {
-    return new AnimatedDiv({children})
-}
+export default (...children: any[]) => ViewWrapper(AnimatedDiv)({children})

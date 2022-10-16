@@ -1,8 +1,5 @@
-import {FuncView, View} from "../../base/element/ReactUIElement";
-import {RUIProp} from "../../base/element/Helpers";
 import {Div} from "../../base/utils/HTMLTags";
-import {Spacer} from "../Other/Spacer";
-import {DotProp} from "../../base/element/Decorator";
+import {DotProp, ViewWrapper, View} from "../../base";
 
 class HStack extends View {
     @DotProp spacing: any = "0px"
@@ -31,6 +28,4 @@ class HStack extends View {
 }
 
 
-export default function(...children: any[]) {
-    return FuncView(HStack)({children})
-}
+export default (...children: any[]) => ViewWrapper(HStack)({children})
