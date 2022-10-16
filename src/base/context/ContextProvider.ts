@@ -1,10 +1,10 @@
-import {C as RUIWrapperC} from "../utils/ReactUIWrapper";
+import {Fragment} from "../utils/ReactUIWrapper";
 import {uid} from "../utils/Utils";
 import {ContextStore} from "./Store";
 
 
 export namespace C {
-    export class ContextProvider extends RUIWrapperC.RUIFragment {
+    export class ContextProvider extends Fragment {
         IAMContextProvider = true
         ruiContext: {[key:string]:{[key:string]: any}} = {}
         context(value: {[key:string]: any}, tag="default") {

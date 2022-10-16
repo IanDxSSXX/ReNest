@@ -18,7 +18,7 @@ function RUIStyleProp(target: any, propertyKey: string, descriptor: PropertyDesc
     }
 }
 
-function RUIElementProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+function ElementViewProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
         (this as ReactUIWithStyle).setProp(propertyKey, args[0], args[1])
@@ -31,500 +31,500 @@ export default class ReactUIWithStyle<TLength = (string & {}) | 0, TTime = strin
 
     // ---* Events from react/ReactUIHH.d.tx -> DOMAttributes
     // ---- Clipboard Events
-    @RUIElementProp
+    @ElementViewProp
     onCopy(value: ClipboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCopyCapture(value: ClipboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCut(value: ClipboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCutCapture(value: ClipboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPaste(value: ClipboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPasteCapture(value: ClipboardEventHandler, willSet=true) { return this }
 
     // ---- Composition Events
-    @RUIElementProp
+    @ElementViewProp
     onCompositionEnd(value: CompositionEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCompositionEndCapture(value: CompositionEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCompositionStart(value: CompositionEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCompositionStartCapture(value: CompositionEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCompositionUpdate(value: CompositionEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCompositionUpdateCapture(value: CompositionEventHandler, willSet=true) { return this }
 
     // ---- Focus Events
-    @RUIElementProp
+    @ElementViewProp
     onFocus(value: FocusEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onFocusCapture(value: FocusEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onBlur(value: FocusEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onBlurCapture(value: FocusEventHandler, willSet=true) { return this }
 
     // ---- Form Events
-    @RUIElementProp
+    @ElementViewProp
     onChange(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onChangeCapture(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onBeforeInput(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onBeforeInputCapture(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onInput(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onInputCapture(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onReset(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onResetCapture(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSubmit(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSubmitCapture(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onInvalid(value: FormEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onInvalidCapture(value: FormEventHandler, willSet=true) { return this }
 
     // ---- Image Events
-    @RUIElementProp
+    @ElementViewProp
     onLoad(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLoadCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onError(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- also a Media Event
-    @RUIElementProp
+    @ElementViewProp
     onErrorCapture(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- also a Media Event
     // ---- Keyboard Events
-    @RUIElementProp
+    @ElementViewProp
     onKeyDown(value: KeyboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onKeyDownCapture(value: KeyboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onKeyPress(value: KeyboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onKeyPressCapture(value: KeyboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onKeyUp(value: KeyboardEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onKeyUpCapture(value: KeyboardEventHandler, willSet=true) { return this }
 
     // ---- Media Events
-    @RUIElementProp
+    @ElementViewProp
     onAbort(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onAbortCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCanPlay(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCanPlayCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCanPlayThrough(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onCanPlayThroughCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDurationChange(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDurationChangeCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onEmptied(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onEmptiedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onEncrypted(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onEncryptedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onEnded(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onEndedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLoadedData(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLoadedDataCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLoadedMetadata(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLoadedMetadataCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLoadStart(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLoadStartCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPause(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPauseCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPlay(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPlayCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPlaying(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPlayingCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onProgress(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onProgressCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onRateChange(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onRateChangeCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSeeked(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSeekedCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSeeking(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSeekingCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onStalled(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onStalledCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSuspend(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSuspendCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTimeUpdate(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTimeUpdateCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onVolumeChange(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onVolumeChangeCapture(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onWaiting(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onWaitingCapture(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- MouseEvents
-    @RUIElementProp
+    @ElementViewProp
     onAuxClick(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onAuxClickCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onClick(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onClickCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onContextMenu(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onContextMenuCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDoubleClick(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDoubleClickCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDrag(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragEnd(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragEndCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragEnter(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragEnterCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragExit(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragExitCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragLeave(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragLeaveCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragOver(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragOverCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragStart(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDragStartCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDrop(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onDropCapture(value: DragEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseDown(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseDownCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseEnter(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseLeave(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseMove(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseMoveCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseOut(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseOutCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseOver(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseOverCapture(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseUp(value: MouseEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onMouseUpCapture(value: MouseEventHandler, willSet=true) { return this }
 
     // ---- Selection Events
-    @RUIElementProp
+    @ElementViewProp
     onSelect(value: ReactEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onSelectCapture(value: ReactEventHandler, willSet=true) { return this }
 
     // ---- Touch Events
-    @RUIElementProp
+    @ElementViewProp
     onTouchCancel(value: TouchEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTouchCancelCapture(value: TouchEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTouchEnd(value: TouchEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTouchEndCapture(value: TouchEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTouchMove(value: TouchEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTouchMoveCapture(value: TouchEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTouchStart(value: TouchEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTouchStartCapture(value: TouchEventHandler, willSet=true) { return this }
 
     // ---- Pointer Events
-    @RUIElementProp
+    @ElementViewProp
     onPointerDown(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerDownCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerMove(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerMoveCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerUp(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerUpCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerCancel(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerCancelCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerEnter(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerEnterCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerLeave(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerLeaveCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerOver(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerOverCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerOut(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onPointerOutCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onGotPointerCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onGotPointerCaptureCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLostPointerCapture(value: PointerEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onLostPointerCaptureCapture(value: PointerEventHandler, willSet=true) { return this }
 
     // ---- UI Events
-    @RUIElementProp
+    @ElementViewProp
     onScroll(value: UIEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onScrollCapture(value: UIEventHandler, willSet=true) { return this }
 
     // ---- Wheel Events
-    @RUIElementProp
+    @ElementViewProp
     onWheel(value: WheelEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onWheelCapture(value: WheelEventHandler, willSet=true) { return this }
 
     // ---- Animation Events
-    @RUIElementProp
+    @ElementViewProp
     onAnimationStart(value: AnimationEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onAnimationStartCapture(value: AnimationEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onAnimationEnd(value: AnimationEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onAnimationEndCapture(value: AnimationEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onAnimationIteration(value: AnimationEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onAnimationIterationCapture(value: AnimationEventHandler, willSet=true) { return this }
 
     // ---- Transition Events
-    @RUIElementProp
+    @ElementViewProp
     onTransitionEnd(value: TransitionEventHandler, willSet=true) { return this }
 
-    @RUIElementProp
+    @ElementViewProp
     onTransitionEndCapture(value: TransitionEventHandler, willSet=true) { return this }
 
     // ---* All styles from csstype/ReactUIHH.d.ts

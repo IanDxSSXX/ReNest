@@ -1,8 +1,8 @@
-import {RUI, useRUIState} from "../../base";
+import {FuncView, useRUIState} from "../../base";
 import {useEffect} from "react";
 import {Toggle} from "../../component";
 
-export const ToggleDisplay = RUI(() => {
+export const ToggleDisplay = FuncView(() => {
     const toggleState = useRUIState(false)
 
     useEffect(() => {

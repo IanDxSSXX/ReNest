@@ -2,7 +2,7 @@ import ReactUIBase from "../base/ReactUIBase";
 import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 import {ReactUITheme} from "../theme/ReactUITheme";
 import {createElement, ReactElement} from "react";
-import {RUIFragment, RUITag} from "../utils/ReactUIWrapper";
+import {FragmentView, TagView} from "../utils/ReactUIWrapper";
 import {NavigationRoute, NavigationRouteMatchable} from "./NavigationRoute";
 import {BrowserRouter as RRDBrowserRouter} from "react-router-dom";
 
@@ -59,7 +59,7 @@ export function NavigationView(pathRoutes: C.PathRoutes) {
 }
 
 export function BrowserRouter(...children: any[]) {
-    return RUITag(RRDBrowserRouter)(...children)
+    return TagView(RRDBrowserRouter)(...children)
 }
 
 export function NavigateBack() {

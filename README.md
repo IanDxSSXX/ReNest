@@ -30,7 +30,7 @@ Here is an example to create a list of buttons using jsx and reactui
   ```
 * ReactUI
   ```typescript
-  const RUIButtons = RUI(({nums}:any) => 
+  const RUIButtons = FuncView(({nums}:any) => 
       List(nums, (num:number) =>
           Button(num)
               .key(num)
@@ -45,7 +45,7 @@ Except the way ReactUI sets props, everything is the same with React functions.
 Basically every prop in React and CSSProperty can be used in ReactUI as 'dot' function, and IDEs will autocomplete for you!
 (if there's some specific properties from third-party components, use `setProp(key, value)`to set additional prop)
 ```typescript
-const MyText = RUI(() =>
+const MyText = FuncView(() =>
     Text("test")
         .fontSize("20px")
         .fontWeight("bold")
@@ -71,11 +71,11 @@ export default App;
 ```typescript
 // ---- src/ReactUIApp.ts
 import ReactUIApp from './ReactUIApp';
-import {RUI} from "@iandx/reactui";
+import {FuncView} from "@iandx/reactui";
 import {Text, Button, VStack} from "@iandx/reactui/component";
 import {useState} from "react";
 
-const MyComponent = RUI(({defaultNum}: any) => {
+const MyComponent = FuncView(({defaultNum}: any) => {
   let [num, setNum] = useState(defaultNum)
   return (
       Button(num)
@@ -83,7 +83,7 @@ const MyComponent = RUI(({defaultNum}: any) => {
   )
 })
 
-const ReactUIApp = RUI(() =>
+const ReactUIApp = FuncView(() =>
   VStack(
       MyComponent({defaultNum: 10}),
       Text("Hello")
@@ -101,7 +101,7 @@ export default ReactUIApp;
   
   => as its children, e.g.:
   ```typescript jsx
-  const MySecondComponent = RUI(() =>
+  const MySecondComponent = FuncView(() =>
       VStack(
           Text("This is ReactUI"),
           React.createElement("p", null, "This is React"),
@@ -111,22 +111,22 @@ export default ReactUIApp;
   ```
 
 ## 🤖 Advanced
-### RUITag
+### TagView
 Turn every react component into reactui instance no matter if it's a custom react function or a html tag
 ```typescript
-const RUIDiv = RUITag("div")()
-const RUIComponent = RUITag(YourReactFunction)()
+const RUIDiv = TagView("div")()
+const RUIComponent = TagView(YourReactFunction)()
 ```
-### RUIElement
+### ElementView
 Turn a react component instance to reactUI instance
 ```tsx
 const myJSX = <div>hello</div>
-const RUIInstance = RUIElement(myJSX)()
+const RUIInstance = ElementView(myJSX)()
 ```
 ### ConditionView
 Use this view to build a dynamic controllable page simple and fast.
 ```typescript
-const MyCondition = RUI(() => {
+const MyCondition = FuncView(() => {
     const displayIdx = useRUIState(0)
     
     return (
@@ -148,7 +148,7 @@ const MyCondition = RUI(() => {
 Using react-router 6, the NavigationView in ReactUI is pretty easy to use and supports regex path
 (which react-router 6 doesn't support).
 ```typescript
-const MyPage = RUI(() =>
+const MyPage = FuncView(() =>
     VStack(
         Text("this will show whatever the route is"),
         NavigationView({
@@ -165,7 +165,7 @@ Using ContextProvider in SwiftUI to manage global states simple and powerful.
 
 ```typescript
 import {ContextProvider} from "@iandx/reactui";
-const ComponentA = RUI((props, contexts) =>
+const ComponentA = FuncView((props, contexts) =>
   VStack(
     P(`Current first state value is ${contexts.myFirstState.value}`),
     Button("add").onClick(() => {
@@ -173,7 +173,7 @@ const ComponentA = RUI((props, contexts) =>
     })
   )
 )
-const MyComponentWithContext = RUI(() => {
+const MyComponentWithContext = FuncView(() => {
   const myFirstState = useRUIState(0)
 
   return (
@@ -189,7 +189,7 @@ const MyComponentWithContext = RUI(() => {
 context with tag:
 ```typescript
 import {ContextProvider} from "@iandx/reactui";
-const ComponentA = RUI((props, {myFirstState}) => // no mySecondState in contexts here
+const ComponentA = FuncView((props, {myFirstState}) => // no mySecondState in contexts here
   VStack(
     P(`Current first state value is ${myFirstState.value}`),
     Button("add").onClick(() => {
@@ -197,7 +197,7 @@ const ComponentA = RUI((props, {myFirstState}) => // no mySecondState in context
     })
   )
 )
-const ComponentB = RUI((props, {myFirstState, mySecondState}) =>
+const ComponentB = FuncView((props, {myFirstState, mySecondState}) =>
   VStack(
     P(`Current first state value is ${mySecondState.value}`),
     Button("add").onClick(() => {
@@ -205,7 +205,7 @@ const ComponentB = RUI((props, {myFirstState, mySecondState}) =>
     })
   )
 )
-const MyComponentWithContext = RUI(() => {
+const MyComponentWithContext = FuncView(() => {
   const myFirstState = useRUIState(0)
   const mySecondState = useRUIState("")
 
@@ -223,7 +223,7 @@ const MyComponentWithContext = RUI(() => {
 ````
 ### Custom ReactUI Element
 This part is to show you an advanced usage of how to define a ReactUI Element 
-apart from the simple `RUI()` and `RUITag()`.
+apart from the simple `FuncView()` and `TagView()`.
 
 Here's an example of an internal Button written in ReactUI
 ```typescript
@@ -311,7 +311,7 @@ export default function() {
 `ThemeProvider`
 ```typescript
 import {ThemeProvider} from "@iandx/reactui"
-const ComponentWithTheme = RUI(() =>
+const ComponentWithTheme = FuncView(() =>
   ThemeProvider(
     VStack(
       Paper()
@@ -327,7 +327,7 @@ const ComponentWithTheme = RUI(() =>
 ```typescript
 import {ThemeProvider, useTheme} from "@iandx/reactui"
 
-const ComponentA = RUI(({}, {theme}) =>
+const ComponentA = FuncView(({}, {theme}) =>
   Button("click me to change theme")
     .onClick(() => {
       if (!theme.is("myTheme")) {
@@ -337,7 +337,7 @@ const ComponentA = RUI(({}, {theme}) =>
       }
     })
 )
-const ComponentWithTheme = RUI(() => {
+const ComponentWithTheme = FuncView(() => {
   let theme = useTheme({
     myTheme: {
       bg: "#22AA11",
@@ -354,7 +354,7 @@ const ComponentWithTheme = RUI(() => {
   )
 })
 ```
-> Tips: Everything that starts with RUI is a **function** and ReactUI a **class**
+> Tips: Everything that starts with FuncView is a **function** and ReactUI a **class**
 ## Components Todo List
 - [x] VStack/HStack/ZStack
 - [x] Button

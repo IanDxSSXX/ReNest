@@ -1,6 +1,6 @@
-import {View} from "../../base/element/ReactUIElement";
+import {ViewWrapper, View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
-import {uid} from "../../base";
+import {ConditionView, uid} from "../../base";
 import ReactUIBase from "../../base/base/ReactUIBase";
 import VStack from "../Container/VStack";
 import HStack from "../Container/HStack";
@@ -8,73 +8,54 @@ import {ForEach} from "../../base";
 import {Div} from "../../base/utils/HTMLTags";
 import {ReactElement} from "react";
 import {RUIColor} from "../../base/theme/Colors";
+import {DotProp, Prop} from "../../base/element/Decorator";
 
 class List extends View {
     defaultTheme = {
-        divider: RUIColor.black.standard
+        divider: RUIColor.white.dark
     }
 
-    Body = ({arrData, arrElem}:any): any => {
-        const isHorizontal = (this.C.alignDirection ?? "vertical") === "horizontal"
-        const Stack = isHorizontal ? HStack : VStack
-        let listView
+    @Prop arrData: any
+    @Prop arrElem: any
+    @DotProp horizontal = false
+    @DotProp vertical = false
+    @DotProp divider: "none" | "solid" | ReactUIBase | ReactElement | any = "none"
+    @DotProp spacing: string = "0px"
+    @DotProp alignment: "top" | "bottom" | "leading" | "tailing" | "center" = "center"
 
-        const divider = this.C.divider ?? "none"
-        if (divider === "none") {
-            listView = Stack(ForEach(arrData, arrElem))
-        } else {
-            const newArrData: any[] = []
-            let newDivider: () => any
-            if (divider === "solid") {
-                newDivider = () =>
-                    Div()
-                        .backgroundColor(this.theme.divider)
-                        .width(isHorizontal ? "1px" : "calc(100% - 10px)")
-                        .height(isHorizontal ? "calc(100% - 10px)" : "1px")
-                        .margin(isHorizontal ? "5px 0" : "0 5px")
-                        .key(uid())
-            } else {
-                newDivider = () => divider()
-            }
-            arrData.forEach((value:any, index:number) => {
-                if (index !== 0) newArrData.push(newDivider)
-                newArrData.push(value)
-            })
+    isHorizontal = () => !(this.vertical ?? true) && (this.horizontal ?? true)
+    stack = () => this.isHorizontal() ? HStack : VStack
 
-            listView = Stack(
-                ForEach(newArrData, (item, idx) =>
-                    idx % 2 === 0 ? arrElem(item, idx / 2) : item()
+    Body = () =>
+        ConditionView(this.divider,  {
+            "none": () =>
+                this.stack()(
+                    ForEach(this.arrData, this.arrElem)
+                ),
+            ":": () =>
+                this.stack()(
+                    ForEach(Array(this.arrData.length*2-1).fill(0), (_, idx) =>
+                        ConditionView(idx % 2, {
+                            0: () => this.arrElem(this.arrData[idx / 2], idx / 2),
+                            1: () =>
+                                ConditionView(this.divider, {
+                                    "solid": () =>
+                                        Div()
+                                            .backgroundColor(this.theme.divider)
+                                            .width(this.isHorizontal() ? "1px" : "calc(100% - 10px)")
+                                            .height(this.isHorizontal() ? "calc(100% - 10px)" : "1px")
+                                            .margin(this.isHorizontal() ? "5px 0" : "0 5px"),
+                                    ":": this.divider
+                                }).key(uid())
+                        })
+                    )
                 )
-            )
-        }
-
-        return listView
-            .alignment("center")
-            .spacing(this.C.spacing ?? "0px")
-    }
-
-    @RUIProp
-    alignDirection(value: "horizontal" | "vertical") { return this }
-
-    horizontal() {
-        return this.setCustomProp("alignDirection", "horizontal")
-    }
-
-    vertical() {
-        return this.setCustomProp("alignDirection", "vertical")
-    }
-
-    @RUIProp
-    divider(value: "none" | "solid" | ReactUIBase | ReactElement | any) { return this }
-
-    @RUIProp
-    alignment(value: "top" | "bottom" | "leading" | "tailing" | "center") { return this }
-
-    @RUIProp
-    spacing(value: string) { return this }
+        })
+            .spacing(this.spacing)
+            .alignment(this.alignment)
 }
 
 
 export default function<T=any>(arrData: T[] | Range, arrElem: (item: T, idx: number) => ReactUIBase | ReactElement) {
-    return new List({arrData, arrElem})
+    return ViewWrapper(List)({arrData, arrElem})
 }

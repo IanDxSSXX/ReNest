@@ -2,15 +2,15 @@ import {Range} from "./Utils";
 import ReactUIBase from "../base/ReactUIBase";
 import {ReactElement} from "react";
 import ReactUIWithStyle from "../base/ReactUIWithStyle";
-import {RUIFragment} from "./ReactUIWrapper";
+import {FragmentView} from "./ReactUIWrapper";
 
 // ---* condition
-export function ConditionView<T=any>(variable: T, conditionMap: any): ReactUIWithStyle {
+export function ConditionView<T=any>(variable: T, conditionMap: any): any {
     let newViewFunc = conditionMap[variable]
     if (!newViewFunc) {
         newViewFunc = conditionMap[":"]
         if (!newViewFunc) {
-            return RUIFragment()
+            return FragmentView()
         }
     }
     return newViewFunc(variable)

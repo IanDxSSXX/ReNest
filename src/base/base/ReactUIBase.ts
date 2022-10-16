@@ -25,7 +25,7 @@ export default class ReactUIBase {
     constructor(elementTag: any, ...children: any[]) {
         this.elementTag = elementTag
         this.children = children
-        this.className(`RUI-${this.constructor.name}`)
+        this.className(`FuncView-${this.constructor.name}`)
     }
 
     asReactElement(): ReactElement {
@@ -85,7 +85,7 @@ export default class ReactUIBase {
     }
 
     ruiClassName(value: string) {
-        this.elementProps.className = `RUI-${value}`
+        this.elementProps.className = `FuncView-${value}`
         return this
     }
 

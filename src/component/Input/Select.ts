@@ -4,7 +4,7 @@ import { AiOutlineDown } from "react-icons/ai";
 import List from "../Displayer/List";
 import {HStack, Spacer, VStack, ZStack} from "../../component";
 import {useEffect, useRef} from "react";
-import {useTrigger, useTriggerEffect, range, RUITag, useRUIState} from "../../base";
+import {useTrigger, useTriggerEffect, range, TagView, useRUIState} from "../../base";
 import {string} from "prop-types";
 import {View} from "../../base/element/ReactUIElement";
 
@@ -27,7 +27,7 @@ class Select extends View {
         const board = HStack(
             Text(selectedValue.value),
             Spacer(),
-            RUITag(AiOutlineDown)
+            TagView(AiOutlineDown)
         )
         const option = (item:string) => HStack(
             this.C.option?this.C.option(item):

@@ -2,7 +2,7 @@ import ReactUIBase from "../base/ReactUIBase";
 import {createElement, ReactElement} from "react";
 import {Route, useParams} from "react-router-dom";
 import {ReactUITheme} from "../theme/ReactUITheme";
-import {RUIFragment} from "../utils/ReactUIWrapper";
+import {FragmentView} from "../utils/ReactUIWrapper";
 import {C} from "./ReactUINavigation";
 
 export class NavigationRoute extends ReactUIBase {
@@ -47,7 +47,7 @@ export class NavigationRouteMatchable extends ReactUIBase {
                     break
                 }
             }
-            let element: any = matchedName === null ? RUIFragment() : regexPathRoutes[matchedName]
+            let element: any = matchedName === null ? FragmentView() : regexPathRoutes[matchedName]
             if (element instanceof Function) {
                 element = element(value ?? "")
             }

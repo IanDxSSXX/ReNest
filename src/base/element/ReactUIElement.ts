@@ -72,7 +72,7 @@ export class ReactUIElement<T=any> extends ReactUITheme {
     shouldUpdate(value: (preProps: T, currProps: T) => boolean) { return this }
 }
 
-export function RUI<T extends Object>(body: (props:T) => any) {
+export function FuncView<T extends Object>(body: (props:T) => any) {
     return function(props?: T) {
         let ruiElement = new ReactUIElement<T>(props)
         ruiElement.setBody(body)
@@ -82,7 +82,7 @@ export function RUI<T extends Object>(body: (props:T) => any) {
 
 export const View = ReactUIElement
 
-export function FuncView<T extends Object>(RUIClass: any) {
+export function ViewWrapper<T extends Object>(RUIClass: any) {
     return (props?: T) => new RUIClass(props).init()
 }
 

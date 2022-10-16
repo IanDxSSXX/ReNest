@@ -1,9 +1,9 @@
 import Content from "./Content";
-import {RUI} from "../base";
+import {FuncView} from "../base";
 // import Calculator from "../dev/Calculator";
 
 
-let ReactUIApp = RUI(() => {
+let ReactUIApp = FuncView(() => {
     return (
         Content()
     )

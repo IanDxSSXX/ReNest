@@ -1,125 +1,125 @@
-import {RUITag} from "./ReactUIWrapper";
+import {TagView} from "./ReactUIWrapper";
 
 // ----
 export function Div(...children: any[]) {
-    return RUITag("div")(...children)
+    return TagView("div")(...children)
 }
 
 // ---- heading
 export function H1(...children: any[]) {
-    return RUITag("h1")(...children)
+    return TagView("h1")(...children)
 }
 
 export function H2(...children: any[]) {
-    return RUITag("h2")(...children)
+    return TagView("h2")(...children)
 }
 
 export function H3(...children: any[]) {
-    return RUITag("h3")(...children)
+    return TagView("h3")(...children)
 }
 
 export function H4(...children: any[]) {
-    return RUITag("h4")(...children)
+    return TagView("h4")(...children)
 }
 
 export function H5(...children: any[]) {
-    return RUITag("h5")(...children)
+    return TagView("h5")(...children)
 }
 
 export function H6(...children: any[]) {
-    return RUITag("h6")(...children)
+    return TagView("h6")(...children)
 }
 
 // ----
 export function Span(...children: any[]) {
-    return RUITag("span")(...children)
+    return TagView("span")(...children)
 }
 
 export function P(...children: any[]) {
-    return RUITag("p")(...children)
+    return TagView("p")(...children)
 }
 
 export function Strong(...children: any[]) {
-    return RUITag("strong")(...children)
+    return TagView("strong")(...children)
 }
 
 // ----
 export function Ul(...children: any[]) {
-    return RUITag("ul")(...children)
+    return TagView("ul")(...children)
 }
 
 export function Li(...children: any[]) {
-    return RUITag("li")(...children)
+    return TagView("li")(...children)
 }
 
 export function Ol(...children: any[]) {
-    return RUITag("ol")(...children)
+    return TagView("ol")(...children)
 }
 
 export function Dl(...children: any[]) {
-    return RUITag("dl")(...children)
+    return TagView("dl")(...children)
 }
 
 export function Dt(...children: any[]) {
-    return RUITag("dt")(...children)
+    return TagView("dt")(...children)
 }
 
 export function Dd(...children: any[]) {
-    return RUITag("dd")(...children)
+    return TagView("dd")(...children)
 }
 
 // ----
 export function Form(...children: any[]) {
-    return RUITag("form")(...children)
+    return TagView("form")(...children)
 }
 
 // ----
 export function Img(...children: any[]) {
-    return RUITag("img")(...children)
+    return TagView("img")(...children)
 }
 
 export function Canvas(...children: any[]) {
-    return RUITag("canvas")(...children)
+    return TagView("canvas")(...children)
 }
 
 // ----
 export function A(...children: any[]) {
-    return RUITag("a")(...children)
+    return TagView("a")(...children)
 }
 
 export function Button(...children: any[]) {
-    return RUITag("button")(...children)
+    return TagView("button")(...children)
 }
 
 export function Input(...children: any[]) {
-    return RUITag("input")(...children)
+    return TagView("input")(...children)
 }
 
 export function Em(...children: any[]) {
-    return RUITag("em")(...children)
+    return TagView("em")(...children)
 }
 
 export function Blockquote(...children: any[]) {
-    return RUITag("blockquote")(...children)
+    return TagView("blockquote")(...children)
 }
 
 // ---- table
 export function Table(...children: any[]) {
-    return RUITag("table")(...children)
+    return TagView("table")(...children)
 }
 
 export function Tbody(...children: any[]) {
-    return RUITag("tbody")(...children)
+    return TagView("tbody")(...children)
 }
 
 export function Tr(...children: any[]) {
-    return RUITag("tr")(...children)
+    return TagView("tr")(...children)
 }
 
 export function Td(...children: any[]) {
-    return RUITag("td")(...children)
+    return TagView("td")(...children)
 }
 
 export function Th(...children: any[]) {
-    return RUITag("th")(...children)
+    return TagView("th")(...children)
 }

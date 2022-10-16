@@ -1,8 +1,5 @@
-import {RUI, ThemeProvider, uid, useRUIState} from "../base";
-import {ReactUIElement, FuncView, View} from "../base/element/ReactUIElement";
+import {ReactUIElement, ViewWrapper, View} from "../base/element/ReactUIElement";
 import {Button, VStack, Text, TextField} from "../component";
-import {ContextProvider} from "../base/context/ContextProvider";
-import {useTheme} from "../base/theme/ThemeProvider";
 import {Context, DotProp, Prop} from "../base/element/Decorator";
 import {Ref, State} from "../base/element/HookDecorator";
 
@@ -39,7 +36,7 @@ class CSub1 extends View {
                 console.log("rerender")
             })
 }
-let Sub1 = FuncView(CSub1)
+let Sub1 = ViewWrapper(CSub1)
 
 
 class CMain extends View {
@@ -63,6 +60,6 @@ class CMain extends View {
 }
 
 
-const Main = FuncView(CMain)
+const Main = ViewWrapper(CMain)
 
 export default Main

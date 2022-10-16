@@ -6,13 +6,12 @@ import multiInput from 'rollup-plugin-multi-input';
 
 const packageJson = require("./dist/package.json");
 
-const inputPaths = ['src/base/index.ts', 'src/component/index.ts', 'src/base/HTMLTags.ts', 'src/base/index.core.ts']
+const inputPaths = ['src/base/index.ts', 'src/component/index.ts', 'src/base/HTMLTags.ts']
 
 const outputPathMap = {
     'src/base/index.ts': 'index.js',
     'src/component/index.ts': 'component/index.js',
-    'src/base/HTMLTags.ts': 'tag/index.js',
-    'src/base/index.core.ts': 'core/index.js',
+    'src/base/HTMLTags.ts': 'tag/index.js'
 }
 
 

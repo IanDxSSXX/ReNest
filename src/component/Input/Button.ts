@@ -1,4 +1,4 @@
-import {ReactUIElement, FuncView, View} from "../../base/element/ReactUIElement";
+import {ReactUIElement, ViewWrapper, View} from "../../base/element/ReactUIElement";
 import {RUIProp} from "../../base/element/Helpers";
 import {useRUIState} from "../../base";
 import {RUIColor} from "../../base/theme/Colors";
@@ -59,6 +59,6 @@ class Button extends View {
 }
 
 export default function (title: string) {
-    return FuncView<{title: string}>(Button)({title})
+    return ViewWrapper<{title: string}>(Button)({title})
 }
 

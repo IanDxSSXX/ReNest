@@ -1,7 +1,7 @@
 import {
     NavigationView,
     useRUIState,
-    RUI,
+    FuncView,
     ThemeProvider,
     uid
 } from "../base";
@@ -43,7 +43,7 @@ let myThemes = {
 }
 
 
-const TopBar = RUI(() =>
+const TopBar = FuncView(() =>
     ZStack(
         Paper()
             .width("600px")
@@ -66,7 +66,7 @@ const TopBar = RUI(() =>
     )
 )
 
-const Content = RUI(() => {
+const Content = FuncView(() => {
     let theme = useTheme(myThemes, "second")
 
     return (
@@ -100,5 +100,5 @@ const Content = RUI(() => {
 })
 
 
-// export default Content
-export default Test
+export default Content
+// export default Test

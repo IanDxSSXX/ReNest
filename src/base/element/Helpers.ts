@@ -1,5 +1,5 @@
 import {ReactUIHelper} from "../utils/ReactUIHelper";
-import {RUITag} from "../utils/ReactUIWrapper";
+import {TagView} from "../utils/ReactUIWrapper";
 import {createElement, memo, useEffect, useRef, useState} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import {ReactUIElement} from "./ReactUIElement";
@@ -13,12 +13,12 @@ const ReactElementWrapper = ({wrapper}:any) => {
     const ErrorFallBack = ({error}: { error: Error }) => {
         let message
         if (wrapper.constructor.name === "ReactUIElement") {
-            message = `in a RUI wrapper\n ${error.message}`
+            message = `in a FuncView wrapper\n ${error.message}`
         } else {
             message = `in react ui component ${wrapper.constructor.name}\n ${error.message}`
         }
         ReactUIHelper.error(message)
-        return RUITag("")
+        return TagView("")
     }
 
     // ---e

@@ -1,10 +1,10 @@
-import {Fragment, useState} from "react";
+import {useState} from "react";
 import {ReactUIHelper} from "../utils/ReactUIHelper";
-import {C as RUIWrapperC} from "../utils/ReactUIWrapper";
+import {Fragment} from "../utils/ReactUIWrapper";
 import {ThemeStore} from "./Store";
 
 namespace C {
-    export class ThemeProvider extends RUIWrapperC.RUIFragment {
+    export class ThemeProvider extends Fragment {
         IAMThemeProvider = true
         useTheme(themeState: ThemesState) {
             ThemeStore[this.themeId] = {
