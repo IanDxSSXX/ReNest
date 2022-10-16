@@ -1,17 +1,13 @@
 import {ReactUIHelper} from "../utils/ReactUIHelper";
 import {RUITag} from "../utils/ReactUIWrapper";
-import {createElement, memo, useEffect} from "react";
+import {createElement, memo, useEffect, useRef, useState} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import {ReactUIElement} from "./ReactUIElement";
 import lodash from "lodash"
+import {useRUIState} from "../utils/Utils";
+import {HookWrapper, ResoleContext, ResoleDotProp, ResoleHook} from "./HookDecorator";
 
-// ---- react treat useXXX as a hook and Xxxx as a component,
-//      can't use hook in a callback, so make react view it as a component
-function UseEffectWrapper(func: Function, states?: any[]) {
-    useEffect(() => {
-        func()
-    }, states)
-}
+
 
 const ReactElementWrapper = ({wrapper}:{wrapper:ReactUIElement}) => {
     // ---- error boundary
@@ -26,19 +22,20 @@ const ReactElementWrapper = ({wrapper}:{wrapper:ReactUIElement}) => {
         return RUITag("")
     }
 
+    // ---e
     if (!wrapper.Body) ReactUIHelper.error("ReactUIElement must have a Body property, which returns the main")
-    let context = {}
-    for (let tag of [...new Set(wrapper.ruiContextTag)]) {
-        context = {...context, ...wrapper.ruiContext[tag] ?? {}}
+
+    console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(wrapper)))
+
+    // ---- decorators **so tricky**
+    for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(wrapper))) {
+        ResoleHook(wrapper, key, "HOOK")               // ---n any hook with single prop: @Hook(useRef)
+        ResoleHook(wrapper, key, "SHOOK", true)        // ---n any hook with multiple props: @Hook(useTheme)
+        ResoleContext(wrapper, key)
+        ResoleDotProp(wrapper, key)
     }
 
-    const component = wrapper.Body!(wrapper.props, context) as any
-    if (!component) ReactUIHelper.error("ReactUIElement must have a proper return, current is null")
-    wrapper.children = [component]
-
-    let reactComponent = component.IAmReactUI ? wrapper.registerView(component).asReactElement() : component
-
-    // ---- lifecycle
+        // ---- lifecycle
     // ---1 didMount and willUnmount
     useEffect(() => {
         !!wrapper.C.didMount && wrapper.C.didMount()
@@ -47,8 +44,18 @@ const ReactElementWrapper = ({wrapper}:{wrapper:ReactUIElement}) => {
 
     // ---2 components update state
     (wrapper.C.didUpdate??[]).forEach(({func, states}: any)=>{
-        UseEffectWrapper(func, states)
+        HookWrapper(useEffect, () => {func()}, states)
     })
+
+
+    // ---- call Body
+    wrapper.Init!(wrapper.props)
+    const component = wrapper.Body!(wrapper.props) as any
+    // ---e
+    if (!component) ReactUIHelper.error("ReactUIElement must have a proper return, current is null")
+
+    // ---- register and turn into React Element
+    let reactComponent = component.IAmReactUI ? wrapper.registerView(component).asReactElement() : component
 
     return createElement(
         ErrorBoundary,
@@ -68,11 +75,10 @@ export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (pre, curr
     if (!lodash.isEqual(preWrapper.elementProps, currWrapper.elementProps)) return false
 
     // ---2 themes, update on change by default using deep equal
-    if (preWrapper.ruiThemeName !== currWrapper.ruiThemeName) return false
-    if (!lodash.isEqual(preWrapper.ruiThemes, currWrapper.ruiThemes)) return false
+    if (!lodash.isEqual(preWrapper.theme, currWrapper.theme)) return false
 
     // ---3 contexts
-    if (!lodash.isEqual(preWrapper.contexts, currWrapper.contexts)) return false
+    if (!lodash.isEqual(preWrapper.C.contexts, currWrapper.C.contexts)) return false
 
     // -4.5 custom and input props with shouldUpdate hook
     if (!!currWrapper.C.shouldUpdate) {
@@ -89,7 +95,7 @@ export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (pre, curr
     if (!lodash.isEqual(preWrapper.props, currWrapper.props)) return false
 
     return true
-}) as any
+})
 
 
 export function RUIProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -110,3 +116,5 @@ export function RUIProp(target: any, propertyKey: string, descriptor: PropertyDe
         return originalValue.apply(this, args);
     }
 }
+
+

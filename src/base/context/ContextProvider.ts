@@ -1,22 +1,19 @@
 import {C as RUIWrapperC} from "../utils/ReactUIWrapper";
-import {flattened} from "../utils/Utils";
-import {useState} from "react";
-import {ReactUIHelper} from "../utils/ReactUIHelper";
-import ReactUIBase from "../base/ReactUIBase";
-import {ReactUIElement} from "../element/ReactUIElement";
-import {ReactUIContext} from "./ReactUIContext";
+import {uid} from "../utils/Utils";
+import {ContextStore} from "./Store";
 
-namespace C {
+
+export namespace C {
     export class ContextProvider extends RUIWrapperC.RUIFragment {
         IAMContextProvider = true
-        private contexts: {[key:string]:{[key:string]: any}} = {}
+        ruiContext: {[key:string]:{[key:string]: any}} = {}
         context(value: {[key:string]: any}, tag="default") {
-            this.contexts[tag] = {...this.contexts[tag] ?? {}, ...value}
-            this.forEachChild((child: ReactUIBase) => {
-                if (child.IAmReactUIContext && !child.IAMContextProvider) {
-                    (child as ReactUIContext).ruiContext = this.contexts
-                }
-            }, true)
+            this.ruiContext[tag] = {...this.ruiContext[tag] ?? {}, ...value}
+            this.willUseContext = true
+            if (ContextStore[this.contextId] === undefined) ContextStore[this.contextId] = {}
+            ContextStore[this.contextId][tag] = {...this.ruiContext[tag] ?? {}, ...value}
+            this.passDownContext()
+
             return this
         }
     }

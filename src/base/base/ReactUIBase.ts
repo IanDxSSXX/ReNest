@@ -8,17 +8,14 @@ import {
 } from "react";
 import {flattened, uid} from "../utils/Utils";
 
-
 export default class ReactUIBase {
     IAmReactUI = true
-    IAmReactUITheme = false
-    IAmReactUIElement = false
-    IAmReactUIWithStyle = false
-    IAmReactUIContext = false
-    IAMContextProvider = false
-
-    currJson: string = ""
-    preJson: string = ""
+    // IAmReactUITheme = false
+    // IAmReactUIElement = false
+    // IAmReactUIWithStyle = false
+    // IAmReactUIContext = false
+    // IAMContextProvider = false
+    // IAMThemeProvider = false
 
     protected elementTag: any
     children: any[]
@@ -121,11 +118,11 @@ export default class ReactUIBase {
     }
 
     // ---- utils
-    forEachChild(func: (child: any)=>void, nested=false) {
+    forEachChild(func: (child: any)=>any, nested=false) {
         for (let child of flattened(this.children)) {
             if (child.IAmReactUI) {
-                func(child)
-                if (nested) {
+                let willNest = func(child) ?? true
+                if (willNest && nested) {
                     child.forEachChild(func, nested)
                 }
             }

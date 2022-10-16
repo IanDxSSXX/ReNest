@@ -7,6 +7,7 @@
       "esnext"
     ],
     "downlevelIteration": true,
+    "useDefineForClassFields": false,
     "experimentalDecorators": true,
     "allowJs": true,
     "skipLibCheck": true,

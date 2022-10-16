@@ -1,16 +1,14 @@
 import {
     NavigationView,
-    ForEach,
     useRUIState,
     RUI,
-    ThemeProvider, ConditionView
+    ThemeProvider,
+    uid
 } from "../base";
 import {
     Button,
     VStack,
-    TextField,
     Text,
-    Toggle,
     HStack,
 } from "../component"
 import Paper from "../component/Displayer/Paper"
@@ -21,7 +19,10 @@ import {ToggleDisplay} from "./routes/ToggleDisplay";
 import {TextFieldDisplay} from "./routes/TextFieldDisplay";
 import {ListDisplay} from "./routes/ListDisplay";
 import {ImageDisplay} from "./routes/ImageDisplay";
-
+import lodash from "lodash"
+import {useCallback, useEffect, useRef} from "react";
+import {ReactUIElement} from "../base/element/ReactUIElement";
+import Test from "./Test"
 
 
 let myThemes = {
@@ -49,7 +50,6 @@ const TopBar = RUI(() =>
             .height("80px"),
         HStack(
             Button("home")
-                .themeName("secondary")
                 .onClick(NavigateTo("/")),
             Button("text field")
                 .onClick(NavigateTo("/textField")),
@@ -58,6 +58,7 @@ const TopBar = RUI(() =>
             Button("toggle")
                 .onClick(NavigateTo("/toggle")),
             Button("image")
+                .themeName("first")
                 .onClick(NavigateTo("/image")),
             Button("::::")
                 .onClick(NavigateTo("/12839")),
@@ -66,7 +67,7 @@ const TopBar = RUI(() =>
 )
 
 const Content = RUI(() => {
-    let theme = useTheme(myThemes, "secondary")
+    let theme = useTheme(myThemes, "second")
 
     return (
         ThemeProvider(
@@ -93,9 +94,11 @@ const Content = RUI(() => {
                 .alignmentV("top")
                 .padding("70px")
         )
-            .theme(theme)
+            .useTheme(theme)
 
     )
 })
 
-export default Content
+
+// export default Content
+export default Test
