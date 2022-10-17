@@ -23,31 +23,34 @@ class List extends View {
 
     Body = () =>
         ConditionView(this.divider,  {
-            "none": () =>
+            none: () =>
                 this.stack()(
                     ForEach(this.arrData, this.arrElem)
-                ),
-            ":": () =>
+                )
+                    .spacing(this.spacing)
+                    .alignment(this.alignment),
+            _: () =>
                 this.stack()(
                     ForEach(Array(this.arrData.length*2-1).fill(0), (_, idx) =>
                         ConditionView(idx % 2, {
                             0: () => this.arrElem(this.arrData[idx / 2], idx / 2),
                             1: () =>
                                 ConditionView(this.divider, {
-                                    "solid": () =>
+                                    solid: () =>
                                         Div()
                                             .backgroundColor(this.theme.divider)
                                             .width(this.isHorizontal() ? "1px" : "calc(100% - 10px)")
                                             .height(this.isHorizontal() ? "calc(100% - 10px)" : "1px")
                                             .margin(this.isHorizontal() ? "5px 0" : "0 5px"),
-                                    ":": this.divider
+                                    _: this.divider
                                 }).key(this.arrData.length+(idx-1)/2)
                         })
                     )
                 )
+                    .spacing(this.spacing)
+                    .alignment(this.alignment)
         })
-            .spacing(this.spacing)
-            .alignment(this.alignment)
+
 }
 
 

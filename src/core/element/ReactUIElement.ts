@@ -64,10 +64,10 @@ export abstract class ReactUIElementAbstract<T=any> extends ReactUITheme {
     // ---- lifecycle
     lifecycle: {
         didMount?: ()=>any,
-        didUpdate: {func:()=>any, states?: any[]}[],
+        didUpdate?: {func:()=>any, states?: any[]}[],
         willUnmount?: ()=>any,
         shouldUpdate?: (preProps: T, currProps: T) => boolean
-    } = {didUpdate: []}
+    } = {}
 
     didMount(value: ()=>any) {
         this.lifecycle.didMount = value
@@ -75,7 +75,7 @@ export abstract class ReactUIElementAbstract<T=any> extends ReactUITheme {
     }
 
     didUpdate(value: ()=>any, states?: any[]) {
-        this.lifecycle.didUpdate = [...this.lifecycle.didUpdate, {func: value, states}]
+        this.lifecycle.didUpdate = [...this.lifecycle.didUpdate??[], {func: value, states}]
         return this
     }
 

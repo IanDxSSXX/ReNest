@@ -28,7 +28,7 @@ const ReactElementWrapper = ({wrapper}:any) => {
     }, []);
 
     // ---2 components update state
-    didUpdate.forEach(({func, states}: any)=>{
+    (didUpdate ?? []).forEach(({func, states}: any)=>{
         HookWrapper(useEffect, () => {func()}, states)
     })
 
