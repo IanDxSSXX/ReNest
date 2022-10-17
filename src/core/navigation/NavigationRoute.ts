@@ -46,10 +46,8 @@ export class NavigationRouteMatchable extends ReactUIBase {
                     break
                 }
             }
-            let element: any = matchedName === null ? FragmentView() : regexPathRoutes[matchedName]
-            if (element instanceof Function) {
-                element = element(value ?? "")
-            }
+            let element: any = matchedName === null ? FragmentView : regexPathRoutes[matchedName]
+            element = element(value ?? "")
 
             if (element.IAmReactUITheme) {
                 navigationView.children = [element]

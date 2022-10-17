@@ -68,14 +68,14 @@ const Content = FuncView(() => {
                         .padding("20px"),
                     NavigationView({
                         "": () => Text("welcome to react UI, click the button above to view component"),
-                        "textField": () => TextFieldDisplay(),
-                        "list": () => ListDisplay(),
-                        "toggle": () => ToggleDisplay(),
-                        "image": () => ImageDisplay(),
-                        "progress": () => ProgressDisplay(),
-                        ":abc+": (value:any) => HStack("abc",value), // regExp
-                        ":what[a+]": (value:any) => HStack("no",value), // regExp
-                        ":": (value:any) => HStack(value), // any other route
+                        textField: () => TextFieldDisplay(),
+                        list: () => ListDisplay(),
+                        toggle: () => ToggleDisplay(),
+                        image: () => ImageDisplay(),
+                        progress: () => ProgressDisplay(),
+                        "_abc+": (value:any) => HStack("abc",value), // regExp
+                        "_what[a+]": (value:any) => HStack("no",value), // regExp
+                        _: (value:any) => HStack("other", value), // any other route
                     })
                 ).padding("20px")
             )
@@ -87,7 +87,6 @@ const Content = FuncView(() => {
 
     )
 })
-
 
 export default Content
 // export default ProgressDisplay
