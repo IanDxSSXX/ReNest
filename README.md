@@ -30,13 +30,13 @@ A react add-on to write React just like SwiftUI.
     
     return (
       <div>
-      	{nums.map((num: number) => 
+        {nums.map((num: number) => 
           <button 
             onClick={()=>{
               console.log(`This is button ${num}`)
               setToggle(pre=>!pre)      
             }}
-  				>
+          >
             {num}
           </button>)}
       </div>
@@ -49,8 +49,8 @@ A react add-on to write React just like SwiftUI.
   ```typescript
   const RUIFuncButtons = FuncView(({nums}:{nums:number[]}) => {
     let [toggle, setToggle] = useState(false)
-    
-  	return (
+
+    return (
       List(nums, (num:number) =>
         Button(num)
           .onClick(() => {
@@ -58,7 +58,7 @@ A react add-on to write React just like SwiftUI.
             setToggle(pre=>!pre)
           })
       )
-  	)
+    )
   })
   ```
   Except the way ReactUI sets props, everything is the same with React functions.
@@ -67,22 +67,21 @@ A react add-on to write React just like SwiftUI.
 
   ``` swift
   struct SwiftButtons: View {
-  	var nums: [Int]
+    var nums: [Int]
     @State toggle = false
     
-  	var body: some View {
-  		List(this.nums) { num in 
-  			Button(num) {
+    var body: some View {
+      List(this.nums) { num in 
+        Button(num) {
           print("This is button \(num)")
           this.toggle = !this.toggle
         }
-  		}
-  	}
+      }
+    }
   }
   ```
 
 * ReactUI as class
-
   ``` typescript
   class RUIClassButtons extends View {
     @Prop nums: number[]
@@ -90,11 +89,11 @@ A react add-on to write React just like SwiftUI.
     
     Body = () => 
       List(this.nums, (num:number) =>
-      	Button(num)
+        Button(num)
           .onClick(() => {
-      			console.log(`This is button ${num}`)
+            console.log(`This is button ${num}`)
             this.toggle.setValue(pre=>!pre)
-    			})
+          })
       )
   }
   ```
@@ -256,18 +255,18 @@ const MyPage = FuncView(() =>
               this.count.setValue((pre:any)=>pre+1)
             }),
           Button("-")
-          	.onClick(() => {
+            .onClick(() => {
               this.count.setValue((pre:any)=>pre-1)
             })
           )
-        		.spacing("20px"),
+            .spacing("20px"),
         Text(this.count.value),
         Button("clear")
-        	.onClick(() => {
+          .onClick(() => {
             this.count.value = this.startNum
           })
       )
-    		.alignment("center")
+        .alignment("center")
   }
   
   export default ViewWrapper<{startNum?: number}>(Counter)
@@ -296,9 +295,9 @@ class ComponentA extends View {
     VStack(
       Text(`Current first state value is ${contexts.myFirstState.value}`),
       Button("add")    // click this will update the context
-      	.onClick(() => {
-        	myFirstState.value += 1
-      	})
+        .onClick(() => {
+          myFirstState.value += 1
+        })
     )
 }
 
@@ -313,7 +312,7 @@ class MyComponentWithContext extends View {
         ComponentAView()
       )
     )
-  		.context({myFirstState: this.myFirstState})
+      .context({myFirstState: this.myFirstState})
 }
 
 ````
@@ -372,7 +371,7 @@ export default ViewWrapper(Paper)
 
 // call to use red theme
 Paper()
-	.themeName("red")
+  .themeName("red")
 ```
 
 2. `ThemeProvider`
@@ -408,7 +407,7 @@ class MyComponentWithContext extends View {
         Paper()
           .themeTag("another")  // only have secondTheme, when themeName == firstTheme, using defeaultTheme inside Paper class
         Button("change theme")
-      		.onClick(() => {
+          .onClick(() => {
             // use themeState.is("xx") to check current theme name
             // use themeState.themeName to get current theme name
             // use themeState.to("xx") to change theme
@@ -417,10 +416,10 @@ class MyComponentWithContext extends View {
             } else {
               this.themeState.to("firstTheme")
             }
-					})
+          })
       )
     )
-  		.themes(themeState)
+      .themes(themeState)
 }
 ```
 
@@ -432,7 +431,7 @@ class MyComponentWithContext extends View {
 ```typescript
 class SubComponent extends View {  
   Body = () =>
-  	Text("not related to MainComponent's states")
+    Text("not related to MainComponent's states")
 }
 
 const SubComponentView = ViewWrapper(CoSubComponentmponentA)
@@ -443,25 +442,25 @@ class MainComponent extends View {
   Body = () =>
     VStack(
       Button("refresh")
-      	.onClick(() => {
+        .onClick(() => {
           toggle.setValue(pre=>!pre)
         })
       SubComponentView()
         .didUpdate(() => {
-        	console.log("re-rendered as subview")  // this will not be called when click refresh button => so called element-wise lifecycle
+          console.log("re-rendered as subview")  // this will not be called when click refresh button => so called element-wise lifecycle
         })
     )
-  		.didMount(() => {
+      .didMount(() => {
         console.log("mounted")
       })
-  		.didUpdate(() => {
+      .didUpdate(() => {
         console.log("re-rendered")
       })
-			.willUnmount(() => {
+      .willUnmount(() => {
         console.log("will unmount")
       })
       .shouldUpdate((preProps, currProps) => false)  // this equals to React.memo(xx, shouldUpdate)
-			.useMemo(false)    // using memo for partial re-render by default, so no need to call this function to disable it, but you can do it anyway
+      .useMemo(false)    // using memo for partial re-render by default, so no need to call this function to disable it, but you can do it anyway
 }
 ```
 
@@ -472,7 +471,7 @@ class MainComponent extends View {
 ```typescript
 class SubComponent extends View {  
   Body = () =>
-  	Text("not related to MainComponent's states")
+    Text("not related to MainComponent's states")
 }
 
 const SubComponentView = ViewWrapper(CoSubComponentmponentA)
@@ -483,7 +482,7 @@ class MainComponent extends View {
   Body = () =>
     VStack(
       Button("refresh")
-      	.onClick(() => {
+        .onClick(() => {
           toggle.setValue(pre=>!pre)
         })
       SubComponentView()
@@ -495,11 +494,11 @@ class MainComponent extends View {
     },
     didUpdate: [
       () => {
-      	console.log("re-rendered at any value")
-    	}),
+        console.log("re-rendered at any value")
+      }),
       () => {
-      	console.log("re-rendered at toggle value")
-    	}, [this.toggle.value])
+        console.log("re-rendered at toggle value")
+      }, [this.toggle.value])
     ],
     willUnmount: () => {
       console.log("will unmount")
