@@ -4,21 +4,21 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import multiInput from 'rollup-plugin-multi-input';
 
-const packageJson = require("./dist/package.json");
+const packageJson = require("./package/package.json");
 
-const inputPaths = ['src/core/index.ts', 'src/component/index.ts', 'src/base/utils/HTMLTags.ts']
+const inputPaths = ['src/core/index.ts', 'src/component/index.ts', 'src/core/utils/HTMLTags.ts']
 
 const outputPathMap = {
     'src/core/index.ts': 'index.js',
     'src/component/index.ts': 'component/index.js',
-    'src/base/utils/HTMLTags.ts': 'tag/index.js'
+    'src/core/utils/HTMLTags.ts': 'tag/index.js'
 }
 
 
 const rollupDefault = [{
       input: inputPaths,
       output: {
-        dir: './dist',
+        dir: './package',
         format: 'esm'
       },
       plugins: [
@@ -34,7 +34,7 @@ const rollupDefault = [{
 {
     input: inputPaths,
     output: {
-        dir: './dist',
+        dir: './package',
         format: "esm"
     },
     plugins: [
