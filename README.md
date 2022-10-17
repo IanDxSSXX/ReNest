@@ -509,6 +509,32 @@ class MainComponent extends View {
 }
 ```
 
+## Internal components
+
+#### Props
+
+| name      | prop         | is dot prop | description                                     |
+| --------- | ------------ | ----------- | ----------------------------------------------- |
+| Button    | title        |             | button title                                    |
+|           | disable      | yes         | gray and disable button                         |
+| TextField | defaultText  |             | input's text                                    |
+|           | placeHolder  | yes         | input's placeHolder and title                   |
+|           | variant      | yes         | "outlined" or "underlined", default is outlined |
+|           | disable      | yes         | gray and disable text field                     |
+|           | autoFocus    | yes         | auto focus this input                           |
+|           | onChange     | yes         | callback when input's text changes              |
+| Toggle    | defaultValue |             | default toggle value, true or false             |
+|           | onChange     | yes         | callback when toggle is toggled                 |
+| ...       |              |             |                                                 |
+
+#### Themes
+
+| Button | value in theme | description |
+| ------ | -------------- | ----------- |
+| Button | ...            |             |
+
+> Tip:  view full examples at src/components as these are internal components written as ReactUI class components.
+
 ## Todo List
 
 - [ ] Find a better way to debug and throw error
@@ -525,4 +551,10 @@ class MainComponent extends View {
 - [ ] Select
 - [ ] CheckList
 - [ ] AutoComplete
+
+## License
+
+* MIT
+
+
 
