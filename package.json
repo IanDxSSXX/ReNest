@@ -18,7 +18,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "rollup": "rollup -c"
+    "rollup": "rollup -c",
+    "publish": "npm publish ./dist"
   },
   "eslintConfig": {
     "extends": [
