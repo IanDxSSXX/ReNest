@@ -32,8 +32,8 @@ class TextField extends View {
     defaultThemeName = "primary"
     myFontSize = "15px"
 
-    @Prop defaultText = "11"
-    @DotProp placeHolder :string = ''
+    @Prop defaultText = ""
+    @DotProp placeHolder :string = ""
     @DotProp variant: "outlined" | "underlined" = "outlined"
     variantUnderlined = this.variant === "underlined"
 
