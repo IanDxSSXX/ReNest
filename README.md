@@ -49,7 +49,7 @@ A react add-on to write React just like SwiftUI.
   ```typescript
   const RUIFuncButtons = FuncView(({nums}:{nums:number[]}) => {
     let [toggle, setToggle] = useState(false)
-
+  
     return (
       List(nums, (num:number) =>
         Button(num)
@@ -524,15 +524,18 @@ class MainComponent extends View {
 |           | onChange     | yes         | callback when input's text changes              |
 | Toggle    | defaultValue |             | default toggle value, true or false             |
 |           | onChange     | yes         | callback when toggle is toggled                 |
-| ...       |              |             |                                                 |
+| ...       |              |             | will be completed soon                          |
 
 #### Themes
 
 | Button | value in theme | description |
 | ------ | -------------- | ----------- |
-| Button | ...            |             |
+| Button |                |             |
 
-> Tip:  view full examples at src/components as these are internal components written as ReactUI class components.
+> Tips:  
+>
+> * View full examples at src/components as these are internal components written as ReactUI class components.
+> * Use plugin `Rainbow Brackets` in `WebStorm` to code ReactUI comfortably.
 
 ## Todo List
 
