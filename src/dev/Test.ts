@@ -1,8 +1,9 @@
 import {ReactUIElement, ViewWrapper, View} from "../core/element/ReactUIElement";
-import {Button, VStack, Text, TextField} from "../component";
-import {Context, DotProp, Prop} from "../core/element/Decorator";
+import {Button, VStack, Text, TextField, HStack} from "../component";
+import {Callback, Context, Contexts, DotProp, Prop} from "../core/element/Decorator";
 import {Ref, State} from "../core/element/HookDecorator";
 import {Div} from "../core/utils/HTMLTags";
+import {ContextProvider} from "../core";
 
 let myThemes = {
     first: {
@@ -23,14 +24,16 @@ let myThemes = {
 class CSub1 extends View {
     @Prop toggle: any
     @DotProp text: any
-
+    @Context a: any
+    @Contexts allContent: any
     Body = () =>
         VStack(
             Text(`${this.toggle}`),
             Text(this.text)
         )
             .didMount(() => {
-                console.log("hh1")
+                console.log("jj",this.a)
+                console.log(this.allContent)
             })
             .didUpdate(() => {
                 console.log("rerender")
@@ -38,6 +41,34 @@ class CSub1 extends View {
 }
 let Sub1 = ViewWrapper(CSub1)
 
+class Counter extends View {
+    @Prop startNum: number = 0
+    @Callback(State) count: any = () => this.startNum
+
+    Body = () =>
+        VStack(
+            HStack(
+                Button("+")
+                    .onClick(() => {
+                        this.count.setValue((pre:any)=>pre+1)
+                    }),
+                Button("-")
+                    .onClick(() => {
+                        this.count.setValue((pre:any)=>pre-1)
+                    })
+            )
+                .spacing("20px"),
+            Text(this.count.value),
+            Button("clear")
+                .onClick(() => {
+                    this.count.value = this.startNum
+                })
+        )
+            .alignment("center")
+}
+
+
+let CounterView = ViewWrapper<{startNum?: number}>(Counter)
 
 class CMain extends View {
     @State count: any = 1
@@ -45,7 +76,8 @@ class CMain extends View {
     @State text: any = "defaultValue"
 
     Body = () =>
-        Div(
+        ContextProvider(
+        VStack(
             TextField(this.text.value)
                 .onChange((newT:string) => {this.text.value = newT}),
             Button("click me")
@@ -55,12 +87,11 @@ class CMain extends View {
                 }),
             Text(`count: ${this.count.value}`),
             Sub1({toggle: false})
-                .text(this.text.value)
-                // .text("11")
-                // .didMount(() => {
-                //     console.log("hh2")
-                // })
+                .text(this.text.value),
+            CounterView({startNum:100})
         )
+        )
+            .context({a:"hh"})
 
 }
 

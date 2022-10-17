@@ -51,6 +51,13 @@ export function ResolveContext(wrapper: any, statusKey: string, callback: ()=>an
     wrapper.customProps.contextStore[key] = wrapper[key]
 }
 
+export function ResolveContexts(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
+    if (!isStatusKey(statusKey, "CONTEXTS")) return callback()
+    let key = getKeyFromStatus(statusKey, "CONTEXTS")
+    wrapper[key] = wrapper.contexts
+    wrapper.customProps.contextStore = wrapper.contexts
+}
+
 export function ResolveProp(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
     if (!isStatusKey(statusKey, "PROP")) return callback()
     let key = getKeyFromStatus(statusKey, "PROP")
@@ -131,6 +138,12 @@ export const SHook = (hook: Function) => {
 
 export const Context = (target: any, propertyKey: string) => {
     Object.defineProperty(target, StatusKey("CONTEXT", propertyKey), {
+        value: true,
+    })
+}
+
+export const Contexts = (target: any, propertyKey: string) => {
+    Object.defineProperty(target, StatusKey("CONTEXTS", propertyKey), {
         value: true,
     })
 }

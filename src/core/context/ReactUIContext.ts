@@ -4,29 +4,11 @@ import {ContextStore} from "./Store";
 
 export class ReactUIContext extends ReactUIWithStyle {
     IAmReactUIContext = true
-    ruiContextTag: string[] = ["default"]
     contextId: string = uid()
     willUseContext = false
 
     get contexts() {
-        if (!this.willUseContext) return {}
-        let context = {}
-        for (let tag of [...new Set(this.ruiContextTag)]) {
-            context = {...context, ...(ContextStore[this.contextId][tag] ?? {})}
-        }
-
-        return context
-    }
-
-    // ---- add tag
-    addContextTag(newTag: string) {
-        this.ruiContextTag = [newTag, ...this.ruiContextTag]
-        return this
-    }
-
-    contextTag(value: string) {
-        this.addContextTag(value)
-        return this
+        return ContextStore[this.contextId] ?? {}
     }
 
     passDownContext() {

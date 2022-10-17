@@ -3,7 +3,7 @@ import {createElement, ReactElement} from "react";
 import {ReactUITheme} from "../theme/ReactUITheme";
 import ReactUIBase from "../base/ReactUIBase";
 import {ReactElementWrapperMemorized} from "./ReactUIHOC";
-import {ResolveContext, ResolveDotProp, ResolveDotPropWrapper, ResolveProp} from "./Decorator";
+import {ResolveContext, ResolveContexts, ResolveDotProp, ResolveDotPropWrapper, ResolveProp} from "./Decorator";
 
 export abstract class ReactUIElementAbstract<T=any> extends ReactUITheme {
     props: T
@@ -30,9 +30,10 @@ export abstract class ReactUIElementAbstract<T=any> extends ReactUITheme {
     asReactElement() {
         for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
             ResolveContext(this, key, () =>
+            ResolveContexts(this, key, () =>
             ResolveProp(this, key, () =>
             ResolveDotProp(this, key)
-            ))
+            )))
         }
 
         return createElement(
