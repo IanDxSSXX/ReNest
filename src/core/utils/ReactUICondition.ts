@@ -1,20 +1,38 @@
-import {Range} from "./Utils";
 import ReactUIBase from "../base/ReactUIBase";
-import {ReactElement} from "react";
-import ReactUIWithStyle from "../base/ReactUIWithStyle";
+import {createElement, ReactElement} from "react";
 import {FragmentView} from "./ReactUIWrapper";
+import {ReactUITheme} from "../theme/ReactUITheme";
 
 // ---* condition
-export function ConditionView<T=any>(variable: T, conditionMap: any): any {
-    let newViewFunc = conditionMap[variable]
-    if (!newViewFunc) {
-        newViewFunc = conditionMap[":"]
-        if (!newViewFunc) {
-            return FragmentView()
-        }
+class Condition extends ReactUITheme {
+    variable: any
+    conditionMap: any
+
+    constructor(variable: any, conditionMap: any) {
+        super("");
+        this.variable = variable
+        this.conditionMap = conditionMap
     }
-    return newViewFunc(variable)
+
+    asReactElement() {
+        let Element = () => {
+            let ruiElement = (this.conditionMap[this.variable] ??
+                this.conditionMap["_"] ??
+                FragmentView)()
+
+            this.children = [ruiElement]
+            this.passDownContext()
+            this.passDownTheme()
+            return ruiElement.asReactElement()
+        }
+
+        return createElement(
+            Element
+        )
+    }
 }
+
+export const ConditionView = (variable: any, conditionMap: any) => new Condition(variable, conditionMap)
 
 // ---* for each
 export function ForEach<T=any>(arr: T[], callback: (item: T, idx: number) => ReactUIBase | ReactElement) {
