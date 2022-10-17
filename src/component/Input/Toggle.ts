@@ -76,7 +76,7 @@ class Toggle extends View {
                 .cursor("pointer")
                 .onClick(() => {
                     this.onChange(!this.valueState.value)
-                    this.valueState.setValue((pre: boolean) => !pre)
+                    this.valueState.setValue((prev: boolean) => !prev)
                 })
                 .pointerEvents("none", this.disable)
                 .opacity("0.5", this.disable)

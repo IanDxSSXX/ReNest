@@ -22,5 +22,4 @@ export class ReactUIContext extends ReactUIWithStyle {
             }
         }, true)
     }
-
 }

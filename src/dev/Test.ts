@@ -50,11 +50,11 @@ class Counter extends View {
             HStack(
                 Button("+")
                     .onClick(() => {
-                        this.count.setValue((pre:any)=>pre+1)
+                        this.count.setValue((prev:any)=>prev+1)
                     }),
                 Button("-")
                     .onClick(() => {
-                        this.count.setValue((pre:any)=>pre-1)
+                        this.count.setValue((prev:any)=>prev-1)
                     })
             )
                 .spacing("20px"),
@@ -82,8 +82,8 @@ class CMain extends View {
                 .onChange((newT:string) => {this.text.value = newT}),
             Button("click me")
                 .onClick(() => {
-                    this.count.setValue((pre: number) => pre + 1)
-                    this.toggle.setValue((pre: boolean) => !pre)
+                    this.count.setValue((prev: number) => prev + 1)
+                    this.toggle.setValue((prev: boolean) => !prev)
                 }),
             Text(`count: ${this.count.value}`),
             Sub1({toggle: false})

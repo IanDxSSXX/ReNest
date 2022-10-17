@@ -19,7 +19,7 @@ export default class ReactUIBase {
     constructor(elementTag: any, ...children: any[]) {
         this.elementTag = elementTag
         this.children = children
-        this.className(`FuncView-${this.constructor.name}`)
+        this.className(`RUI-${this.constructor.name}`)
     }
 
     asReactElement(): ReactElement {

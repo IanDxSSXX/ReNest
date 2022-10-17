@@ -34,7 +34,7 @@ A react add-on to write React just like SwiftUI.
           <button 
             onClick={()=>{
               console.log(`This is button ${num}`)
-              setToggle(pre=>!pre)      
+              setToggle(prev=>!prev)      
             }}
           >
             {num}
@@ -55,7 +55,7 @@ A react add-on to write React just like SwiftUI.
         Button(num)
           .onClick(() => {
             console.log(`This is button ${num}`)
-            setToggle(pre=>!pre)
+            setToggle(prev=>!prev)
           })
       )
     )
@@ -92,7 +92,7 @@ A react add-on to write React just like SwiftUI.
         Button(num)
           .onClick(() => {
             console.log(`This is button ${num}`)
-            this.toggle.setValue(pre=>!pre)
+            this.toggle.setValue(prev=>!prev)
           })
       )
   }
@@ -252,11 +252,11 @@ const MyPage = FuncView(() =>
         HStack(
           Button("+")
             .onClick(() => {
-              this.count.setValue((pre:any)=>pre+1)
+              this.count.setValue((prev:any)=>prev+1)
             }),
           Button("-")
             .onClick(() => {
-              this.count.setValue((pre:any)=>pre-1)
+              this.count.setValue((prev:any)=>prev-1)
             })
           )
             .spacing("20px"),
@@ -443,7 +443,7 @@ class MainComponent extends View {
     VStack(
       Button("refresh")
         .onClick(() => {
-          toggle.setValue(pre=>!pre)
+          toggle.setValue(prev=>!prev)
         })
       SubComponentView()
         .didUpdate(() => {
@@ -483,7 +483,7 @@ class MainComponent extends View {
     VStack(
       Button("refresh")
         .onClick(() => {
-          toggle.setValue(pre=>!pre)
+          toggle.setValue(prev=>!prev)
         })
       SubComponentView()
     )

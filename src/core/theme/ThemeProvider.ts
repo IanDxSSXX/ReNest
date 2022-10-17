@@ -3,26 +3,21 @@ import {ReactUIHelper} from "../utils/ReactUIHelper";
 import {Fragment} from "../utils/ReactUIWrapper";
 import {ThemeStore} from "./Store";
 
-namespace C {
-    export class ThemeProvider extends Fragment {
-        IAMThemeProvider = true
-        useTheme(themeState: ThemesState) {
-            ThemeStore[this.themeId] = {
-                themes: themeState.themes,
-                themeName: themeState.themeName
-            }
-            this.willUseTheme = true
-            this.passDownTheme()
-
-            return this
+class ThemeProvider extends Fragment {
+    IAMThemeProvider = true
+    useTheme(themeState: ThemesState) {
+        ThemeStore[this.themeId] = {
+            themes: themeState.themes,
+            themeName: themeState.themeName
         }
+        this.willUseTheme = true
+        this.passDownTheme()
+
+        return this
     }
 }
 
-
-export function ThemeProvider(...children: any[]) {
-    return new C.ThemeProvider(...children)
-}
+export default (...children: any[]) => new ThemeProvider(...children)
 
 
 export class ThemesState {

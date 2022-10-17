@@ -37,7 +37,7 @@ class Select extends View {
             .backgroundColor(`${this.theme.bg}`)
             .padding("4px 10px")
             .alignItems('center')
-            .onClick(()=>{showOptions.setValue((pre:any)=>!pre);})
+            .onClick(()=>{showOptions.setValue((prev:any)=>!prev);})
             .borderRadius("2px")
     }
 

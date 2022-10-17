@@ -114,26 +114,25 @@ function createHookDecorator(target: any, propertyKey: string, hookName: string,
 // --eg @State first = 1
 // --no @State second = this.first.value      (because it will treat this.first as 1)
 // -yes @Callback@State second = () => this.first.value
-export function Callback(decorator: Function) {
-    return function(target: any, propertyKey: string) {
+export const Callback = (decorator: Function) =>
+    (target: any, propertyKey: string) => {
         decorator(target, propertyKey)
         Object.defineProperty(target, StatusKey("CALLBACK", propertyKey), {
             value: true,
         })
     }
-}
 
-export const Hook = (hook: Function) => {
-    return function(target: any, propertyKey: string) {
+export const Hook: Function = (hook: Function) =>
+    (target: any, propertyKey: string) => {
         createHookDecorator(target, propertyKey, "HOOK", hook)
     }
-}
 
-export const SHook = (hook: Function) => {
-    return function(target: any, propertyKey: string) {
+
+export const SHook = (hook: Function) =>
+    (target: any, propertyKey: string) => {
         createHookDecorator(target, propertyKey, "SHOOK", hook)
     }
-}
+
 
 
 export const Context = (target: any, propertyKey: string) => {

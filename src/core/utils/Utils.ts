@@ -18,7 +18,7 @@ export class RUIState<T> {
     get value() {
         return this._value
     }
-    setValue(func: (pre: T)=>T) {
+    setValue(func: (prev: T)=>T) {
         this.setProp(func)
     }
     constructor(prop: T, setProp: any) {

@@ -2,10 +2,10 @@ import ReactUIBase from "../base/ReactUIBase";
 import {createElement, ReactElement} from "react";
 import {Route, useParams} from "react-router-dom";
 import {FragmentView} from "../utils/ReactUIWrapper";
-import {C} from "./ReactUINavigation";
+import {NavigationView} from "./NavigationView";
 
 export class NavigationRoute extends ReactUIBase {
-    constructor(elementFunc: () => (ReactUIBase | ReactElement), path: string, navigationView: C.NavigationView) {
+    constructor(elementFunc: () => (ReactUIBase | ReactElement), path: string, navigationView: NavigationView) {
         super(Route)
         function Element() {
             let element = elementFunc() as any
@@ -33,7 +33,7 @@ export class NavigationRoute extends ReactUIBase {
 
 export class NavigationRouteMatchable extends ReactUIBase {
     constructor(regexPathRoutes: {[key: string]: ((value: string) => (ReactUIBase | ReactElement))}, withSubPath: boolean,
-                navigationView: C.NavigationView) {
+                navigationView: NavigationView) {
         super(Route)
 
         function Element() {

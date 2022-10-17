@@ -9,7 +9,7 @@ export const ListDisplay = FuncView(() => {
         VStack(
             Button("click")
                 .onClick(() => {
-                    alignment.setValue(pre=>!pre)
+                    alignment.setValue(prev=>!prev)
                 }),
             List(numArr, (_,idx) =>
                 Button(`horizontal list ${idx}`).key(idx)

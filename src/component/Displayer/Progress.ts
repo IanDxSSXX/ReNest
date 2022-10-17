@@ -1,8 +1,21 @@
 import {Div} from "../../core/utils/HTMLTags";
-import {Callback, DotProp, Ref, Spring, State, View, ViewWrapper} from "../../core";
+import {
+    Callback,
+    ConditionView,
+    DotProp,
+    FuncView,
+    Prop,
+    Ref,
+    Spring,
+    State,
+    useRUIState,
+    View,
+    ViewWrapper
+} from "../../core";
 import {RUIColor} from "../../core/theme/Colors";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/AnimatedDiv";
+
 
 let themes = {
     primary: {
@@ -20,14 +33,15 @@ let themes = {
 }
 
 
-class LineProgress extends View {
+class LineProgressClass extends View {
     defaultThemes = themes
     defaultThemeName = "primary"
-    duration = 150
-    @Spring progressFrontStyle = {
-        width: `calc(${this.props.value > 1 ? 1 : this.props.value} * 100%)`,
+    @DotProp duration = 0
+    @Prop value: number = 0
+    @Callback(Spring) progressFrontStyle = () => ({
+        width: `calc(${this.value > 1 ? 1 : this.value} * 100%)`,
         config: {duration: this.duration},
-    }
+    })
 
     Body = () =>
         ZStack(
@@ -48,14 +62,15 @@ class LineProgress extends View {
 }
 
 
-class CircleProgress extends View {
+class CircleProgressClass extends View {
     defaultThemes = themes
     defaultThemeName = "primary"
 
-    duration = 5000
+    @DotProp duration = 0
+    @Prop value: number = 0
     @State delay: any = "none"
-    @State valueState = this.props.value
-    @Ref preValueRef = this.props.value
+    @Callback(State) valueState: any = () => this.value
+    @Callback(Ref) preValueRef: any = () => this.value
     @Callback(Spring) circleLeftStyle = () => ({
         transform: `rotate(${this.valueState.value>0.5?this.valueState.value*360-180:0}deg)`,
         delay: this.delay.value  == "left" ? this.duration*(0.5-this.preValueRef.current) : 0,
@@ -79,7 +94,7 @@ class CircleProgress extends View {
     })
 
 
-    Body = (value:number) =>
+    Body = () =>
         ZStack(
             Div(
                 AnimatedDiv()
@@ -114,36 +129,44 @@ class CircleProgress extends View {
             .borderRadius('50%')
             .backgroundColor(this.theme.fg)
             .didUpdate(() => {
-                if (this.valueState.value > 0.5 && value < 0.5) {
+                if (this.valueState.value > 0.5 && this.value < 0.5) {
                     this.delay.value = "right"
-                } else if (this.valueState.value < 0.5 && value > 0.5) {
+                } else if (this.valueState.value < 0.5 && this.value > 0.5) {
                     this.delay.value = "left"
                 } else {
                     this.delay.value = "none"
                 }
                 this.preValueRef.current = this.valueState.value
-                this.valueState.value = value
-            }, [value])
+                this.valueState.value = this.value
+            }, [this.value])
 }
+
+
+const LineProgress = ViewWrapper(LineProgressClass)
+const CircleProgress = ViewWrapper(CircleProgressClass)
+
 
 class Progress extends View {
+    defaultThemes = themes
+    defaultThemeName = "primary"
+
     @DotProp variant: string = 'line'
     @DotProp showNum: boolean = false
+    @DotProp duration = 0
+    @Prop value = 1
 
-    Body = ({value}:any):any => {
-        let progress
-        if(this.variant as any ==='line'){
-            progress = new LineProgress({value})
-        } else {
-            progress = new CircleProgress({value})
-        }
-
-        return progress
-    }
-
+    Body = () =>
+        ConditionView(this.variant, {
+            line: () =>
+                LineProgress({value: this.value})
+                    .themeName(this.defaultThemeName)
+                    .duration(this.duration),
+            circle: () =>
+                CircleProgress({value: this.value})
+                    .themeName(this.defaultThemeName)
+                    .duration(this.duration),
+        })
 }
 
 
-export default function(value: number) {
-    return ViewWrapper(Progress)({value})
-}
+export default(value: number) => ViewWrapper<{value?: number}>(Progress)({value})

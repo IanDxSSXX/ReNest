@@ -1,5 +1,5 @@
 import {animated} from "@react-spring/web";
-import {View, ViewWrapper} from "../../core";
+import {DotProp, View, ViewWrapper} from "../../core";
 import {TagView} from "../../core";
 
 

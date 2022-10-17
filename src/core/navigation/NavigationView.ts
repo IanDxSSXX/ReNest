@@ -7,7 +7,6 @@ import {NavigationRoute, NavigationRouteMatchable} from "./NavigationRoute";
 import {BrowserRouter as RRDBrowserRouter} from "react-router-dom";
 
 
-export namespace C {
     // ---- encapsulate react-router
     export interface PathRoutes {
         [key: string]: (value?: string) => (ReactUIBase | ReactElement)
@@ -53,21 +52,9 @@ export namespace C {
         }
     }
 
-}
-export function NavigationView(pathRoutes: C.PathRoutes) {
-    return new C.NavigationView(pathRoutes)
-}
+export default (pathRoutes: PathRoutes) => new NavigationView(pathRoutes)
+
 
 export function BrowserRouter(...children: any[]) {
     return TagView(RRDBrowserRouter)(...children)
-}
-
-export function NavigateBack() {
-    let navigate = useNavigate()
-    return () => {navigate(-1)}
-}
-
-export function NavigateTo(path: any) {
-    let navigate = useNavigate()
-    return () => navigate(path)
 }

@@ -15,6 +15,7 @@ export function ElementView(reactElement: ReactElement) {
 }
 
 export class Fragment extends ReactUITheme {
+    IAMFragment = true
     constructor(...children: any[]) {
         super(ReactFragment, ...children);
     }
