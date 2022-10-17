@@ -115,7 +115,7 @@ const MyText = FuncView(() =>
 )
 ```
 ## ⚡️ Quick Start
-* try ReactUI in [!codesandbox](https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
+* try ReactUI in [codesandbox](https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
 ```typescript
 // ---- src/App.tsx
 import ReactUIApp from 'ReactUIApp';
@@ -168,7 +168,7 @@ export default ReactUIApp;
   )
   ```
 
-* but we strongly suggest you to use pure ReactUI for additional features, use `TagView/ElementView` to wrap your React Components
+* but we **strongly** suggest you to use **pure** ReactUI for additional features, use `TagView/ElementView` to wrap your React Components
 
 ## 🤖 Useful Features
 
@@ -187,7 +187,7 @@ const myJSX = <div>hello</div>
 const RUIInstance = ElementView(myJSX)()
 ```
 ### ConditionView
-* Use this view to build a dynamic controllable page simple and fast.
+* Use this view to build a dynamic controllable page **simple and fast**.
 
 ```typescript
 const MyCondition = FuncView(() => {
@@ -209,7 +209,7 @@ const MyCondition = FuncView(() => {
 })
 ```
 ### Router
-* Using react-router 6, the `NavigationView` in ReactUI is pretty easy to use and supports regex path
+* Using react-router 6, the `NavigationView` in ReactUI is pretty easy to use and **supports regex path**
   (which react-router 6 doesn't).
 
 ```typescript
@@ -227,7 +227,7 @@ const MyPage = FuncView(() =>
 ```
 ## 🔆 Advanced
 
-* This is the part where we write react like SwiftUI and offer some great features!
+* This is the part where we write react like SwiftUI and get to know some **cool** features!
 
 ### Class Component
 
@@ -285,7 +285,7 @@ const MyPage = FuncView(() =>
 
 * Use ContextProvider in ReactUI to manage global states simple and powerful.
 * Use `@Context` to destructure the whole context into a specific variable
-* Use `@Contexts` to get the whole context
+* Use `@Contexts` to get the **whole context**
 
 ```typescript
 import {ContextProvider, ViewWrapper, View} from "@iandx/reactui";
@@ -310,7 +310,7 @@ class MyComponentWithContext extends View {
   Body = () =>
     ContextProvider(
       VStack(
-        ComponentA()
+        ComponentAView()
       )
     )
   		.context({myFirstState: this.myFirstState})
@@ -375,7 +375,7 @@ Paper()
 	.themeName("red")
 ```
 
-2. ThemeProvider`
+2. `ThemeProvider`
 
 ```typescript
 class MyComponentWithContext extends View {
@@ -424,11 +424,90 @@ class MyComponentWithContext extends View {
 }
 ```
 
+### Lifecycle
 
+* React function uses `useEffect ` to handle lifecycles, so you can still use it (remember, class's Body is **nothing but a react function component**, but we don't write any logical code blocks in Body for the sake of **love**)
+* So ReactUI handles lifecycles this way (and adds a strong feature: **component wise lifecycles**)
 
+```typescript
+class SubComponent extends View {  
+  Body = () =>
+  	Text("not related to MainComponent's states")
+}
 
+const SubComponentView = ViewWrapper(CoSubComponentmponentA)
 
+class MainComponent extends View {
+  @State toggle: any = false
+  
+  Body = () =>
+    VStack(
+      Button("refresh")
+      	.onClick(() => {
+          toggle.setValue(pre=>!pre)
+        })
+      SubComponentView()
+        .didUpdate(() => {
+        	console.log("re-rendered as subview")  // this will not be called when click refresh button => so called element-wise lifecycle
+        })
+    )
+  		.didMount(() => {
+        console.log("mounted")
+      })
+  		.didUpdate(() => {
+        console.log("re-rendered")
+      })
+			.willUnmount(() => {
+        console.log("will unmount")
+      })
+      .shouldUpdate((preProps, currProps) => false)  // this equals to React.memo(xx, shouldUpdate)
+			.useMemo(false)    // using memo for partial re-render by default, so no need to call this function to disable it, but you can do it anyway
+}
+```
 
+* Only Component that defined by a `FuncView` or `View` can use lifecycles, tags like Div, P, ... don't have this dot function
+* As the example above, remember the lifecycle is VStack and SubComponentView's, not MainComponent's
+* If you want to set MainComponent's lifecycle, you can do it this way
+
+```typescript
+class SubComponent extends View {  
+  Body = () =>
+  	Text("not related to MainComponent's states")
+}
+
+const SubComponentView = ViewWrapper(CoSubComponentmponentA)
+
+class MainComponent extends View {
+  @State toggle: any = false
+  
+  Body = () =>
+    VStack(
+      Button("refresh")
+      	.onClick(() => {
+          toggle.setValue(pre=>!pre)
+        })
+      SubComponentView()
+    )
+    
+  lifecycles = {
+    didMount: () => {
+      console.log("mounted")
+    },
+    didUpdate: [
+      () => {
+      	console.log("re-rendered at any value")
+    	}),
+      () => {
+      	console.log("re-rendered at toggle value")
+    	}, [this.toggle.value])
+    ],
+    willUnmount: () => {
+      console.log("will unmount")
+    }),
+    shouldUpdate: (preProps, currProps) => false
+  }
+}
+```
 
 ## Todo List
 
