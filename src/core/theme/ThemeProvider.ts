@@ -18,6 +18,9 @@ function ThemeWrapper({wrapper}: any) {
     if (themeId.current !== null) wrapper.themeId = themeId.current
     useEffect(() => {
         themeId.current = wrapper.themeId
+        return () => {
+            delete Running.ThemeStore[wrapper.themeId]
+        }
     },[])
 
     Running.ThemeStore[wrapper.themeId] = {

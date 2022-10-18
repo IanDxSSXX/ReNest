@@ -14,6 +14,9 @@ function ContextWrapper({wrapper}: any) {
     if (contextId.current !== null) wrapper.contextId = contextId.current
     useEffect(() => {
         contextId.current = wrapper.contextId
+        return () => {
+            delete Running.ContextStore[wrapper.contextId]
+        }
     },[])
 
     Running.ContextStore[wrapper.contextId] = wrapper.contextStoreValue
