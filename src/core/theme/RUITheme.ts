@@ -2,6 +2,7 @@ import {RUIContext} from "../context/RUIContext";
 import {filteredObject, uid} from "../utils/Utils";
 import RUIBase from "../base/RUIBase";
 import Running from "../base/Running";
+import {ThemesState} from "./ThemeState";
 
 export class RUITheme extends RUIContext {
     readonly IAmRUITheme = true
@@ -9,7 +10,10 @@ export class RUITheme extends RUIContext {
     protected readonly defaultThemes: { [key: string]: any } = {}
     protected defaultThemeName: string = "_NONE_"
 
+    // ---- not like context, theme not allow theme passing through
     themeId?: string
+
+    themeState: any
 
     get theme() {
         let defaultTheme = this.defaultThemeName === "_NONE_" ? this.defaultTheme : this.defaultThemes[this.defaultThemeName]
@@ -42,5 +46,12 @@ export class RUITheme extends RUIContext {
                 child.willUseTheme = true
             }
         }, true)
+    }
+
+    beforeAsReactElement() {
+        if (!!this.themeId)  {
+            this.themeState = Running.ContextStore[this.themeId]["themeState"]
+            this.customProps.contextNameStore.push("themeState")
+        }
     }
 }

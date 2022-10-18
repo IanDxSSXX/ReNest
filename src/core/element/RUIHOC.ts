@@ -1,6 +1,7 @@
 import {RUIHelper} from "../utils/RUIHelper";
 import {memo, useEffect, useRef} from "react";
 import {HookWrapper, ResolveHook} from "./ResolveDecorator";
+import Running from "../base/Running";
 
 
 const ReactElementWrapper = ({wrapper}:any) => {
@@ -35,24 +36,29 @@ const ReactElementWrapper = ({wrapper}:any) => {
         }, states.map((state:any)=>state(wrapper)))
     })
 
+    const uid = useRef(null)
+    if (uid.current !== null) wrapper.uid = uid.current
+
     // ---2 didMount and willUnmount
     useEffect(() => {
         firstIn.current = false
         didMount.map((func: any)=>func())
+
+        uid.current = wrapper.uid
+
         return () => {
             willUnmount.map((func: any)=>func())
         }
     }, []);
 
+
     // ---- register and turn into React Element
-    let reactComponent = component.IAmRUI ? wrapper.registerView(component).asReactElement() : component
+    let reactComponent = component.IAmRUI ? wrapper.registerView(component).key(uid).asReactElement() : component
     return reactComponent
 }
 
 export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (prev, curr)=> {
     let preWrapper = prev.wrapper, currWrapper = curr.wrapper
-    // ---- always re-render if not use memo
-    if (!(currWrapper.customProps.useMemo??true)) return false
     return preWrapper.equalTo(currWrapper)
 })
 

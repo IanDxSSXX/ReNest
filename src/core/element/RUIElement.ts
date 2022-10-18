@@ -3,6 +3,8 @@ import RUIBase from "../base/RUIBase";
 import {filteredObject} from "../utils/Utils";
 
 export class RUIElement extends RUITheme {
+    customProps: any = {contextNameStore: [], dotPropNameStore: []}
+
     registerView(view: RUIBase) {
         // ---- react only use key in React.createElement, so no need for pass down
         // ---- and deleting className to avoid some confusion

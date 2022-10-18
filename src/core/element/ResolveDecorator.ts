@@ -39,17 +39,16 @@ export function ResolveHook(wrapper: any, statusKey: string, hookName: string, s
 export function ResolveContext(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
     if (!isStatusKey(statusKey, "CONTEXT")) return callback()
     let key = getKeyFromStatus(statusKey, "CONTEXT")
-    if (wrapper.contexts[key] === undefined) return callback()
+    if (wrapper.contexts[key] === undefined) return
     wrapper[key] = wrapper.contexts[key]
-    if (wrapper.customProps.contextStore === undefined) wrapper.customProps.contextStore = {}
-    wrapper.customProps.contextStore[key] = wrapper[key]
+    wrapper.customProps.contextNameStore.push(key)
 }
 
 export function ResolveContexts(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
     if (!isStatusKey(statusKey, "CONTEXTS")) return callback()
     let key = getKeyFromStatus(statusKey, "CONTEXTS")
     wrapper[key] = wrapper.contexts
-    wrapper.customProps.contextStore = wrapper.contexts
+    wrapper.customProps.contextNameStore = Object.keys(wrapper.contexts)
 }
 
 export function ResolveProp(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
@@ -78,8 +77,7 @@ export function ResolveDotProp(wrapper: any, statusKey: string, callback: ()=>an
     let wrapperValue = wrapper[StoreKey("DOTPROP", key)] ?? wrapper[StoreKey("DOTPROP_DEFAULT", key)]
     wrapper[key] = wrapperValue === "undefined" ? undefined : wrapperValue    // ---- when you do not want any parameter
     // ---4 add to customProps for memo refreshing
-    if (wrapper.customProps.dotPropStore === undefined) wrapper.customProps.dotPropStore = {}
-    wrapper.customProps.dotPropStore[key] = wrapper[key]
+    wrapper.customProps.dotPropNameStore.push(key)
 }
 
 export function ResolveObserve(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {

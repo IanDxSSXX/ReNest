@@ -4,21 +4,21 @@ import Running from "../base/Running";
 
 export class RUIContext extends RUIWithStyle {
     IAmRUIContext = true
-    contextId?: string
+    contextIds: string[] = []
 
     get contexts() {
-        if (!this.contextId) return {}
-        return Running.ContextStore[this.contextId] ?? {}
+        let context = {}
+        for (let contextId of this.contextIds) {
+            context = {...context, ...Running.ContextStore[contextId]}
+        }
+        return context
     }
 
     passDownContext() {
-        if (!this.contextId) return
         this.forEachChild(child => {
             // ---- if encounter ContextProvider, stop nesting, which means only use inner ContextProvider's contexts
-            if (child.IAMContextProvider) return false
             if (child.IAmRUIContext) {
-                child.contextId = this.contextId
-                child.willUseContext = true
+                child.contextIds = [...new Set([...child.contextIds, ...this.contextIds])]
             }
         }, true)
     }

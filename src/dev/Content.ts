@@ -1,6 +1,16 @@
 import {ToggleDisplay} from "./routes/ToggleDisplay";
 import {ListDisplay} from "./routes/ListDisplay";
-import {FuncView, Navigate, NavigationView, ThemeProvider, View, ViewWrapper} from "../core";
+import {
+    Context,
+    ContextProvider,
+    FuncView,
+    Navigate,
+    NavigationView,
+    ThemeProvider,
+    useRUIState,
+    View,
+    ViewWrapper
+} from "../core";
 import {TextFieldDisplay} from "./routes/TextFieldDisplay";
 import {ImageDisplay} from "./routes/ImageDisplay";
 import {Button, HStack, Paper, VStack, ZStack, Text} from "../component";
@@ -8,6 +18,7 @@ import Test from "./Test"
 import ProgressDisplay from "./routes/ProgressDisplay";
 import ContextDisplay from "./routes/ContextDisplay";
 import {useTheme} from "../core/theme/ThemeState";
+import {useEffect} from "react";
 
 let myThemes = {
     first: {
@@ -28,6 +39,8 @@ let myThemes = {
 
 class TopBarView extends View {
     @Navigate nv: any
+    // @Context themeState: any
+
     Body = () =>
         ZStack(
             Paper()
@@ -54,45 +67,55 @@ class TopBarView extends View {
                     .onClick(() => this.nv("/12839")),
             ).spacing("10px")
         )
+
 }
 
 const TopBar = ViewWrapper(TopBarView)
 
 const Content = FuncView(() => {
-    let theme = useTheme(myThemes, "second")
+    let themeState = useTheme(myThemes, "second")
+    let aaa = useRUIState(false)
 
     return (
-        ThemeProvider(
-            ZStack(
-                Paper()
-                    .width("1000px")
-                    .height("1000px"),
-                VStack(
-                    TopBar()
-                        .padding("20px"),
-                    NavigationView({
-                        "": () => Text("welcome to react UI, click the button above to view component"),
-                        textField: () => TextFieldDisplay(),
-                        list: () => ListDisplay(),
-                        toggle: () => ToggleDisplay(),
-                        image: () => ImageDisplay(),
-                        progress: () => ProgressDisplay(),
-                        context: () => ContextDisplay(),
-                        "_abc+": (value:any) => HStack("abc",value), // regExp
-                        "_what[a+]": (value:any) => HStack("no",value), // regExp
-                        _: (value:any) => HStack("other", value), // any other route
-                    })
-                ).padding("20px")
-            )
-                .alignmentH("leading")
-                .alignmentV("top")
-                .padding("70px")
-        )
-            .useTheme(theme)
+            ThemeProvider(
+                ZStack(
+                    Paper()
+                        .width("1000px")
+                        .height("1000px")
+                        ,
+                    VStack(
+                        Button(aaa.value)
+                            .onClick(() => aaa.setValue(prev=>!prev)),
+                        TopBar()
+                            .padding("20px"),
+                        NavigationView({
+                            "/": () => Text("welcome to react UI, click the button above to view component"),
+                            textField: () => TextFieldDisplay(),
+                            list: () => ListDisplay(),
+                            toggle: () => ToggleDisplay(),
+                            image: () => ImageDisplay(),
+                            progress: () => ProgressDisplay()
+                                ,
+                            context: () => ContextDisplay().didUpdate(() =>{
+                                console.log("hh")
+                            }),
+                            "_abc+": (value:any) => HStack("abc",value), // regExp
+                            "_what[a+]": (value:any) => HStack("no",value), // regExp
+                            _: (value:any) => HStack("other", value), // any other route
+                        })
+                    ).padding("20px")
 
+                )
+                    .alignmentH("leading")
+                    .alignmentV("top")
+                    .padding("70px")
+
+            )
+                .useTheme(themeState)
     )
 })
 
 export default Content
+// export default ContextDisplay
 // export default ProgressDisplay
 // export default Test

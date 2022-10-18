@@ -1,8 +1,6 @@
-import {Fragment, FragmentView} from "../utils/RUIWrapper";
+import {FragmentView} from "../utils/RUIWrapper";
 import {createElement, memo, useEffect, useRef} from "react";
-import {RUITheme} from "../theme/RUITheme";
 import {filteredObject, uid} from "../utils/Utils";
-import RUIBase from "../base/RUIBase";
 import lodash from "lodash";
 import Running from "../base/Running";
 import {RUIElement} from "../element/RUIElement";
@@ -10,10 +8,18 @@ import {RUIElement} from "../element/RUIElement";
 // ---* condition
 function ContextWrapper({wrapper}: any) {
     // ---- make sure contextId won't change
+    //      contextId is current ContextProvider's id, contextIds are nested ContextProvider's ids
     const contextId = useRef(null)
-    if (contextId.current !== null) wrapper.contextId = contextId.current
+    const contextIds = useRef<any>(null)
+    if (contextId.current !== null) {
+        wrapper.contextId = contextId.current
+        wrapper.contextIds = contextIds.current
+    } else {
+        wrapper.contextIds = [...wrapper.contextIds, wrapper.contextId]
+    }
     useEffect(() => {
         contextId.current = wrapper.contextId
+        contextIds.current = wrapper.contextIds
         return () => {
             delete Running.ContextStore[wrapper.contextId]
         }
@@ -22,7 +28,7 @@ function ContextWrapper({wrapper}: any) {
     Running.ContextStore[wrapper.contextId] = wrapper.contextStoreValue
     let element = wrapper.children[0]
 
-    return wrapper.registerView(element).asReactElement()
+    return wrapper.key(wrapper.contextId).registerView(element).asReactElement()
 }
 
 const ContextWrapperMemorized = memo(ContextWrapper, (prev, curr) => {
@@ -34,7 +40,6 @@ const ContextWrapperMemorized = memo(ContextWrapper, (prev, curr) => {
 })
 
 class ContextProvider extends RUIElement {
-    IAMContextProvider = true
     contextStoreValue = {}
     contextId = uid()
 

@@ -110,7 +110,9 @@ export default class RUIBase {
 
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {
+        // console.log(this, this.children)
         for (let child of flattened(this.children)) {
+
             if (child.IAmRUI) {
                 let willNest = func(child) ?? true
                 if (willNest && nested) {

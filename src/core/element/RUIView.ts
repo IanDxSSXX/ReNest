@@ -11,6 +11,8 @@ import {
     ResolveProp
 } from "./ResolveDecorator";
 import {RUIElement} from "./RUIElement";
+import Running from "../base/Running";
+import {uid} from "../utils/Utils";
 
 export abstract class View<T=any> extends RUIElement {
     props: T
@@ -31,6 +33,8 @@ export abstract class View<T=any> extends RUIElement {
     willUnmount: any
     shouldUpdate: any
     observe: any
+
+    uid = uid()
 
     constructor(props: any={}) {
         super("")
@@ -77,6 +81,7 @@ export abstract class View<T=any> extends RUIElement {
     }
 
     asReactElement() {
+        this.beforeAsReactElement()
         for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
             ResolveContext(this, key, () =>
             ResolveContexts(this, key, () =>
@@ -97,10 +102,6 @@ export abstract class View<T=any> extends RUIElement {
         return super.registerView(view)
     }
 
-    // ---- memo
-    disableMemo() {
-        return this.setCustomProp("useMemo", false)
-    }
 
     equalTo(another: View) {
         // ---- check if another's prop is equal to this props
@@ -112,24 +113,37 @@ export abstract class View<T=any> extends RUIElement {
         // ---2 themes, update on change by default using deep equal
         if (!lodash.isEqual(this.theme, another.theme)) return false
 
+        // ---- all props
+        let thisAllProps: any = {...this.props}
+        let anotherAllProps: any = {...another.props}
+
+        // ---- all context
+        for (let key of this.customProps.contextNameStore) {
+            let value = (this as any)[key]
+            if(value !== undefined) thisAllProps[key] = value
+        }
+        for (let key of another.customProps.contextNameStore) {
+            let value = (another as any)[key]
+            if(value !== undefined) anotherAllProps[key] = value
+        }
+        // ---- all dot props
+        for (let key of this.customProps.dotPropNameStore) {
+            let value = (this as any)[key]
+            if(value !== undefined) thisAllProps[key] = value
+        }
+        for (let key of another.customProps.dotPropNameStore) {
+            let value = (another as any)[key]
+            if(value !== undefined) anotherAllProps[key] = value
+        }
+        // console.log(thisAllProps, anotherAllProps)
         // -4.5 custom and input props with shouldUpdate hook
         if (this.lifecycle.shouldUpdate.length > 0) {
             // ---- props and contexts and dotProps
             //      if has one false, return false, re-render
-            return !this.lifecycle.shouldUpdate.map(func => func(
-                {...this.props, ...this.customProps.contextStore, ...this.customProps.dotPropStore},
-                {...another.props, ...another.customProps.contextStore, ...another.customProps.dotPropStore}
-            )).includes(false)
+            return !this.lifecycle.shouldUpdate.map(func => func(thisAllProps, anotherAllProps)).includes(false)
         }
 
-        // ---4 custom props, update on change by default using deep equal, contains dot prop and context
-        //      no function hooks
-        if (!lodash.isEqual(this.customProps, another.customProps)) return false
-
-        // ---5 input props
-        if (!lodash.isEqual(this.props, another.props)) return false
-
-        return true
+       return lodash.isEqual(thisAllProps, anotherAllProps)
     }
 }
 
