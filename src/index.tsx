@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import ReactUIApp from "./dev/ReactUIApp";
+import RUIApp from "./dev/RUIApp";
 import {BrowserRouter} from "./core/navigation/NavigationView";
 import {Div} from "./core/utils/HTMLTags";
 import {ContextProvider, ForEach, FuncView, useRUIState} from "./core";
@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 
 const App = () =>
     BrowserRouter(
-        ReactUIApp()
+        RUIApp()
     ).asReactElement()
 
 

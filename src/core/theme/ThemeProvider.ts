@@ -1,50 +1,63 @@
-import {useState} from "react";
-import {ReactUIHelper} from "../utils/ReactUIHelper";
-import {Fragment} from "../utils/ReactUIWrapper";
-import {ThemeStore} from "./Store";
+import {createElement, memo, useEffect, useRef, useState} from "react";
+import {RUIHelper} from "../utils/RUIHelper";
+import {Fragment, FragmentView} from "../utils/RUIWrapper";
+import {ThemesState} from "./ThemeState";
+import Running from "../base/Running";
+import lodash from "lodash";
+import {RUIElement} from "../element/RUIElement";
+import {uid} from "../utils/Utils";
 
-class ThemeProvider extends Fragment {
-    IAMThemeProvider = true
-    useTheme(themeState: ThemesState) {
-        ThemeStore[this.themeId] = {
-            themes: themeState.themes,
-            themeName: themeState.themeName
-        }
-        this.willUseTheme = true
-        this.passDownTheme()
-
-        return this
-    }
-}
 
 export default (...children: any[]) => new ThemeProvider(...children)
 
 
-export class ThemesState {
-    themes: any
-    private readonly setThemeName: any
-    themeName: string
+// ---* condition
+function ThemeWrapper({wrapper}: any) {
+    // ---- very important, see notes
+    const themeId = useRef(null)
+    if (themeId.current !== null) wrapper.themeId = themeId.current
+    useEffect(() => {
+        themeId.current = wrapper.themeId
+    },[])
 
-    to(themeName: string) {
-        this.setThemeName(themeName)
+    Running.ThemeStore[wrapper.themeId] = {
+        themes: wrapper.themeState.themes,
+        themeName: wrapper.themeState.themeName
     }
-    
-    is(themeName: string) {
-        return this.themeName === themeName
-    }
+    let element = wrapper.children[0]
 
-    constructor(themes: { [key: string]: { [key: string]: any }}, themeName: string, setThemeName: any) {
-        this.themes = themes
-        this.themeName = themeName
-        this.setThemeName = setThemeName
-    }
+    return wrapper.registerView(element).asReactElement()
 }
 
-export function useTheme(themes: { [key: string]: { [key: string]: any }}, defaultThemeName?: string) {
-    if (typeof themes !== "object" || Object.keys(themes).length === 0) {
-        ReactUIHelper.error(`must provide a solid object to useTheme.`)
+const ThemeWrapperMemorized = memo(ThemeWrapper, (prev, curr) => {
+    let preElement = prev.wrapper.children[0]
+    let currElement = curr.wrapper.children[0]
+
+    let themeEqual = lodash.isEqual(prev.wrapper.themeStoreValue, curr.wrapper.themeStoreValue)
+    return themeEqual && (preElement.IAmRUIElement && preElement.equalTo(currElement))
+})
+
+class ThemeProvider extends RUIElement {
+    themeState?: ThemesState
+    IAMThemeProvider = true
+    themeId = uid()
+    useTheme = (themeState: ThemesState) => {
+        this.themeState = themeState
+        return this
     }
-    defaultThemeName = !!defaultThemeName ? defaultThemeName : Object.keys(themes)[0]
-    let [themeName, setThemeName] = useState(defaultThemeName)
-    return new ThemesState(themes, themeName, setThemeName)
+
+    constructor(...children: any) {
+        super("", ...children);
+    }
+
+
+    asReactElement() {
+        // ---- wrap children
+        this.children = [FragmentView(...this.children)]
+
+        return createElement(
+            ThemeWrapperMemorized,
+            {wrapper:this, ...!!this.P.key?{key: this.P.key}:{} }
+        )
+    }
 }

@@ -6,10 +6,10 @@ import {
     MutableRefObject,
     createElement
 } from "react";
-import {flattened, uid} from "../utils/Utils";
+import {flattened} from "../utils/Utils";
 
-export default class ReactUIBase {
-    IAmReactUI = true
+export default class RUIBase {
+    IAmRUI = true
 
     protected elementTag: any
     children: any[]
@@ -27,8 +27,8 @@ export default class ReactUIBase {
 
         let children = this.children
             .map((child) =>
-                child.IAmReactUI ? child.asReactElement() :
-                child instanceof Array ? child.map((c)=>c.IAmReactUI ? c.asReactElement() : c):
+                child.IAmRUI ? child.asReactElement() :
+                child instanceof Array ? child.map((c)=>c.IAmRUI ? c.asReactElement() : c):
                 child)
 
         return createElement(
@@ -111,7 +111,7 @@ export default class ReactUIBase {
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {
         for (let child of flattened(this.children)) {
-            if (child.IAmReactUI) {
+            if (child.IAmRUI) {
                 let willNest = func(child) ?? true
                 if (willNest && nested) {
                     child.forEachChild(func, nested)

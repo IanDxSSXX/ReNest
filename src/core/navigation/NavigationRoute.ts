@@ -1,27 +1,27 @@
-import ReactUIBase from "../base/ReactUIBase";
+import RUIBase from "../base/RUIBase";
 import {createElement, ReactElement} from "react";
 import {Route, useParams} from "react-router-dom";
-import {FragmentView} from "../utils/ReactUIWrapper";
+import {FragmentView} from "../utils/RUIWrapper";
 import {NavigationView} from "./NavigationView";
 
-export class NavigationRoute extends ReactUIBase {
-    constructor(elementFunc: () => (ReactUIBase | ReactElement), path: string, navigationView: NavigationView) {
+export class NavigationRoute extends RUIBase {
+    constructor(elementFunc: () => (RUIBase | ReactElement), path: string, navigationView: NavigationView) {
         super(Route)
         function Element() {
             let element = elementFunc() as any
-            if (element.IAmReactUITheme) {
+            if (element.IAmRUITheme) {
                 navigationView.children = [element]
                 navigationView.passDownTheme()
                 navigationView.children = []
             }
 
-            if (element.IAmReactUIContext) {
+            if (element.IAmRUIContext) {
                 navigationView.children = [element]
                 navigationView.passDownContext()
                 navigationView.children = []
             }
 
-            return (element.IAmReactUI) ? (element as ReactUIBase).asReactElement() : element as ReactElement
+            return (element.IAmRUI) ? (element as RUIBase).asReactElement() : element as ReactElement
         }
 
         this.setProps({
@@ -31,8 +31,8 @@ export class NavigationRoute extends ReactUIBase {
     }
 }
 
-export class NavigationRouteMatchable extends ReactUIBase {
-    constructor(regexPathRoutes: {[key: string]: ((value: string) => (ReactUIBase | ReactElement))}, withSubPath: boolean,
+export class NavigationRouteMatchable extends RUIBase {
+    constructor(regexPathRoutes: {[key: string]: ((value: string) => (RUIBase | ReactElement))}, withSubPath: boolean,
                 navigationView: NavigationView) {
         super(Route)
 
@@ -49,19 +49,19 @@ export class NavigationRouteMatchable extends ReactUIBase {
             let element: any = matchedName === null ? FragmentView : regexPathRoutes[matchedName]
             element = element(value ?? "")
 
-            if (element.IAmReactUITheme) {
+            if (element.IAmRUITheme) {
                 navigationView.children = [element]
                 navigationView.passDownTheme()
                 navigationView.children = []
             }
 
-            if (element.IAmReactUIContext) {
+            if (element.IAmRUIContext) {
                 navigationView.children = [element]
                 navigationView.passDownContext()
                 navigationView.children = []
             }
 
-            return (element.IAmReactUI) ? (element as ReactUIBase).asReactElement() : element as ReactElement
+            return (element.IAmRUI) ? (element as RUIBase).asReactElement() : element as ReactElement
         }
 
         this.setProps({

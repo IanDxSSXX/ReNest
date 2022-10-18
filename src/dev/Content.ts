@@ -1,4 +1,3 @@
-import {useTheme} from "../core/theme/ThemeProvider";
 import {ToggleDisplay} from "./routes/ToggleDisplay";
 import {ListDisplay} from "./routes/ListDisplay";
 import {FuncView, Navigate, NavigationView, ThemeProvider, View, ViewWrapper} from "../core";
@@ -7,6 +6,8 @@ import {ImageDisplay} from "./routes/ImageDisplay";
 import {Button, HStack, Paper, VStack, ZStack, Text} from "../component";
 import Test from "./Test"
 import ProgressDisplay from "./routes/ProgressDisplay";
+import ContextDisplay from "./routes/ContextDisplay";
+import {useTheme} from "../core/theme/ThemeState";
 
 let myThemes = {
     first: {
@@ -46,6 +47,9 @@ class TopBarView extends View {
                 Button("image")
                     .themeName("first")
                     .onClick(() => this.nv("/image")),
+                Button("context")
+                    .themeName("first")
+                    .onClick(() => this.nv("/context")),
                 Button("::::")
                     .onClick(() => this.nv("/12839")),
             ).spacing("10px")
@@ -73,6 +77,7 @@ const Content = FuncView(() => {
                         toggle: () => ToggleDisplay(),
                         image: () => ImageDisplay(),
                         progress: () => ProgressDisplay(),
+                        context: () => ContextDisplay(),
                         "_abc+": (value:any) => HStack("abc",value), // regExp
                         "_what[a+]": (value:any) => HStack("no",value), // regExp
                         _: (value:any) => HStack("other", value), // any other route

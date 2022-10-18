@@ -1,4 +1,4 @@
-import {ReactUIElement, ViewWrapper, View} from "../core/element/ReactUIElement";
+import {RUIView, ViewWrapper, View} from "../core/element/RUIView";
 import {Button, VStack, Text, TextField, HStack} from "../component";
 import {Callback, Context, Contexts, DotProp, Prop} from "../core/element/Decorator";
 import {Ref, State} from "../core/element/HookDecorator";

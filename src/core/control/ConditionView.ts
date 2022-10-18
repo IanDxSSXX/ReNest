@@ -1,9 +1,10 @@
-import ReactUIBase from "../base/ReactUIBase";
+import RUIBase from "../base/RUIBase";
 import {createElement, memo, ReactElement, useCallback, useEffect, useMemo, useRef} from "react";
-import {FragmentView} from "../utils/ReactUIWrapper";
-import {ReactUITheme} from "../theme/ReactUITheme";
+import {FragmentView} from "../utils/RUIWrapper";
+import {RUITheme} from "../theme/RUITheme";
 import lodash from "lodash";
 import {filteredObject, uid} from "../utils/Utils";
+import {RUIElement} from "../element/RUIElement";
 
 // ---* condition
 function ConditionWrapper({wrapper}: any) {
@@ -21,10 +22,10 @@ const ConditionWrapperMemorized = memo(ConditionWrapper, (prev, curr) => {
     let preElement = prev.wrapper.children[0]
     let currElement = curr.wrapper.children[0]
 
-    return preElement.IAMFragment || (preElement.IAmReactUIElement && preElement.equalTo(currElement))
+    return preElement.IAMFragment || (preElement.IAmRUIElement && preElement.equalTo(currElement))
 })
 
-class ConditionView extends ReactUITheme {
+class ConditionView extends RUIElement {
     variable: any
     conditionMap: any
     conditionIDs: any = {}
@@ -38,21 +39,6 @@ class ConditionView extends ReactUITheme {
         }
     }
 
-    registerView(view: ReactUIBase) {
-        // ---- react only use key in React.createElement, so no need for pass down
-        // ---- and deleting className to avoid some confusion
-        const newElementStyles = this.elementProps.style
-        const newElementProps = filteredObject(this.elementProps, ["key", "className", "style"])
-        view.elementProps.style = {...view.elementProps.style, ...newElementStyles}
-        view.elementProps = {...view.elementProps, ...newElementProps}
-
-        this.children = [view]
-        this.passDownTheme()
-        this.passDownContext()
-
-        return view
-    }
-
     asReactElement() {
         let ruiElement = (this.conditionMap[this.variable] ??
             this.conditionMap["_"] ??
@@ -62,7 +48,7 @@ class ConditionView extends ReactUITheme {
 
         return createElement(
             ConditionWrapperMemorized,
-            {wrapper:this}
+            {wrapper:this, ...!!this.P.key?{key: this.P.key}:{} }
         )
     }
 }

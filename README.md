@@ -1,4 +1,4 @@
-# 🪶 ReactUI
+# 🪶 RUI
 A react add-on to write React just like SwiftUI.
 
 * ✨ Write function components like React function components with original react hooks
@@ -10,14 +10,14 @@ A react add-on to write React just like SwiftUI.
 
 ## 📦 Install
 `npm install @iandx/reactui`
-## ❓ What brings ReactUI?
+## ❓ What brings RUI?
 * React is a great framework, and function hooks make it even more elegant.
   But not HTML or CSS! It's 2022! React uses jsx to replace the ugly HTML and CSS, but......
   What the difference between JSX and HTML! Why can't we code modern? 
 
 * That was what in my mind when I first used SwiftUI back in 2019. Though it was(and is still) just a toy 
   and though I've heard its idea was exactly from React, still, it's modern and elegant. 
-  So why don't we take a little bit back to React? Here comes ReactUI...
+  So why don't we take a little bit back to React? Here comes RUI...
 
 * Here is an example to create a list of buttons using jsx and reactui
 
@@ -45,7 +45,7 @@ A react add-on to write React just like SwiftUI.
   
   ```
   
-* ReactUI as function
+* RUI as function
   ```typescript
   const RUIFuncButtons = FuncView(({nums}:{nums:number[]}) => {
     let [toggle, setToggle] = useState(false)
@@ -61,7 +61,7 @@ A react add-on to write React just like SwiftUI.
     )
   })
   ```
-  Except the way ReactUI sets props, everything is the same with React functions.
+  Except the way RUI sets props, everything is the same with React functions.
 
 * SwiftUI
 
@@ -81,7 +81,7 @@ A react add-on to write React just like SwiftUI.
   }
   ```
 
-* ReactUI as class
+* RUI as class
   ``` typescript
   class RUIClassButtons extends View {
     @Prop nums: number[]
@@ -98,7 +98,7 @@ A react add-on to write React just like SwiftUI.
   }
   ```
 
-* Basically every prop in React and CSSProperty can be used in ReactUI as 'dot' function, and IDEs will autocomplete for you!
+* Basically every prop in React and CSSProperty can be used in RUI as 'dot' function, and IDEs will autocomplete for you!
 * if there's some specific properties from third-party components, use `setProp(key, value)`to set additional prop
 
 ```typescript
@@ -114,20 +114,20 @@ const MyText = FuncView(() =>
 )
 ```
 ## ⚡️ Quick Start
-* try ReactUI in [codesandbox](https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
+* try RUI in [codesandbox](https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
 ```typescript
 // ---- src/App.tsx
-import ReactUIApp from 'ReactUIApp';
+import RUIApp from 'RUIApp';
 function App() {
-  return ReactUIApp().asReactElement()
+  return RUIApp().asReactElement()
 }
 
 export default App;
 ```
 
 ```typescript
-// ---- src/ReactUIApp.ts
-import ReactUIApp from './ReactUIApp';
+// ---- src/RUIApp.ts
+import RUIApp from './RUIApp';
 import {FuncView} from "@iandx/reactui";
 import {Text, Button, VStack} from "@iandx/reactui/component";
 import {useState} from "react";
@@ -140,7 +140,7 @@ const MyComponent = FuncView(({defaultNum}: any) => {
   )
 })
 
-const ReactUIApp = FuncView(() =>
+const RUIApp = FuncView(() =>
   VStack(
       MyComponent({defaultNum: 10}),
       Text("Hello")
@@ -148,11 +148,11 @@ const ReactUIApp = FuncView(() =>
     .alignment("center")
 )
 
-export default ReactUIApp;
+export default RUIApp;
 ```
-* Every ReactUI instance can convert to React element using `.asReactElement()`
-* Every ReactUI instance can take
-  1. another ReactUI instance
+* Every RUI instance can convert to React element using `.asReactElement()`
+* Every RUI instance can take
+  1. another RUI instance
   2. a react element
   3. jsx element
   
@@ -160,14 +160,14 @@ export default ReactUIApp;
   ```typescript jsx
   const MySecondComponent = FuncView(() =>
       VStack(
-          Text("This is ReactUI"),
+          Text("This is RUI"),
           React.createElement("p", null, "This is React"),
           <p>This is JSX</p>
       )     
   )
   ```
 
-* but we **strongly** suggest you to use **pure** ReactUI for additional features, use `TagView/ElementView` to wrap your React Components
+* but we **strongly** suggest you to use **pure** RUI for additional features, use `TagView/ElementView` to wrap your React Components
 
 ## 🤖 Useful Features
 
@@ -208,7 +208,7 @@ const MyCondition = FuncView(() => {
 })
 ```
 ### Router
-* Using react-router 6, the `NavigationView` in ReactUI is pretty easy to use and **supports regex path**
+* Using react-router 6, the `NavigationView` in RUI is pretty easy to use and **supports regex path**
   (which react-router 6 doesn't).
 
 ```typescript
@@ -282,7 +282,7 @@ const MyPage = FuncView(() =>
 
 ### ContextProvider
 
-* Use ContextProvider in ReactUI to manage global states simple and powerful.
+* Use ContextProvider in RUI to manage global states simple and powerful.
 * Use `@Context` to destructure the whole context into a specific variable
 * Use `@Contexts` to get the **whole context**
 
@@ -426,7 +426,7 @@ class MyComponentWithContext extends View {
 ### Lifecycle
 
 * React function uses `useEffect ` to handle lifecycles, so you can still use it (remember, class's Body is **nothing but a react function component**, but we don't write any logical code blocks in Body for the sake of **love**)
-* So ReactUI handles lifecycles this way (and adds a strong feature: **component wise lifecycles**)
+* So RUI handles lifecycles this way (and adds a strong feature: **component wise lifecycles**)
 
 ```typescript
 class SubComponent extends View {  
@@ -459,7 +459,7 @@ class MainComponent extends View {
       .willUnmount(() => {
         console.log("will unmount")
       })
-      .shouldUpdate((preProps, currProps) => false)  // this equals to React.memo(xx, shouldUpdate)
+      .shouldUpdate((prevProps, currProps) => false)  // this equals to React.memo(xx, shouldUpdate)
       .useMemo(false)    // using memo for partial re-render by default, so no need to call this function to disable it, but you can do it anyway
 }
 ```
@@ -503,7 +503,7 @@ class MainComponent extends View {
     willUnmount: () => {
       console.log("will unmount")
     }),
-    shouldUpdate: (preProps, currProps) => false
+    shouldUpdate: (prevProps, currProps) => false
   }
 }
 ```
@@ -534,8 +534,8 @@ class MainComponent extends View {
 
 > Tips:  
 >
-> * View full examples at src/components as these are internal components written as ReactUI class components.
-> * Use plugin `Rainbow Brackets` in `WebStorm` to code ReactUI comfortably.
+> * View full examples at src/components as these are internal components written as RUI class components.
+> * Use plugin `Rainbow Brackets` in `WebStorm` to code RUI comfortably.
 
 ## Todo List
 

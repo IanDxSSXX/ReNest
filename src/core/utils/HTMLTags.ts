@@ -1,4 +1,4 @@
-import {TagView} from "./ReactUIWrapper";
+import {TagView} from "./RUIWrapper";
 
 // ----
 export function Div(...children: any[]) {

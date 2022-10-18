@@ -1,9 +1,9 @@
 import {Fragment as ReactFragment, ReactElement} from "react";
-import {ReactUITheme} from "../theme/ReactUITheme";
+import {RUITheme} from "../theme/RUITheme";
 
 
 export function TagView(element: any) {
-    return (...children: any) => new ReactUITheme(element, ...children).deleteProp("className")
+    return (...children: any) => new RUITheme(element, ...children).deleteProp("className")
 }
 
 
@@ -14,7 +14,7 @@ export function ElementView(reactElement: ReactElement) {
     return TagView(ReactElementWrapper)().setProps({reactElement})
 }
 
-export class Fragment extends ReactUITheme {
+export class Fragment extends RUITheme {
     IAMFragment = true
     constructor(...children: any[]) {
         super(ReactFragment, ...children);

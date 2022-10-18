@@ -1,6 +1,6 @@
-import {ReactUIHelper} from "../utils/ReactUIHelper";
-import {memo, useEffect} from "react";
-import {HookWrapper, ResolveHook} from "./Decorator";
+import {RUIHelper} from "../utils/RUIHelper";
+import {memo, useEffect, useRef} from "react";
+import {HookWrapper, ResolveHook} from "./ResolveDecorator";
 
 
 const ReactElementWrapper = ({wrapper}:any) => {
@@ -15,23 +15,37 @@ const ReactElementWrapper = ({wrapper}:any) => {
     // ---- see ConditionView
     const component = wrapper.Body(wrapper.props) as any
     // ---e
-    if (!component) ReactUIHelper.error("ReactUIElement must have a proper return, current is null")
+    if (!component) RUIHelper.error("RUIView must have a proper return, current is null")
     // ---- lifecycle
     let didMount = wrapper.lifecycle.didMount
     let willUnmount = wrapper.lifecycle.willUnmount
     let didUpdate =wrapper.lifecycle.didUpdate
-    // ---1 didMount and willUnmount
-    useEffect(() => {
-        !!didMount && didMount()
-        return willUnmount
-    }, []);
-    // ---2 components update state
-    (didUpdate ?? []).forEach(({func, states}: any)=>{
-        HookWrapper(useEffect, () => {func()}, states)
+    let observe =wrapper.lifecycle.observe
+
+    // ---1 components update state
+    let firstIn = useRef(true)
+    didUpdate.forEach((func: any)=>{
+        HookWrapper(useEffect, () => {
+            if (!firstIn.current) func()
+        })
+    })
+    observe.forEach(({func, states}: any)=>{
+        HookWrapper(useEffect, () => {
+            if (!firstIn.current) func()
+        }, states.map((state:any)=>state(wrapper)))
     })
 
+    // ---2 didMount and willUnmount
+    useEffect(() => {
+        firstIn.current = false
+        didMount.map((func: any)=>func())
+        return () => {
+            willUnmount.map((func: any)=>func())
+        }
+    }, []);
+
     // ---- register and turn into React Element
-    let reactComponent = component.IAmReactUI ? wrapper.registerView(component).asReactElement() : component
+    let reactComponent = component.IAmRUI ? wrapper.registerView(component).asReactElement() : component
     return reactComponent
 }
 

@@ -8,12 +8,12 @@ import {
     ReactEventHandler, TouchEventHandler, TransitionEventHandler, UIEventHandler, WheelEventHandler
 } from "react";
 import {Property} from "csstype";
-import ReactUIBase from "./ReactUIBase";
+import RUIBase from "./RUIBase";
 
 function RUIStyleProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
-        (this as ReactUIWithStyle).setStyle(propertyKey, args[0], args[1])
+        (this as RUIWithStyle).setStyle(propertyKey, args[0], args[1])
         return originalValue.apply(this, args);
     }
 }
@@ -21,15 +21,15 @@ function RUIStyleProp(target: any, propertyKey: string, descriptor: PropertyDesc
 function ElementViewProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
-        (this as ReactUIWithStyle).setProp(propertyKey, args[0], args[1])
+        (this as RUIWithStyle).setProp(propertyKey, args[0], args[1])
         return originalValue.apply(this, args);
     }
 }
 
-export default class ReactUIWithStyle<TLength = (string & {}) | 0, TTime = string & {}> extends ReactUIBase {
-    IAmReactUIWithStyle = true
+export default class RUIWithStyle<TLength = (string & {}) | 0, TTime = string & {}> extends RUIBase {
+    IAmRUIWithStyle = true
 
-    // ---* Events from react/ReactUIHH.d.tx -> DOMAttributes
+    // ---* Events from react/RUIHH.d.tx -> DOMAttributes
     // ---- Clipboard Events
     @ElementViewProp
     onCopy(value: ClipboardEventHandler, willSet=true) { return this }
@@ -527,7 +527,7 @@ export default class ReactUIWithStyle<TLength = (string & {}) | 0, TTime = strin
     @ElementViewProp
     onTransitionEndCapture(value: TransitionEventHandler, willSet=true) { return this }
 
-    // ---* All styles from csstype/ReactUIHH.d.ts
+    // ---* All styles from csstype/RUIHH.d.ts
     @RUIStyleProp
     accentColor(value: Property.AccentColor, willSet=true) { return this }
 

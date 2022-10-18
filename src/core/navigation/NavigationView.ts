@@ -1,18 +1,18 @@
-import ReactUIBase from "../base/ReactUIBase";
+import RUIBase from "../base/RUIBase";
 import {Route, Routes, useNavigate, useParams} from "react-router-dom";
-import {ReactUITheme} from "../theme/ReactUITheme";
+import {RUITheme} from "../theme/RUITheme";
 import {createElement, ReactElement} from "react";
-import {FragmentView, TagView} from "../utils/ReactUIWrapper";
+import {FragmentView, TagView} from "../utils/RUIWrapper";
 import {NavigationRoute, NavigationRouteMatchable} from "./NavigationRoute";
 import {BrowserRouter as RRDBrowserRouter} from "react-router-dom";
 
 
 // ---- encapsulate react-router
 export interface PathRoutes {
-    [key: string]: (value?: string) => (ReactUIBase | ReactElement)
+    [key: string]: (value?: string) => (RUIBase | ReactElement)
 }
 
-export class NavigationView extends ReactUITheme {
+export class NavigationView extends RUITheme {
     pathRoutes: PathRoutes
     regexTag = "_"
 
@@ -29,7 +29,7 @@ export class NavigationView extends ReactUITheme {
                 regexNames.push(path)
             } else {
                 const newRoute = new NavigationRoute(
-                    this.pathRoutes[path] as (() => (ReactUIBase | ReactElement)), path, this
+                    this.pathRoutes[path] as (() => (RUIBase | ReactElement)), path, this
                 )
                 this.children.push(newRoute)
             }

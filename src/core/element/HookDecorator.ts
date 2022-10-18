@@ -1,7 +1,7 @@
 import {useRUIState} from "../utils/Utils";
 import {useRef} from "react";
 import {Hook, SHook} from "./Decorator";
-import {useTheme} from "../theme/ThemeProvider";
+import {useTheme} from "../theme/ThemeState";
 import {useSpring} from "@react-spring/web";
 import {useNavigate} from "react-router-dom";
 

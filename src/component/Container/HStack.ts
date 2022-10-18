@@ -14,7 +14,7 @@ class HStack extends View {
             .forEachChild((child: any) => {
                 if (child.constructor.name === "Spacer") {
                     child.flexGrow(1)
-                } else if (child.IAMReactUIWithStyle) {
+                } else if (child.IAMRUIWithStyle) {
                     child.flexShrink(0)
                     if (this.alignment === "top") {
                         child.marginBottom("auto")
