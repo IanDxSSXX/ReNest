@@ -140,6 +140,8 @@ export function ResolveDotProp(wrapper: any, statusKey: string, callback: ()=>an
 export function ResolveObserve(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
     if (!isStatusKey(statusKey, "OBSERVE")) return callback()
     let key = getKeyFromStatus(statusKey, "OBSERVE")
+    let prefix = key.substr(0, 1)
+    if (prefix !== "$") return
     let stateKey = key.substr(1)
     if (!wrapper.hasOwnProperty(stateKey)) return
     wrapper.lifecycle.observe.push({func: wrapper[key], states: [(wrapper:any) => wrapper[stateKey]]})

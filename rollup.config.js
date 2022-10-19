@@ -38,7 +38,7 @@ function generatePackage(packageName, inputPath) {
 
 
 
-let option = 0
+let option = 1
 
 let config
 switch(option) {

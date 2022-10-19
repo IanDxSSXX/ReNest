@@ -89,7 +89,7 @@ export default class RUIBase {
     }
 
     style(value: CSSProperties | any, willSet=true) {
-        if (willSet) this.elementProps.style = Object.assign(this.elementProps.style, value)
+        if (willSet) this.elementProps.style = {...this.elementProps.style, ...value}
         return this
     }
 
@@ -110,9 +110,7 @@ export default class RUIBase {
 
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {
-        // console.log(this, this.children)
         for (let child of flattened(this.children)) {
-
             if (child.IAmRUI) {
                 let willNest = func(child) ?? true
                 if (willNest && nested) {

@@ -30,7 +30,7 @@ export interface PathRoutes {
 
 export class NavigationView extends View {
     pathRoutes: PathRoutes
-    regexTag = "_"
+    regexTag = ":"
     navigationIds: {[key:string]: string} = {}
     Body: any
 
