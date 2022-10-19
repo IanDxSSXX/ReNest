@@ -22,7 +22,6 @@ class ChildView extends View {
     didMount = () => {
     }
     @Observe _context1 = () => {
-        console.log(Running.ContextStore)
     }
 }
 const Child = ViewWrapper(ChildView)
@@ -36,16 +35,12 @@ class ContextDisplay extends View {
                 .onChange((newValue: any) => {
                     this.text.value = newValue
                 }),
-            // Text("hh")
             Child()
         )
             .context({
                 context1: this.text.value
             })
 
-    didMount = () => {
-        console.log("hahahhaah")
-    }
 
 }
 

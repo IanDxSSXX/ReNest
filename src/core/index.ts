@@ -1,6 +1,6 @@
 import ConditionView from "./control/ConditionView"
 import NavigationView from "./navigation/NavigationView"
-import {useRUIState, useTrigger, useTriggerEffect} from "./utils/Utils"
+import {useRUIState, useTrigger, useTriggerEffect} from "./utils/Hook"
 import ThemeProvider from "./theme/ThemeProvider"
 import {TagView, ElementView, FragmentView} from "./utils/RUIWrapper";
 import {ViewWrapper, View, FuncView} from "./element/RUIView"

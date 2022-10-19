@@ -94,14 +94,11 @@ const Content = FuncView(() => {
                             list: () => ListDisplay(),
                             toggle: () => ToggleDisplay(),
                             image: () => ImageDisplay(),
-                            progress: () => ProgressDisplay()
-                                ,
-                            context: () => ContextDisplay().didUpdate(() =>{
-                                console.log("hh")
-                            }),
-                            "_abc+": (value:any) => HStack("abc",value), // regExp
+                            progress: () => ProgressDisplay(),
+                            context: () => ContextDisplay(),
+                            "_abc+": (value:any) => ContextDisplay(), // regExp
                             "_what[a+]": (value:any) => HStack("no",value), // regExp
-                            _: (value:any) => HStack("other", value), // any other route
+                            _: (value:any) =>  ProgressDisplay(), // any other route
                         })
                     ).padding("20px")
 

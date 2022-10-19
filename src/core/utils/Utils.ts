@@ -1,37 +1,3 @@
-import {CSSProperties, useEffect, useRef, useState} from "react";
-import * as uuid from "uuid";
-
-export function IsFirstRender() {
-    const ref = useRef(true);
-    const firstRender = ref.current;
-    ref.current = false;
-    return firstRender;
-}
-
-// ---* State
-export class RUIState<T> {
-    private readonly _value: T
-    private readonly setProp: any
-    set value(newProp: any) {
-        this.setProp(newProp)
-    }
-    get value() {
-        return this._value
-    }
-    setValue(func: (prev: T)=>T) {
-        this.setProp(func)
-    }
-    constructor(prop: T, setProp: any) {
-        this.setProp = setProp
-        this._value = prop
-    }
-}
-
-export function useRUIState<T>(value: T) {
-    let [prop, setProp] = useState<T>(value)
-    return new RUIState<T>(prop, setProp)
-}
-
 // ---* Range
 export class Range {
     startNum: number
@@ -98,59 +64,20 @@ export function filteredObject(obj: any, deletedKeys: string[]) {
 }
 
 export function uid() {
-    return uuid.v4()
-}
-
-export function objectEquals(obj1: any, obj2: any) {
-    const equals = (a:any, b:any) => JSON.stringify(a) === JSON.stringify(b);
-
-    const obj1Key = Object.keys(obj1).sort()
-    const obj2Key = Object.keys(obj2).sort()
-
-    if (!equals(obj1Key, obj2Key)) {
-        return false
-    }
-    const results = obj1Key.map((item) => obj1[item] === obj2[item])
-    return !results.includes(false)
-}
-
-
-// ---- trigger
-export class Trigger {
-    private readonly _value: boolean
-    private readonly setProp: any
-    private _props = useRef()
-
-    get value() {
-        return this._value
-    }
-
-    trigger(props?: any) {
-        this._props.current = props
-        this.setProp(!this._value)
-    }
-
-    get props() {
-        return this._props.current
-    }
-
-    constructor(prop: boolean, setProp: any) {
-        this.setProp = setProp
-        this._value = prop
-    }
-}
-
-export function useTrigger() {
-    const [triggerValue, setTriggerValue] = useState(false)
-    return new Trigger(triggerValue, setTriggerValue)
-}
-
-export function useTriggerEffect(trigger: Trigger, triggerEvent: ()=>any) {
-    const isFirstRender = IsFirstRender()
-    const triggerValue = !trigger ? null : trigger.value
-    useEffect(() => {
-        if (triggerValue !== null && !isFirstRender) {
-            return triggerEvent()
+    let d = new Date().getTime();//Timestamp
+    let d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r = Math.random() * 16;//random number between 0 and 16
+        if (d > 0) {//Use timestamp until depleted
+            r = (d + r) % 16 | 0;
+            d = Math.floor(d / 16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r) % 16 | 0;
+            d2 = Math.floor(d2 / 16);
         }
-    }, [triggerValue])
+
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    })
 }
+
+
