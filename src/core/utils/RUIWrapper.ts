@@ -2,9 +2,14 @@ import {Fragment as ReactFragment, ReactElement} from "react";
 import {RUITheme} from "../theme/RUITheme";
 import {RUIElement} from "../element/RUIElement";
 
-
-export function TagView(element: any) {
-    return (...children: any) => new RUIElement(element, ...children).deleteProp("className")
+export function TagView(element: any, dotPropNames?: string[]) {
+    return (...children: any) => {
+        let ruiElement = new RUIElement(element, ...children).deleteProp("className")
+        if (!!dotPropNames) {
+            return ruiElement.withDotProp(...dotPropNames)
+        }
+        return ruiElement
+    }
 }
 
 
