@@ -1,5 +1,4 @@
 import {Fragment as ReactFragment, ReactElement} from "react";
-import {RUITheme} from "../theme/RUITheme";
 import {RUIElement} from "../element/RUIElement";
 
 export function TagView(element: any, dotPropNames?: string[]) {

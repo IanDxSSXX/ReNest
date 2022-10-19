@@ -1,5 +1,6 @@
 import * as R from "../../component";
 import {RUITemplate} from "./RUITemplate";
+import RUIProgress  from "../../component/Displayer/Progress";
 
 export default {
     title: 'Display',
@@ -13,7 +14,7 @@ export default {
 }
 
 export const Progress = RUITemplate((args:any)=>
-    R.Progress(args.num)
+    RUIProgress(args.num)
         .variant(args.variant)
         .themeName(args.themeName)
         .duration(args.duration)

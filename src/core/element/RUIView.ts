@@ -1,7 +1,7 @@
 import {createElement, ReactElement} from "react";
 import RUIBase from "../base/RUIBase";
 import {ReactElementWrapperMemorized} from "./RUIHOC";
-import lodash from "lodash";
+import isEqual from 'lodash.isequal';
 import {
     ResolveContext,
     ResolveContexts,
@@ -11,7 +11,6 @@ import {
     ResolveProp
 } from "./ResolveDecorator";
 import {RUIElement} from "./RUIElement";
-import Running from "../base/Running";
 import {uid} from "../utils/Utils";
 
 export abstract class View<T=any> extends RUIElement {
@@ -108,10 +107,10 @@ export abstract class View<T=any> extends RUIElement {
         // ---- useful for memo equal check
         // ---- styles and custom props
         // ---1 element props, update on change by default using deep equal
-        if (!lodash.isEqual(this.elementProps, another.elementProps)) return false
+        if (!isEqual(this.elementProps, another.elementProps)) return false
 
         // ---2 themes, update on change by default using deep equal
-        if (!lodash.isEqual(this.theme, another.theme)) return false
+        if (!isEqual(this.theme, another.theme)) return false
 
         // ---- all props
         let thisAllProps: any = {...this.props}
@@ -143,7 +142,7 @@ export abstract class View<T=any> extends RUIElement {
             return !this.lifecycle.shouldUpdate.map(func => func(thisAllProps, anotherAllProps)).includes(false)
         }
 
-       return lodash.isEqual(thisAllProps, anotherAllProps)
+       return isEqual(thisAllProps, anotherAllProps)
     }
 }
 

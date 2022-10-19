@@ -1,6 +1,6 @@
-import {Div} from "../../core/utils/HTMLTags";
-import {RUIColor} from "../../core/theme/Colors";
-import {View, ViewWrapper} from "../../core";
+import {Div} from "../Util/Tags";
+import {RUIColor} from "../Util/Colors";
+import {View, ViewWrapper} from "@iandx/reactui"
 
 
 class Paper extends View {

@@ -1,5 +1,5 @@
-import {View, ViewWrapper} from "../../core";
-import {Div} from "../../core/utils/HTMLTags";
+import {View, ViewWrapper} from "@iandx/reactui"
+import {Div} from "../Util/Tags";
 
 class Spacer extends View {
     Body = () =>

@@ -1,6 +1,6 @@
-import {RUIColor} from "../../core/theme/Colors";
-import {DotProp, Prop, State, View, ViewWrapper} from "../../core";
-import {Button as HTMLButton} from "../../core/utils/HTMLTags"
+import {RUIColor} from "../Util/Colors";
+import {DotProp, Prop, State, View, ViewWrapper} from "@iandx/reactui"
+import {Button as HTMLButton} from "../Util/Tags"
 
 
 const themes = {

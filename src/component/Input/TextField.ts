@@ -1,10 +1,11 @@
-import {Derived, ConditionView, DotProp, Prop, Ref, Spring, State, View, ViewWrapper} from "../../core";
-import {Input} from "../../core/utils/HTMLTags";
-import {RUIColor} from "../../core/theme/Colors";
-import {pixelToInt} from "../../core/utils/Utils";
+import {Derived, ConditionView, DotProp, Prop, Ref, State, View, ViewWrapper} from "@iandx/reactui"
+import {RUIColor} from "../Util/Colors";
+import {pixelToInt} from "../Util/Utils";
 import ZStack from "../Container/ZStack";
-import {AnimatedDiv} from "../index";
+import AnimatedDiv from "../Other/AnimatedDiv";
 import Text from "../Displayer/Text";
+import {Input} from "../Util/Tags";
+import {Spring} from "../Util/Hooks";
 
 const themes = {
     primary: {

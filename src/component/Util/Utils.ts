@@ -1,13 +1,6 @@
-export function flattened(array: any[]) {
-    return array.reduce((accumulator:any, value:any) => accumulator.concat(value), [])
+export function pixelToInt(value: string) {
+    return +value.replace("px", "")
 }
-
-
-export function filteredObject(obj: any, deletedKeys: string[]) {
-    const filteredKeys = Object.keys(obj).filter(key => !deletedKeys.includes(key))
-    return filteredKeys.reduce((newObj:any, key:any) => (newObj[key] = (obj as any)[key], newObj), {});
-}
-
 
 export function uid() {
     let d = new Date().getTime();  //Timestamp

@@ -1,18 +1,14 @@
-import {FuncView, useRUIState} from "../../core";
-import {useEffect} from "react";
 import {Toggle} from "../../component";
+import {State, View, ViewWrapper} from "@iandx/reactui";
 
-export const ToggleDisplay = FuncView(() => {
-    const toggleState = useRUIState(false)
+class ToggleDisplay extends View {
+    @State isToggled = false
 
-    useEffect(() => {
-        console.log(toggleState.value)
-    })
-
-    return (
-        Toggle(toggleState.value)
+    Body = () =>
+        Toggle(this.isToggled)
             .onChange((v:any)=>{
-                toggleState.value = v
+                this.isToggled = v
             })
-    )
-})
+}
+
+export default ViewWrapper(ToggleDisplay)

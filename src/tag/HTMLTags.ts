@@ -1,4 +1,4 @@
-import {TagView} from "./RUIWrapper";
+import {TagView} from"@iandx/reactui"
 
 // ----
 export function Div(...children: any[]) {

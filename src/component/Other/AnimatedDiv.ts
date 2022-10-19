@@ -1,6 +1,6 @@
 import {animated} from "@react-spring/web";
-import {DotProp, View, ViewWrapper} from "../../core";
-import {TagView} from "../../core";
+import {View, ViewWrapper} from "@iandx/reactui"
+import {TagView} from "@iandx/reactui";
 
 
 class AnimatedDiv extends View {

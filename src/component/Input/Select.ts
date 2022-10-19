@@ -1,6 +1,6 @@
-import {FuncView, TagView, useRUIState, useTrigger, useTriggerEffect, View} from "../../core";
+import {FuncView, TagView, useState, useTrigger, useTriggerEffect, View} from "@iandx/reactui"
 import {useEffect, useRef} from "react";
-import {RUIColor} from "../../core/theme/Colors";
+import {RUIColor} from "../Util/Colors";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import Spacer from "../Other/Spacer";
 import HStack from "../Container/HStack";
@@ -50,9 +50,9 @@ class Select extends View {
     })
 
     Body = ({arr, defaultValue}:any):any =>{
-        const selectedValue = useRUIState(defaultValue)
-        const showOptions = useRUIState(false)
-        const hoverState = useRUIState(-1)
+        const selectedValue = useState(defaultValue)
+        const showOptions = useState(false)
+        const hoverState = useState(-1)
         const selectElement = useRef()
         const groupOptionsValue = [{title:"orange",data:[1,3,4]}]
 

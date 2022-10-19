@@ -1,5 +1,5 @@
-import {Div} from "../../core/utils/HTMLTags";
-import {View, ViewWrapper} from "../../core/element/RUIView";
+import {Div} from "../Util/Tags";
+import {View, ViewWrapper} from "@iandx/reactui"
 
 
 class Text extends View {

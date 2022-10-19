@@ -1,20 +1,18 @@
-import {Div} from "../../core/utils/HTMLTags";
+import {Div} from "../Util/Tags";
 import {
     Derived,
     ConditionView,
     DotProp,
-    FuncView,
     Prop,
     Ref,
-    Spring,
     State,
-    useRUIState,
     View,
     ViewWrapper
-} from "../../core";
-import {RUIColor} from "../../core/theme/Colors";
+} from "@iandx/reactui"
+import {RUIColor} from "../Util/Colors";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/AnimatedDiv";
+import {Spring} from "../Util/Hooks";
 
 
 let themes = {

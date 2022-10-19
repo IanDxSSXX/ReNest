@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState as useReactState} from "react";
 
 export function IsFirstRender() {
     const ref = useRef(true);
@@ -26,8 +26,8 @@ export class RUIState<T> {
     }
 }
 
-export function useRUIState<T>(value: T) {
-    let [prop, setProp] = useState<T>(value)
+export function useState<T>(value: T) {
+    let [prop, setProp] = useReactState<T>(value)
     return new RUIState<T>(prop, setProp)
 }
 
@@ -58,7 +58,7 @@ export class Trigger {
 }
 
 export function useTrigger() {
-    const [triggerValue, setTriggerValue] = useState(false)
+    const [triggerValue, setTriggerValue] = useReactState(false)
     return new Trigger(triggerValue, setTriggerValue)
 }
 

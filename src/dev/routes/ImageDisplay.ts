@@ -1,7 +1,10 @@
-import {FuncView} from "../../core";
+import {FuncView, View, ViewWrapper} from "@iandx/reactui";
 import {VStack} from "../../component";
 
-export const ImageDisplay = FuncView(() =>
-    VStack("dfa")
-)
 
+class ImageDisplay extends View {
+    Body = () =>
+        VStack("dfa")
+}
+
+export default ViewWrapper(ImageDisplay)

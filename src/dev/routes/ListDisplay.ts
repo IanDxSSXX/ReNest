@@ -1,28 +1,23 @@
-import {ForEach, FuncView, useRUIState} from "../../core";
+import {ForEach, FuncView, View, ViewWrapper} from "@iandx/reactui";
 import {Button, VStack} from "../../component";
 import List from "../../component/Displayer/List";
 
-export const ListDisplay = FuncView(() => {
-    let numArr = Array(4).fill(0)
-    let alignment = useRUIState(false)
-    return (
+class ListDisplay extends View {
+    numArr = Array(4).fill(0)
+    Body = () =>
         VStack(
-            Button("click")
-                .onClick(() => {
-                    alignment.setValue(prev=>!prev)
-                }),
-            List(numArr, (_,idx) =>
+            List(this.numArr, (_,idx) =>
                 Button(`horizontal list ${idx}`).key(idx)
             ).horizontal().spacing("10px"),
-            List(numArr, (_,idx) =>
+            List(this.numArr, (_,idx) =>
                 Button(`vertical list ${idx}`).key(idx)
             ).vertical().spacing("10px"),
-            List(numArr, (_,idx) =>
+            List(this.numArr, (_,idx) =>
                 Button(`divider list ${idx}`).key(idx)
             )
-                .vertical(!alignment.value)
-                .horizontal(alignment.value)
-                .spacing("10px").divider("solid"),
+                .spacing("10px")
+                .divider("solid"),
         ).spacing("20px").padding("20px")
-    )
-})
+}
+
+export default ViewWrapper(ListDisplay)

@@ -1,8 +1,5 @@
 import {RUIContext} from "../context/RUIContext";
-import {filteredObject, uid} from "../utils/Utils";
-import RUIBase from "../base/RUIBase";
 import Running from "../base/Running";
-import {ThemesState} from "./ThemeState";
 
 export class RUITheme extends RUIContext {
     readonly IAmRUITheme = true

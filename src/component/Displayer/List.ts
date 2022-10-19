@@ -1,6 +1,6 @@
-import {ConditionView, DotProp, ForEach, Prop, View, ViewWrapper} from "../../core";
-import {Div} from "../../core/utils/HTMLTags";
-import {RUIColor} from "../../core/theme/Colors";
+import {ConditionView, DotProp, ForEach, Prop, View, ViewWrapper} from "@iandx/reactui"
+import {Div} from "../Util/Tags";
+import {RUIColor} from "../Util/Colors";
 import HStack from "../Container/HStack";
 import VStack from "../Container/VStack";
 

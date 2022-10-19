@@ -1,5 +1,5 @@
-import {Div} from "../../core/utils/HTMLTags";
-import {DotProp, ViewWrapper, View} from "../../core";
+import {Div} from "../Util/Tags";
+import {DotProp, ViewWrapper, View} from "@iandx/reactui"
 
 class VStack extends View {
     @DotProp spacing: any = "0px"

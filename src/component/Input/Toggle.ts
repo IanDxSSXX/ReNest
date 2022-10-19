@@ -1,8 +1,9 @@
-import {Div} from "../../core/utils/HTMLTags";
 import AnimatedDiv from "../Other/AnimatedDiv";
-import {RUIColor} from "../../core/theme/Colors";
-import {Derived, DotProp, Prop, Spring, State, View, ViewWrapper} from "../../core";
+import {RUIColor} from "../Util/Colors";
+import {Derived, DotProp, Prop, State, View, ViewWrapper} from "@iandx/reactui"
 import ZStack from "../Container/ZStack";
+import {Div} from "../Util/Tags";
+import {Spring} from "../Util/Hooks";
 
 const themes = {
     primary: {

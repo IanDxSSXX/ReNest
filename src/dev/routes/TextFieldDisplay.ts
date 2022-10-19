@@ -1,18 +1,20 @@
-import {FuncView} from "../../core";
-import {useRef} from "react";
+import {Ref, View, ViewWrapper} from "@iandx/reactui";
 import {TextField} from "../../component";
 
-export const TextFieldDisplay = FuncView(() => {
-    const textRef = useRef("用ref")
 
-    return (
-        TextField(textRef.current)
+class TextFieldDisplay extends View {
+    @Ref text = "这是text"
+    Body = () =>
+        TextField(this.text)
             .placeHolder("哈哈哈")
             .onChange((newText: any) => {
-                textRef.current = newText
-                console.log(textRef.current)
+                this.text = newText
+                console.log()
             })
             .variant("underlined")
             .autoFocus()
-    )
-})
+
+}
+
+
+export default ViewWrapper(TextFieldDisplay)

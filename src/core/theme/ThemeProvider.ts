@@ -1,12 +1,11 @@
-import {createElement, memo, useEffect, useRef, useState} from "react";
-import {RUIHelper} from "../utils/RUIHelper";
-import {Fragment, FragmentView} from "../utils/RUIWrapper";
+import {createElement, memo, useEffect, useRef} from "react";
+import {FragmentView} from "../utils/RUIWrapper";
 import {ThemesState} from "./ThemeState";
 import Running from "../base/Running";
-import lodash from "lodash";
+import isEqual from 'lodash.isequal';
 import {RUIElement} from "../element/RUIElement";
 import {uid} from "../utils/Utils";
-import {ContextProvider} from "../index";
+import ContextProvider from "../context/ContextProvider";
 
 
 export default (...children: any[]) => new ThemeProvider(...children)
@@ -37,9 +36,8 @@ const ThemeWrapperMemorized = memo(ThemeWrapper, (prev, curr) => {
     let preElement = prev.wrapper.children[0]
     let currElement = curr.wrapper.children[0]
 
-    let themeEqual = lodash.isEqual(prev.wrapper.themes, curr.wrapper.themes)
+    let themeEqual = isEqual(prev.wrapper.themes, curr.wrapper.themes)
         && prev.wrapper.themeName === curr.wrapper.themeName
-    // console.log(prev, themeEqual && (preElement.IAmRUIElement && preElement.equalTo(currElement)))
     return themeEqual && (preElement.IAmRUIElement && preElement.equalTo(currElement))
 })
 
@@ -50,7 +48,9 @@ class ThemeProvider extends RUIElement {
     currThemeState?: ThemesState
     IAMThemeProvider = true
     themeId = uid()
+
     useTheme = (themeState: ThemesState) => {
+        console.log("yse", this.themeId)
         this.currThemeState = themeState
         this.themes = themeState.themes
         this.themeName = themeState.themeName
@@ -64,6 +64,7 @@ class ThemeProvider extends RUIElement {
 
     asReactElement() {
         // ---- wrap children
+        console.log(this.currThemeState, "ss")
         if (!!this.currThemeState) {
             // ---- add to context by default
             let ContextView = ContextProvider(...this.children).context({themeState: this.currThemeState})

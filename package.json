@@ -3,12 +3,14 @@
   "license": "MIT",
   "dependencies": {
     "@react-spring/web": "^9.5.2",
+    "lodash.isequal": "^4.5.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-error-boundary": "^3.1.4",
     "react-icons": "4.4.0",
     "react-router-dom": "6.3.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "@iandx/reactui": "^0.10.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -18,7 +20,8 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "rollup": "rollup -c",
-    "publish": "npm publish ./package"
+    "publish_core": "npm publish ./packages/core",
+    "publish_component": "npm publish ./packages/component"
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +67,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/lodash.isequal": "^4.5.6",
     "babel-plugin-named-exports-order": "^0.0.2",
     "prop-types": "^15.8.1",
     "rollup": "^2.78.0",
