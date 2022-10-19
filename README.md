@@ -238,13 +238,13 @@ const MyPage = FuncView(() =>
     // @Prop is a decorator, it means Counter component takes an optional prop startNum with default value 0
     // so when you use this component, call => Counter() or Counter({startNum: 100})
     @Prop startNum: number = 0    
-    // another two decorators: @State and @Callback
+    // another two decorators: @State and @Derived
     // @State means in Body, you can use this property as a state variable in react hook
     // so { @State count = 1 } visually equals to { [count.value, count.setValue] = useState(1) }
-    // @Callback takes another decorator as its argument
-    // if we did't use @Callback, { @State count = this.startNum } would always equal to { @State count = 0 } because 0 is startNum's default value
-    // so we use @Callback to get the updated value(set as prop from outside) in Body
-    @Callback(State) count: any = () => this.startNum
+    // @Derived takes another decorator as its argument
+    // if we did't use @Derived, { @State count = this.startNum } would always equal to { @State count = 0 } because 0 is startNum's default value
+    // so we use @Derived to get the updated value(set as prop from outside) in Body
+    @Derived(State) count: any = () => this.startNum
    
     // the Body is just a clousure property, you can always do any logical things in Body to make it look like a function component and use any react hooks as you want, but that would miss the point to code elegantly
     Body = () =>

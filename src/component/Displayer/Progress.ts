@@ -1,6 +1,6 @@
 import {Div} from "../../core/utils/HTMLTags";
 import {
-    Callback,
+    Derived,
     ConditionView,
     DotProp,
     FuncView,
@@ -38,7 +38,7 @@ class LineProgressClass extends View {
     defaultThemeName = "primary"
     @DotProp duration = 0
     @Prop value: number = 0
-    @Callback(Spring) progressFrontStyle = () => ({
+    @Derived(Spring) progressFrontStyle = () => ({
         width: `calc(${this.value > 1 ? 1 : this.value} * 100%)`,
         config: {duration: this.duration},
     })
@@ -69,27 +69,27 @@ class CircleProgressClass extends View {
     @DotProp duration = 0
     @Prop value: number = 0
     @State delay: any = "none"
-    @Callback(State) valueState: any = () => this.value
-    @Callback(Ref) preValueRef: any = () => this.value
-    @Callback(Spring) circleLeftStyle = () => ({
-        transform: `rotate(${this.valueState.value>0.5?this.valueState.value*360-180:0}deg)`,
-        delay: this.delay.value  == "left" ? this.duration*(0.5-this.preValueRef.current) : 0,
+    @Derived(State) valueState: any = () => this.value
+    @Derived(Ref) preValueRef: any = () => this.value
+    @Derived(Spring) circleLeftStyle = () => ({
+        transform: `rotate(${this.valueState>0.5?this.valueState*360-180:0}deg)`,
+        delay: this.delay  == "left" ? this.duration*(0.5-this.preValueRef) : 0,
         config: {
-            duration: this.duration * (this.delay.value === "left" ?
-                this.valueState.value - 0.5 : (this.delay.value === "right" ?
-                    this.preValueRef.current - 0.5:
-                    Math.abs(this.preValueRef.current - this.valueState.value)))
+            duration: this.duration * (this.delay === "left" ?
+                this.valueState - 0.5 : (this.delay === "right" ?
+                    this.preValueRef - 0.5:
+                    Math.abs(this.preValueRef - this.valueState)))
         },
     })
 
-    @Callback(Spring) circleRightStyle = () => ({
-        transform: `rotate(${this.valueState.value<0.5?this.valueState.value*360:180}deg)`,
-        delay: this.delay.value == "right" ? this.duration*(this.preValueRef.current-0.5) : 0,
+    @Derived(Spring) circleRightStyle = () => ({
+        transform: `rotate(${this.valueState<0.5?this.valueState*360:180}deg)`,
+        delay: this.delay == "right" ? this.duration*(this.preValueRef-0.5) : 0,
         config: {
-            duration: this.duration * (this.delay.value === "right" ?
-                0.5 - this.valueState.value : (this.delay.value === "left" ?
-                    0.5 - this.preValueRef.current :
-                    Math.abs(this.valueState.value - this.preValueRef.current)))
+            duration: this.duration * (this.delay === "right" ?
+                0.5 - this.valueState : (this.delay === "left" ?
+                    0.5 - this.preValueRef :
+                    Math.abs(this.valueState - this.preValueRef)))
         },
     })
 
@@ -129,15 +129,15 @@ class CircleProgressClass extends View {
             .borderRadius('50%')
             .backgroundColor(this.theme.fg)
             .didUpdate(() => {
-                if (this.valueState.value > 0.5 && this.value < 0.5) {
-                    this.delay.value = "right"
-                } else if (this.valueState.value < 0.5 && this.value > 0.5) {
-                    this.delay.value = "left"
+                if (this.valueState > 0.5 && this.value < 0.5) {
+                    this.delay = "right"
+                } else if (this.valueState < 0.5 && this.value > 0.5) {
+                    this.delay = "left"
                 } else {
-                    this.delay.value = "none"
+                    this.delay = "none"
                 }
-                this.preValueRef.current = this.valueState.value
-                this.valueState.value = this.value
+                this.preValueRef = this.valueState
+                this.valueState = this.value
             }, [this.value])
 }
 

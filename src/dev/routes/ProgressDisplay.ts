@@ -10,19 +10,19 @@ class ProgressDisplay extends View {
 
     Body = () =>
         VStack(
-            Progress(this.valueState.value)
-                .variant(this.style.value),
+            Progress(this.valueState)
+                .variant(this.style).duration(600),
             Button("+")
                 .onClick(() => {
-                    this.valueState.setValue((prev:any)=>prev+0.05)
+                    this.valueState += 0.05
                 }),
             Button("-")
                 .onClick(() => {
-                    this.valueState.setValue((prev:any)=>prev-0.05)
+                    this.valueState += 0.05
                 }),
             Button("change style")
                 .onClick(() => {
-                    this.style.setValue((prev: any) => prev === "line" ? "circle":"line")
+                    this.style = this.style === "line" ? "circle":"line"
                 })
         )
             .spacing("10px")

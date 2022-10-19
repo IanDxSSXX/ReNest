@@ -1,6 +1,6 @@
 import {RUIHelper} from "../utils/RUIHelper";
 import {memo, useEffect, useRef} from "react";
-import {HookWrapper, ResolveHook} from "./ResolveDecorator";
+import {HookWrapper, ResolveHook, ResolveRef, ResolveState} from "./ResolveDecorator";
 import Running from "../base/Running";
 
 
@@ -8,8 +8,10 @@ const ReactElementWrapper = ({wrapper}:any) => {
     // ---- decorators **so tricky**
     for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(wrapper))) {
         ResolveHook(wrapper, key, "HOOK", false, ()=>    // ---n any hook with single prop: @Hook(useRef)
-        ResolveHook(wrapper, key, "SHOOK", true)     // ---n any hook with multiple props: @SHook(useTheme)
-        )
+        ResolveHook(wrapper, key, "SHOOK", true, () =>     // ---n any hook with multiple props: @SHook(useTheme)
+        ResolveState(wrapper, key, () =>
+        ResolveRef(wrapper, key)
+        )))
     }
     // ---- call Body
     // ---- **dangerous when element type is different because directly call will lead to inconsistent hooks**

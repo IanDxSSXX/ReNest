@@ -1,4 +1,5 @@
 import {StatusKey, StoreKey} from "./Decorator";
+import {useRef, useState} from "react";
 
 function isStatusKey(statusKey: string, name: string) {
     return statusKey.startsWith("_STATUS_" + name + "_")
@@ -23,17 +24,16 @@ export function ResolveHook(wrapper: any, statusKey: string, hookName: string, s
     let hook = wrapper[StoreKey(`_${hookName}_FUNC_`, key)]
     if (!hook) return
     let storeKey = StoreKey(hookName, key)
-    let isFunc = StatusKey("CALLBACK", key)
-    if (wrapper[storeKey] === true) {
-        wrapper[storeKey] = wrapper[key]
-        let props = wrapper[key]
-        if (wrapper[isFunc] === true) props = props()
-        wrapper[key] = spreadProps ? hook(...props) : hook(props)
+    let isDerived = StatusKey("DERIVED", key)
+    let props
+    if (wrapper[storeKey] === "__FIRST_IN__") {
+        props = wrapper[key]
+        wrapper[storeKey] = props
     } else if (wrapper[statusKey]) {
-        let props = wrapper[storeKey]
-        if (wrapper[isFunc] === true) props = props()
-        wrapper[key] = spreadProps ? hook(...props) : hook(props)
+        props = wrapper[storeKey]
     }
+    if (wrapper[isDerived] === true) props = props()
+    wrapper[key] = spreadProps ? hook(...props) : hook(props)
 }
 
 export function ResolveContext(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
@@ -42,6 +42,61 @@ export function ResolveContext(wrapper: any, statusKey: string, callback: ()=>an
     if (wrapper.contexts[key] === undefined) return
     wrapper[key] = wrapper.contexts[key]
     wrapper.customProps.contextNameStore.push(key)
+}
+
+export function ResolveState(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
+    if (!isStatusKey(statusKey, "STATE")) return callback()
+    let key = getKeyFromStatus(statusKey, "STATE")
+    let storeKey = StoreKey("STATE", key)
+    let isDerived = StatusKey("DERIVED", key)
+
+    let isFirstIn = wrapper[storeKey] === "__FIRST_IN__"
+    let value
+    if (isFirstIn) {
+        value = wrapper[key]
+        wrapper[storeKey] = value
+    } else {
+        value = wrapper[storeKey]
+    }
+    // ---- set new state when use callback
+    if (wrapper[isDerived] === true) value = value()
+    let [state, setState] = HookWrapper(useState, value)
+    // ---- equivalent to getDerivedStateFromProps
+    if (isFirstIn && state !== value) setState(value)
+
+    let firstCapitalKey = key.replace(/^[a-z]/, l=>l.toUpperCase())
+    // ---- access setValue by using this.setKey
+    wrapper[`set${firstCapitalKey}`] = setState
+    Object.defineProperty(wrapper, key, {
+        get: () => state,
+        set: (value: any) => {setState(value)}
+    })
+}
+
+export function ResolveRef(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
+    if (!isStatusKey(statusKey, "REF")) return callback()
+    let key = getKeyFromStatus(statusKey, "REF")
+    let storeKey = StoreKey("REF", key)
+    let isDerived = StatusKey("DERIVED", key)
+
+    let isFirstIn = wrapper[storeKey] === "__FIRST_IN__"
+    let value
+    if (isFirstIn) {
+        value = wrapper[key]
+        wrapper[storeKey] = value
+    } else {
+        value = wrapper[storeKey]
+    }
+    // ---- set new state when use callback
+    if (wrapper[isDerived] === true) value = value()
+    let ref = HookWrapper(useRef, value)
+
+    wrapper[`${key}Ref`] = ref
+
+    Object.defineProperty(wrapper, key, {
+        get: () => ref.current,
+        set: (value: any) => {ref.current = value}
+    })
 }
 
 export function ResolveContexts(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
@@ -92,5 +147,5 @@ export function ResolveObserve(wrapper: any, statusKey: string, callback: ()=>an
 // ---- react treat useXXX as a hook and Xxxx as a component,
 //      can't use hook in a callback, so make react view it as a component
 export function HookWrapper(hook: Function, ...props: any[]) {
-    hook(...props)
+    return hook(...props)
 }

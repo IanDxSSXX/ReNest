@@ -1,7 +1,7 @@
 import {Div} from "../../core/utils/HTMLTags";
 import AnimatedDiv from "../Other/AnimatedDiv";
 import {RUIColor} from "../../core/theme/Colors";
-import {Callback, DotProp, Prop, Spring, State, View, ViewWrapper} from "../../core";
+import {Derived, DotProp, Prop, Spring, State, View, ViewWrapper} from "../../core";
 import ZStack from "../Container/ZStack";
 
 const themes = {
@@ -27,7 +27,7 @@ class Toggle extends View {
     defaultThemeName = "secondary"
 
     @Prop defaultValue: boolean = false
-    @Callback(State) valueState: any = () => this.defaultValue
+    @Derived(State) valueState: any = () => this.defaultValue
     @DotProp width: any
     @DotProp height: any
     toggleWidth = () => this.width ?? "40px"
@@ -35,14 +35,14 @@ class Toggle extends View {
     toggleBackWidth = () => this.toggleWidth()
     toggleBackHeight = () => `calc(${this.toggleHeight()} * 3 / 5)`
     duration = 150
-    @Callback(Spring) buttonStyles = () => ({
-        translateX: this.valueState.value ?
+    @Derived(Spring) buttonStyles = () => ({
+        translateX: this.valueState ?
             `calc((${this.toggleWidth()} - ${this.toggleHeight()}) / 2)` :
             `calc((${this.toggleHeight()} - ${this.toggleWidth()}) / 2)`,
         config: { duration: this.duration },
     })
-    @Callback(Spring) frontStyles = () => ({
-        width: this.valueState.value ? this.toggleWidth() : this.toggleHeight(),
+    @Derived(Spring) frontStyles = () => ({
+        width: this.valueState ? this.toggleWidth() : this.toggleHeight(),
         config: { duration: this.duration },
     })
     @DotProp disable = false
@@ -60,7 +60,7 @@ class Toggle extends View {
                         .width("100%")
                         .height(this.toggleBackHeight())
                         .borderRadius(`calc(${this.toggleBackHeight()} / 2)`)
-                        .backgroundColor(this.valueState.value ? this.theme.fg : this.theme.bg)
+                        .backgroundColor(this.valueState ? this.theme.fg : this.theme.bg)
                         .style(this.frontStyles)
                 )
                     .alignmentH("leading"),
@@ -68,15 +68,15 @@ class Toggle extends View {
                     .width(this.toggleHeight())
                     .height(this.toggleHeight())
                     .borderRadius(`calc(${this.toggleHeight()} / 2)`)
-                    .backgroundColor(this.valueState.value ? this.theme.toggle : this.theme.bg)
+                    .backgroundColor(this.valueState ? this.theme.toggle : this.theme.bg)
                     .style(this.buttonStyles)
             )
                 .width(this.toggleWidth())
                 .height(this.toggleHeight())
                 .cursor("pointer")
                 .onClick(() => {
-                    this.onChange(!this.valueState.value)
-                    this.valueState.setValue((prev: boolean) => !prev)
+                    this.onChange(!this.valueState)
+                    this.valueState = !this.valueState
                 })
                 .pointerEvents("none", this.disable)
                 .opacity("0.5", this.disable)

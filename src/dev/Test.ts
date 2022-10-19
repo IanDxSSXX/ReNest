@@ -1,9 +1,9 @@
 import {RUIView, ViewWrapper, View} from "../core/element/RUIView";
 import {Button, VStack, Text, TextField, HStack} from "../component";
-import {Callback, Context, Contexts, DotProp, Prop} from "../core/element/Decorator";
-import {Ref, State} from "../core/element/HookDecorator";
+import {Derived, Context, Contexts, DotProp, Prop} from "../core/element/Decorator";
 import {Div} from "../core/utils/HTMLTags";
 import {ContextProvider} from "../core";
+import {State} from "../../package";
 
 let myThemes = {
     first: {
@@ -43,7 +43,7 @@ let Sub1 = ViewWrapper(CSub1)
 
 class Counter extends View {
     @Prop startNum: number = 0
-    @Callback(State) count: any = () => this.startNum
+    @Derived(State) count: any = () => this.startNum
 
     Body = () =>
         VStack(

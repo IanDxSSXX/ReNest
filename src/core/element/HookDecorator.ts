@@ -8,9 +8,7 @@ import {useNavigate} from "react-router-dom";
 
 type HookDecorator = (target: any, propertyKey: string) => void
 
-export const State = Hook(useRUIState) as HookDecorator
-
-export const Ref = Hook(useRef) as HookDecorator
+export const AState = Hook(useRUIState) as HookDecorator
 
 export const Theme = SHook(useTheme) as HookDecorator
 

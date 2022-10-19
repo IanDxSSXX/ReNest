@@ -41,15 +41,15 @@ class Button extends View {
             .backgroundColor(this.theme.bg)
             .color(this.theme.fg)
             .borderColor(this.theme.fg)
-            .opacity(this.mouseState.value === "out" ? "1" : "0.5")
+            .opacity(this.mouseState === "out" ? "1" : "0.5")
             .onMouseDown(() => {
-                this.mouseState.value = "down"
+                this.mouseState = "down"
             })
             .onMouseUp(() => {
-                this.mouseState.value = "out"
+                this.mouseState = "out"
             })
             .onMouseOut(() => {
-                this.mouseState.value = "out"
+                this.mouseState = "out"
             })
             .pointerEvents("none", this.disable)
             .opacity("0.5", this.disable)

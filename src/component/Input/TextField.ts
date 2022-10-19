@@ -1,4 +1,4 @@
-import {Callback, ConditionView, DotProp, Prop, Ref, Spring, State, View, ViewWrapper} from "../../core";
+import {Derived, ConditionView, DotProp, Prop, Ref, Spring, State, View, ViewWrapper} from "../../core";
 import {Input} from "../../core/utils/HTMLTags";
 import {RUIColor} from "../../core/theme/Colors";
 import {pixelToInt} from "../../core/utils/Utils";
@@ -42,13 +42,13 @@ class TextField extends View {
     @DotProp onChange: any
     @Ref inputElement: any
     @Ref textFieldElement: any
-    @Callback(Ref) textRef: any = () => this.defaultText
-    @Callback(State) isTyping: any = () => this.textRef.current !== ""
+    @Derived(Ref) textRef: any = () => this.defaultText
+    @Derived(State) isTyping: any = () => this.textRef !== ""
     @State isMouseOver: any = false
-    @Callback(Spring) styles = () => ({
+    @Derived(Spring) styles = () => ({
         to:{
-            fontSize: this.isTyping.value ? pixelToInt(this.myFontSize)*7/10 : pixelToInt(this.myFontSize),
-            bottom: this.isTyping.value ? "50%" : "0"
+            fontSize: this.isTyping ? pixelToInt(this.myFontSize)*7/10 : pixelToInt(this.myFontSize),
+            bottom: this.isTyping ? "50%" : "0"
         },
         config: { duration: 200 },
     })
@@ -57,7 +57,7 @@ class TextField extends View {
     Body = () =>
         ZStack(
             Input()
-                .ref(this.inputElement)
+                .ref((this as any).inputElementRef)
                 .width("200px")
                 .outline("none")
                 .border("solid")
@@ -65,12 +65,12 @@ class TextField extends View {
                 .borderWidth(this.variantUnderlined ? "0px 0px 1px 0px" : "1px")
                 .borderRadius(this.variantUnderlined ? "0px" : "5px")
                 .padding(this.variantUnderlined ? "7px 0px" : "7px")
-                .borderColor(this.isTyping.value ? this.theme.selected :
-                        (this.isMouseOver.value || (this.disable ?? true)) ? this.theme.over : this.theme.unselected)
-                .setProp("defaultValue", this.textRef.current)
+                .borderColor(this.isTyping ? this.theme.selected :
+                        (this.isMouseOver || (this.disable ?? true)) ? this.theme.over : this.theme.unselected)
+                .setProp("defaultValue", this.textRef)
                 .onChange(() => {
-                    this.textRef.current = (this.inputElement as any).current.value
-                    !!this.onChange && this.onChange(this.textRef.current)
+                    this.textRef = this.inputElement.value
+                    !!this.onChange && this.onChange(this.textRef)
                 })
                 .backgroundColor(this.theme.foreground),
             ConditionView((this.placeHolder ?? "") === "", {
@@ -78,7 +78,7 @@ class TextField extends View {
                     AnimatedDiv(
                         Text(this.placeHolder)
                             .color((this.disable ?? true) ? this.theme.over :
-                                this.isTyping.value ? this.theme.selected : this.theme.unselected)
+                                this.isTyping ? this.theme.selected : this.theme.unselected)
                             .background(`linear-gradient(to top , ${this.theme.foreground} 0%, ${this.theme.foreground}  50.5%, transparent 50.5%, transparent 100%)`)
                             .padding(this.variantUnderlined ? "0px" : "3px")
                             .marginLeft(this.variantUnderlined ? "0px" : "5px")
@@ -89,31 +89,31 @@ class TextField extends View {
                         .style(this.styles)
             })
         )
-            .ref(this.textFieldElement)
+            .ref((this as any).textFieldElementRef)
             .alignmentH("leading")
             .pointerEvents("none", this.disable)
             .opacity("0.5", this.disable)
             .onMouseOver(() => {
-                this.isMouseOver.value = true
+                this.isMouseOver = true
             })
             .onMouseOut(() => {
-                this.isMouseOver.value = false
+                this.isMouseOver = false
             })
             .onMouseDown(() => {
-                this.isTyping.value = true
+                this.isTyping = true
             })
             .didMount(() => {
                 if (this.autoFocus ?? true) {
-                    (this.inputElement.current as any).focus()
-                    this.isTyping.value = true;
-                    (this.inputElement.current as any).borderColor = this.theme.selected
+                    this.inputElement.focus()
+                    this.isTyping = true;
+                    this.inputElement.borderColor = this.theme.selected
                 }
             })
             .didUpdate(() => {
                 if (this.disable) return
                 let clickOutsideHandler = (event: any) => {
-                    if (!(this.textFieldElement.current as any)?.contains(event.target) && this.textRef.current === "")
-                        this.isTyping.value = false
+                    if (!this.textFieldElement?.contains(event.target) && this.textRef === "")
+                        this.isTyping = false
                 }
                 document.addEventListener("mousedown", clickOutsideHandler);
 

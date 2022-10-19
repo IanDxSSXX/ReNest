@@ -9,11 +9,10 @@ export function StoreKey(name: string, key: string) {
 
 function createHookDecorator(target: any, propertyKey: string, hookName: string, hookFunc: Function) {
     Object.defineProperty(target, StatusKey(hookName, propertyKey), {
-        value: true,
-        writable: true
+        value: true
     })
     Object.defineProperty(target, StoreKey(hookName, propertyKey), {
-        value: true,
+        value: "__FIRST_IN__",
         writable: true
     })
     Object.defineProperty(target, StoreKey(`_${hookName}_FUNC_`, propertyKey), {
@@ -24,11 +23,11 @@ function createHookDecorator(target: any, propertyKey: string, hookName: string,
 // ---- in this situation:
 // --eg @State first = 1
 // --no @State second = this.first.value      (because it will treat this.first as 1)
-// -yes @Callback@State second = () => this.first.value
-export const Callback = (decorator: Function) =>
+// -yes @Derived@State second = () => this.first.value
+export const Derived = (decorator: Function) =>
     (target: any, propertyKey: string) => {
         decorator(target, propertyKey)
-        Object.defineProperty(target, StatusKey("CALLBACK", propertyKey), {
+        Object.defineProperty(target, StatusKey("DERIVED", propertyKey), {
             value: true,
         })
     }
@@ -45,6 +44,25 @@ export const SHook = (hook: Function) =>
     }
 
 
+export const State = (target: any, propertyKey: string) => {
+    Object.defineProperty(target, StatusKey("STATE", propertyKey), {
+        value: true,
+    })
+    Object.defineProperty(target, StoreKey("STATE", propertyKey), {
+        value: "__FIRST_IN__",
+        writable: true
+    })
+}
+
+export const Ref = (target: any, propertyKey: string) => {
+    Object.defineProperty(target, StatusKey("REF", propertyKey), {
+        value: true,
+    })
+    Object.defineProperty(target, StoreKey("REF", propertyKey), {
+        value: "__FIRST_IN__",
+        writable: true
+    })
+}
 
 export const Context = (target: any, propertyKey: string) => {
     Object.defineProperty(target, StatusKey("CONTEXT", propertyKey), {
