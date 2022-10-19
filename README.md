@@ -92,7 +92,7 @@ A react add-on to write React just like SwiftUI.
         Button(num)
           .onClick(() => {
             console.log(`This is button ${num}`)
-            this.toggle.setValue(prev=>!prev)
+            this.toggle = !this.toggle
           })
       )
   }
