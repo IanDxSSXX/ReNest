@@ -7,7 +7,7 @@ class ChildView extends View {
     @Context context1: string = "5"
 
     @Prop a: any = -1
-    @Derived(State) test: any = () => this.a
+    @Derived(Ref) test: any = () => this.a
     Body = () =>
         VStack(
             Text(this.context1),
@@ -21,7 +21,6 @@ class ChildView extends View {
                     // this.a.setValue(this.a.value+1)
                     // this.a.value = this.a.value + 1
                     // this.a.value += 1
-                    (this as any).setTest((pre:any)=>pre+1)
                 }),
             Text(this.test)
         )

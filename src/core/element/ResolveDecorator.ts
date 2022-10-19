@@ -24,7 +24,7 @@ export function ResolveHook(wrapper: any, statusKey: string, hookName: string, s
     let hook = wrapper[StoreKey(`_${hookName}_FUNC_`, key)]
     if (!hook) return
     let storeKey = StoreKey(hookName, key)
-    let isDerived = StatusKey("DERIVED", key)
+    let isDerived = wrapper[StatusKey("DERIVED", key)]
     let props
     if (wrapper[storeKey] === "__FIRST_IN__") {
         props = wrapper[key]
@@ -32,7 +32,7 @@ export function ResolveHook(wrapper: any, statusKey: string, hookName: string, s
     } else if (wrapper[statusKey]) {
         props = wrapper[storeKey]
     }
-    if (wrapper[isDerived] === true) props = props()
+    if (isDerived === true) props = props()
     wrapper[key] = spreadProps ? hook(...props) : hook(props)
 }
 
@@ -48,7 +48,7 @@ export function ResolveState(wrapper: any, statusKey: string, callback: ()=>any=
     if (!isStatusKey(statusKey, "STATE")) return callback()
     let key = getKeyFromStatus(statusKey, "STATE")
     let storeKey = StoreKey("STATE", key)
-    let isDerived = StatusKey("DERIVED", key)
+    let isDerived = wrapper[StatusKey("DERIVED", key)]
 
     let isFirstIn = wrapper[storeKey] === "__FIRST_IN__"
     let value
@@ -59,10 +59,10 @@ export function ResolveState(wrapper: any, statusKey: string, callback: ()=>any=
         value = wrapper[storeKey]
     }
     // ---- set new state when use callback
-    if (wrapper[isDerived] === true) value = value()
+    if (isDerived === true) value = value()
     let [state, setState] = HookWrapper(useState, value)
     // ---- equivalent to getDerivedStateFromProps
-    if (isFirstIn && state !== value) setState(value)
+    if (isFirstIn && isDerived && state !== value) setState(value)
 
     let firstCapitalKey = key.replace(/^[a-z]/, l=>l.toUpperCase())
     // ---- access setValue by using this.setKey
@@ -77,7 +77,7 @@ export function ResolveRef(wrapper: any, statusKey: string, callback: ()=>any=()
     if (!isStatusKey(statusKey, "REF")) return callback()
     let key = getKeyFromStatus(statusKey, "REF")
     let storeKey = StoreKey("REF", key)
-    let isDerived = StatusKey("DERIVED", key)
+    let isDerived = wrapper[StatusKey("DERIVED", key)]
 
     let isFirstIn = wrapper[storeKey] === "__FIRST_IN__"
     let value
@@ -88,8 +88,10 @@ export function ResolveRef(wrapper: any, statusKey: string, callback: ()=>any=()
         value = wrapper[storeKey]
     }
     // ---- set new state when use callback
-    if (wrapper[isDerived] === true) value = value()
+    if (isDerived) value = value()
     let ref = HookWrapper(useRef, value)
+    // ---- equivalent to getDerivedStateFromProps
+    if (isFirstIn && isDerived && ref.current !== value) ref.current = value
 
     wrapper[`${key}Ref`] = ref
 
