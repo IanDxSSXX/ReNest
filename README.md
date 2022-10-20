@@ -221,7 +221,7 @@ const MyPage = FuncView(() =>
 ```
 ## 🔆 Cool Things
 
-* This is the part where we write react like ReNest and get to know some **cool** features!
+* This is the part where we write react like SwiftUI and get to know some **cool** features!
 
 ### Class Component
 
