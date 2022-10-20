@@ -1,25 +1,24 @@
-# 🪶 RUI
-A react add-on to write React just like SwiftUI.
+# 🪺 ReNest
+Let SwiftUI nests in React.
 
 * ✨ Write function components like React function components with original react hooks
-* 🎨 Write class components just like SwiftUI, element and modern
-* 🐳 Pure relative layout, offering components like VStack/HStack/ZStack/Spacer
+* 🎨 Write class components just like SwiftUI, elegant and modern
 * ⚡️ Partial re-render by default
 * 🌐 Powerful contexts that enables passing props through multiple levels of components
-* ⌨️ More features like Navigation, Theme, ...
+* ⌨️ More features like Theme, Navigation; components like VStack/HStack/ZStack/Spacer; intergrating with React Native, EXPO, Taro ...
 
 ## 📦 Install
-`npm install @iandx/reactui`
-## ❓ What brings RUI?
+`npm install @renest/renest`
+## ❓ What brings ReNest?
 * React is a great framework, and function hooks make it even more elegant.
   But not HTML or CSS! It's 2022! React uses jsx to replace the ugly HTML and CSS, but......
   What the difference between JSX and HTML! Why can't we code modern? 
 
 * That was what in my mind when I first used SwiftUI back in 2019. Though it was(and is still) just a toy 
   and though I've heard its idea was exactly from React, still, it's modern and elegant. 
-  So why don't we take a little bit back to React? Here comes RUI...
+  So why don't we take a little bit back to React? Here comes ReNest...
 
-* Here is an example to create a list of buttons using jsx and reactui
+* Here is an example to create a list of buttons using react functional jsx/swiftui/renest
 
 ### Comparison
 
@@ -45,9 +44,9 @@ A react add-on to write React just like SwiftUI.
   
   ```
   
-* RUI as function
+* ReNest as function
   ```typescript
-  const RUIFuncButtons = FuncView(({nums}:{nums:number[]}) => {
+  const RTFuncButtons = FuncView(({nums}:{nums:number[]}) => {
     let [toggle, setToggle] = useState(false)
   
     return (
@@ -61,7 +60,7 @@ A react add-on to write React just like SwiftUI.
     )
   })
   ```
-  Except the way RUI sets props, everything is the same with React functions.
+  Except the way ReNest sets props, everything is the same with React functions.
 
 * SwiftUI
 
@@ -81,9 +80,9 @@ A react add-on to write React just like SwiftUI.
   }
   ```
 
-* RUI as class
+* ReNest as class
   ``` typescript
-  class RUIClassButtons extends View {
+  class RTClassButtons extends View {
     @Prop nums: number[]
     @State toggle = false
     
@@ -98,38 +97,25 @@ A react add-on to write React just like SwiftUI.
   }
   ```
 
-* Basically every prop in React and CSSProperty can be used in RUI as 'dot' function, and IDEs will autocomplete for you!
+* Basically every prop in React and CSSProperty can be used in ReNest as 'dot' function, and IDEs will autocomplete for you!
 * if there's some specific properties from third-party components, use `setProp(key, value)`to set additional prop
 
-```typescript
-const MyText = FuncView(() =>
-    Text("test")
-        .fontSize("20px")
-        .fontWeight("bold")
-        .width("30px")
-        .color("red")
-        .className("rui-text")
-        .id("text-12abc")
-        .setProp("other_prop", 123)
-)
-```
 ## ⚡️ Quick Start
-* try RUI in [codesandbox](https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
+* try ReNest in [codesandbox](https://codesandbox.io/s/cool-boyd-1w8rr1?file=/src/App.tsx)
 ```typescript
 // ---- src/App.tsx
-import RUIApp from 'RUIApp';
+import RTApp from 'RTApp';
 function App() {
-  return RUIApp().asReactElement()
+  return RTApp().asReactElement()
 }
 
 export default App;
 ```
 
 ```typescript
-// ---- src/RUIApp.ts
-import RUIApp from './RUIApp';
-import {FuncView} from "@iandx/reactui";
-import {Text, Button, VStack} from "@iandx/reactui/component";
+// ---- src/RTApp.ts
+import {FuncView} from "@renest/renest";
+import {Text, Button, VStack} from "@renest/component";
 import {useState} from "react";
 
 const MyComponent = FuncView(({defaultNum}: any) => {
@@ -140,7 +126,7 @@ const MyComponent = FuncView(({defaultNum}: any) => {
   )
 })
 
-const RUIApp = FuncView(() =>
+const RTApp = FuncView(() =>
   VStack(
       MyComponent({defaultNum: 10}),
       Text("Hello")
@@ -148,11 +134,11 @@ const RUIApp = FuncView(() =>
     .alignment("center")
 )
 
-export default RUIApp;
+export default RTApp;
 ```
-* Every RUI instance can convert to React element using `.asReactElement()`
-* Every RUI instance can take
-  1. another RUI instance
+* Every ReNest instance can convert to React element using `.asReactElement()`
+* Every ReNest instance can take
+  1. another ReNest instance
   2. a react element
   3. jsx element
   
@@ -160,43 +146,52 @@ export default RUIApp;
   ```typescript jsx
   const MySecondComponent = FuncView(() =>
       VStack(
-          Text("This is RUI"),
+          Text("This is ReNest"),
           React.createElement("p", null, "This is React"),
           <p>This is JSX</p>
       )     
   )
   ```
 
-* but we **strongly** suggest you to use **pure** RUI for additional features, use `TagView/ElementView` to wrap your React Components
+* but we **strongly** suggest you to use **pure** ReNest for additional features, use `TagView/ElementView` to wrap your React Components
 
 ## 🤖 Useful Features
 
 ### TagView
-* Turn every react component into reactui instance no matter if it's a custom react function or a html tag
+* Turn every react component into ReNest instance no matter if it's a custom react function or a html tag
 
 ```typescript
-const RUIDiv = TagView("div")()
-const RUIComponent = TagView(YourReactFunction)()
+const RTDiv = TagView("div")()
+const RTComponent = TagView(YourReactFunction)()
 ```
+* use the second parameter to offer some acceptable dotProp
+
+```typescript
+const Button = TagView("button", ["onTap"])
+let NewButton = Button("title").onTap("whatever value here will be saved into props when creactElement")
+
+```
+
 ### ElementView
-* Turn a react component instance to reactUI instance
+
+* Turn a react component instance to ReNest instance
 
 ```tsx
 const myJSX = <div>hello</div>
-const RUIInstance = ElementView(myJSX)()
+const RTInstance = ElementView(myJSX)()
 ```
 ### ConditionView
 * Use this view to build a dynamic controllable page **simple and fast**.
 
 ```typescript
 const MyCondition = FuncView(() => {
-    const displayIdx = useRUIState(0)
+    const [displayIdx, setDisplayIdx] = useState(0)
     
     return (
         VStack(
             Button("change")
                 .onClick(() => {
-                    displayIdx.value = displayIdx.value == 2 ? 0 : displayIdx.value+1
+                    setDisplayIdx(prev=> prev==2 ? 0 : prev+1)
                 }),
             ConditionView(displayIdx.value, {
                 0: () => Text("This is the default view"),
@@ -208,7 +203,7 @@ const MyCondition = FuncView(() => {
 })
 ```
 ### Router
-* Using react-router 6, the `NavigationView` in RUI is pretty easy to use and **supports regex path**
+* Using react-router 6, the `NavigationView` in ReNest is pretty easy to use and **supports regex path**
   (which react-router 6 doesn't).
 
 ```typescript
@@ -224,13 +219,13 @@ const MyPage = FuncView(() =>
     )
 )
 ```
-## 🔆 Advanced
+## 🔆 Cool Things
 
-* This is the part where we write react like SwiftUI and get to know some **cool** features!
+* This is the part where we write react like ReNest and get to know some **cool** features!
 
 ### Class Component
 
-* A reactui class component looks like this
+* A ReNest class component looks like this
 
   ```typescript
   // extends View to write a class component
@@ -252,18 +247,18 @@ const MyPage = FuncView(() =>
         HStack(
           Button("+")
             .onClick(() => {
-              this.count.setValue((prev:any)=>prev+1)
+              this.count ++
             }),
           Button("-")
             .onClick(() => {
-              this.count.setValue((prev:any)=>prev-1)
+              this.count --
             })
           )
             .spacing("20px"),
-        Text(this.count.value),
+        Text(this.count),
         Button("clear")
           .onClick(() => {
-            this.count.value = this.startNum
+            this.count = this.startNum
           })
       )
         .alignment("center")
@@ -282,37 +277,35 @@ const MyPage = FuncView(() =>
 
 ### ContextProvider
 
-* Use ContextProvider in RUI to manage global states simple and powerful.
+* Use ContextProvider in ReNest to manage global states simple and powerful.
 * Use `@Context` to destructure the whole context into a specific variable
 * Use `@Contexts` to get the **whole context**
 
 ```typescript
 import {ContextProvider, ViewWrapper, View} from "@iandx/reactui";
 class ComponentA extends View {
-  @Context myFirstState: any
+  @Context myFirstContext: any
   
   Body = () =>
-    VStack(
-      Text(`Current first state value is ${contexts.myFirstState.value}`),
-      Button("add")    // click this will update the context
-        .onClick(() => {
-          myFirstState.value += 1
-        })
-    )
+      Text(`Current first state value is ${this.myFirstContext}`),
 }
 
 const ComponentAView = ViewWrapper(ComponentA)
 
 class MyComponentWithContext extends View {
-  @State myFirstState: any = 0
+  @State myFirstContext = 0
   
   Body = () =>
     ContextProvider(
       VStack(
+        Button("add")
+        	.onClick(() => {
+            this.myFirstContext
+					})
         ComponentAView()
       )
     )
-      .context({myFirstState: this.myFirstState})
+      .context({myFirstContext: this.myFirstContext})
 }
 
 ````
@@ -381,7 +374,8 @@ class MyComponentWithContext extends View {
   // default using class name(in this case is Paper) to set different theme for different class
   // if you don't want some class to be polluted, use a themeTag() to add a appendix(in this case is Paper_another)
   // @Theme in hook equals to useTheme(themes, initialThemeName)
-  @Theme themeState = [{
+  // any element inside ThemeProvider can directly current "myThemes" by using this.themeState to change theme
+  @Theme myThemes = [{
     firstTheme: {
       Paper: {
         bg: "#118811",
@@ -408,25 +402,25 @@ class MyComponentWithContext extends View {
           .themeTag("another")  // only have secondTheme, when themeName == firstTheme, using defeaultTheme inside Paper class
         Button("change theme")
           .onClick(() => {
-            // use themeState.is("xx") to check current theme name
-            // use themeState.themeName to get current theme name
-            // use themeState.to("xx") to change theme
-            if (this.themeState.is("firstTheme")) {
-              this.themeState.to("secondTheme")
+            // use myThemes.is("xx") to check current theme name
+            // use myThemes.themeName to get current theme name
+            // use myThemes.to("xx") to change theme
+            if (this.myThemes.is("firstTheme")) {
+              this.myThemes.to("secondTheme")
             } else {
-              this.themeState.to("firstTheme")
+              this.myThemes.to("firstTheme")
             }
           })
       )
     )
-      .themes(themeState)
+      .useTheme(this.myThemes)
 }
 ```
 
 ### Lifecycle
 
-* React function uses `useEffect ` to handle lifecycles, so you can still use it (remember, class's Body is **nothing but a react function component**, but we don't write any logical code blocks in Body for the sake of **love**)
-* So RUI handles lifecycles this way (and adds a strong feature: **component wise lifecycles**)
+* React function uses `useEffect ` to handle lifecycles, so you can still use it (remember, class's Body is **nothing but a react function component**, but we don't write any logical code blocks inside Body for the sake of **love**)
+* So ReNest handles lifecycles this way (and adds a strong feature: **component wise lifecycles**)
 
 ```typescript
 class SubComponent extends View {  
@@ -443,7 +437,7 @@ class MainComponent extends View {
     VStack(
       Button("refresh")
         .onClick(() => {
-          toggle.setValue(prev=>!prev)
+          this.toggle = !this.toggle
         })
       SubComponentView()
         .didUpdate(() => {
@@ -460,7 +454,6 @@ class MainComponent extends View {
         console.log("will unmount")
       })
       .shouldUpdate((prevProps, currProps) => false)  // this equals to React.memo(xx, shouldUpdate)
-      .useMemo(false)    // using memo for partial re-render by default, so no need to call this function to disable it, but you can do it anyway
 }
 ```
 
@@ -477,36 +470,93 @@ class SubComponent extends View {
 const SubComponentView = ViewWrapper(CoSubComponentmponentA)
 
 class MainComponent extends View {
-  @State toggle: any = false
+  @State toggle = false
   
   Body = () =>
     VStack(
       Button("refresh")
         .onClick(() => {
-          toggle.setValue(prev=>!prev)
+          this.toggle = !this.toggle
         })
       SubComponentView()
     )
     
-  lifecycles = {
-    didMount: () => {
-      console.log("mounted")
-    },
-    didUpdate: [
-      () => {
-        console.log("re-rendered at any value")
-      }),
-      () => {
-        console.log("re-rendered at toggle value")
-      }, [this.toggle.value])
-    ],
-    willUnmount: () => {
-      console.log("will unmount")
-    }),
-    shouldUpdate: (prevProps, currProps) => false
+  didMount: () => {
+    console.log("mounted")
   }
+  didUpdate: () => {
+    console.log("re-rendered at any value")
+  }
+  willUnmount: () => {
+    console.log("will unmount")
+  })
+  shouldUpdate: (prevProps, currProps) => false
+  
 }
 ```
+
+* `@Observe`: you can use this to observe any prop/dotProp/state
+
+```typescript
+class Counter extends View {
+  @State count: = 0
+  @Observe $count = () => {
+    console.log("log this every time click refresh")
+  }
+  
+  Body = () =>
+      Button("refresh")
+        .onClick(() => {
+          this.count ++
+        })
+
+  
+```
+
+### Converter
+
+* You may need some 3rd ui libraries to provide some off-the-shelf components, to use this, for example, you can simply use `TavView(tag, ...DotPropNames)`. However, if you're using a lot, this is exhausting, now we provide a function called `Converter`, the first prop is a Dict of tags, and the second is dotPropNames
+
+```typescript
+const {Div, Button, P, WhateverSpan} = Converter(
+{
+  Div: "div",
+  Button: "button",
+  P: "p",
+  WhateverSpan: "span"
+}, {
+  Div: ["goodBye", "look"]
+})
+```
+
+* Now you can use it anywhere in ReNest
+
+```typescript
+let allGood = FuncView(() =>
+  Div(
+    Button("ok"),
+    WhateverSpan("ha")
+  )
+    .look("don't look at me")
+)
+```
+
+* Suggest you to write a new file `Convert.ts` which contains all the tag you need, and import it from elsewhere
+
+```typescript
+import {Converter} from "@renest/renest";
+
+export const {Div, Button, Span, P} = Converter(
+{
+    Div: "div",
+    Button: "button",
+    Span: "span",
+    P: "p"
+})
+
+```
+
+
 
 ## Internal components
 
@@ -532,14 +582,9 @@ class MainComponent extends View {
 | ------ | -------------- | ----------- |
 | Button |                |             |
 
-> Tips:  
->
-> * View full examples at src/components as these are internal components written as RUI class components.
-> * Use plugin `Rainbow Brackets` in `WebStorm` to code RUI comfortably.
-
 ## Todo List
 
-- [ ] Find a better way to debug and throw error
+- [x] Find a better way to debug and throw error
 - [ ] Improve performance
 
 ### Components
