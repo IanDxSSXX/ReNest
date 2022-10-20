@@ -6,6 +6,7 @@ import RTConfig from "../base/RTConfig";
 export class RTElement extends RTTheme {
     customProps: any = {contextNameStore: [], dotPropNameStore: []}
     dotPropNames: string[] = []
+    IAmTagView = false
 
     registerView(view: RTBase) {
         // ---- react only use key in React.createElement, so no need for pass down

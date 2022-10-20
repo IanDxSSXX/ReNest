@@ -27,6 +27,7 @@ class ConditionView extends RTElement {
     variable: any
     conditionMap: any
     conditionIDs: any = {}
+    name = "ConditionView"
 
     constructor(variable: any, conditionMap: any) {
         super("");

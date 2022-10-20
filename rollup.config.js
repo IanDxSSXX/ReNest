@@ -2,6 +2,7 @@ import dts from "rollup-plugin-dts";
 import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import { terser } from "rollup-plugin-terser";
 
 let rootName = "./packages"
 
@@ -10,9 +11,9 @@ function generatePackage(packageName, inputPath) {
     return [{
         input: inputPath,
         output: [{
-          file: `${rootName}/${packageName}/index.js`,
-          format: 'esm',
-          sourcemap: true
+            file: `${rootName}/${packageName}/index.js`,
+            format: 'esm',
+            sourcemap: true
         }, {
             file: `${rootName}/${packageName}/index.cjs.js`,
             format: 'cjs',
@@ -21,7 +22,8 @@ function generatePackage(packageName, inputPath) {
         plugins: [
             typescript({ tsconfig: "tsconfig.json" }),
             commonjs(),
-            nodeResolve()
+            nodeResolve(),
+            terser()
         ],
         external: Object.keys(packageJson.dependencies)
     }, {

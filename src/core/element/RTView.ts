@@ -45,13 +45,10 @@ export abstract class View<T=any> extends RTElement {
     init() {
         if (RTConfig.debug) {
             // ---- get trace
-            let err: any = {}
-            Error.captureStackTrace(err)
-            let stack = err.stack
+            let err = new Error()
+            let stack = err.stack!
             let stackList = stack.split("\n")
-            if (!stackList[3].trim().startsWith("at App")) {
-                this.fileName = stackList[3].replace(/.*\((https?:\/\/\S+)\)/, "$1")
-            }
+            this.fileName = stackList[3].replace(/.*(https?:\/\/\S+?)/, "$1")
         }
 
 

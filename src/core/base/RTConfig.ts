@@ -1,5 +1,6 @@
 class RTConfig {
     debug = true
+    throwAll = false
     debugStore = {}
 }
 

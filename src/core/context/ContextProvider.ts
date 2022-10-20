@@ -42,6 +42,7 @@ const ContextWrapperMemorized = memo(ContextWrapper, (prev, curr) => {
 class ContextProvider extends RTElement {
     contextStoreValue = {}
     contextId = uid()
+    name = "ContextProvider"
 
     constructor(...children: any) {
         super("", ...children);

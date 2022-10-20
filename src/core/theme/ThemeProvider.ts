@@ -47,6 +47,7 @@ class ThemeProvider extends RTElement {
 
     currThemeState?: ThemesState
     IAMThemeProvider = true
+    name = "ThemeProvider"
     themeId = uid()
 
     useTheme = (themeState: ThemesState) => {

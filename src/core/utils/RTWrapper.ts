@@ -5,11 +5,10 @@ import RTConfig from "../base/RTConfig";
 export function TagView(element: any, dotPropNames?: string[]) {
     return (...children: any) => {
         let ruiElement = new RTElement(element, ...children).deleteProp("className")
-
+        ruiElement.IAmTagView = true
         if (RTConfig.debug) {
-            let err: any = {}
-            Error.captureStackTrace(err)
-            let stack = err.stack
+            let err = new Error()
+            let stack = err.stack!
             let stackList = stack.split("\n")
             ruiElement.fileName = stackList[2].replace(/.*\((https?:\/\/\S+)\)/, "$1")
         }

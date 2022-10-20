@@ -1,5 +1,6 @@
 import {PureComponent} from "react"
 import Running from "../base/Running";
+import RTConfig from "../base/RTConfig";
 
 interface ErrorBoundaryProp {
     wrapper: any,
@@ -9,6 +10,27 @@ interface ErrorBoundaryProp {
 export interface ErrorBoundaryState {
     hasError: boolean
     error: any
+}
+
+if (!RTConfig.throwAll) {
+    // ---- error handling
+    const consoleError = console.error
+    console.error = (error) => {
+        if (typeof error !== "string" || !error.startsWith("The above error occurred in the")) {
+            // ---- suppress react error because it already piped into renest
+            consoleError(error)
+        }
+    }
+
+    window.addEventListener('error', function (event) {
+        const {error} = event;
+        // Skip the first error, it is always irrelevant in the DEV mode.
+        if (error.stack?.indexOf('invokeGuardedCallbackDev') >= 0 && !error.alreadySeen) {
+            error.alreadySeen = true;
+            event.preventDefault();
+            return;
+        }
+    }, {capture: true});
 }
 
 export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundaryState> {
@@ -25,44 +47,36 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
     }
 
     getTraceMessage(node: any) {
-        let name = node.parentNode.constructor.name
-        if (name === "RTElement")  {
-            name = node.parentNode.elementTag.name??node.parentNode.elementTag
-        }
-        if (node.fileName !== undefined) {
-            return `\tat ${name} (${node.fileName})\n`
-        } else {
-            return `\tat ${name}\n`
-        }
-    }
+        let name = node.IAmTagView ?
+            node.elementTag.name??node.elementTag : node.name??node.constructor.name
 
+        return `\tat ${name} (${node.fileName??"http://"})\n`
+    }
 
     render() {
         const { hasError, error } = this.state
         const { children, wrapper } = this.props
 
         if (hasError) {
-            let wrapperName = wrapper.constructor.name
-            if (wrapperName === "RTElement")  {
-                wrapperName = wrapper.elementTag.name??wrapper.elementTag
-            }
-            let traceMessages = `\tat ${wrapperName}\n`
+            let traceMessages = this.getTraceMessage(wrapper)
             let node = wrapper
             while (!!node.parentNode) {
-                traceMessages += this.getTraceMessage(node)
+                traceMessages += this.getTraceMessage(node.parentNode)
                 node = node.parentNode
             }
-            let errorMessage = `\nReact UI Error:\n\t${error.message}\n\nReact UI Trace:\n`
 
             if (!Running.DebugStore.alreadyLogged) {
-                // ---- log error message
-                console.error('\x1b[35m%s\x1b[0m', errorMessage + traceMessages)
+                // ---- log error message, best practice with chrome
+                // ---- if you want browser to automatically translate http://xx/js_bundle to the file you're writing now
+                //      you have to follow the structure:
+                //      Start with: "Error: xxx", each line with a "\s*at ", and most importantly can't end with a new line!
+                let errorMessage = `Error: \n🪹 ReNest Error:\n\t${error.message}\n\n🛣 ReNest Element Trace:\n` + traceMessages.slice(0, -1)
+                console.error(errorMessage)
                 Running.DebugStore.alreadyLogged = true
-            } else if (!wrapper.parentNode?.parentNode) {
-                // ---- reset debug store after the outmost ErrorBoundary is called
-                delete Running.DebugStore.alreadyLogged
             }
-            let err = new Error("ReactUI Error Boundary: ReactUI Element Trace is in Purple! Read it First!")
+
+            let err = new Error("ReNest Error Boundary: ReNest Error is tagged with 🪹 and Element Trace with 🛣 ! Read them First!")
+            err.stack = err.message     // remove useless trace
             throw err
         }
         return children
