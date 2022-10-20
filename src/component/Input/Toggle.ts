@@ -1,5 +1,5 @@
 import AnimatedDiv from "../Other/AnimatedDiv";
-import {RUIColor} from "../Util/Colors";
+import {RTColor} from "../Util/Colors";
 import {Derived, DotProp, Prop, State, View, ViewWrapper} from "@iandx/reactui"
 import ZStack from "../Container/ZStack";
 import {Div} from "../Util/Tags";
@@ -7,19 +7,19 @@ import {Spring} from "../Util/Hooks";
 
 const themes = {
     primary: {
-        bg: RUIColor.white.dark,
-        toggle: RUIColor.red.standard,
-        fg: RUIColor.red.light,
+        bg: RTColor.white.dark,
+        toggle: RTColor.red.standard,
+        fg: RTColor.red.light,
     },
     secondary: {
-        bg: RUIColor.white.dark,
-        toggle: RUIColor.green.standard,
-        fg: RUIColor.green.light,
+        bg: RTColor.white.dark,
+        toggle: RTColor.green.standard,
+        fg: RTColor.green.light,
     },
     tertiary: {
-        bg: RUIColor.white.dark,
-        toggle: RUIColor.blue.standard,
-        fg: RUIColor.blue.light,
+        bg: RTColor.white.dark,
+        toggle: RTColor.blue.standard,
+        fg: RTColor.blue.light,
     },
 }
 

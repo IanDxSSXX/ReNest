@@ -1,9 +1,9 @@
-import {FragmentView} from "../utils/RUIWrapper";
+import {FragmentView} from "../utils/RTWrapper";
 import {createElement, memo, useEffect, useRef} from "react";
 import {uid} from "../utils/Utils";
 import isEqual from "lodash.isequal";
 import Running from "../base/Running";
-import {RUIElement} from "../element/RUIElement";
+import {RTElement} from "../element/RTElement";
 
 // ---* condition
 function ContextWrapper({wrapper}: any) {
@@ -36,10 +36,10 @@ const ContextWrapperMemorized = memo(ContextWrapper, (prev, curr) => {
     let currElement = curr.wrapper.children[0]
 
     let contextEqual = isEqual(prev.wrapper.contextStoreValue, curr.wrapper.contextStoreValue)
-    return contextEqual && (preElement.IAmRUIElement && preElement.equalTo(currElement))
+    return contextEqual && (preElement.IAmRTElement && preElement.equalTo(currElement))
 })
 
-class ContextProvider extends RUIElement {
+class ContextProvider extends RTElement {
     contextStoreValue = {}
     contextId = uid()
 

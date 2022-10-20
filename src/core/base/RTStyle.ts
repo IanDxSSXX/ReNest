@@ -8,12 +8,12 @@ import {
     ReactEventHandler, TouchEventHandler, TransitionEventHandler, UIEventHandler, WheelEventHandler
 } from "react";
 import {Property} from "csstype";
-import RUIBase from "./RUIBase";
+import RTBase from "./RTBase";
 
-function RUIStyleProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+function RTStyleProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
-        (this as RUIWithStyle).setStyle(propertyKey, args[0], args[1])
+        (this as RTStyle).setStyle(propertyKey, args[0], args[1])
         return originalValue.apply(this, args);
     }
 }
@@ -21,15 +21,15 @@ function RUIStyleProp(target: any, propertyKey: string, descriptor: PropertyDesc
 function ElementViewProp(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalValue = descriptor.value;
     descriptor.value = function(...args: any[]) {
-        (this as RUIWithStyle).setProp(propertyKey, args[0], args[1])
+        (this as RTStyle).setProp(propertyKey, args[0], args[1])
         return originalValue.apply(this, args);
     }
 }
 
-export default class RUIWithStyle<TLength = (string & {}) | 0, TTime = string & {}> extends RUIBase {
-    IAmRUIWithStyle = true
+export default class RTStyle<TLength = (string & {}) | 0, TTime = string & {}> extends RTBase {
+    IAmRTWithStyle = true
 
-    // ---* Events from react/RUIHH.d.tx -> DOMAttributes
+    // ---* Events from react/RTHH.d.tx -> DOMAttributes
     // ---- Clipboard Events
     @ElementViewProp
     onCopy(value: ClipboardEventHandler, willSet=true) { return this }
@@ -527,1214 +527,1214 @@ export default class RUIWithStyle<TLength = (string & {}) | 0, TTime = string & 
     @ElementViewProp
     onTransitionEndCapture(value: TransitionEventHandler, willSet=true) { return this }
 
-    // ---* All styles from csstype/RUIHH.d.ts
-    @RUIStyleProp
+    // ---* All styles from csstype/RTHH.d.ts
+    @RTStyleProp
     accentColor(value: Property.AccentColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     alignContent(value: Property.AlignContent, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     alignItems(value: Property.AlignItems, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     alignSelf(value: Property.AlignSelf, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     alignTracks(value: Property.AlignTracks, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationDelay(value: Property.AnimationDelay<TTime>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationDirection(value: Property.AnimationDirection, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationDuration(value: Property.AnimationDuration<TTime>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationFillMode(value: Property.AnimationFillMode, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationIterationCount(value: Property.AnimationIterationCount, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationName(value: Property.AnimationName, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationPlayState(value: Property.AnimationPlayState, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationTimeline(value: Property.AnimationTimeline, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animationTimingFunction(value: Property.AnimationTimingFunction, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     appearance(value: Property.Appearance, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     aspectRatio(value: Property.AspectRatio, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backdropFilter(value: Property.BackdropFilter, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backfaceVisibility(value: Property.BackfaceVisibility, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundAttachment(value: Property.BackgroundAttachment, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundBlendMode(value: Property.BackgroundBlendMode, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundClip(value: Property.BackgroundClip, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundColor(value: Property.BackgroundColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundImage(value: Property.BackgroundImage, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundOrigin(value: Property.BackgroundOrigin, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundPositionX(value: Property.BackgroundPositionX<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundPositionY(value: Property.BackgroundPositionY<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundRepeat(value: Property.BackgroundRepeat, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundSize(value: Property.BackgroundSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     blockOverflow(value: Property.BlockOverflow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     blockSize(value: Property.BlockSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockColor(value: Property.BorderBlockColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockEndColor(value: Property.BorderBlockEndColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockEndStyle(value: Property.BorderBlockEndStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockEndWidth(value: Property.BorderBlockEndWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockStartColor(value: Property.BorderBlockStartColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockStartStyle(value: Property.BorderBlockStartStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockStartWidth(value: Property.BorderBlockStartWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockStyle(value: Property.BorderBlockStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockWidth(value: Property.BorderBlockWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBottomColor(value: Property.BorderBottomColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBottomLeftRadius(value: Property.BorderBottomLeftRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBottomRightRadius(value: Property.BorderBottomRightRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBottomStyle(value: Property.BorderBottomStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBottomWidth(value: Property.BorderBottomWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderCollapse(value: Property.BorderCollapse, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderEndEndRadius(value: Property.BorderEndEndRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderEndStartRadius(value: Property.BorderEndStartRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderImageOutset(value: Property.BorderImageOutset<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderImageRepeat(value: Property.BorderImageRepeat, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderImageSlice(value: Property.BorderImageSlice, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderImageSource(value: Property.BorderImageSource, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderImageWidth(value: Property.BorderImageWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineColor(value: Property.BorderInlineColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineEndColor(value: Property.BorderInlineEndColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineEndStyle(value: Property.BorderInlineEndStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineEndWidth(value: Property.BorderInlineEndWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineStartColor(value: Property.BorderInlineStartColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineStartStyle(value: Property.BorderInlineStartStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineStartWidth(value: Property.BorderInlineStartWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineStyle(value: Property.BorderInlineStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineWidth(value: Property.BorderInlineWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderLeftColor(value: Property.BorderLeftColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderLeftStyle(value: Property.BorderLeftStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderLeftWidth(value: Property.BorderLeftWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderRightColor(value: Property.BorderRightColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderRightStyle(value: Property.BorderRightStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderRightWidth(value: Property.BorderRightWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderSpacing(value: Property.BorderSpacing<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderStartEndRadius(value: Property.BorderStartEndRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderStartStartRadius(value: Property.BorderStartStartRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderTopColor(value: Property.BorderTopColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderTopLeftRadius(value: Property.BorderTopLeftRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderTopRightRadius(value: Property.BorderTopRightRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderTopStyle(value: Property.BorderTopStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderTopWidth(value: Property.BorderTopWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     bottom(value: Property.Bottom<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     boxDecorationBreak(value: Property.BoxDecorationBreak, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     boxShadow(value: Property.BoxShadow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     boxSizing(value: Property.BoxSizing, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     breakAfter(value: Property.BreakAfter, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     breakBefore(value: Property.BreakBefore, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     breakInside(value: Property.BreakInside, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     captionSide(value: Property.CaptionSide, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     caretColor(value: Property.CaretColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     clear(value: Property.Clear, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     clipPath(value: Property.ClipPath, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     color(value: Property.Color, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     colorAdjust(value: Property.PrintColorAdjust, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     colorScheme(value: Property.ColorScheme, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnCount(value: Property.ColumnCount, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnFill(value: Property.ColumnFill, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnGap(value: Property.ColumnGap<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnRuleColor(value: Property.ColumnRuleColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnRuleStyle(value: Property.ColumnRuleStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnRuleWidth(value: Property.ColumnRuleWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnSpan(value: Property.ColumnSpan, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnWidth(value: Property.ColumnWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     contain(value: Property.Contain, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     content(value: Property.Content, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     contentVisibility(value: Property.ContentVisibility, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     counterIncrement(value: Property.CounterIncrement, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     counterReset(value: Property.CounterReset, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     counterSet(value: Property.CounterSet, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     cursor(value: Property.Cursor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     direction(value: Property.Direction, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     display(value: Property.Display, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     emptyCells(value: Property.EmptyCells, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     filter(value: Property.Filter, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     flexBasis(value: Property.FlexBasis<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     flexDirection(value: Property.FlexDirection, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     flexGrow(value: Property.FlexGrow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     flexShrink(value: Property.FlexShrink, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     flexWrap(value: Property.FlexWrap, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     float(value: Property.Float, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontFamily(value: Property.FontFamily, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontFeatureSettings(value: Property.FontFeatureSettings, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontKerning(value: Property.FontKerning, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontLanguageOverride(value: Property.FontLanguageOverride, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontOpticalSizing(value: Property.FontOpticalSizing, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontSize(value: Property.FontSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontSizeAdjust(value: Property.FontSizeAdjust, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontSmooth(value: Property.FontSmooth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontStretch(value: Property.FontStretch, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontStyle(value: Property.FontStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontSynthesis(value: Property.FontSynthesis, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariant(value: Property.FontVariant, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariantAlternates(value: Property.FontVariantAlternates, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariantCaps(value: Property.FontVariantCaps, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariantEastAsian(value: Property.FontVariantEastAsian, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariantLigatures(value: Property.FontVariantLigatures, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariantNumeric(value: Property.FontVariantNumeric, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariantPosition(value: Property.FontVariantPosition, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontVariationSettings(value: Property.FontVariationSettings, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     fontWeight(value: Property.FontWeight, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     forcedColorAdjust(value: Property.ForcedColorAdjust, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridAutoColumns(value: Property.GridAutoColumns<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridAutoFlow(value: Property.GridAutoFlow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridAutoRows(value: Property.GridAutoRows<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridColumnEnd(value: Property.GridColumnEnd, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridColumnStart(value: Property.GridColumnStart, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridRowEnd(value: Property.GridRowEnd, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridRowStart(value: Property.GridRowStart, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridTemplateAreas(value: Property.GridTemplateAreas, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridTemplateColumns(value: Property.GridTemplateColumns<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridTemplateRows(value: Property.GridTemplateRows<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     hangingPunctuation(value: Property.HangingPunctuation, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     height(value: Property.Width<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     hyphenateCharacter(value: Property.HyphenateCharacter, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     hyphens(value: Property.Hyphens, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     imageOrientation(value: Property.ImageOrientation, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     imageRendering(value: Property.ImageRendering, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     imageResolution(value: Property.ImageResolution, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     initialLetter(value: Property.InitialLetter, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     inlineSize(value: Property.InlineSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     inputSecurity(value: Property.InputSecurity, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     inset(value: Property.Inset<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     insetBlock(value: Property.InsetBlock<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     insetBlockEnd(value: Property.InsetBlockEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     insetBlockStart(value: Property.InsetBlockStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     insetInline(value: Property.InsetInline<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     insetInlineEnd(value: Property.InsetInlineEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     insetInlineStart(value: Property.InsetInlineStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     isolation(value: Property.Isolation, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     justifyContent(value: Property.JustifyContent, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     justifyItems(value: Property.JustifyItems, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     justifySelf(value: Property.JustifySelf, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     justifyTracks(value: Property.JustifyTracks, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     left(value: Property.Left<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     letterSpacing(value: Property.LetterSpacing<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     lineBreak(value: Property.LineBreak, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     lineHeight(value: Property.LineHeight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     lineHeightStep(value: Property.LineHeightStep<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     listStyleImage(value: Property.ListStyleImage, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     listStylePosition(value: Property.ListStylePosition, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     listStyleType(value: Property.ListStyleType, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginBlock(value: Property.MarginBlock<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginBlockEnd(value: Property.MarginBlockEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginBlockStart(value: Property.MarginBlockStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginBottom(value: Property.MarginBottom<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginInline(value: Property.MarginInline<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginInlineEnd(value: Property.MarginInlineEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginInlineStart(value: Property.MarginInlineStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginLeft(value: Property.MarginLeft<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginRight(value: Property.MarginRight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     marginTop(value: Property.MarginTop<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskBorderMode(value: Property.MaskBorderMode, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskBorderOutset(value: Property.MaskBorderOutset<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskBorderRepeat(value: Property.MaskBorderRepeat, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskBorderSlice(value: Property.MaskBorderSlice, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskBorderSource(value: Property.MaskBorderSource, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskBorderWidth(value: Property.MaskBorderWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskClip(value: Property.MaskClip, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskComposite(value: Property.MaskComposite, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskImage(value: Property.MaskImage, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskMode(value: Property.MaskMode, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskOrigin(value: Property.MaskOrigin, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskPosition(value: Property.MaskPosition<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskRepeat(value: Property.MaskRepeat, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskSize(value: Property.MaskSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskType(value: Property.MaskType, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     mathStyle(value: Property.MathStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maxBlockSize(value: Property.MaxBlockSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maxHeight(value: Property.MaxHeight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maxInlineSize(value: Property.MaxInlineSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maxLines(value: Property.MaxLines, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maxWidth(value: Property.MaxWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     minBlockSize(value: Property.MinBlockSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     minHeight(value: Property.MinHeight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     minInlineSize(value: Property.MinInlineSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     minWidth(value: Property.MinWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     mixBlendMode(value: Property.MixBlendMode, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     motionDistance(value: Property.OffsetDistance<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     motionPath(value: Property.OffsetPath, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     motionRotation(value: Property.OffsetRotate, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     objectFit(value: Property.ObjectFit, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     objectPosition(value: Property.ObjectPosition<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     offsetAnchor(value: Property.OffsetAnchor<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     offsetDistance(value: Property.OffsetDistance<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     offsetPath(value: Property.OffsetPath, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     offsetRotate(value: Property.OffsetRotate, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     offsetRotation(value: Property.OffsetRotate, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     opacity(value: Property.Opacity, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     order(value: Property.Order, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     orphans(value: Property.Orphans, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     outlineColor(value: Property.OutlineColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     outlineOffset(value: Property.OutlineOffset<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     outlineStyle(value: Property.OutlineStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     outlineWidth(value: Property.OutlineWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowAnchor(value: Property.OverflowAnchor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowBlock(value: Property.OverflowBlock, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowClipBox(value: Property.OverflowClipBox, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowClipMargin(value: Property.OverflowClipMargin<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowInline(value: Property.OverflowInline, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowWrap(value: Property.OverflowWrap, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowX(value: Property.OverflowX, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflowY(value: Property.OverflowY, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overscrollBehaviorBlock(value: Property.OverscrollBehaviorBlock, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overscrollBehaviorInline(value: Property.OverscrollBehaviorInline, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overscrollBehaviorX(value: Property.OverscrollBehaviorX, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overscrollBehaviorY(value: Property.OverscrollBehaviorY, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingBlock(value: Property.PaddingBlock<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingBlockEnd(value: Property.PaddingBlockEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingBlockStart(value: Property.PaddingBlockStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingBottom(value: Property.PaddingBottom<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingInline(value: Property.PaddingInline<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingInlineEnd(value: Property.PaddingInlineEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingInlineStart(value: Property.PaddingInlineStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingLeft(value: Property.PaddingLeft<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingRight(value: Property.PaddingRight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paddingTop(value: Property.PaddingTop<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     pageBreakAfter(value: Property.PageBreakAfter, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     pageBreakBefore(value: Property.PageBreakBefore, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     pageBreakInside(value: Property.PageBreakInside, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     paintOrder(value: Property.PaintOrder, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     perspective(value: Property.Perspective<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     perspectiveOrigin(value: Property.PerspectiveOrigin<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     placeContent(value: Property.PlaceContent, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     pointerEvents(value: Property.PointerEvents, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     position(value: Property.Position, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     printColorAdjust(value: Property.PrintColorAdjust, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     quotes(value: Property.Quotes, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     resize(value: Property.Resize, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     right(value: Property.Right<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     rotate(value: Property.Rotate, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     rowGap(value: Property.RowGap<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     rubyAlign(value: Property.RubyAlign, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     rubyMerge(value: Property.RubyMerge, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     rubyPosition(value: Property.RubyPosition, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scale(value: Property.Scale, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollBehavior(value: Property.ScrollBehavior, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMargin(value: Property.ScrollMargin<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginBlock(value: Property.ScrollMarginBlock<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginBlockEnd(value: Property.ScrollMarginBlockEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginBlockStart(value: Property.ScrollMarginBlockStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginBottom(value: Property.ScrollMarginBottom<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginInline(value: Property.ScrollMarginInline<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginInlineEnd(value: Property.ScrollMarginInlineEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginInlineStart(value: Property.ScrollMarginInlineStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginLeft(value: Property.ScrollMarginLeft<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginRight(value: Property.ScrollMarginRight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollMarginTop(value: Property.ScrollMarginTop<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPadding(value: Property.ScrollPadding<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingBlock(value: Property.ScrollPaddingBlock<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingBlockEnd(value: Property.ScrollPaddingBlockEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingBlockStart(value: Property.ScrollPaddingBlockStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingBottom(value: Property.ScrollPaddingBottom<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingInline(value: Property.ScrollPaddingInline<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingInlineEnd(value: Property.ScrollPaddingInlineEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingInlineStart(value: Property.ScrollPaddingInlineStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingLeft(value: Property.ScrollPaddingLeft<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingRight(value: Property.ScrollPaddingRight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollPaddingTop(value: Property.ScrollPaddingTop<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapAlign(value: Property.ScrollSnapAlign, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapMargin(value: Property.ScrollMargin<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapMarginBottom(value: Property.ScrollMarginBottom<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapMarginLeft(value: Property.ScrollMarginLeft<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapMarginRight(value: Property.ScrollMarginRight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapMarginTop(value: Property.ScrollMarginTop<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapStop(value: Property.ScrollSnapStop, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollSnapType(value: Property.ScrollSnapType, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollbarColor(value: Property.ScrollbarColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollbarGutter(value: Property.ScrollbarGutter, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     scrollbarWidth(value: Property.ScrollbarWidth, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     shapeImageThreshold(value: Property.ShapeImageThreshold, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     shapeMargin(value: Property.ShapeMargin<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     shapeOutside(value: Property.ShapeOutside, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     tabSize(value: Property.TabSize<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     tableLayout(value: Property.TableLayout, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textAlign(value: Property.TextAlign, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textAlignLast(value: Property.TextAlignLast, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textCombineUpright(value: Property.TextCombineUpright, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecorationColor(value: Property.TextDecorationColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecorationLine(value: Property.TextDecorationLine, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecorationSkip(value: Property.TextDecorationSkip, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecorationSkipInk(value: Property.TextDecorationSkipInk, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecorationStyle(value: Property.TextDecorationStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecorationThickness(value: Property.TextDecorationThickness<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecorationWidth(value: Property.TextDecorationThickness<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textEmphasisColor(value: Property.TextEmphasisColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textEmphasisPosition(value: Property.TextEmphasisPosition, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textEmphasisStyle(value: Property.TextEmphasisStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textIndent(value: Property.TextIndent<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textJustify(value: Property.TextJustify, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textOrientation(value: Property.TextOrientation, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textOverflow(value: Property.TextOverflow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textRendering(value: Property.TextRendering, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textShadow(value: Property.TextShadow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textSizeAdjust(value: Property.TextSizeAdjust, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textTransform(value: Property.TextTransform, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textUnderlineOffset(value: Property.TextUnderlineOffset<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textUnderlinePosition(value: Property.TextUnderlinePosition, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     top(value: Property.Top<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     touchAction(value: Property.TouchAction, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transform(value: Property.Transform, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transformBox(value: Property.TransformBox, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transformOrigin(value: Property.TransformOrigin<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transformStyle(value: Property.TransformStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transitionDelay(value: Property.TransitionDelay<TTime>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transitionDuration(value: Property.TransitionDuration<TTime>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transitionProperty(value: Property.TransitionProperty, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transitionTimingFunction(value: Property.TransitionTimingFunction, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     translate(value: Property.Translate<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     unicodeBidi(value: Property.UnicodeBidi, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     userSelect(value: Property.UserSelect, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     verticalAlign(value: Property.VerticalAlign<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     visibility(value: Property.Visibility, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     whiteSpace(value: Property.WhiteSpace, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     widows(value: Property.Widows, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     width(value: Property.Width<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     willChange(value: Property.WillChange, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     wordBreak(value: Property.WordBreak, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     wordSpacing(value: Property.WordSpacing<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     wordWrap(value: Property.WordWrap, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     writingMode(value: Property.WritingMode, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     zIndex(value: Property.ZIndex, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     zoom(value: Property.Zoom, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     all(value: Property.All, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     animation(value: Property.Animation<TTime>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     background(value: Property.Background<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     backgroundPosition(value: Property.BackgroundPosition<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     border(value: Property.Border<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlock(value: Property.BorderBlock<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockEnd(value: Property.BorderBlockEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBlockStart(value: Property.BorderBlockStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderBottom(value: Property.BorderBottom<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderColor(value: Property.BorderColor, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderImage(value: Property.BorderImage, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInline(value: Property.BorderInline<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineEnd(value: Property.BorderInlineEnd<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderInlineStart(value: Property.BorderInlineStart<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderLeft(value: Property.BorderLeft<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderRadius(value: Property.BorderRadius<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderRight(value: Property.BorderRight<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderStyle(value: Property.BorderStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderTop(value: Property.BorderTop<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     borderWidth(value: Property.BorderWidth<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columnRule(value: Property.ColumnRule<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     columns(value: Property.Columns<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     flex(value: Property.Flex<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     flexFlow(value: Property.FlexFlow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     font(value: Property.Font, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gap(value: Property.Gap<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     grid(value: Property.Grid, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridArea(value: Property.GridArea, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridColumn(value: Property.GridColumn, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridRow(value: Property.GridRow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     gridTemplate(value: Property.GridTemplate, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     lineClamp(value: Property.LineClamp, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     listStyle(value: Property.ListStyle, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     margin(value: Property.Margin<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     mask(value: Property.Mask<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     maskBorder(value: Property.MaskBorder, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     motion(value: Property.Offset<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     offset(value: Property.Offset<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     outline(value: Property.Outline<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overflow(value: Property.Overflow, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     overscrollBehavior(value: Property.OverscrollBehavior, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     padding(value: Property.Padding<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     placeItems(value: Property.PlaceItems, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     placeSelf(value: Property.PlaceSelf, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textDecoration(value: Property.TextDecoration<TLength>, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     textEmphasis(value: Property.TextEmphasis, willSet=true) { return this }
 
-    @RUIStyleProp
+    @RTStyleProp
     transition(value: Property.Transition<TTime>, willSet=true) { return this }
 
 }

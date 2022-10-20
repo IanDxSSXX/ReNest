@@ -14,7 +14,7 @@ function NavigationWrapper({wrapper}: any) {
     },[])
 
     let children = wrapper.children.map((child: any)=>
-        child.IAmRUI ? child.asReactElement() : child)
+        child.IAmRT ? child.asReactElement() : child)
 
     return createElement(
         Routes,

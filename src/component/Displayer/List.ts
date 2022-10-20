@@ -1,13 +1,13 @@
 import {ConditionView, DotProp, ForEach, Prop, View, ViewWrapper} from "@iandx/reactui"
 import {Div} from "../Util/Tags";
-import {RUIColor} from "../Util/Colors";
+import {RTColor} from "../Util/Colors";
 import HStack from "../Container/HStack";
 import VStack from "../Container/VStack";
 
 
 class List extends View {
     defaultTheme = {
-        divider: RUIColor.white.dark
+        divider: RTColor.white.dark
     }
 
     @Prop arrData: any

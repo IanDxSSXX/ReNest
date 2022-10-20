@@ -1,9 +1,9 @@
-import {RUIHelper} from "../utils/RUIHelper";
+import {RTHelper} from "../utils/RTHelper";
 import {createElement, memo, useEffect, useRef} from "react";
 import {HookWrapper, ResolveHook, ResolveRef, ResolveState} from "./ResolveDecorator";
-import {TagView} from "../utils/RUIWrapper";
+import {TagView} from "../utils/RTWrapper";
 import {ErrorBoundary} from "../utils/ErrorBoundary";
-import RUIConfig from "../base/RUIConfig";
+import RTConfig from "../base/RTConfig";
 
 const ReactElementWrapper = ({wrapper}:any) => {
     // ---- decorators **so tricky**
@@ -19,7 +19,7 @@ const ReactElementWrapper = ({wrapper}:any) => {
     // ---- see ConditionView
     let component = wrapper.Body(wrapper.props) as any
     // ---e
-    if (!component) RUIHelper.throw("RUIView must have a proper return, current is null")
+    if (!component) RTHelper.throw("RTView must have a proper return, current is null")
     // ---- lifecycle
     let didMount = wrapper.lifecycle.didMount
     let willUnmount = wrapper.lifecycle.willUnmount
@@ -57,11 +57,11 @@ const ReactElementWrapper = ({wrapper}:any) => {
 
     // ---- register and turn into React Element
     let newComponent = component
-    if (component.IAmRUI) {
+    if (component.IAmRT) {
         component = wrapper.registerView(component).key(wrapper.uid)
         newComponent = component.asReactElement()
         // ---- debug
-        if (RUIConfig.debug) {
+        if (RTConfig.debug) {
             newComponent = createElement(ErrorBoundary, {children: newComponent, wrapper: component})
         }
     }

@@ -9,7 +9,7 @@ import {
     View,
     ViewWrapper
 } from "@iandx/reactui"
-import {RUIColor} from "../Util/Colors";
+import {RTColor} from "../Util/Colors";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/AnimatedDiv";
 import {Spring} from "../Util/Hooks";
@@ -17,16 +17,16 @@ import {Spring} from "../Util/Hooks";
 
 let themes = {
     primary: {
-        fg: RUIColor.red.standard,
-        bg: RUIColor.white.dark
+        fg: RTColor.red.standard,
+        bg: RTColor.white.dark
     },
     secondary: {
-        fg: RUIColor.green.standard,
-        bg: RUIColor.white.dark
+        fg: RTColor.green.standard,
+        bg: RTColor.white.dark
     },
     tertiary: {
-        fg: RUIColor.blue.standard,
-        bg: RUIColor.white.dark
+        fg: RTColor.blue.standard,
+        bg: RTColor.white.dark
     }
 }
 

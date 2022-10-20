@@ -1,6 +1,6 @@
 import {createElement, ReactElement} from "react";
-import RUIBase from "../base/RUIBase";
-import {ReactElementWrapperMemorized} from "./RUIHOC";
+import RTBase from "../base/RTBase";
+import {ReactElementWrapperMemorized} from "./RTHOC";
 import isEqual from 'lodash.isequal';
 import {
     ResolveContext,
@@ -10,16 +10,16 @@ import {
     ResolveObserve,
     ResolveProp
 } from "./ResolveDecorator";
-import {RUIElement} from "./RUIElement";
+import {RTElement} from "./RTElement";
 import {uid} from "../utils/Utils";
-import RUIConfig from "../base/RUIConfig";
+import RTConfig from "../base/RTConfig";
 
 
-export abstract class View<T=any> extends RUIElement {
+export abstract class View<T=any> extends RTElement {
     props: T
-    abstract Body: (props: T) => RUIBase | ReactElement
+    abstract Body: (props: T) => RTBase | ReactElement
     funcGene: boolean = false
-    IAmRUIElement = true
+    IAmRTElement = true
     // ---- lifecycle
     lifecycle: {
         didMount: (()=>any)[],
@@ -43,7 +43,7 @@ export abstract class View<T=any> extends RUIElement {
     }
 
     init() {
-        if (RUIConfig.debug) {
+        if (RTConfig.debug) {
             // ---- get trace
             let err: any = {}
             Error.captureStackTrace(err)
@@ -109,7 +109,7 @@ export abstract class View<T=any> extends RUIElement {
         )
     }
     
-    registerView(view: RUIBase) {
+    registerView(view: RTBase) {
         // ---- only pass classname when it's class defined
         if (!this.funcGene) view.className(this.P.className, true)
         return super.registerView(view)
@@ -148,7 +148,7 @@ export abstract class View<T=any> extends RUIElement {
             let value = (another as any)[key]
             if(value !== undefined) anotherAllProps[key] = value
         }
-        // console.log(thisAllProps, anotherAllProps)
+
         // -4.5 custom and input props with shouldUpdate hook
         if (this.lifecycle.shouldUpdate.length > 0) {
             // ---- props and contexts and dotProps
@@ -161,7 +161,7 @@ export abstract class View<T=any> extends RUIElement {
 }
 
 // ---- FuncView to write like react function
-export class RUIView<T> extends View {
+class RTFuncView<T> extends View {
     Body
     constructor(body: (props: T) => any, props?: T) {
         super(props);
@@ -170,11 +170,11 @@ export class RUIView<T> extends View {
     }
 }
 export function FuncView<T extends Object>(body: (props:T) => any) {
-    return (props?: T) => new RUIView<T>(body, props)
+    return (props?: T) => new RTFuncView<T>(body, props)
 }
 
 
-export function ViewWrapper<T extends Object>(RUIClass: any) {
-    return (props?: T) => new RUIClass(props).init()
+export function ViewWrapper<T extends Object>(RTClass: any) {
+    return (props?: T) => new RTClass(props).init()
 }
 

@@ -1,5 +1,5 @@
 // ---- tags
-export const RUIColor = {
+export const RTColor = {
     black: {
         light: "#191A1A",
         standard: "#131414",

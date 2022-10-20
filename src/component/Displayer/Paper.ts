@@ -1,12 +1,12 @@
 import {Div} from "../Util/Tags";
-import {RUIColor} from "../Util/Colors";
+import {RTColor} from "../Util/Colors";
 import {View, ViewWrapper} from "@iandx/reactui"
 
 
 class Paper extends View {
     defaultTheme =  {
-        bg: RUIColor.white.light,
-        shadow: RUIColor.white.dark
+        bg: RTColor.white.light,
+        shadow: RTColor.white.dark
     }
 
     Body = () =>

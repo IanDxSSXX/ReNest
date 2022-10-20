@@ -1,6 +1,6 @@
 import {FuncView, TagView, useState, useTrigger, useTriggerEffect, View} from "@iandx/reactui"
 import {useEffect, useRef} from "react";
-import {RUIColor} from "../Util/Colors";
+import {RTColor} from "../Util/Colors";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import Spacer from "../Other/Spacer";
 import HStack from "../Container/HStack";
@@ -11,12 +11,12 @@ import VStack from "../Container/VStack";
 
 class Select extends View {
     defaultTheme = {
-            bg: RUIColor.white.light,
-            border: RUIColor.white.dark,
-            hover: RUIColor.white.dark,
-            selected: RUIColor.blue.light,
-            font1: RUIColor.black.light,
-            font2: RUIColor.white.dark,
+            bg: RTColor.white.light,
+            border: RTColor.white.dark,
+            hover: RTColor.white.dark,
+            selected: RTColor.blue.light,
+            font1: RTColor.black.light,
+            font2: RTColor.white.dark,
     }
     isGroup(arr: Array<any>){
         return arr[0] instanceof Object
@@ -150,11 +150,11 @@ class Select extends View {
             .ref(selectElement)
     }
 
-    // @RUIProp
+    // @RTProp
     // onChange(value: any) { return this }
-    // @RUIProp
+    // @RTProp
     // option(value: Function) {return this}
-    // @RUIProp
+    // @RTProp
     // groupHead(value: Function) {return this}
 }
 

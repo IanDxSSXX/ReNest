@@ -1,13 +1,13 @@
-import {RUITheme} from "../theme/RUITheme";
-import RUIBase from "../base/RUIBase";
+import {RTTheme} from "../theme/RTTheme";
+import RTBase from "../base/RTBase";
 import {filteredObject} from "../utils/Utils";
-import RUIConfig from "../base/RUIConfig";
+import RTConfig from "../base/RTConfig";
 
-export class RUIElement extends RUITheme {
+export class RTElement extends RTTheme {
     customProps: any = {contextNameStore: [], dotPropNameStore: []}
     dotPropNames: string[] = []
 
-    registerView(view: RUIBase) {
+    registerView(view: RTBase) {
         // ---- react only use key in React.createElement, so no need for pass down
         // ---- and deleting className to avoid some confusion
         const newElementStyles = this.elementProps.style
@@ -18,7 +18,7 @@ export class RUIElement extends RUITheme {
         this.children = [view]
         this.passDownTheme()
         this.passDownContext()
-        if (RUIConfig.debug) view.parentNode = this
+        if (RTConfig.debug) view.parentNode = this
 
         return view
     }

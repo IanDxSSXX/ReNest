@@ -1,20 +1,20 @@
-import {RUIColor} from "../Util/Colors";
+import {RTColor} from "../Util/Colors";
 import {DotProp, Prop, State, View, ViewWrapper} from "@iandx/reactui"
 import {Button as HTMLButton} from "../Util/Tags"
 
 
 const themes = {
     primary: {
-        bg: RUIColor.red.light,
-        fg: RUIColor.red.dark,
+        bg: RTColor.red.light,
+        fg: RTColor.red.dark,
     },
     secondary: {
-        bg: RUIColor.green.light,
-        fg: RUIColor.green.dark,
+        bg: RTColor.green.light,
+        fg: RTColor.green.dark,
     },
     tertiary: {
-        bg: RUIColor.blue.light,
-        fg: RUIColor.blue.dark,
+        bg: RTColor.blue.light,
+        fg: RTColor.blue.dark,
     },
 }
 

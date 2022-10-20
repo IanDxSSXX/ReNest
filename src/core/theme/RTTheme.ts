@@ -1,8 +1,8 @@
-import {RUIContext} from "../context/RUIContext";
+import {RTContext} from "../context/RTContext";
 import Running from "../base/Running";
 
-export class RUITheme extends RUIContext {
-    readonly IAmRUITheme = true
+export class RTTheme extends RTContext {
+    readonly IAmRTTheme = true
     protected readonly defaultTheme: { [key: string]: any } = {}
     protected readonly defaultThemes: { [key: string]: any } = {}
     protected defaultThemeName: string = "_NONE_"
@@ -38,7 +38,7 @@ export class RUITheme extends RUIContext {
         if (!this.themeId) return
         this.forEachChild(child => {
             if (child.IAMThemeProvider) return false
-            if (child.IAmRUITheme) {
+            if (child.IAmRTTheme) {
                 child.themeId = this.themeId
                 child.willUseTheme = true
             }

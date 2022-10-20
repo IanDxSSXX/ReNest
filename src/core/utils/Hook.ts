@@ -8,7 +8,7 @@ export function IsFirstRender() {
 }
 
 // ---* State
-export class RUIState<T> {
+export class RTState<T> {
     private readonly _value: T
     private readonly setProp: any
     set value(newProp: any) {
@@ -28,7 +28,7 @@ export class RUIState<T> {
 
 export function useState<T>(value: T) {
     let [prop, setProp] = useReactState<T>(value)
-    return new RUIState<T>(prop, setProp)
+    return new RTState<T>(prop, setProp)
 }
 
 

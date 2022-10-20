@@ -1,5 +1,5 @@
 import * as R from "../../component";
-import {RUITemplate} from "./RUITemplate";
+import {RTTemplate} from "./RTTemplate";
 
 export default {
     title: 'Input',
@@ -13,19 +13,19 @@ export default {
 };
 
 
-export const Button = RUITemplate((args: any) =>
+export const Button = RTTemplate((args: any) =>
     R.Button("Button").themeName(args.themeName)
 )
 
-export const Toggle = RUITemplate((args: any) =>
+export const Toggle = RTTemplate((args: any) =>
     R.Toggle().themeName(args.themeName)
 )
 
-// export const Select = RUITemplate((args: any) =>
+// export const Select = RTTemplate((args: any) =>
 //     R.Select([{title:"orange",data:[1,3,4]},{title:"banana",data:[10,30,40]}],'1')
 // )
 
-export const TextField = RUITemplate((args: any) =>
+export const TextField = RTTemplate((args: any) =>
     R.TextField("").placeHolder(args.placeHolder).themeName(args.themeName)
 )
 TextField.argTypes = {

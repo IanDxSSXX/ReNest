@@ -1,8 +1,8 @@
 import {createElement, memo, useEffect, useRef} from "react";
-import {FragmentView} from "../utils/RUIWrapper";
+import {FragmentView} from "../utils/RTWrapper";
 import {uid} from "../utils/Utils";
-import {RUIElement} from "../element/RUIElement";
-import {RUIHelper} from "../utils/RUIHelper";
+import {RTElement} from "../element/RTElement";
+import {RTHelper} from "../utils/RTHelper";
 
 // ---* condition
 function ConditionWrapper({wrapper}: any) {
@@ -20,10 +20,10 @@ const ConditionWrapperMemorized = memo(ConditionWrapper, (prev, curr) => {
     let preElement = prev.wrapper.children[0]
     let currElement = curr.wrapper.children[0]
 
-    return preElement.IAMFragment || (preElement.IAmRUIElement && preElement.equalTo(currElement))
+    return preElement.IAMFragment || (preElement.IAmRTElement && preElement.equalTo(currElement))
 })
 
-class ConditionView extends RUIElement {
+class ConditionView extends RTElement {
     variable: any
     conditionMap: any
     conditionIDs: any = {}
@@ -49,7 +49,7 @@ class ConditionView extends RUIElement {
                 {wrapper:this, ...!!this.P.key?{key: this.P.key}:{} }
             )
         } catch (e) {
-            RUIHelper.throw("ConditionView must have 2 props, the first one is a variable, the second one is a map of functions, each of which returns a reactui element")
+            RTHelper.throw("ConditionView must have 2 props, the first one is a variable, the second one is a map of functions, each of which returns a renest element")
             return null as any
         }
 

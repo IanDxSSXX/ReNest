@@ -1,9 +1,9 @@
 import {createElement, memo, useEffect, useRef} from "react";
-import {FragmentView} from "../utils/RUIWrapper";
+import {FragmentView} from "../utils/RTWrapper";
 import {ThemesState} from "./ThemeState";
 import Running from "../base/Running";
 import isEqual from 'lodash.isequal';
-import {RUIElement} from "../element/RUIElement";
+import {RTElement} from "../element/RTElement";
 import {uid} from "../utils/Utils";
 import ContextProvider from "../context/ContextProvider";
 
@@ -38,10 +38,10 @@ const ThemeWrapperMemorized = memo(ThemeWrapper, (prev, curr) => {
 
     let themeEqual = isEqual(prev.wrapper.themes, curr.wrapper.themes)
         && prev.wrapper.themeName === curr.wrapper.themeName
-    return themeEqual && (preElement.IAmRUIElement && preElement.equalTo(currElement))
+    return themeEqual && (preElement.IAmRTElement && preElement.equalTo(currElement))
 })
 
-class ThemeProvider extends RUIElement {
+class ThemeProvider extends RTElement {
     themes: any = {}
     themeName: any = "_NONE_"
 

@@ -1,8 +1,8 @@
 import {ConditionView, TagView, View, ViewWrapper} from "../core";
 import { useErrorBoundary } from "use-error-boundary"
 import {ErrorBoundary} from "../core/utils/ErrorBoundary";
+import {Div} from "./Convert"
 
-const Div = TagView("div")
 
 class MyComponent extends View {
     Body = () => {
@@ -10,9 +10,10 @@ class MyComponent extends View {
         return (
             Div(
                 ConditionView(a,  {
-                    true: Div(undefined)
+                    true: () => Div("hhh")
                 })
             )
+                .fuck("me")
 
         )
     }

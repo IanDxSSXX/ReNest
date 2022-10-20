@@ -1,12 +1,12 @@
 import {Fragment as ReactFragment, ReactElement} from "react";
-import {RUIElement} from "../element/RUIElement";
-import RUIConfig from "../base/RUIConfig";
+import {RTElement} from "../element/RTElement";
+import RTConfig from "../base/RTConfig";
 
 export function TagView(element: any, dotPropNames?: string[]) {
     return (...children: any) => {
-        let ruiElement = new RUIElement(element, ...children).deleteProp("className")
+        let ruiElement = new RTElement(element, ...children).deleteProp("className")
 
-        if (RUIConfig.debug) {
+        if (RTConfig.debug) {
             let err: any = {}
             Error.captureStackTrace(err)
             let stack = err.stack
@@ -29,7 +29,7 @@ export function ElementView(reactElement: ReactElement) {
     return TagView(ReactElementWrapper)().setProps({reactElement})
 }
 
-export class Fragment extends RUIElement {
+export class Fragment extends RTElement {
     IAMFragment = true
     constructor(...children: any[]) {
         super(ReactFragment, ...children);

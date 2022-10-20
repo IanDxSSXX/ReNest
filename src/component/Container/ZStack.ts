@@ -21,7 +21,7 @@ class ZStack extends View {
                 "tailing": "right"
             } as any)[this.alignmentH])
             .forEachChild((child: any) => {
-                if (child.IAmRUIWithStyle) {
+                if (child.IAmRTWithStyle) {
                     child
                         .position("relative")
                         .gridArea("1 / 1/ 1 / 1")

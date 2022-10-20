@@ -7,12 +7,12 @@ import {
     createElement
 } from "react";
 import {flattened} from "../utils/Utils";
-import RUIConfig from "./RUIConfig";
+import RTConfig from "./RTConfig";
 import {ErrorBoundary} from "../utils/ErrorBoundary";
 
 
-export default class RUIBase {
-    IAmRUI = true
+export default class RTBase {
+    IAmRT = true
 
     protected elementTag: any
     children: any[]
@@ -26,11 +26,11 @@ export default class RUIBase {
     constructor(elementTag: any, ...children: any[]) {
         this.elementTag = elementTag
         this.children = children
-        this.className(`RUI-${this.constructor.name}`)
+        this.className(`RT-${this.constructor.name}`)
     }
 
-    private passParentNode(child: RUIBase) {
-        if (RUIConfig.debug) {
+    private passParentNode(child: RTBase) {
+        if (RTConfig.debug) {
                 child.parentNode = this
         }
     }
@@ -39,13 +39,13 @@ export default class RUIBase {
 
         let children = this.children
             .map(child => {
-                if (child?.IAmRUI) {
+                if (child?.IAmRT) {
                     this.passParentNode(child)
                     return child.asReactElement()
                 }
                 if (child instanceof Array) {
                     return child.map(c=> {
-                        if (c?.IAmRUI) {
+                        if (c?.IAmRT) {
                             this.passParentNode(c)
                             return c.asReactElement()
                         }
@@ -57,7 +57,7 @@ export default class RUIBase {
 
 
         let element: any = createElement(this.elementTag, this.elementProps, ...children)
-        if (RUIConfig.debug) element = createElement(ErrorBoundary, {children: element, wrapper: this})
+        if (RTConfig.debug) element = createElement(ErrorBoundary, {children: element, wrapper: this})
         return element
     }
 
@@ -134,7 +134,7 @@ export default class RUIBase {
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {
         for (let child of flattened(this.children)) {
-            if (child?.IAmRUI) {
+            if (child?.IAmRT) {
                 let willNest = func(child) ?? true
                 if (willNest && nested) {
                     child.forEachChild(func, nested)

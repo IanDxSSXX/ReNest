@@ -14,7 +14,7 @@ class VStack extends View {
             .forEachChild((child: any) => {
                 if (child.constructor.name === "Spacer") {
                     child.flexGrow(1)
-                } else if (child.IAmRUIWithStyle) {
+                } else if (child.IAmRTWithStyle) {
                     child.flexShrink(0)
                     if (this.alignment === "leading") {
                         child.marginRight("auto")

@@ -1,5 +1,5 @@
 import {Derived, ConditionView, DotProp, Prop, Ref, State, View, ViewWrapper} from "@iandx/reactui"
-import {RUIColor} from "../Util/Colors";
+import {RTColor} from "../Util/Colors";
 import {pixelToInt} from "../Util/Utils";
 import ZStack from "../Container/ZStack";
 import AnimatedDiv from "../Other/AnimatedDiv";
@@ -9,22 +9,22 @@ import {Spring} from "../Util/Hooks";
 
 const themes = {
     primary: {
-        unselected: RUIColor.white.dark,
-        over: RUIColor.red.light,
-        selected: RUIColor.red.standard,
-        foreground: RUIColor.white.light,
+        unselected: RTColor.white.dark,
+        over: RTColor.red.light,
+        selected: RTColor.red.standard,
+        foreground: RTColor.white.light,
     },
     secondary: {
-        unselected: RUIColor.white.dark,
-        over: RUIColor.green.light,
-        selected: RUIColor.green.standard,
-        foreground: RUIColor.white.light,
+        unselected: RTColor.white.dark,
+        over: RTColor.green.light,
+        selected: RTColor.green.standard,
+        foreground: RTColor.white.light,
     },
     tertiary: {
-        unselected: RUIColor.white.dark,
-        over: RUIColor.blue.light,
-        selected: RUIColor.blue.standard,
-        foreground: RUIColor.white.light,
+        unselected: RTColor.white.dark,
+        over: RTColor.blue.light,
+        selected: RTColor.blue.standard,
+        foreground: RTColor.white.light,
     },
 }
 

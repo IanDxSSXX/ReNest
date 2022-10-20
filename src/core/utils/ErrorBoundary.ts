@@ -26,7 +26,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
 
     getTraceMessage(node: any) {
         let name = node.parentNode.constructor.name
-        if (name === "RUIElement")  {
+        if (name === "RTElement")  {
             name = node.parentNode.elementTag.name??node.parentNode.elementTag
         }
         if (node.fileName !== undefined) {
@@ -43,7 +43,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
 
         if (hasError) {
             let wrapperName = wrapper.constructor.name
-            if (wrapperName === "RUIElement")  {
+            if (wrapperName === "RTElement")  {
                 wrapperName = wrapper.elementTag.name??wrapper.elementTag
             }
             let traceMessages = `\tat ${wrapperName}\n`

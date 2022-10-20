@@ -9,7 +9,7 @@ function RouteElement({navigationView, elementFunc, path}: any) {
     navigationView.passDownTheme()
     navigationView.passDownContext()
 
-    return (element.IAmRUI) ? element.key(navigationView.navigationIds[path]).asReactElement() : element
+    return (element.IAmRT) ? element.key(navigationView.navigationIds[path]).asReactElement() : element
 }
 
 export function NavigationRoute(elementFunc: () => any, path: string, navigationView: NavigationView) {
@@ -41,7 +41,7 @@ function MatchableRouteElement({navigationView, regexPathRoutes}: any) {
     navigationView.passDownTheme()
     navigationView.passDownContext()
 
-    return (element.IAmRUI) ? (element as any).key(navigationView.navigationIds[matchedName??"_"]??"_").asReactElement() : element as ReactElement
+    return (element.IAmRT) ? (element as any).key(navigationView.navigationIds[matchedName??"_"]??"_").asReactElement() : element as ReactElement
 }
 
 
