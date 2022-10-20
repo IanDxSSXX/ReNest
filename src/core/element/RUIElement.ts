@@ -1,6 +1,7 @@
 import {RUITheme} from "../theme/RUITheme";
 import RUIBase from "../base/RUIBase";
 import {filteredObject} from "../utils/Utils";
+import RUIConfig from "../base/RUIConfig";
 
 export class RUIElement extends RUITheme {
     customProps: any = {contextNameStore: [], dotPropNameStore: []}
@@ -17,6 +18,7 @@ export class RUIElement extends RUITheme {
         this.children = [view]
         this.passDownTheme()
         this.passDownContext()
+        if (RUIConfig.debug) view.parentNode = this
 
         return view
     }

@@ -12,6 +12,7 @@ import ContextDisplay from "./routes/ContextDisplay";
 import ToggleDisplay from "./routes/ToggleDisplay";
 import ListDisplay from "./routes/ListDisplay";
 import {HStack, Paper, VStack, ZStack, Text, NavigationView, Button} from "../component";
+import Core from "./Core";
 
 let myThemes = {
     first: {
@@ -64,7 +65,7 @@ class Content extends View {
             .useTheme(this.myTheme)
 }
 
-
-export default ViewWrapper(Content)
+export default Core
+// export default ViewWrapper(Content)
 // export default ContextDisplay
 // export default ProgressDisplay

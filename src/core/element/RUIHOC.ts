@@ -1,6 +1,9 @@
 import {RUIHelper} from "../utils/RUIHelper";
-import {memo, useEffect, useRef} from "react";
+import {createElement, memo, useEffect, useRef} from "react";
 import {HookWrapper, ResolveHook, ResolveRef, ResolveState} from "./ResolveDecorator";
+import {TagView} from "../utils/RUIWrapper";
+import {ErrorBoundary} from "../utils/ErrorBoundary";
+import RUIConfig from "../base/RUIConfig";
 
 const ReactElementWrapper = ({wrapper}:any) => {
     // ---- decorators **so tricky**
@@ -14,9 +17,9 @@ const ReactElementWrapper = ({wrapper}:any) => {
     // ---- call Body
     // ---- **dangerous when element type is different because directly call will lead to inconsistent hooks**
     // ---- see ConditionView
-    const component = wrapper.Body(wrapper.props) as any
+    let component = wrapper.Body(wrapper.props) as any
     // ---e
-    if (!component) RUIHelper.error("RUIView must have a proper return, current is null")
+    if (!component) RUIHelper.throw("RUIView must have a proper return, current is null")
     // ---- lifecycle
     let didMount = wrapper.lifecycle.didMount
     let willUnmount = wrapper.lifecycle.willUnmount
@@ -53,8 +56,17 @@ const ReactElementWrapper = ({wrapper}:any) => {
 
 
     // ---- register and turn into React Element
-    let reactComponent = component.IAmRUI ? wrapper.registerView(component).key(uid).asReactElement() : component
-    return reactComponent
+    let newComponent = component
+    if (component.IAmRUI) {
+        component = wrapper.registerView(component).key(wrapper.uid)
+        newComponent = component.asReactElement()
+        // ---- debug
+        if (RUIConfig.debug) {
+            newComponent = createElement(ErrorBoundary, {children: newComponent, wrapper: component})
+        }
+    }
+
+    return newComponent
 }
 
 export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (prev, curr)=> {

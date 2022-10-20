@@ -12,6 +12,8 @@ import {
 } from "./ResolveDecorator";
 import {RUIElement} from "./RUIElement";
 import {uid} from "../utils/Utils";
+import RUIConfig from "../base/RUIConfig";
+
 
 export abstract class View<T=any> extends RUIElement {
     props: T
@@ -41,6 +43,18 @@ export abstract class View<T=any> extends RUIElement {
     }
 
     init() {
+        if (RUIConfig.debug) {
+            // ---- get trace
+            let err: any = {}
+            Error.captureStackTrace(err)
+            let stack = err.stack
+            let stackList = stack.split("\n")
+            if (!stackList[3].trim().startsWith("at App")) {
+                this.fileName = stackList[3].replace(/.*\((https?:\/\/\S+)\)/, "$1")
+            }
+        }
+
+
         for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
             ResolveDotPropWrapper(this, key, () =>
             ResolveObserve(this, key)

@@ -23,7 +23,7 @@ export class ThemesState {
 
 export function useTheme(themes: { [key: string]: { [key: string]: any }}, defaultThemeName?: string) {
     if (typeof themes !== "object" || Object.keys(themes).length === 0) {
-        RUIHelper.error(`must provide a solid object to useTheme.`)
+        RUIHelper.throw(`must provide a solid object to useTheme.`)
     }
     defaultThemeName = !!defaultThemeName ? defaultThemeName : Object.keys(themes)[0]
     let [themeName, setThemeName] = useState(defaultThemeName)

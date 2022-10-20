@@ -7,6 +7,9 @@ import {
     createElement
 } from "react";
 import {flattened} from "../utils/Utils";
+import RUIConfig from "./RUIConfig";
+import {ErrorBoundary} from "../utils/ErrorBoundary";
+
 
 export default class RUIBase {
     IAmRUI = true
@@ -16,26 +19,46 @@ export default class RUIBase {
     elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
     customProps: any = {}
 
+    // ---- for error capturing
+    parentNode: any = null
+    fileName: string | undefined
+
     constructor(elementTag: any, ...children: any[]) {
         this.elementTag = elementTag
         this.children = children
         this.className(`RUI-${this.constructor.name}`)
     }
 
+    private passParentNode(child: RUIBase) {
+        if (RUIConfig.debug) {
+                child.parentNode = this
+        }
+    }
     asReactElement(): ReactElement {
         this.beforeAsReactElement()
 
         let children = this.children
-            .map((child) =>
-                child.IAmRUI ? child.asReactElement() :
-                child instanceof Array ? child.map((c)=>c.IAmRUI ? c.asReactElement() : c):
-                child)
+            .map(child => {
+                if (child?.IAmRUI) {
+                    this.passParentNode(child)
+                    return child.asReactElement()
+                }
+                if (child instanceof Array) {
+                    return child.map(c=> {
+                        if (c?.IAmRUI) {
+                            this.passParentNode(c)
+                            return c.asReactElement()
+                        }
+                        return c
+                    })
+                }
+                return child
+            })
 
-        return createElement(
-                this.elementTag,
-                this.elementProps,
-                ...children
-            )
+
+        let element: any = createElement(this.elementTag, this.elementProps, ...children)
+        if (RUIConfig.debug) element = createElement(ErrorBoundary, {children: element, wrapper: this})
+        return element
     }
 
     // ---* set props
@@ -111,7 +134,7 @@ export default class RUIBase {
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {
         for (let child of flattened(this.children)) {
-            if (child.IAmRUI) {
+            if (child?.IAmRUI) {
                 let willNest = func(child) ?? true
                 if (willNest && nested) {
                     child.forEachChild(func, nested)

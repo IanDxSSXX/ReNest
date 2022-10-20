@@ -1,9 +1,19 @@
 import {Fragment as ReactFragment, ReactElement} from "react";
 import {RUIElement} from "../element/RUIElement";
+import RUIConfig from "../base/RUIConfig";
 
 export function TagView(element: any, dotPropNames?: string[]) {
     return (...children: any) => {
         let ruiElement = new RUIElement(element, ...children).deleteProp("className")
+
+        if (RUIConfig.debug) {
+            let err: any = {}
+            Error.captureStackTrace(err)
+            let stack = err.stack
+            let stackList = stack.split("\n")
+            ruiElement.fileName = stackList[2].replace(/.*\((https?:\/\/\S+)\)/, "$1")
+        }
+
         if (!!dotPropNames) {
             return ruiElement.withDotProp(...dotPropNames)
         }

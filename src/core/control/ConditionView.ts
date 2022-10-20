@@ -2,6 +2,7 @@ import {createElement, memo, useEffect, useRef} from "react";
 import {FragmentView} from "../utils/RUIWrapper";
 import {uid} from "../utils/Utils";
 import {RUIElement} from "../element/RUIElement";
+import {RUIHelper} from "../utils/RUIHelper";
 
 // ---* condition
 function ConditionWrapper({wrapper}: any) {
@@ -37,16 +38,22 @@ class ConditionView extends RUIElement {
     }
 
     asReactElement() {
-        let ruiElement = (this.conditionMap[this.variable] ??
-            this.conditionMap["_"] ??
-            FragmentView)()
+        try {
+            let ruiElement = (this.conditionMap[this.variable] ??
+                this.conditionMap["_"] ??
+                FragmentView)()
+            this.registerView(ruiElement)
 
-        this.registerView(ruiElement)
+            return createElement(
+                ConditionWrapperMemorized,
+                {wrapper:this, ...!!this.P.key?{key: this.P.key}:{} }
+            )
+        } catch (e) {
+            RUIHelper.throw("ConditionView must have 2 props, the first one is a variable, the second one is a map of functions, each of which returns a reactui element")
+            return null as any
+        }
 
-        return createElement(
-            ConditionWrapperMemorized,
-            {wrapper:this, ...!!this.P.key?{key: this.P.key}:{} }
-        )
+
     }
 }
 
