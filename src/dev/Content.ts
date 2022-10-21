@@ -52,9 +52,9 @@ class Content extends View {
                         image: () => ImageDisplay(),
                         progress: () => ProgressDisplay(),
                         context: () => ContextDisplay(),
-                        ":abc+": (value:any) => HStack("abc",value), // regExp
-                        ":what[a+]": (value:any) => HStack("no",value), // regExp
-                        ":": (value:any) => HStack("other", value), // any other route
+                        "_abc+": (value:any) => HStack("abc",value), // regExp
+                        "_what[a+]": (value:any) => HStack("no",value), // regExp
+                        _: (value:any) => HStack("other", value), // any other route
                     })
                 ).padding("20px")
             )

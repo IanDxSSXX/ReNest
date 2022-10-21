@@ -51,7 +51,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
         let name = node.IAmTagView ?
             node.elementTag.name??node.elementTag : node.name??node.constructor.name
 
-        return `\tat ${name} (${node._fileName??"http://"})\n`
+        return `\tat ${name} (${node.__fileName??"http://"})\n`
     }
 
     render() {
@@ -61,9 +61,9 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
         if (hasError) {
             let traceMessages = this.getTraceMessage(wrapper)
             let node = wrapper
-            while (!!node._parentNode) {
-                traceMessages += this.getTraceMessage(node._parentNode)
-                node = node._parentNode
+            while (!!node.__parentNode) {
+                traceMessages += this.getTraceMessage(node.__parentNode)
+                node = node.__parentNode
             }
 
             if (!Running.DebugStore.alreadyLogged) {
@@ -74,7 +74,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
                 let errorMessage = `Error: \n🪹 ReNest Error:\n\t${error.message}\n\n🛣 ReNest Element Trace:\n` + traceMessages.slice(0, -1)
                 console.error(errorMessage)
                 Running.DebugStore.alreadyLogged = true
-            } else if (!wrapper._parentNode?._parentNode) {
+            } else if (!wrapper.__parentNode?.__parentNode) {
                 // ---- reset debug store after the outmost ErrorBoundary is called
                 delete Running.DebugStore.alreadyLogged
             }

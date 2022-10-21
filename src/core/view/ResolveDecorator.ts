@@ -26,7 +26,7 @@ export function ResolveHook(wrapper: any, statusKey: string, hookName: string, s
     let storeKey = StoreKey(hookName, key)
     let isDerived = wrapper[StatusKey("DERIVED", key)]
     let props
-    if (wrapper[storeKey] === "_FIRST_IN_") {
+    if (wrapper[storeKey] === "__FIRST_IN__") {
         props = wrapper[key]
         wrapper[storeKey] = props
     } else if (wrapper[statusKey]) {
@@ -41,7 +41,7 @@ export function ResolveContext(wrapper: any, statusKey: string, callback: ()=>an
     let key = getKeyFromStatus(statusKey, "CONTEXT")
     if (wrapper.contexts[key] === undefined) return
     wrapper[key] = wrapper.contexts[key]
-    wrapper._customProps.contextNameStore.push(key)
+    wrapper.__customProps.contextNameStore.push(key)
 }
 
 export function ResolveState(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
@@ -50,7 +50,7 @@ export function ResolveState(wrapper: any, statusKey: string, callback: ()=>any=
     let storeKey = StoreKey("STATE", key)
     let isDerived = wrapper[StatusKey("DERIVED", key)]
 
-    let isFirstIn = wrapper[storeKey] === "_FIRST_IN_"
+    let isFirstIn = wrapper[storeKey] === "__FIRST_IN__"
     let value
     if (isFirstIn) {
         value = wrapper[key]
@@ -79,7 +79,7 @@ export function ResolveRef(wrapper: any, statusKey: string, callback: ()=>any=()
     let storeKey = StoreKey("REF", key)
     let isDerived = wrapper[StatusKey("DERIVED", key)]
 
-    let isFirstIn = wrapper[storeKey] === "_FIRST_IN_"
+    let isFirstIn = wrapper[storeKey] === "__FIRST_IN__"
     let value
     if (isFirstIn) {
         value = wrapper[key]
@@ -105,7 +105,7 @@ export function ResolveContexts(wrapper: any, statusKey: string, callback: ()=>a
     if (!isStatusKey(statusKey, "CONTEXTS")) return callback()
     let key = getKeyFromStatus(statusKey, "CONTEXTS")
     wrapper[key] = wrapper.contexts
-    wrapper._customProps.contextNameStore = Object.keys(wrapper.contexts)
+    wrapper.__customProps.contextNameStore = Object.keys(wrapper.contexts)
 }
 
 export function ResolveProp(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
@@ -133,8 +133,8 @@ export function ResolveDotProp(wrapper: any, statusKey: string, callback: ()=>an
     // ---3 dotProp = props ?? default prop
     let wrapperValue = wrapper[StoreKey("DOTPROP", key)] ?? wrapper[StoreKey("DOTPROP_DEFAULT", key)]
     wrapper[key] = wrapperValue === "undefined" ? undefined : wrapperValue    // ---- when you do not want any parameter
-    // ---4 add to _customProps for memo refreshing
-    wrapper._customProps.dotPropNameStore.push(key)
+    // ---4 add to __customProps for memo refreshing
+    wrapper.__customProps.dotPropNameStore.push(key)
 }
 
 export function ResolveObserve(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {

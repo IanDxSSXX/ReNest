@@ -26,14 +26,14 @@ function ThemeWrapper({wrapper}: any) {
         themes: wrapper.themes,
         themeName: wrapper.themeName
     }
-    let element = wrapper._children[0]
+    let element = wrapper.__children[0]
 
     return wrapper.registerView(element).asReactElement()
 }
 
 const ThemeWrapperMemorized = memo(ThemeWrapper, (prev, curr) => {
-    let preElement = prev.wrapper._children[0]
-    let currElement = curr.wrapper._children[0]
+    let preElement = prev.wrapper.__children[0]
+    let currElement = curr.wrapper.__children[0]
 
     let themeEqual = isEqual(prev.wrapper.themes, curr.wrapper.themes)
         && prev.wrapper.themeName === curr.wrapper.themeName
@@ -56,20 +56,20 @@ class ThemeProvider extends RTElement {
         return this
     }
 
-    constructor(..._children: any) {
-        super("", ..._children);
+    constructor(...__children: any) {
+        super("", ...__children);
     }
 
 
     asReactElement() {
-        // ---- wrap _children
+        // ---- wrap __children
         if (!!this.currThemeState) {
             // ---- add to context by default
-            let ContextView = ContextProvider(...this._children).context({themeState: this.currThemeState})
+            let ContextView = ContextProvider(...this.__children).context({themeState: this.currThemeState})
             ContextView.contextId = this.themeId
-            this._children = [ContextView]
+            this.__children = [ContextView]
         } else {
-            this._children = [FragmentView(...this._children)]
+            this.__children = [FragmentView(...this.__children)]
         }
 
         return createElement(
@@ -79,4 +79,4 @@ class ThemeProvider extends RTElement {
     }
 }
 
-export default (..._children: any[]) => new ThemeProvider(..._children)
+export default (...__children: any[]) => new ThemeProvider(...__children)

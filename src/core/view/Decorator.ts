@@ -12,7 +12,7 @@ function createHookDecorator(target: any, propertyKey: string, hookName: string,
         value: true
     })
     Object.defineProperty(target, StoreKey(hookName, propertyKey), {
-        value: "_FIRST_IN_",
+        value: "__FIRST_IN__",
         writable: true
     })
     Object.defineProperty(target, StoreKey(`_${hookName}_FUNC_`, propertyKey), {
@@ -49,7 +49,7 @@ export const State = (target: any, propertyKey: string) => {
         value: true,
     })
     Object.defineProperty(target, StoreKey("STATE", propertyKey), {
-        value: "_FIRST_IN_",
+        value: "__FIRST_IN__",
         writable: true
     })
 }
@@ -59,7 +59,7 @@ export const Ref = (target: any, propertyKey: string) => {
         value: true,
     })
     Object.defineProperty(target, StoreKey("REF", propertyKey), {
-        value: "_FIRST_IN_",
+        value: "__FIRST_IN__",
         writable: true
     })
 }

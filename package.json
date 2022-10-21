@@ -10,7 +10,7 @@
     "react-icons": "4.4.0",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
-    "@renest/renest": "0.0.6"
+    "@renest/renest": "0.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -48,7 +48,7 @@ export class RTTheme extends RTContext {
     beforeAsReactElement() {
         if (!!this.themeId)  {
             this.themeState = Running.ContextStore[this.themeId]["themeState"]
-            this._customProps.contextNameStore.push("themeState")
+            this.__customProps.contextNameStore.push("themeState")
         }
     }
 }

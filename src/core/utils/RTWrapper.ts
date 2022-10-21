@@ -10,7 +10,7 @@ export function TagView(element: any, dotPropNames?: string[]) {
             let err = new Error()
             let stack = err.stack!
             let stackList = stack.split("\n")
-            ruiElement._fileName = stackList[2].replace(/.*\((https?:\/\/\S+)\)/, "$1")
+            ruiElement.__fileName = stackList[2].replace(/.*\((https?:\/\/\S+)\)/, "$1")
         }
 
         if (!!dotPropNames) {
@@ -36,10 +36,10 @@ export class Fragment extends RTElement {
     beforeAsReactElement() {
         super.beforeAsReactElement();
 
-        if (!!this._elementProps && !!this._elementProps.key) {
-            this._elementProps = {key: this._elementProps.key}
+        if (!!this.__elementProps && !!this.__elementProps.key) {
+            this.__elementProps = {key: this.__elementProps.key}
         } else {
-            this._elementProps = undefined
+            this.__elementProps = undefined
         }
     }
 }

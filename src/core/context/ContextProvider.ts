@@ -26,14 +26,14 @@ function ContextWrapper({wrapper}: any) {
     },[])
 
     Running.ContextStore[wrapper.contextId] = wrapper.contextStoreValue
-    let element = wrapper._children[0]
+    let element = wrapper.__children[0]
 
     return wrapper.key(wrapper.contextId).registerView(element).asReactElement()
 }
 
 const ContextWrapperMemorized = memo(ContextWrapper, (prev, curr) => {
-    let preElement = prev.wrapper._children[0]
-    let currElement = curr.wrapper._children[0]
+    let preElement = prev.wrapper.__children[0]
+    let currElement = curr.wrapper.__children[0]
 
     let contextEqual = isEqual(prev.wrapper.contextStoreValue, curr.wrapper.contextStoreValue)
     return contextEqual && (preElement.IAmRTElement && preElement.equalTo(currElement))
@@ -44,8 +44,8 @@ class ContextProvider extends RTElement {
     contextId = uid()
     name = "ContextProvider"
 
-    constructor(..._children: any) {
-        super("", ..._children);
+    constructor(...__children: any) {
+        super("", ...__children);
     }
 
     context(value: {[key:string]: any}) {
@@ -54,8 +54,8 @@ class ContextProvider extends RTElement {
     }
 
     asReactElement() {
-        // ---- wrap _children
-        this._children = [FragmentView(...this._children)]
+        // ---- wrap __children
+        this.__children = [FragmentView(...this.__children)]
 
         return createElement(
             ContextWrapperMemorized,
@@ -64,5 +64,5 @@ class ContextProvider extends RTElement {
     }
 }
 
-export default (..._children: any[]) => new ContextProvider(..._children)
+export default (...__children: any[]) => new ContextProvider(...__children)
 
