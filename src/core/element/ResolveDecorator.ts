@@ -41,7 +41,7 @@ export function ResolveContext(wrapper: any, statusKey: string, callback: ()=>an
     let key = getKeyFromStatus(statusKey, "CONTEXT")
     if (wrapper.contexts[key] === undefined) return
     wrapper[key] = wrapper.contexts[key]
-    wrapper.customProps.contextNameStore.push(key)
+    wrapper.__customProps.contextNameStore.push(key)
 }
 
 export function ResolveState(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
@@ -105,7 +105,7 @@ export function ResolveContexts(wrapper: any, statusKey: string, callback: ()=>a
     if (!isStatusKey(statusKey, "CONTEXTS")) return callback()
     let key = getKeyFromStatus(statusKey, "CONTEXTS")
     wrapper[key] = wrapper.contexts
-    wrapper.customProps.contextNameStore = Object.keys(wrapper.contexts)
+    wrapper.__customProps.contextNameStore = Object.keys(wrapper.contexts)
 }
 
 export function ResolveProp(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
@@ -133,8 +133,8 @@ export function ResolveDotProp(wrapper: any, statusKey: string, callback: ()=>an
     // ---3 dotProp = props ?? default prop
     let wrapperValue = wrapper[StoreKey("DOTPROP", key)] ?? wrapper[StoreKey("DOTPROP_DEFAULT", key)]
     wrapper[key] = wrapperValue === "undefined" ? undefined : wrapperValue    // ---- when you do not want any parameter
-    // ---4 add to customProps for memo refreshing
-    wrapper.customProps.dotPropNameStore.push(key)
+    // ---4 add to __customProps for memo refreshing
+    wrapper.__customProps.dotPropNameStore.push(key)
 }
 
 export function ResolveObserve(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {

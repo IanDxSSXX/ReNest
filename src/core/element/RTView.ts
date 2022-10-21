@@ -49,7 +49,7 @@ export abstract class View<T=any> extends RTElement {
             let err = new Error()
             let stack = err.stack!
             let stackList = stack.split("\n")
-            this.fileName = stackList[3].replace(/.*(https?:\/\/\S+?)/, "$1")
+            this.__fileName = stackList[3].replace(/.*(https?:\/\/\S+?)/, "$1")
         }
 
 
@@ -119,7 +119,7 @@ export abstract class View<T=any> extends RTElement {
         // ---- useful for memo equal check
         // ---- styles and custom props
         // ---1 element props, update on change by default using deep equal
-        if (!isEqual(this.elementProps, another.elementProps)) return false
+        if (!isEqual(this.__elementProps, another.__elementProps)) return false
 
         // ---2 themes, update on change by default using deep equal
         if (!isEqual(this.theme, another.theme)) return false
@@ -129,20 +129,20 @@ export abstract class View<T=any> extends RTElement {
         let anotherAllProps: any = {...another.props}
 
         // ---- all context
-        for (let key of this.customProps.contextNameStore) {
+        for (let key of this.__customProps.contextNameStore) {
             let value = (this as any)[key]
             if(value !== undefined) thisAllProps[key] = value
         }
-        for (let key of another.customProps.contextNameStore) {
+        for (let key of another.__customProps.contextNameStore) {
             let value = (another as any)[key]
             if(value !== undefined) anotherAllProps[key] = value
         }
         // ---- all dot props
-        for (let key of this.customProps.dotPropNameStore) {
+        for (let key of this.__customProps.dotPropNameStore) {
             let value = (this as any)[key]
             if(value !== undefined) thisAllProps[key] = value
         }
-        for (let key of another.customProps.dotPropNameStore) {
+        for (let key of another.__customProps.dotPropNameStore) {
             let value = (another as any)[key]
             if(value !== undefined) anotherAllProps[key] = value
         }
