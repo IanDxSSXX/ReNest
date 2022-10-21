@@ -36,6 +36,7 @@ export class NavigationView extends View {
     regexTag = ":"
     navigationIds: {[key:string]: string} = {}
     Body: any
+    children: any = []
 
     constructor(pathRoutes: PathRoutes) {
         super()

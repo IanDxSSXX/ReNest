@@ -15,29 +15,29 @@ export default class RTBase {
     IAmRT = true
 
     protected elementTag: any
-    __children: any[]
-    __elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
-    __customProps: any = {}
+    _children: any[]
+    _elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
+    _customProps: any = {}
 
     // ---- for error capturing
-    __parentNode: any = null
-    __fileName: string | undefined
+    _parentNode: any = null
+    _fileName: string | undefined
 
-    constructor(elementTag: any, ...__children: any[]) {
+    constructor(elementTag: any, ..._children: any[]) {
         this.elementTag = elementTag
-        this.__children = __children
+        this._children = _children
         this.className(`RT-${this.constructor.name}`)
     }
 
     private passParentNode(child: RTBase) {
         if (RTConfig.debug) {
-                child.__parentNode = this
+                child._parentNode = this
         }
     }
     asReactElement(): ReactElement {
         this.beforeAsReactElement()
 
-        let __children = this.__children
+        let children = this._children
             .map(child => {
                 if (child?.IAmRT) {
                     this.passParentNode(child)
@@ -56,84 +56,84 @@ export default class RTBase {
             })
 
 
-        let element: any = createElement(this.elementTag, this.__elementProps, ...__children)
+        let element: any = createElement(this.elementTag, this._elementProps, ...children)
         if (RTConfig.debug) element = createElement(ErrorBoundary, {children: element, wrapper: this})
         return element
     }
 
     // ---* set props
     setProps(value: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any) {
-        this.__elementProps = {...this.__elementProps, ...value}
+        this._elementProps = {...this._elementProps, ...value}
         return this
     }
 
     setProp(key: keyof (InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement>) | any, value: any, willSet=true) {
-        if (willSet) this.__elementProps[key] = value
+        if (willSet) this._elementProps[key] = value
         return this
     }
 
     setCustomProp(key: string, value: any, willSet=true) {
-        if (willSet) this.__customProps[key] = value
+        if (willSet) this._customProps[key] = value
         return this
     }
 
     setStyle(key: string, value: any, willSet=true) {
-        if (willSet) this.__elementProps.style[key] = value
+        if (willSet) this._elementProps.style[key] = value
         return this
     }
 
     deleteProp(key: any) {
-        delete this.__elementProps[key]
+        delete this._elementProps[key]
         return this
     }
 
     id(value: string) {
-        this.__elementProps.id = value
+        this._elementProps.id = value
         return this
     }
 
     className(value: string, override=false) {
-        if (override || !this.__elementProps.className) {
-            this.__elementProps.className = value
+        if (override || !this._elementProps.className) {
+            this._elementProps.className = value
         } else {
-            this.__elementProps.className = `${this.__elementProps.className} ${value}`
+            this._elementProps.className = `${this._elementProps.className} ${value}`
         }
         return this
     }
 
     ruiClassName(value: string) {
-        this.__elementProps.className = `FuncView-${value}`
+        this._elementProps.className = `FuncView-${value}`
         return this
     }
 
     key(value: string | number) {
-        this.__elementProps.key = `${value}`
+        this._elementProps.key = `${value}`
         return this
     }
 
     style(value: CSSProperties | any, willSet=true) {
-        if (willSet) this.__elementProps.style = {...this.__elementProps.style, ...value}
+        if (willSet) this._elementProps.style = {...this._elementProps.style, ...value}
         return this
     }
 
     ref(value: MutableRefObject<any>) {
-        this.__elementProps.ref = value
+        this._elementProps.ref = value
         return this
     }
 
     // ---* shorthand
     get P() {
-        return this.__elementProps
+        return this._elementProps
     }
 
     get S() {
-        return this.__elementProps.style
+        return this._elementProps.style
     }
 
 
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {
-        for (let child of flattened(this.__children)) {
+        for (let child of flattened(this._children)) {
             if (child?.IAmRT) {
                 let willNest = func(child) ?? true
                 if (willNest && nested) {

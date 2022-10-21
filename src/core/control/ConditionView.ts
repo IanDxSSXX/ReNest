@@ -13,12 +13,12 @@ function ConditionWrapper({wrapper}: any) {
         conditionIDs.current = wrapper.conditionIDs
     },[])
 
-    return wrapper.__children[0].key(wrapper.conditionIDs[wrapper.variable]??"_").asReactElement()
+    return wrapper._children[0].key(wrapper.conditionIDs[wrapper.variable]??"_").asReactElement()
 }
 
 const ConditionWrapperMemorized = memo(ConditionWrapper, (prev, curr) => {
-    let preElement = prev.wrapper.__children[0]
-    let currElement = curr.wrapper.__children[0]
+    let preElement = prev.wrapper._children[0]
+    let currElement = curr.wrapper._children[0]
 
     return preElement.IAMFragment || (preElement.IAmRTElement && preElement.equalTo(currElement))
 })
