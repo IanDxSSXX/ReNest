@@ -118,7 +118,7 @@ export abstract class View<T=any> extends RTElement {
         // ---- check if another's prop is equal to this props
         // ---- useful for memo equal check
         // ---- styles and custom props
-        // ---1 element props, update on change by default using deep equal
+        // ---1 view props, update on change by default using deep equal
         if (!isEqual(this.__elementProps, another.__elementProps)) return false
 
         // ---2 themes, update on change by default using deep equal

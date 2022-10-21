@@ -14,7 +14,7 @@ import {ErrorBoundary} from "../utils/ErrorBoundary";
 export default class RTBase {
     IAmRT = true
 
-    protected __elementTag: any
+    protected elementTag: any
     __children: any[]
     __elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
     __customProps: any = {}
@@ -23,9 +23,9 @@ export default class RTBase {
     __parentNode: any = null
     __fileName: string | undefined
 
-    constructor(elementTag: any, ...children: any[]) {
-        this.__elementTag = elementTag
-        this.__children = children
+    constructor(elementTag: any, ...__children: any[]) {
+        this.elementTag = elementTag
+        this.__children = __children
         this.className(`RT-${this.constructor.name}`)
     }
 
@@ -37,7 +37,7 @@ export default class RTBase {
     asReactElement(): ReactElement {
         this.beforeAsReactElement()
 
-        let children = this.__children
+        let __children = this.__children
             .map(child => {
                 if (child?.IAmRT) {
                     this.passParentNode(child)
@@ -56,7 +56,7 @@ export default class RTBase {
             })
 
 
-        let element: any = createElement(this.__elementTag, this.__elementProps, ...children)
+        let element: any = createElement(this.elementTag, this.__elementProps, ...__children)
         if (RTConfig.debug) element = createElement(ErrorBoundary, {children: element, wrapper: this})
         return element
     }
