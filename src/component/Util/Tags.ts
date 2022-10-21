@@ -1,4 +1,4 @@
-import {TagView} from "@iandx/reactui";
+import {TagView} from "@renest/renest";
 
 export const Div = TagView("div")
 

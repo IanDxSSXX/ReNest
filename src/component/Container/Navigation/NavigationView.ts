@@ -3,7 +3,7 @@ import {createElement, useEffect, useRef} from "react";
 import {NavigationRoute, NavigationRouteMatchable} from "./NavigationRoute";
 import {BrowserRouter as RRDBrowserRouter} from "react-router-dom";
 import {uid} from "../../Util/Utils";
-import {TagView, View} from "@iandx/reactui";
+import {RTConfig, TagView, View} from "@renest/renest";
 
 function NavigationWrapper({wrapper}: any) {
     // ---- very important, see notes
@@ -13,8 +13,11 @@ function NavigationWrapper({wrapper}: any) {
         navigationIds.current = wrapper.navigationIds
     },[])
 
+    RTConfig.debug = false
     let children = wrapper.children.map((child: any)=>
         child.IAmRT ? child.asReactElement() : child)
+
+    RTConfig.debug = true
 
     return createElement(
         Routes,

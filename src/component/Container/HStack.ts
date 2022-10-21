@@ -1,5 +1,5 @@
 import {Div} from "../Util/Tags";
-import {DotProp, ViewWrapper, View} from "@iandx/reactui";
+import {DotProp, ViewWrapper, View} from "@renest/renest";
 
 class HStack extends View {
     @DotProp spacing: any = "0px"

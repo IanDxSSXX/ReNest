@@ -1,5 +1,5 @@
 import {Toggle} from "../../component";
-import {State, View, ViewWrapper} from "@iandx/reactui";
+import {State, View, ViewWrapper} from "@renest/renest";
 
 class ToggleDisplay extends View {
     @State isToggled = false

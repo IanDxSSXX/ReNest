@@ -18,6 +18,7 @@ import RTConfig from "../base/RTConfig";
 export abstract class View<T=any> extends RTElement {
     props: T
     abstract Body: (props: T) => RTBase | ReactElement
+    Preset: () => any = () => null
     funcGene: boolean = false
     IAmRTElement = true
     // ---- lifecycle

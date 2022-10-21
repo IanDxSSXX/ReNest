@@ -12,7 +12,8 @@ export interface ErrorBoundaryState {
     error: any
 }
 
-if (!RTConfig.throwAll) {
+
+if (RTConfig.suppressReactError) {
     // ---- error handling
     const consoleError = console.error
     console.error = (error) => {
@@ -73,6 +74,9 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
                 let errorMessage = `Error: \n🪹 ReNest Error:\n\t${error.message}\n\n🛣 ReNest Element Trace:\n` + traceMessages.slice(0, -1)
                 console.error(errorMessage)
                 Running.DebugStore.alreadyLogged = true
+            } else if (!wrapper.parentNode?.parentNode) {
+                // ---- reset debug store after the outmost ErrorBoundary is called
+                delete Running.DebugStore.alreadyLogged
             }
 
             let err = new Error("ReNest Error Boundary: ReNest Error is tagged with 🪹 and Element Trace with 🛣 ! Read them First!")

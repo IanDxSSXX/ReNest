@@ -1,8 +1,7 @@
 {
-  "name": "@iandx/reactui",
+  "name": "@renest/renest",
   "license": "MIT",
   "dependencies": {
-    "@iandx/reactui": "^0.10.1",
     "@react-spring/web": "^9.5.2",
     "lodash.isequal": "^4.5.0",
     "react": "^18.0.0",
@@ -10,7 +9,8 @@
     "react-error-boundary": "^3.1.4",
     "react-icons": "4.4.0",
     "react-router-dom": "6.3.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "@renest/renest": "0.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

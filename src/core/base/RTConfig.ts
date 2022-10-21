@@ -1,7 +1,8 @@
 class RTConfig {
     debug = true
-    throwAll = false
     debugStore = {}
+    reactNative = false
+    suppressReactError = false
 }
 
 

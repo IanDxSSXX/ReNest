@@ -9,7 +9,7 @@ import {
     Observe,
     Prop,
     DotProp, Derived
-} from "@iandx/reactui";
+} from "@renest/renest";
 import {Button, Text, TextField, VStack} from "../../component";
 
 class ChildView extends View {

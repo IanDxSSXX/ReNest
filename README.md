@@ -282,7 +282,7 @@ const MyPage = FuncView(() =>
 * Use `@Contexts` to get the **whole context**
 
 ```typescript
-import {ContextProvider, ViewWrapper, View} from "@iandx/reactui";
+import {ContextProvider, ViewWrapper, View} from "@renest/renest";
 class ComponentA extends View {
   @Context myFirstContext: any
   

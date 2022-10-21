@@ -3,7 +3,7 @@ import {
     ThemeProvider,
     View,
     ViewWrapper
-} from "@iandx/reactui";
+} from "@renest/renest";
 import TopBar from "./TopBar";
 import TextFieldDisplay from "./routes/TextFieldDisplay";
 import ImageDisplay from "./routes/ImageDisplay";
@@ -65,7 +65,7 @@ class Content extends View {
             .useTheme(this.myTheme)
 }
 
-export default Core
-// export default ViewWrapper(Content)
+// export default Core
+export default ViewWrapper(Content)
 // export default ContextDisplay
 // export default ProgressDisplay

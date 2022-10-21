@@ -17,6 +17,7 @@ const ReactElementWrapper = ({wrapper}:any) => {
     // ---- call Body
     // ---- **dangerous when element type is different because directly call will lead to inconsistent hooks**
     // ---- see ConditionView
+    wrapper.Preset()
     let component = wrapper.Body(wrapper.props) as any
     // ---e
     if (!component) RTHelper.throw("RTView must have a proper return, current is null")

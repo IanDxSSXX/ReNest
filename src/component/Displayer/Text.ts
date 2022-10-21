@@ -1,5 +1,5 @@
 import {Div} from "../Util/Tags";
-import {View, ViewWrapper} from "@iandx/reactui"
+import {View, ViewWrapper} from "@renest/renest"
 
 
 class Text extends View {

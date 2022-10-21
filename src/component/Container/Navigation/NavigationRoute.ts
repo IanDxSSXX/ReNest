@@ -1,7 +1,7 @@
 import {createElement, ReactElement} from "react";
 import {Route, useParams} from "react-router-dom";
 import {NavigationView} from "./NavigationView";
-import {FragmentView, TagView} from "@iandx/reactui";
+import {FragmentView, TagView} from "@renest/renest";
 
 function RouteElement({navigationView, elementFunc, path}: any) {
     let element = elementFunc() as any

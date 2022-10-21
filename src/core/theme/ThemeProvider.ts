@@ -51,7 +51,6 @@ class ThemeProvider extends RTElement {
     themeId = uid()
 
     useTheme = (themeState: ThemesState) => {
-        console.log("yse", this.themeId)
         this.currThemeState = themeState
         this.themes = themeState.themes
         this.themeName = themeState.themeName
@@ -65,7 +64,6 @@ class ThemeProvider extends RTElement {
 
     asReactElement() {
         // ---- wrap children
-        console.log(this.currThemeState, "ss")
         if (!!this.currThemeState) {
             // ---- add to context by default
             let ContextView = ContextProvider(...this.children).context({themeState: this.currThemeState})
