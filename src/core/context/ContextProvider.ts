@@ -26,7 +26,7 @@ function ContextWrapper({wrapper}: any) {
     },[])
 
     Running.ContextStore[wrapper.contextId] = wrapper.contextStoreValue
-    let element = wrapper.__children[0]
+    let element = wrapper.children[0]
 
     return wrapper.key(wrapper.contextId).registerView(element).asReactElement()
 }
@@ -55,7 +55,7 @@ class ContextProvider extends RTElement {
 
     asReactElement() {
         // ---- wrap children
-        this.__children = [FragmentView(...this.__children)]
+        this.children = [FragmentView(...this.children)]
 
         return createElement(
             ContextWrapperMemorized,

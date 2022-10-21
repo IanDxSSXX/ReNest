@@ -8,6 +8,7 @@ import {uid} from "../utils/Utils";
 import ContextProvider from "../context/ContextProvider";
 
 
+export default (...children: any[]) => new ThemeProvider(...children)
 
 
 // ---* condition
@@ -26,7 +27,7 @@ function ThemeWrapper({wrapper}: any) {
         themes: wrapper.themes,
         themeName: wrapper.themeName
     }
-    let element = wrapper.__children[0]
+    let element = wrapper.children[0]
 
     return wrapper.registerView(element).asReactElement()
 }
@@ -65,11 +66,11 @@ class ThemeProvider extends RTElement {
         // ---- wrap children
         if (!!this.currThemeState) {
             // ---- add to context by default
-            let ContextView = ContextProvider(...this.__children).context({themeState: this.currThemeState})
+            let ContextView = ContextProvider(...this.children).context({themeState: this.currThemeState})
             ContextView.contextId = this.themeId
-            this.__children = [ContextView]
+            this.children = [ContextView]
         } else {
-            this.__children = [FragmentView(...this.__children)]
+            this.children = [FragmentView(...this.children)]
         }
 
         return createElement(
@@ -78,5 +79,3 @@ class ThemeProvider extends RTElement {
         )
     }
 }
-
-export default (...children: any[]) => new ThemeProvider(...children)

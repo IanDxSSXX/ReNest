@@ -1,4 +1,4 @@
-import {ConditionView, State, TagView, View, ViewWrapper} from "../core";
+import {ConditionView, TagView, View, ViewWrapper} from "../core";
 import {Div} from "./Convert"
 
 
@@ -41,20 +41,5 @@ class MyComponent4 extends View {
 }
 const e = ViewWrapper(MyComponent4)
 
-const P = TagView("p")
-const Button = TagView("button")
-
-class Counter extends View {
-    @State num = 0
-
-    Body = () =>
-        Div(
-            P(this.num),
-            Button("+")
-                .onClick(() => {
-                    this.num += 1
-                })
-        )
-}
 
 export default e
