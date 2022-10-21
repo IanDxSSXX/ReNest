@@ -1,5 +1,5 @@
 import {Fragment as ReactFragment, ReactElement} from "react";
-import {RTElement} from "../view/RTElement";
+import {RTElement} from "../element/RTElement";
 import RTConfig from "../base/RTConfig";
 
 export function TagView(element: any, dotPropNames?: string[]) {
