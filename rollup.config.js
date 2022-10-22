@@ -4,18 +4,18 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from "rollup-plugin-terser";
 
-let rootName = "./packages"
+let rootName = "./package"
 
-function generatePackage(packageName, inputPath) {
-    let packageJson = require(`${rootName}/${packageName}/package.json`)
+function generatePackage(inputPath) {
+    let packageJson = require(`${rootName}/package.json`)
     return [{
         input: inputPath,
         output: [{
-            file: `${rootName}/${packageName}/index.js`,
+            file: `${rootName}/index.js`,
             format: 'esm',
             sourcemap: true
         }, {
-            file: `${rootName}/${packageName}/index.cjs.js`,
+            file: `${rootName}/index.cjs.js`,
             format: 'cjs',
             sourcemap: true
         }],
@@ -29,7 +29,7 @@ function generatePackage(packageName, inputPath) {
     }, {
         input: inputPath,
         output: {
-           dir: `${rootName}/${packageName}/`,
+           dir: `${rootName}/`,
            format: "esm"
         },
         plugins: [
@@ -39,18 +39,4 @@ function generatePackage(packageName, inputPath) {
 }
 
 
-
-let option = 0
-
-let config
-switch(option) {
-    case 0:
-        config = generatePackage("core", "src/core/index.ts")
-        break
-    case 1:
-        config = generatePackage("component", "src/component/index.ts")
-        break
-    default:
-}
-
-export default config
+export default generatePackage("src/core/index.ts")

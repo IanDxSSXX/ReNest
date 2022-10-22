@@ -8,7 +8,7 @@ class MyComponent extends View {
         return (
             Div(
                 ConditionView(a,  {
-                    true: () => Div({a:11})
+                    true: () => Div(1)
                 })
             )
                 .fuck("me")

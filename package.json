@@ -20,8 +20,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "rollup": "rollup -c",
-    "publish_core": "npm publish ./packages/core",
-    "publish_component": "npm publish ./packages/component"
+    "publish": "npm publish ./package"
   },
   "eslintConfig": {
     "extends": [
