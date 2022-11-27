@@ -147,6 +147,12 @@ export function ResolveObserve(wrapper: any, statusKey: string, callback: ()=>an
     wrapper.lifecycle.observe.push({func: wrapper[key], states: [(wrapper:any) => wrapper[stateKey]]})
 }
 
+
+export function ResolvePreset(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
+    if (!isStatusKey(statusKey, "PRESET")) return callback()
+    let key = getKeyFromStatus(statusKey, "PRESET")
+    wrapper[key]()
+}
 // ---- decorator
 // ---- react treat useXXX as a hook and Xxxx as a component,
 //      can't use hook in a callback, so make react view it as a component

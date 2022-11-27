@@ -3,12 +3,11 @@ import {FragmentView} from "../utils/RTWrapper";
 import {ThemesState} from "./ThemeState";
 import Running from "../base/Running";
 import isEqual from 'lodash.isequal';
-import {RTElement} from "../element/RTElement";
+import {RTElement} from "../view/RTElement";
 import {uid} from "../utils/Utils";
 import ContextProvider from "../context/ContextProvider";
 
 
-export default (...children: any[]) => new ThemeProvider(...children)
 
 
 // ---* condition
@@ -27,14 +26,14 @@ function ThemeWrapper({wrapper}: any) {
         themes: wrapper.themes,
         themeName: wrapper.themeName
     }
-    let element = wrapper.children[0]
+    let element = wrapper.elementChildren[0]
 
     return wrapper.registerView(element).asReactElement()
 }
 
 const ThemeWrapperMemorized = memo(ThemeWrapper, (prev, curr) => {
-    let preElement = prev.wrapper.children[0]
-    let currElement = curr.wrapper.children[0]
+    let preElement = prev.wrapper.elementChildren[0]
+    let currElement = curr.wrapper.elementChildren[0]
 
     let themeEqual = isEqual(prev.wrapper.themes, curr.wrapper.themes)
         && prev.wrapper.themeName === curr.wrapper.themeName
@@ -63,14 +62,14 @@ class ThemeProvider extends RTElement {
 
 
     asReactElement() {
-        // ---- wrap children
+        // ---- wrap elementChildren
         if (!!this.currThemeState) {
             // ---- add to context by default
-            let ContextView = ContextProvider(...this.children).context({themeState: this.currThemeState})
+            let ContextView = ContextProvider(...this.elementChildren).context({themeState: this.currThemeState})
             ContextView.contextId = this.themeId
-            this.children = [ContextView]
+            this.elementChildren = [ContextView]
         } else {
-            this.children = [FragmentView(...this.children)]
+            this.elementChildren = [FragmentView(...this.elementChildren)]
         }
 
         return createElement(
@@ -79,3 +78,5 @@ class ThemeProvider extends RTElement {
         )
     }
 }
+
+export default (...children: any[]) => new ThemeProvider(...children)

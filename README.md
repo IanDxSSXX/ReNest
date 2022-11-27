@@ -374,7 +374,7 @@ class MyComponentWithContext extends View {
   // default using class name(in this case is Paper) to set different theme for different class
   // if you don't want some class to be polluted, use a themeTag() to add a appendix(in this case is Paper_another)
   // @Theme in hook equals to useTheme(themes, initialThemeName)
-  // any element inside ThemeProvider can directly current "myThemes" by using this.themeState to change theme
+  // any view inside ThemeProvider can directly current "myThemes" by using this.themeState to change theme
   @Theme myThemes = [{
     firstTheme: {
       Paper: {
@@ -441,7 +441,7 @@ class MainComponent extends View {
         })
       SubComponentView()
         .didUpdate(() => {
-          console.log("re-rendered as subview")  // this will not be called when click refresh button => so called element-wise lifecycle
+          console.log("re-rendered as subview")  // this will not be called when click refresh button => so called view-wise lifecycle
         })
     )
       .didMount(() => {

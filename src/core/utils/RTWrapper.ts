@@ -1,8 +1,8 @@
 import {Fragment as ReactFragment, ReactElement} from "react";
-import {RTElement} from "../element/RTElement";
+import {RTElement} from "../view/RTElement";
 import RTConfig from "../base/RTConfig";
 
-export function TagView(element: any, dotPropNames?: string[]) {
+export function TagView(element: any, propNames?: string[], dotPropNames?: string[]) {
     return (...children: any) => {
         let ruiElement = new RTElement(element, ...children).deleteProp("className")
         ruiElement.IAmTagView = true
@@ -13,9 +13,23 @@ export function TagView(element: any, dotPropNames?: string[]) {
             ruiElement.fileName = stackList[2].replace(/.*\((https?:\/\/\S+)\)/, "$1")
         }
 
-        if (!!dotPropNames) {
-            return ruiElement.withDotProp(...dotPropNames)
+        if (!!propNames) {
+            for (let [idx, propName] of propNames.entries()) {
+                let value = children[idx]
+                if (value !== undefined) ruiElement.setProp(propName, children[idx])
+            }
         }
+
+        if (!!dotPropNames) {
+            let anyRuiElement = ruiElement as any
+            for (let dotPropName of dotPropNames) {
+                anyRuiElement[dotPropName] = (value: any) => {
+                    anyRuiElement.elementProps[dotPropName] = value
+                    return anyRuiElement
+                }
+            }
+        }
+
         return ruiElement
     }
 }

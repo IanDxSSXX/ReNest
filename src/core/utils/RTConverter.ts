@@ -1,9 +1,9 @@
 import {TagView} from "./RTWrapper";
 
-function Converter(tagMap: {[key:string]:any}, dotPropMap?: {[key:string]:string[]}) {
+function Converter(tagMap: {[key:string]:any}, propMap?: {[key:string]:string[]}, dotPropMap?: {[key:string]:string[]}) {
     let elementMap: any = {}
     for (let rtName in tagMap) {
-        elementMap[rtName] = TagView(tagMap[rtName], (dotPropMap??{})[rtName])
+        elementMap[rtName] = TagView(tagMap[rtName], (propMap??{})[rtName], (dotPropMap??{})[rtName])
     }
 
     return elementMap

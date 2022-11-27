@@ -3,7 +3,7 @@ import {createElement, memo, useEffect, useRef} from "react";
 import {uid} from "../utils/Utils";
 import isEqual from "lodash.isequal";
 import Running from "../base/Running";
-import {RTElement} from "../element/RTElement";
+import {RTElement} from "../view/RTElement";
 
 // ---* condition
 function ContextWrapper({wrapper}: any) {
@@ -26,14 +26,14 @@ function ContextWrapper({wrapper}: any) {
     },[])
 
     Running.ContextStore[wrapper.contextId] = wrapper.contextStoreValue
-    let element = wrapper.children[0]
+    let element = wrapper.elementChildren[0]
 
     return wrapper.key(wrapper.contextId).registerView(element).asReactElement()
 }
 
 const ContextWrapperMemorized = memo(ContextWrapper, (prev, curr) => {
-    let preElement = prev.wrapper.children[0]
-    let currElement = curr.wrapper.children[0]
+    let preElement = prev.wrapper.elementChildren[0]
+    let currElement = curr.wrapper.elementChildren[0]
 
     let contextEqual = isEqual(prev.wrapper.contextStoreValue, curr.wrapper.contextStoreValue)
     return contextEqual && (preElement.IAmRTElement && preElement.equalTo(currElement))
@@ -54,8 +54,8 @@ class ContextProvider extends RTElement {
     }
 
     asReactElement() {
-        // ---- wrap children
-        this.children = [FragmentView(...this.children)]
+        // ---- wrap elementChildren
+        this.elementChildren = [FragmentView(...this.elementChildren)]
 
         return createElement(
             ContextWrapperMemorized,

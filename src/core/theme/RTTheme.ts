@@ -6,6 +6,7 @@ export class RTTheme extends RTContext {
     protected readonly defaultTheme: { [key: string]: any } = {}
     protected readonly defaultThemes: { [key: string]: any } = {}
     protected defaultThemeName: string = "_NONE_"
+    _name?: string
 
     // ---- not like context, theme not allow theme passing through
     themeId?: string
@@ -17,7 +18,7 @@ export class RTTheme extends RTContext {
         if (!this.themeId) return defaultTheme
         let themes = Running.ThemeStore[this.themeId].themes
         let themeName = Running.ThemeStore[this.themeId].themeName
-        let theme = themes[themeName][this.constructor.name]
+        let theme = themes[themeName][this._name ?? this.constructor.name]
         if (theme === undefined) return defaultTheme
 
         return {...defaultTheme, ...theme}

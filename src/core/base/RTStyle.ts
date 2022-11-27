@@ -27,7 +27,7 @@ function ElementViewProp(target: any, propertyKey: string, descriptor: PropertyD
 }
 
 export default class RTStyle<TLength = (string & {}) | 0, TTime = string & {}> extends RTBase {
-    IAmRTWithStyle = true
+    IAmRTStyle = true
 
     // ---* Events from react/RTHH.d.tx -> DOMAttributes
     // ---- Clipboard Events

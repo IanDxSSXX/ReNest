@@ -1,7 +1,7 @@
 import {createElement, memo, useEffect, useRef} from "react";
 import {FragmentView} from "../utils/RTWrapper";
 import {uid} from "../utils/Utils";
-import {RTElement} from "../element/RTElement";
+import {RTElement} from "../view/RTElement";
 import {RTHelper} from "../utils/RTHelper";
 
 // ---* condition
@@ -13,12 +13,12 @@ function ConditionWrapper({wrapper}: any) {
         conditionIDs.current = wrapper.conditionIDs
     },[])
 
-    return wrapper.children[0].key(wrapper.conditionIDs[wrapper.variable]??"_").asReactElement()
+    return wrapper.elementChildren[0].key(wrapper.conditionIDs[wrapper.variable]??"_").asReactElement()
 }
 
 const ConditionWrapperMemorized = memo(ConditionWrapper, (prev, curr) => {
-    let preElement = prev.wrapper.children[0]
-    let currElement = curr.wrapper.children[0]
+    let preElement = prev.wrapper.elementChildren[0]
+    let currElement = curr.wrapper.elementChildren[0]
 
     return preElement.IAMFragment || (preElement.IAmRTElement && preElement.equalTo(currElement))
 })
@@ -50,7 +50,7 @@ class ConditionView extends RTElement {
                 {wrapper:this, ...!!this.P.key?{key: this.P.key}:{} }
             )
         } catch (e) {
-            RTHelper.throw("ConditionView must have 2 props, the first one is a variable, the second one is a map of functions, each of which returns a renest element")
+            RTHelper.throw("ConditionView must have 2 props, the first one is a variable, the second one is a map of functions, each of which returns a renest view")
             return null as any
         }
 

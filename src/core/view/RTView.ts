@@ -38,10 +38,25 @@ export abstract class View<T=any> extends RTElement {
 
     uid = uid()
 
+    _propertyNamesTillRTView: string[] = []
+
     constructor(props: any={}) {
         super("")
         this.props = props
+
+        // ---- getTillRTViewPropertyNames
+        let protoObj = Object.getPrototypeOf(this)
+        // ---- start at this.__proto__ because Object.assignProperty only apply on this.__proto__,
+        //      so no need to iter current properties
+        while (!!protoObj) {
+            let newProperties = Object.getOwnPropertyNames(protoObj)
+            if (newProperties.includes("asReactElement")) break
+            // ---- stop when reach RTView
+            this._propertyNamesTillRTView = [...this._propertyNamesTillRTView, ...newProperties]
+            protoObj = Object.getPrototypeOf(protoObj)
+        }
     }
+
 
     init() {
         if (RTConfig.debug) {
@@ -53,7 +68,7 @@ export abstract class View<T=any> extends RTElement {
         }
 
 
-        for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(this))) {
+        for (let key of this._propertyNamesTillRTView) {
             ResolveDotPropWrapper(this, key, () =>
             ResolveObserve(this, key)
             )
@@ -118,7 +133,7 @@ export abstract class View<T=any> extends RTElement {
         // ---- check if another's prop is equal to this props
         // ---- useful for memo equal check
         // ---- styles and custom props
-        // ---1 element props, update on change by default using deep equal
+        // ---1 view props, update on change by default using deep equal
         if (!isEqual(this.elementProps, another.elementProps)) return false
 
         // ---2 themes, update on change by default using deep equal
@@ -167,6 +182,7 @@ class RTFuncView<T> extends View {
         this.funcGene = true
     }
 }
+
 export function FuncView<T extends Object>(body: (props:T) => any) {
     return (props?: T) => new RTFuncView<T>(body, props)
 }

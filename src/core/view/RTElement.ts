@@ -16,7 +16,7 @@ export class RTElement extends RTTheme {
         view.elementProps.style = {...view.elementProps.style, ...newElementStyles}
         view.elementProps = {...view.elementProps, ...newElementProps}
 
-        this.children = [view]
+        this.elementChildren = [view]
         this.passDownTheme()
         this.passDownContext()
         if (RTConfig.debug) view.parentNode = this
@@ -24,14 +24,5 @@ export class RTElement extends RTTheme {
         return view
     }
 
-    withDotProp(...dotPropNames: string[]) {
-        for (let dotPropName of dotPropNames) {
-            (this as any)[dotPropName] = (value: any) => {
-                this.elementProps[dotPropName] = value
-                return this
-            }
-        }
-        return this as any
-    }
 
 }

@@ -15,7 +15,7 @@ export default class RTBase {
     IAmRT = true
 
     protected elementTag: any
-    children: any[]
+    elementChildren: any[]
     elementProps: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | any = {style: {}}
     customProps: any = {}
 
@@ -23,9 +23,9 @@ export default class RTBase {
     parentNode: any = null
     fileName: string | undefined
 
-    constructor(elementTag: any, ...children: any[]) {
+    constructor(elementTag: any, ...elementChildren: any[]) {
         this.elementTag = elementTag
-        this.children = children
+        this.elementChildren = elementChildren
         this.className(`RT-${this.constructor.name}`)
     }
 
@@ -37,7 +37,7 @@ export default class RTBase {
     asReactElement(): ReactElement {
         this.beforeAsReactElement()
 
-        let children = this.children
+        let children = this.elementChildren
             .map(child => {
                 if (child?.IAmRT) {
                     this.passParentNode(child)
@@ -133,7 +133,7 @@ export default class RTBase {
 
     // ---- utils
     forEachChild(func: (child: any)=>any, nested=false) {
-        for (let child of flattened(this.children)) {
+        for (let child of flattened(this.elementChildren)) {
             if (child?.IAmRT) {
                 let willNest = func(child) ?? true
                 if (willNest && nested) {

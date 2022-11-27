@@ -49,7 +49,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProp, ErrorBoundar
 
     getTraceMessage(node: any) {
         let name = node.IAmTagView ?
-            node.elementTag.name??node.elementTag : node.name??node.constructor.name
+            node.elementTag?.name??node.elementTag : node.name??node.constructor.name
 
         return `\tat ${name} (${node.fileName??"http://"})\n`
     }

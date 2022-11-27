@@ -102,3 +102,10 @@ export const Observe = (target: any, propertyKey: string) => {
         value: true,
     })
 }
+
+
+export const Preset = (target: any, propertyKey: string) => {
+    Object.defineProperty(target, StatusKey("PRESET", propertyKey), {
+        value: true,
+    })
+}

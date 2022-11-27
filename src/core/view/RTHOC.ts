@@ -1,21 +1,22 @@
 import {RTHelper} from "../utils/RTHelper";
 import {createElement, memo, useEffect, useRef} from "react";
-import {HookWrapper, ResolveHook, ResolveRef, ResolveState} from "./ResolveDecorator";
+import {HookWrapper, ResolvePreset, ResolveHook, ResolveRef, ResolveState} from "./ResolveDecorator";
 import {TagView} from "../utils/RTWrapper";
 import {ErrorBoundary} from "../utils/ErrorBoundary";
 import RTConfig from "../base/RTConfig";
 
 const ReactElementWrapper = ({wrapper}:any) => {
     // ---- decorators **so tricky**
-    for (let key of Object.getOwnPropertyNames(Object.getPrototypeOf(wrapper))) {
+    for (let key of wrapper._propertyNamesTillRTView) {
         ResolveHook(wrapper, key, "HOOK", false, ()=>    // ---n any hook with single prop: @Hook(useRef)
         ResolveHook(wrapper, key, "SHOOK", true, () =>     // ---n any hook with multiple props: @SHook(useTheme)
         ResolveState(wrapper, key, () =>
-        ResolveRef(wrapper, key)
-        )))
+        ResolveRef(wrapper, key, () =>
+        ResolvePreset(wrapper, key)
+        ))))
     }
     // ---- call Body
-    // ---- **dangerous when element type is different because directly call will lead to inconsistent hooks**
+    // ---- **dangerous when view type is different because directly call will lead to inconsistent hooks**
     // ---- see ConditionView
     wrapper.Preset()
     let component = wrapper.Body(wrapper.props) as any
@@ -74,5 +75,4 @@ export const ReactElementWrapperMemorized = memo(ReactElementWrapper, (prev, cur
     let preWrapper = prev.wrapper, currWrapper = curr.wrapper
     return preWrapper.equalTo(currWrapper)
 })
-
 
