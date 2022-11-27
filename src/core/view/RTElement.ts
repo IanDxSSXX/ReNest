@@ -1,9 +1,9 @@
-import {RTTheme} from "../theme/RTTheme";
 import RTBase from "../base/RTBase";
 import {filteredObject} from "../utils/Utils";
 import RTConfig from "../base/RTConfig";
+import {RTContext} from "../context/RTContext";
 
-export class RTElement extends RTTheme {
+export class RTElement extends RTContext {
     customProps: any = {contextNameStore: [], dotPropNameStore: []}
     dotPropNames: string[] = []
     IAmTagView = false
@@ -17,7 +17,6 @@ export class RTElement extends RTTheme {
         view.elementProps = {...view.elementProps, ...newElementProps}
 
         this.elementChildren = [view]
-        this.passDownTheme()
         this.passDownContext()
         if (RTConfig.debug) view.parentNode = this
 

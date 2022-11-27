@@ -1,39 +1,54 @@
-import {ConditionView, Preset, Prop, required, State, TagView, View, ViewWrapper} from "../core";
+import {
+    ConditionView,
+    Context,
+    ContextProvider,
+    Preset,
+    Prop,
+    required,
+    State,
+    TagView,
+    View,
+    ViewWrapper
+} from "../core";
 import {Button, Div, Span} from "./Convert"
 import {useEffect} from "react";
 
 
 class MyComponentSubView extends View {
     @State num = 0
+    @Context hh = 1
 
     Body = () =>
         Div(
-            Span(this.num),
-            Button("click me")
-                .onClick(() => {
-                    this.num ++
-                    console.log("h")
-                }),
+            this.hh
         )
 }
 
 const MyComponentSub = ViewWrapper(MyComponentSubView)
+class MyComponentSubView2 extends View {
+    Body = () =>
+        MyComponentSub()
+}
+
+const MyComponentSub2 = ViewWrapper(MyComponentSubView)
+class MyComponentSubView3 extends View {
+    Body = () =>
+        MyComponentSub2()
+}
+
+const MyComponentSub3 = ViewWrapper(MyComponentSubView)
 
 class MyComponent extends View {
     @State num = 0
 
     Body = () =>
-        Div(
-            MyComponentSub(),
-            Span(this.num),
-            Button("click me")
-                .onClick(() => {
-                    this.num ++
-                    console.log("h")
-                }),
+        ContextProvider(
+            MyComponentSub3(),
         )
-            .height("100px")
-            .width("110px")
+            .context({
+                hh: "hhh"
+            })
+
 }
 
 

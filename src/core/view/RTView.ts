@@ -136,9 +136,6 @@ export abstract class View<T=any> extends RTElement {
         // ---1 view props, update on change by default using deep equal
         if (!isEqual(this.elementProps, another.elementProps)) return false
 
-        // ---2 themes, update on change by default using deep equal
-        if (!isEqual(this.theme, another.theme)) return false
-
         // ---- all props
         let thisAllProps: any = {...this.props}
         let anotherAllProps: any = {...another.props}
