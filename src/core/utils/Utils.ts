@@ -27,4 +27,4 @@ export function uid() {
 }
 
 
-export const required = undefined as any
+export const required = "__REQUIRED__" as any

@@ -3,8 +3,7 @@ import {
     Context,
     ContextProvider,
     Preset,
-    Prop,
-    required,
+    Prop, required,
     State,
     TagView,
     View,
@@ -16,7 +15,7 @@ import {useEffect} from "react";
 
 class MyComponentSubView extends View {
     @State num = 0
-    @Context hh = 1
+    @Prop hh = required
 
     Body = () =>
         Div(
@@ -25,29 +24,12 @@ class MyComponentSubView extends View {
 }
 
 const MyComponentSub = ViewWrapper(MyComponentSubView)
-class MyComponentSubView2 extends View {
-    Body = () =>
-        MyComponentSub()
-}
-
-const MyComponentSub2 = ViewWrapper(MyComponentSubView)
-class MyComponentSubView3 extends View {
-    Body = () =>
-        MyComponentSub2()
-}
-
-const MyComponentSub3 = ViewWrapper(MyComponentSubView)
 
 class MyComponent extends View {
     @State num = 0
 
     Body = () =>
-        ContextProvider(
-            MyComponentSub3(),
-        )
-            .context({
-                hh: "hhh"
-            })
+        MyComponentSub()
 
 }
 

@@ -1,5 +1,6 @@
 import {StatusKey, StoreKey} from "./Decorator";
 import {useRef, useState} from "react";
+import {RTHelper} from "../utils/RTHelper";
 
 function isStatusKey(statusKey: string, name: string) {
     return statusKey.startsWith("_STATUS_" + name + "_")
@@ -111,7 +112,12 @@ export function ResolveContexts(wrapper: any, statusKey: string, callback: ()=>a
 export function ResolveProp(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
     if (!isStatusKey(statusKey, "PROP")) return callback()
     let key = getKeyFromStatus(statusKey, "PROP")
-    wrapper[key] = wrapper.props[key] ?? wrapper[key]
+    // ---- check if the prop is required
+    let prop = wrapper.props[key]
+    if (prop === undefined && wrapper[key] === "__REQUIRED__") {
+        RTHelper.throw(`Key [${key}] in class [${wrapper.constructor.name}] is a required prop, now I can see none`)
+    }
+    wrapper[key] = prop ?? wrapper[key]
 }
 
 export function ResolveDotPropWrapper(wrapper: any, statusKey: string, callback: ()=>any=()=>null) {
