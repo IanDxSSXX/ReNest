@@ -20,7 +20,7 @@ const ConditionWrapperMemorized = memo(ConditionWrapper, (prev, curr) => {
     let preElement = prev.wrapper.elementChildren[0]
     let currElement = curr.wrapper.elementChildren[0]
 
-    return preElement.IAMFragment || (preElement.IAmRTElement && preElement.equalTo(currElement))
+    return (preElement.IAMFragment && currElement.IAMFragment) || (preElement.IAmRTElement && preElement.equalTo(currElement))
 })
 
 class ConditionView extends RTElement {
